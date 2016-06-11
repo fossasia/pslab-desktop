@@ -10,8 +10,6 @@ Requirements
   * NumPy, Scipy
   * Pyqtgraph : Plotting library
   * For 3D graphics: pyopengl and qt-opengl
-  * Known to run on various versions of Linux based on Debian(Ubuntu 12.04+ , Raspbian, Mate ... ). Windows support in the works.
-  * iPython-qtconsole optional.
 
 Installation
 ------------
