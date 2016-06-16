@@ -2,6 +2,7 @@
 
 # Form implementation generated from reading ui file 'transistor.ui'
 
+
 from PyQt4 import QtCore, QtGui
 
 try:

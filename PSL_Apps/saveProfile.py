@@ -5,7 +5,7 @@
 #===================================================================
 
 #===================================================================
-# Modified by Jithin bp and Praveen Patil for the FOSSASIA PSLab package.
+# Modified by Jithin bp and Praveen Patil for the Fossasia PSLab.
 # Added support for QDial, QSpinBox, QDoubleSpinBox , QSlider
 # QCombobox ignores itemText. It's not user editable in our use case
 #

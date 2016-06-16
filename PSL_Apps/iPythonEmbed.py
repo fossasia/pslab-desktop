@@ -38,4 +38,3 @@ class QIPythonWidget(RichIPythonWidget):
 		self._execute(command,hidden)
 
 
-

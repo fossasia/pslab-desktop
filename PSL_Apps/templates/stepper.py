@@ -2,7 +2,6 @@
 
 # Form implementation generated from reading ui file 'stepper.ui'
 
-
 from PyQt4 import QtCore, QtGui
 
 try:

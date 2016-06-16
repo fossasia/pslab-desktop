@@ -2,7 +2,6 @@
 
 # Form implementation generated from reading ui file 'liss3d.ui'
 
-
 from PyQt4 import QtCore, QtGui
 
 try:

@@ -60,7 +60,7 @@ class AppWindow(QtGui.QMainWindow, plotSave.Ui_MainWindow):
 		for a in data:
 			item = QtGui.QTableWidgetItem()
 			self.table.setItem(ypos,col,item)
-			item.setText('%s'%a)
+			item.setText('%.3e'%a)
 			ypos+=1
 
 
@@ -124,7 +124,7 @@ class AppWindow(QtGui.QMainWindow, plotSave.Ui_MainWindow):
 		print ('bye')
                 
 if __name__ == "__main__":
-    from SEEL import interface
+    from PSL import sciencelab
     app = QtGui.QApplication(sys.argv)
     myapp = AppWindow(data=[[0,1],[1,2]])
     myapp.show()

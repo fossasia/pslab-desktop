@@ -2,6 +2,7 @@
 
 # Form implementation generated from reading ui file 'aboutDevice.ui'
 
+
 from PyQt4 import QtCore, QtGui
 
 try:

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-Output Peripheral control for FOSSASIA PSLab
+Output Peripheral control for FOSSASIA PSLab - version 1.0.0.
 '''
 
 from __future__ import print_function
