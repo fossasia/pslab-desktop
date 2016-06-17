@@ -62,14 +62,14 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				if len(self.I.H.occupiedPorts):
 					diag = QtGui.QMessageBox.about(self,'Error','Could not find available device.\nSoftware already running for ports: %s'%list(self.I.H.occupiedPorts))
 				else:
-					diag = QtGui.QMessageBox.about(self,'Error','Could not find available device')
+					diag = QtGui.QMessageBox.about(self,'Error','FOSSASIA PSLab Not Connected')
 				#diag.show()
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
 				self.setStyleSheet(self.styleText)
-				self.setWindowTitle('Error : Not Connected')
+				self.setWindowTitle('Error : FOSSASIA PSLab Not Connected')
 			else:
 				self.hexid = hex(self.I.device_id()&0xFFFF)
-				self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string.decode("utf-8")+' - '+self.hexid)
+				self.setWindowTitle(self.I.generic_name + ' :  '+self.hexid)
 		except:
 			self.updateSplash(30,'Connection Error!')
 			#self.SCF1.setStyleSheet(_fromUtf8(styles.disconnected))
@@ -331,7 +331,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 			info = deviceInfo.AppWindow(self,I=self.I)
 			info.show()
 		else:
-			print (self.setWindowTitle('Device Not Connected!'))
+			print (self.setWindowTitle('PSLab  Not Connected!'))
 
 
 
@@ -356,7 +356,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 						print (self.menu_entries, self.I.H.portname)
 						self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
 						self.setStyleSheet(self.styleText)
-						self.setWindowTitle('Error : Device Disconnected')
+						self.setWindowTitle('Error : PSLab Disconnected')
 						if self.runningApp:
 							self.runningApp.close()
 						self.I.connected = False
@@ -395,16 +395,16 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				#diag.show()
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
 				self.setStyleSheet(self.styleText)
-				self.setWindowTitle('Error : Not Connected')
+				self.setWindowTitle('Error : PSLab Not Connected')
 			else:
 				self.hexid = hex(self.I.device_id()&0xFFFF)
-				self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string.decode("utf-8")+' - '+self.hexid)
+				self.setWindowTitle(self.I.generic_name + ' : '+self.hexid)
 				self.updateSplash(20,'Finished Reconnecting...');
 				self.displayDialog('Reconnected :'+self.I.H.version_string.decode("utf-8"))
 				#self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
 				self.setStyleSheet(self.styleText)
-				self.setWindowTitle('PSLablet : '+self.I.H.version_string.decode("utf-8"))
+				self.setWindowTitle('PSLab : '+self.I.H.version_string.decode("utf-8"))
 
 		self.splash.close()
 		return
