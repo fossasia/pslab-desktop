@@ -48,7 +48,7 @@ class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow,utilitiesClass):
 		self.setupUi(self)
 		self.I=kwargs.get('I',None)
 
-		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
 
 		self.plot=self.add2DPlot(self.plot_area)
 		labelStyle = {'color': 'rgb(255,255,255)', 'font-size': '11pt'}

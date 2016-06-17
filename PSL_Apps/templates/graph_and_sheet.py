@@ -156,7 +156,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "FOSSASIA PSLab", None))
         self.widgetFrameOuter.setProperty("class", _translate("MainWindow", "PeripheralCollection", None))
         self.frame_2.setProperty("class", _translate("MainWindow", "PeripheralCollectionInner", None))
         self.pushButton_2.setText(_translate("MainWindow", "Save Data", None))

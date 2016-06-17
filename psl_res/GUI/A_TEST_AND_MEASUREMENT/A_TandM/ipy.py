@@ -37,7 +37,7 @@ class AppWindow(QtGui.QMainWindow, ipy.Ui_MainWindow):
 
 		self.showSplash();self.updateSplash(10,'Importing iPython Widgets...')
 		try:
-			from SEEL_Apps.iPythonEmbed import QIPythonWidget
+			from PSL_Apps.iPythonEmbed import QIPythonWidget
 			self.updateSplash(10,'Creating Dock Widget...')
 		except:
 			self.splash.finish(self);
@@ -53,7 +53,7 @@ class AppWindow(QtGui.QMainWindow, ipy.Ui_MainWindow):
 		self.ipyConsole = QIPythonWidget(customBanner="An interactive Python Console!\n");self.updateSplash(10)
 		self.layout.addWidget(self.ipyConsole);self.updateSplash(10,'Preparing default command dictionary...')        
 		
-		from SEEL.analyticsClass import analyticsClass
+		from PSL.analyticsClass import analyticsClass
 		self.analytics = analyticsClass()
 		cmdDict = {"analytics":self.analytics}
 		#if self.graphContainer1_enabled:cmdDict["graph"]=self.graph
@@ -93,12 +93,12 @@ class AppWindow(QtGui.QMainWindow, ipy.Ui_MainWindow):
 
 	def showSplash(self):
 		import pkg_resources
-		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('SEEL_Apps.stylesheets', "ipy_splash.png"))
+		splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('PSL_Apps.stylesheets', "ipy_splash.png"))
 		self.splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
 		# adding progress bar
 		self.progressBar = QtGui.QProgressBar(self.splash)
 		self.progressBar.resize(self.splash.width(),20)
-		css = pkg_resources.resource_string('SEEL_Apps', "stylesheets/splash.css").decode("utf-8")
+		css = pkg_resources.resource_string('PSL_Apps', "stylesheets/splash.css").decode("utf-8")
 		if css:
 			self.splash.setStyleSheet(css)
 		self.splashMsg = QtGui.QLabel(self.splash);self.splashMsg.setStyleSheet("font-weight:bold;color:purple")

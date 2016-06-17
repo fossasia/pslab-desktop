@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SEELablet: Control Panel</string>
+   <string>PSLab: Control Panel</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton {

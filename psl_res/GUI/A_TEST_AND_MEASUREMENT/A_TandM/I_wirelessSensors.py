@@ -39,7 +39,7 @@ class AppWindow(QtGui.QMainWindow, sensorGrid.Ui_MainWindow,utilitiesClass):
 		if self.I:
 			self.I.NRF.start_token_manager()
 			print (self.I.readLog()	)
-		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle('FOSSASIA PSLab  : '+params.get('name','').replace('\n',' ') )
 
 		from PSL.SENSORS.supported import supported
 		self.supported = supported

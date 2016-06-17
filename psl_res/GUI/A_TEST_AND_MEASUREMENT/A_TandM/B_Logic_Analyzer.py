@@ -47,7 +47,7 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow,utilitiesCla
 		from PSL.analyticsClass import analyticsClass
 		self.math = analyticsClass()
 
-		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
 
 		self.plot=self.add2DPlot(self.plot_area,enableMenu=False)
 		

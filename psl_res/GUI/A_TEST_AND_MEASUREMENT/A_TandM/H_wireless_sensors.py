@@ -38,7 +38,7 @@ class AppWindow(QtGui.QMainWindow, wirelessTemplate.Ui_MainWindow,utilitiesClass
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
 		self.I=kwargs.get('I',None)
-		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
 
 		self.I.NRF.start_token_manager()
 		print (self.I.readLog()	)

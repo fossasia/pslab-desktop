@@ -46,7 +46,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow,utilitiesClass):
 		from PSL.analyticsClass import analyticsClass
 		self.math = analyticsClass()
 
-		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle('FOSSASIA PSLAb : '+params.get('name','').replace('\n',' ') )
 		self.trace_colors=[(0,255,20),(255,0,0),(255,255,100),(10,255,255)]
 		self.plot=self.add2DPlot(self.plot_area,enableMenu=False)
 	

@@ -51,7 +51,7 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 		print (self.I.readLog()	)
 		self.plot=self.add2DPlot(self.plot_area)
 		self.plot.setTitle('dsafd')
-		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
 
 		self.axisItems=[]
 
