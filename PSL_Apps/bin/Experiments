@@ -55,7 +55,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 
 		self.updateSplash(10,'Connecting to Device...')
 		if  args.PortName: self.I = sciencelab.ScienceLab(port = args.PortName)  #Not using connect method because it returns None if unconnected,
-		else: self.I = sciencelab.ScienceLab(verbose=False)                       #and I need to pass the methods of interface to various control widgets regardless
+		else: self.I = sciencelab.ScienceLab(verbose=False)                       #and I need to pass the methods of interfacing to various control widgets regardless
 		self.hexid=''
 		try:
 			if not self.I.connected:
@@ -108,22 +108,16 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 		autogenControls.append({'TITLE':'Wave 1','MIN':1,'MAX':5000,'FUNC':self.I.set_w1,'TYPE':'dial2','UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #1','LINK':self.updateWAVE1_FREQ})
 		autogenControls.append({'TITLE':'Wave 2','MIN':1,'MAX':5000,'FUNC':self.I.set_w2,'TYPE':'dial2','UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #2','LINK':self.updateWAVE2_FREQ})
 		autogenControls.append({'TITLE':'square 1','MIN':0,'MAX':50000,'FUNC':self.modifiedSqr1,'TYPE':'dial','UNITS':'Hz','TOOLTIP':'Frequency of square wave generator #1\n0 for switched off, Max for On state'})
-
 		tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PV1')
 		autogenControls.append({'TITLE':'PV1','MIN':0,'MAX':4095,'FUNC':tmpfunc,'TYPE':'dial','UNITS':'V','TOOLTIP':'Programmable Voltage Source ','LINK':self.updatePV1_LABEL})
-
 		tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PV2')
 		autogenControls.append({'TITLE':'PV2','MIN':0,'MAX':4095,'FUNC':tmpfunc,'TYPE':'dial','UNITS':'V','TOOLTIP':'Programmable Voltage Source ','LINK':self.updatePV2_LABEL})
-
 		tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__,'PV3')
 		autogenControls.append({'TITLE':'PV3','MIN':0,'MAX':4095,'FUNC':tmpfunc,'TYPE':'dial','UNITS':'V','TOOLTIP':'Programmable Voltage Source ','LINK':self.updatePV3_LABEL})
-
 		tmpfunc = lambda x: self.I.DAC.__setRawVoltage__('PCS',x)
 		autogenControls.append({'TITLE':'PCS','MIN':0,'MAX':4095,'FUNC':tmpfunc,'TYPE':'dial','UNITS':'A','TOOLTIP':'Programmable Current Source ','LINK':self.updatePCS_LABEL})
-
 		#autogenControls.append({'TYPE':'voltWidget'})
 		autogenControls.append({'TYPE':'separator'})
-
 		autogenControls.append({'TITLE':'CAPACITANCE','FUNC':self.I.get_capacitance,'TYPE':'button','UNITS':'F','TOOLTIP':'Read Capacitance connected to CAP input '})
 		autogenControls.append({'TITLE':'RESISTANCE','FUNC':self.I.get_resistance,'TYPE':'button','UNITS':u"\u03A9",'TOOLTIP':'Read Resistance connected to SEN input '})
 		tmpfunc = functools.partial(self.I.get_average_voltage,samples=100)
@@ -218,7 +212,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 		
 	def importExperimentFolder(self):
 		from os.path import expanduser
-		dirname = QtGui.QFileDialog.getExistingDirectory(self,  "Load a folder containing Experiments", expanduser("./"),  QtGui.QFileDialog.ShowDirsOnly)
+		dirname = QtGui.QFileDialog.getExistingDirectory(self,"Load a folder containing Experiments", expanduser("./"),  QtGui.QFileDialog.ShowDirsOnly)
 		if not dirname:return
 		parentPath = os.path.abspath(os.path.join(dirname, os.pardir))
 		sys.path.append(parentPath)
@@ -307,11 +301,12 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 
 	def launchFunc(self,fname,helpurl):
 		if self.I.connected:
-			#try:
-			#	if fname.split('.')[1]=='apps':
-			if self.runningApp:
-				self.runningApp.close()
-			#except: pass
+			try:
+				if self.runningApp:
+					self.runningApp.close()
+					self.killAllTimers()
+			except Exception,e: print(e)
+			
 			FILE = importlib.import_module(fname)
 			inst = FILE.AppWindow(self,I=self.I)
 			inst.show()
@@ -409,7 +404,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				#self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
 				self.setStyleSheet(self.styleText)
-				self.setWindowTitle('PSLab : '+self.I.H.version_string.decode("utf-8"))
+				self.setWindowTitle('PSLablet : '+self.I.H.version_string.decode("utf-8"))
 
 		self.splash.close()
 		return
