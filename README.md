@@ -14,9 +14,22 @@ Requirements
 Installation
 ------------
 
-Clone this repository / download the zip file , and run the following
+To install PSLab
+=================
+Clone both  the repositories fossasia-pslab-apps and fossasia-pslab
 
-  * sudo python setup.py install
+
+now, cd into the directories , and run
+
+sudo make clean
+
+sudo make install
+
+
+Now you should find an 'Experiments' item in the education menu
+
+Else run Experiments.py from terminal
+
 
 Documentation
 -------------
