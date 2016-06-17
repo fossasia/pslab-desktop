@@ -14,9 +14,8 @@ class CustomInstall(install):
         install.run(self)
 
 setup(name='PSL_Apps',
-	version='0.1',
 	version='1.0.0',
-  description='GUI's for Experiments with PSLab. Requires PSL',
+  description='GUIs for Experiments with PSLab. Requires PSL',
   author='Jithin B.P. and Praveen Patil',
 	install_requires = ['numpy>=1.8.1','pyqtgraph>=0.9.10'], #PSL>=
 	packages=['PSL_Apps','PSL_Apps.templates','PSL_Apps.utilityApps','PSL_Apps.utilityApps.templates','PSL_Apps.stylesheets','PSL_Apps.templates.widgets'],
