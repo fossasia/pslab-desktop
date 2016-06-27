@@ -3,14 +3,31 @@ DESTDIR =
 # the variable CUSTOM will be 'true' if we are *not* in the context of
 # building a debian package (you must be rrot or use fakeroot, the
 # directory .. is supposed to be the root directory of the package
-# seelablet
+# FOSSASIA PSLab
+
 CUSTOM = $(shell cd ..; if [ -x /usr/bin/dh_testroot -a -x /usr/bin/dh_testdir ] && dh_testroot && dh_testdir; then echo false; else echo true; fi)
 
-all:
+UI_SOURCES = $(shell find . -name "*.ui")
+
+UIfiles    = $(shell for f in $(UI_SOURCES); do path=$$(dirname $$f); g=$$(basename $$f); echo $$path/ui_$$g | sed 's/ui$$/py/'; done)
+oldUIfiles    = $(patsubst %.ui, %.py, $(UI_SOURCES))
+
+all:  $(UIfiles)
 	#make -C docs html
 	#make -C docs/misc all
+	@echo $(UI_SOURCES)
 	python setup.py build
 	python3 setup.py build
+
+
+ui_%.py: %.ui
+	@echo compiling UI : $@
+	@pyuic4 $< > $@
+
+showUifiles:
+	@echo $(UIfiles) | tr " " "\n"
+showOldUifiles:
+	@echo $(oldUIfiles) | tr " " "\n"
 
 clean:
 	rm -rf PSL_Apps.egg-info build
