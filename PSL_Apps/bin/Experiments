@@ -28,7 +28,7 @@ except AttributeError:
 
 from PSL_Apps.stylesheets import styles
 from PSL_Apps.utilitiesClass import utilitiesClass
-from PSL_Apps.templates import single_col_exp
+from PSL_Apps.templates import ui_single_col_exp as single_col_exp
 
 import os,string,time,pkgutil,importlib,functools,pkg_resources
 
@@ -50,26 +50,26 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 		self.setStyleSheet(self.styleText)
 		self.updateSplash(10,'Fetching libraries...')
 
-		from PSL import sciencelab
+		from PSL import interface
 		self.row=0;	self.col=0;	self.colLimit=3
 
 		self.updateSplash(10,'Connecting to Device...')
-		if  args.PortName: self.I = sciencelab.ScienceLab(port = args.PortName)  #Not using connect method because it returns None if unconnected,
-		else: self.I = sciencelab.ScienceLab(verbose=False)                       #and I need to pass the methods of interfacing to various control widgets regardless
+		if  args.PortName: self.I = interface.Interface(port = args.PortName)  #Not using connect method because it returns None if unconnected,
+		else: self.I = interface.Interface(verbose=False)                       #and I need to pass the methods of interface to various control widgets regardless
 		self.hexid=''
 		try:
 			if not self.I.connected:
 				if len(self.I.H.occupiedPorts):
 					diag = QtGui.QMessageBox.about(self,'Error','Could not find available device.\nSoftware already running for ports: %s'%list(self.I.H.occupiedPorts))
 				else:
-					diag = QtGui.QMessageBox.about(self,'Error','FOSSASIA PSLab Not Connected')
+					diag = QtGui.QMessageBox.about(self,'Error','Could not find available device')
 				#diag.show()
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
 				self.setStyleSheet(self.styleText)
-				self.setWindowTitle('Error : FOSSASIA PSLab Not Connected')
+				self.setWindowTitle('Error : Not Connected')
 			else:
 				self.hexid = hex(self.I.device_id()&0xFFFF)
-				self.setWindowTitle(self.I.generic_name + ' :  '+self.hexid)
+				self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string.decode("utf-8")+' - '+self.hexid)
 		except:
 			self.updateSplash(30,'Connection Error!')
 			#self.SCF1.setStyleSheet(_fromUtf8(styles.disconnected))
@@ -167,6 +167,9 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 
 		self.helpView = QtWebKit.QWebView()
 		self.helpLayout.addWidget(self.helpView)
+		self.helpView.setUrl(QtCore.QUrl(pkg_resources.resource_filename('psl_res.HTML','index.html')))
+		#from PSL_Apps.utilityApps.indexGen import autogen
+		#self.helpView.setHtml(autogen(pkg_resources.resource_listdir('psl_res','HTML')))
 
 		self.shortlist=[]
 		self.timer = QtCore.QTimer()
@@ -288,6 +291,13 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 
 			self.col=0;self.row+=1
 
+	def setHelpUrl(self,fname): #fname must reside in psl_res.HTML
+		helpurl = pkg_resources.resource_filename('psl_res.HTML',fname)
+		if not os.path.isfile(helpurl): helpurl=None
+		self.helpView.setUrl(QtCore.QUrl(helpurl))          
+		self.tabWidget.setCurrentIndex(1)
+		
+
 	def clearExperimentIcons(self):
 		while self.ExperimentLayout.count():
 			item = self.ExperimentLayout.takeAt(0)
@@ -305,7 +315,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				if self.runningApp:
 					self.runningApp.close()
 					self.killAllTimers()
-			except Exception,e: print(e)
+			except Exception as e: print(e)
 			
 			FILE = importlib.import_module(fname)
 			inst = FILE.AppWindow(self,I=self.I)
@@ -331,7 +341,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 			info = deviceInfo.AppWindow(self,I=self.I)
 			info.show()
 		else:
-			print (self.setWindowTitle('PSLab  Not Connected!'))
+			print (self.setWindowTitle('Device Not Connected!'))
 
 
 
@@ -356,7 +366,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 						print (self.menu_entries, self.I.H.portname)
 						self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
 						self.setStyleSheet(self.styleText)
-						self.setWindowTitle('Error : PSLab Disconnected')
+						self.setWindowTitle('Error : Device Disconnected')
 						if self.runningApp:
 							self.runningApp.close()
 						self.I.connected = False
@@ -366,9 +376,6 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				if reply == QtGui.QMessageBox.Yes:
 					print (reply)
 					self.selectDevice()
-
-
-
 
 	def selectDevice(self):
 		sel = self.deviceCombo.currentText()
@@ -381,7 +388,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 		if self.I:
 			try:
 				self.I.reconnect(port = sel)
-			except Exception,e:
+			except Exception as e:
 				self.updateSplash(30,'Connection Error!')
 				#self.SCF1.setStyleSheet(_fromUtf8(styles.disconnected))
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
@@ -395,10 +402,10 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				#diag.show()
 				self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode("utf-8")
 				self.setStyleSheet(self.styleText)
-				self.setWindowTitle('Error : PSLab Not Connected')
+				self.setWindowTitle('Error : Not Connected')
 			else:
 				self.hexid = hex(self.I.device_id()&0xFFFF)
-				self.setWindowTitle(self.I.generic_name + ' : '+self.hexid)
+				self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string.decode("utf-8")+' - '+self.hexid)
 				self.updateSplash(20,'Finished Reconnecting...');
 				self.displayDialog('Reconnected :'+self.I.H.version_string.decode("utf-8"))
 				#self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
@@ -428,7 +435,6 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 			self.splash.setStyleSheet(css)
 		self.splash.setMask(splash_pix.mask())
 		self.splash.show()
-
 
 	def resetDevice(self):
 		if self.I:
