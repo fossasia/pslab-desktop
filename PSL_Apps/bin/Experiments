@@ -50,12 +50,12 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 		self.setStyleSheet(self.styleText)
 		self.updateSplash(10,'Fetching libraries...')
 
-		from PSL import interface
+		from PSL import sciencelab
 		self.row=0;	self.col=0;	self.colLimit=3
 
 		self.updateSplash(10,'Connecting to Device...')
-		if  args.PortName: self.I = interface.Interface(port = args.PortName)  #Not using connect method because it returns None if unconnected,
-		else: self.I = interface.Interface(verbose=False)                       #and I need to pass the methods of interface to various control widgets regardless
+		if  args.PortName: self.I = sciencelab.ScienceLab(port = args.PortName)  #Not using connect method because it returns None if unconnected,
+		else: self.I = sciencelab.ScienceLab(verbose=False)                       #and I need to pass the methods of interfacing to various control widgets regardless
 		self.hexid=''
 		try:
 			if not self.I.connected:
