@@ -15,7 +15,7 @@ oldUIfiles    = $(patsubst %.ui, %.py, $(UI_SOURCES))
 all:  $(UIfiles)
 	#make -C docs html
 	#make -C docs/misc all
-	@echo $(UI_SOURCES)
+	#@echo $(UI_SOURCES)
 	python setup.py build
 	python3 setup.py build
 
