@@ -22,7 +22,7 @@ Connected to AIN5
 """
 #from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
-from .templates import calibrator
+from templates import calibrator
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
@@ -218,7 +218,19 @@ class AppWindow(QtGui.QMainWindow, calibrator.Ui_MainWindow,utilitiesClass):
 		self.savedir = os.path.join('.',self.hexid)
 
 		self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string.decode("utf-8")+' : '+self.hexid)
-
+		#Check DIO and freq counter
+		for a in ['SQR1','SQR2','SQR3','SQR4']:
+			x = {'SQR1':0,'SQR2':0,'SQR3':0,'SQR4':0}
+			x[a]=1
+			self.I.set_state(**x)
+			time.sleep(0.2)
+		self.I.sqrPWM(10000,0.5,0,0.5,0,0.5,0,0.5)
+		for a in ['ID1','ID2','ID3','ID4','CNTR']:
+			if abs(self.I.get_freq(a,0.2)-10000)>2:
+				self.setWindowTitle('D/IO error!!!!!!!!!!!!!!!!!!!!!!!' + ' : '+self.hexid)
+		self.I.set_state(SQR1=0,SQR2=0,SQR3=0,SQR4=0)
++
++
 		self.valueTable.setHorizontalHeaderLabels(['AIN5','PV1','AIN6','PV2','AIN7','PV3','INL'])
 		for a in range(8):
 			item = QtGui.QTableWidgetItem()
