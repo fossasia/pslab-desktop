@@ -83,6 +83,21 @@ class AppWindow(QtGui.QMainWindow, calibration_loader.Ui_MainWindow,utilitiesCla
 		
 		self.hexid = hex(self.I.device_id())
 		self.setWindowTitle(self.I.generic_name + ' : '+self.I.H.version_string.decode("utf-8")+' : '+self.hexid)
+		
+		#Check DIO and freq counter
+		for a in ['SQR1','SQR2','SQR3','SQR4']:
+			x = {'SQR1':0,'SQR2':0,'SQR3':0,'SQR4':0}
+			x[a]=1
+			self.I.set_state(**x)
+			time.sleep(0.1)
+		self.I.sqrPWM(10000,0.5,0,0.5,0,0.5,0,0.5)
+		for a in ['ID1','ID2','ID3','ID4','CNTR']:
+			if abs(self.I.get_freq(a,0.2)-10000)>2:
+				self.setWindowTitle('D/IO error!!!!!!!!!!!!!!!!!!!!!!!' + ' : '+self.hexid)
+		self.I.set_state(SQR1=0,SQR2=0,SQR3=0,SQR4=0)
+		self.plot=self.add2DPlot(self.plot_area)
+		
+		
 		self.plot=self.add2DPlot(self.plot_area)
 		labelStyle = {'color': 'rgb(255,255,255)', 'font-size': '11pt'}
 		self.plot.setLabel('left','Error -->', units='V',**labelStyle)
