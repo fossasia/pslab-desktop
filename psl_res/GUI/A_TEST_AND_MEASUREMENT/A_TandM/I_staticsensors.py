@@ -41,9 +41,9 @@ class AppWindow(QtGui.QMainWindow, sensorGrid.Ui_MainWindow,utilitiesClass):
 			self.I.I2C.config(400e3)
 		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
 
-		from SEEL.SENSORS.supported import supported
+		from PSL.SENSORS.supported import supported
 		self.supported = supported
-		#from SEEL.sensorlist import sensors as sensorHints
+		#from PSL.sensorlist import sensors as sensorHints
 		#self.hints = sensorHints
 
 		self.foundSensors=[]
