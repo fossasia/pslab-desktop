@@ -1,6 +1,11 @@
 # fossasia-pslab-apps
 GUI Experiments for PSLab from FOSSASIA
 
+This repository is for Qt based applications for PSLab - GUI programs, widgets and templates for various experiments.
+This is also installable on linux machine. 
+
+To access PSLab through GUI you need to install the code from this repo and from https://github.com/fossasia/pslab
+
 
 Requirements
 ------------
