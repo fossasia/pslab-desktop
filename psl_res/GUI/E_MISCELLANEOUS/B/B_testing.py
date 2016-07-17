@@ -1,5 +1,14 @@
 #!/usr/bin/python
 
+"""
+
+::
+
+	This program loads calibration data from a directory, processes it, and loads it into a connected device
+	Not for regular users!
+	Maybe dont include this in the main package
+
+"""
 
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
