@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'psl_res/GUI/B_ELECTRONICS/A_electronics/templates/transistorCE.ui'
+# Form implementation generated from reading ui file 'seel_res/GUI/B_ELECTRONICS/A_BJT_AND_FET/templates/transistorCE.ui'
 #
-# Created: Mon Jul 11 21:45:33 2016
+# Created: Mon Jul 18 22:55:11 2016
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
