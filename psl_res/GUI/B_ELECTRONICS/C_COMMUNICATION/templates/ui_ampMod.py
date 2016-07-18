@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ampMod.ui'
-
+# Form implementation generated from reading ui file 'psl_res/GUI/B_ELECTRONICS/C_COMMUNICATION/templates/ampMod.ui'
+#
+# Created: Mon Jul 18 22:55:10 2016
+#      by: PyQt4 UI code generator 4.10.4
+#
+# WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
