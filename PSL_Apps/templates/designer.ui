@@ -746,4 +746,131 @@ in order to obtain the dataset</string>
    </layout>
   </widget>
  </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>commandLinkButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>prepare()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>819</x>
+     <y>430</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>862</x>
+     <y>448</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>runAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>-19</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commandLinkButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>plotColumns()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>674</x>
+     <y>432</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>462</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>852</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>886</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteCurve()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>327</x>
+     <y>-6</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveProfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>440</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>227</x>
+     <y>474</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadProfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>584</x>
+     <y>-11</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>prepare()</slot>
+  <slot>clearColumn()</slot>
+  <slot>runAll()</slot>
+  <slot>plotColumns()</slot>
+  <slot>addCustom()</slot>
+  <slot>saveData()</slot>
+  <slot>deleteCurve()</slot>
+  <slot>saveProfile()</slot>
+  <slot>loadProfile()</slot>
+ </slots>
+</ui>
 
