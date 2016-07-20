@@ -9,9 +9,9 @@
 """
 
 from __future__ import print_function
-from SEEL_Apps.utilitiesClass import utilitiesClass
+from PSL_Apps.utilitiesClass import utilitiesClass
 
-from SEEL_Apps.templates import ui_template_graph_nofft as template_graph_nofft
+from PSL_Apps.templates import ui_template_graph_nofft as template_graph_nofft
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
@@ -35,7 +35,7 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 		
 		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
-		from SEEL.analyticsClass import analyticsClass
+		from PSL.analyticsClass import analyticsClass
 		self.math = analyticsClass()
 		self.prescalerValue=0
 
@@ -191,9 +191,9 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 		print('bye')
 
 if __name__ == "__main__":
-    from SEEL import interface
+    from PSL import sciencelab
     app = QtGui.QApplication(sys.argv)
-    myapp = AppWindow(I=interface.connect())
+    myapp = AppWindow(I=sciencelab.connect())
     myapp.show()
     sys.exit(app.exec_())
 

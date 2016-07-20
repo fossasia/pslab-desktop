@@ -9,7 +9,7 @@ can be easily visualized.
 from __future__ import print_function
 import time,sys,os
 
-from SEEL_Apps.utilitiesClass import utilitiesClass
+from PSL_Apps.utilitiesClass import utilitiesClass
 from .templates import ui_NFET as NFET
 from PyQt4 import QtCore, QtGui
 import pyqtgraph as pg
@@ -127,9 +127,9 @@ class AppWindow(QtGui.QMainWindow, NFET.Ui_MainWindow,utilitiesClass):
 
 
 if __name__ == "__main__":
-    from SEEL import interface
+    from PSL import sciencelab
     app = QtGui.QApplication(sys.argv)
-    myapp = AppWindow(I=interface.connect())
+    myapp = AppWindow(I=sciencelab.connect())
     myapp.show()
     sys.exit(app.exec_())
 
