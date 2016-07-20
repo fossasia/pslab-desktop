@@ -4,7 +4,7 @@
 
 ::
 
-    This experiment is used to study phase shift oscillators
+    This experiment is used to ...study resistors in parallel and in series
 
 
 """
