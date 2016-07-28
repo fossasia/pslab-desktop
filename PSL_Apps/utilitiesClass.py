@@ -145,7 +145,7 @@ class utilitiesClass():
 				try:
 					for d in plot.axisItems:  #Go through any additional axes, and set colors there too
 						d.setPen('k')
-				except Exception,ex: print ('error while changing scheme',ex)
+				except Exception as ex: print ('error while changing scheme',ex)
 
 
 	def rightClickToZoomOut(self,plot):
