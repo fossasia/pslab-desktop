@@ -152,7 +152,7 @@ class AppWindow(QtGui.QMainWindow, testing.Ui_MainWindow,utilitiesClass):
 		res = self.I.get_resistance()
 		item = self.tbl.item(row,1)
 		if res!=np.inf:
-			item.setText(self.applySIPrefix(res,u"\u03A9"))
+			item.setText(self.applySIPrefix(res, "\u03A9"))
 			actual = float(self.tbl.item(row,0).text() )
 			if abs(res-actual)<self.RESISTANCE_ERROR :
 				self.setSuccess(item,1) #resistance within error margins
