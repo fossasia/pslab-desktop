@@ -14,7 +14,6 @@ before_install:
     - sudo mkdir -p /downloads
     - sudo chmod a+rw /downloads
     - curl -L http://sourceforge.net/projects/pyqt/files/sip/sip-4.16.5/sip-4.16.5.tar.gz -o /downloads/sip.tar.gz 
-    - curl -L http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.3/PyQt-x11-gpl-4.11.3.tar.gz -o /downloads/pyqt4.tar.gz
     # Builds
     - sudo mkdir -p /builds
     - sudo chmod a+rw /builds
@@ -34,7 +33,7 @@ install:
     - make
     - sudo make install
     - popd
-        # Builds Complete
+    # Builds Complete
     - popd
-    - pip install -r requirements.txt
+    #- pip install -r requirements.txt
 script: nosetests
