@@ -1,5 +1,5 @@
 ###### Requirements  ######
-PyQt4
+#PyQt4
 PySide
 PyQt5
 NumPy
