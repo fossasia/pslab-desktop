@@ -1,0 +1,10 @@
+###### Requirements  ######
+PyQt 4.7+
+PySide
+PyQt5
+NumPy
+Scipy
+pyqt4-dev-tools         # for pyuic4
+Pyqtgraph               # Plotting library
+pyopengl and qt-opengl  # for 3D graphics
+iPython-qtconsole       # optional

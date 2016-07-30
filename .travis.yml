@@ -6,9 +6,41 @@ python:
   - "3.3"
   - "3.4"
  # - "3.5"
-  #- "3.5-dev" # 3.5 development branch
-  #- "nightly" # currently points to 3.6-dev
 # command to install dependencies
 #install: "pip install -r requirements.txt"
 # command to run tests
+before_install:
+    - sudo mkdir -p /downloads
+    - sudo chmod a+rw /downloads
+    - curl -L http://sourceforge.net/projects/pyqt/files/sip/sip-4.16.5/sip-4.16.5.tar.gz -o /downloads/sip.tar.gz 
+    - curl -L http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.3/PyQt-x11-gpl-4.11.3.tar.gz -o /downloads/pyqt4.tar.gz
+    # Builds
+    - sudo mkdir -p /builds
+    - sudo chmod a+rw /builds
+
+install:
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - sudo apt-get install -y libqt4-dev
+    - sudo apt-get install -y mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev
+#    - sudo apt-get install -y python3-sip python3-sip-dev python3-pyqt4 cmake
+    # Qt4
+    - pushd /builds
+    # SIP
+    - tar xzf /downloads/sip.tar.gz --keep-newer-files
+    - pushd sip-4.16.5
+    - python configure.py
+    - make
+    - sudo make install
+    - popd
+    # PyQt4
+    - tar xzf /downloads/pyqt4.tar.gz --keep-newer-files
+    - pushd PyQt-x11-gpl-4.11.3
+    - python configure.py -c --confirm-license --no-designer-plugin -e QtCore -e QtGui -e QtTest
+    - make
+    - sudo make install
+    - popd
+    # Builds Complete
+    - popd
+    pip install -r requirements.txt
 script: nosetests
