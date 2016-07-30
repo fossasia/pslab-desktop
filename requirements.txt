@@ -6,5 +6,6 @@ NumPy
 Scipy
 pyqt4-dev-tools         # for pyuic4
 Pyqtgraph               # Plotting library
-pyopengl and qt-opengl  # for 3D graphics
+pyopengl                # for 3D graphics
+qt-opengl               # for 3D graphics
 iPython-qtconsole       # optional
