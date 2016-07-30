@@ -1,11 +1,11 @@
 ###### Requirements  ######
-#PyQt4
-PySide
-PyQt5
-NumPy
-Scipy
+importlib==1.0.3
+ipython==1.2.1
+matplotlib==1.3.1
+numpy==1.8.2
+pygrace==0.4
+pyqtgraph==0.9.10
+pyserial==2.6
+scipy==0.13.3
 pyqt4-dev-tools         # for pyuic4
-Pyqtgraph               # Plotting library
-pyopengl                # for 3D graphics
-qt-opengl               # for 3D graphics
-iPython-qtconsole       # optional
+
