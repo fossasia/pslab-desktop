@@ -151,9 +151,9 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 		print('bye')
 
 if __name__ == "__main__":
-    from PSL import interface
+    from PSL import sciencelab
     app = QtGui.QApplication(sys.argv)
-    myapp = AppWindow(I=interface.connect())
+    myapp = AppWindow(I=sciencelab.connect())
     myapp.show()
     sys.exit(app.exec_())
 
