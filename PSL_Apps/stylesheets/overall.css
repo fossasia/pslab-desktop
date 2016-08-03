@@ -19,7 +19,7 @@ stop: 0 #abe, stop: 0.7 #aba);
 
 }
 
-QTabBar::tab{
+#tabWidget QTabBar::tab{
 color: #000;
 border-top-left-radius: 5px;
 border-bottom-left-radius: 5px;
@@ -31,7 +31,7 @@ min-width: 30px;
 font-size: 13px;
 }
 
-QTabBar::tab:selected {
+#tabWidget QTabBar::tab:selected {
 color: #000;
 border-top-left-radius: 20px;
 border-bottom-left-radius: 5px;
@@ -154,17 +154,15 @@ background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 rgb(97, 146, 121), stop: 0.3 rgb(65, 89, 111) );
 
 }
-QFrame.ControlWidget QLabel{
-color: white;
-}
+QFrame.ControlWidget QLabel{color: white;}
+QFrame.ControlWidget QCheckBox{ border: none;color: white;}
 
 QFrame.ControlWidgetInner{
 border: 1px solid black;
 background: (65, 89, 111);
-
 }
 QFrame.ControlWidgetInner QLabel{
-color: white; /*white*/
+color: white; 
 }
 
 QMessageBox QLabel{
