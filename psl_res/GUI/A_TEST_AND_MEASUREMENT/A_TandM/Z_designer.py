@@ -54,8 +54,8 @@ class AppWindow(QtGui.QMainWindow, designer.Ui_MainWindow,utilitiesClass):
 
 		###################################READ AND LIST PROFILE FILES(.CONF)####################
 		self.confTable.setHorizontalHeaderLabels(['File name','Path'])
-		sys.path.append('/usr/share/pslab')
-		RESMODULE = 'psl_res.CONF'
+		sys.path.append('/usr/share/seelablet')
+		RESMODULE = 'seel_res.CONF'
 		apps = [(n.split('.conf')[0],resource_filename(RESMODULE,n) ) for n in resource_listdir(RESMODULE,'') if n!='__init__.py']
 		self.populateResources(apps)
 		

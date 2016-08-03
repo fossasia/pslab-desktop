@@ -39,6 +39,16 @@ class utilitiesClass():
 	white_trace_colors+=[QtGui.QColor(random.randint(50,200),random.randint(50,200),random.randint(50,200)) for a in range(50)]
 	
 	properties={'colorScheme':'black'}
+	outputs = {
+		'W1':{'min':1,'max':5000,'tooltip':'Wavegen 1'},
+		'W2':{'min':1,'max':5000,'tooltip':'Wavegen 2'},
+		'SQR1':{'min':10,'max':100000,'tooltip':'Square Wave'},
+		'PV1':{'min':-5,'max':5,'tooltip':'Programmable Voltage #1'},
+		'PV2':{'min':-3.3,'max':3.3,'tooltip':'Programmable Voltage #2'},
+		'PV3':{'min':0,'max':3.3,'tooltip':'Programmable Voltage #3'},
+		'PCS':{'min':0,'max':2,'tooltip':'Programmable Current source'},
+	}
+
 	def __init__(self):
 		sys.path.append('/usr/share/pslab')
 		pass
