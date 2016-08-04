@@ -18,7 +18,7 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from .templates import arbitStream
+from templates import arbitStream
 from PSL_Apps.utilitiesClass import utilitiesClass
 import sys,os,string
 import time
@@ -62,7 +62,7 @@ class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow,utilitiesClass):
 		self.plot.setYRange(-16,16)
 		self.curve = self.addCurve(self.plot,name='Data'); self.curve.setPen(color=[255,255,255], width=1)
 
-		self.streamfunc="I."+self.cmdlist.currentText()
+		self.streamfunc=self.cmdlist.currentText()
 		self.start_time=time.time()
 		self.num=0
 		self.arrow=pg.ArrowItem(angle=90)
@@ -79,7 +79,7 @@ class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow,utilitiesClass):
 
 	def stream(self):
 		self.looptimer.stop()
-		self.streamfunc="I."+self.cmdlist.currentText()
+		self.streamfunc=self.cmdlist.currentText()
 		self.X=np.arange(self.totalpoints)
 		self.Y=np.zeros(self.totalpoints)
 		self.num=0
@@ -97,8 +97,8 @@ class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow,utilitiesClass):
 		#	self.nm+=1
 		#self.Y=np.roll(self.Y,-1)
 		if self.pause.isChecked():return
-		val=np.average([eval(self.streamfunc,{'I':self.I}) for a in range(self.averagingSamples)])
-		self.Y[self.num]=val	#self.mag.read()[1]
+		val=np.average([eval(self.streamfunc,globals(),{k: getattr(self.I, k) for k in dir(self.I)}) for a in range(self.averagingSamples)])
+ 		self.Y[self.num]=val	#self.mag.read()[1]
 		self.msg.setText('%.4f'%(val))
 		try:
 			self.arrow.setPos(self.num,self.Y[self.num])

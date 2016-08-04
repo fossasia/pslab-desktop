@@ -37,9 +37,8 @@ class AppWindow(QtGui.QMainWindow, template_xl.Ui_MainWindow,utilitiesClass):
 		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.plot1=self.add2DPlot(self.plot_area)
-
 		labelStyle = {'color': 'rgb(255,255,255)', 'font-size': '11pt'}
-		self.plot1.setLabel('bottom','Time -->', units='S',**labelStyle)
+		self.plot1.setLabel('bottom','Time', units='S',**labelStyle)
 
 		self.p2=self.enableRightAxis(self.plot1)
 

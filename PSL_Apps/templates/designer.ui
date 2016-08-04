@@ -873,4 +873,3 @@ in order to obtain the dataset</string>
   <slot>loadProfile()</slot>
  </slots>
 </ui>
-
