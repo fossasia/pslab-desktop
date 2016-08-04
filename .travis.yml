@@ -4,10 +4,11 @@ virtualenv:
   system_site_packages: true
 
 python:
-  - "pypy"
   #- "2.6"
   - "2.7"
+  - "2.7_with_system_site_packages"
   - "3.2"
+  - "3.2_with_system_site_packages"
   - "3.3"
   - "3.4"
  # - "3.5"
