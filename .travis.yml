@@ -1,5 +1,10 @@
 language: python
+
+virtualenv:
+  system_site_packages: true
+
 python:
+  - "pypy"
   #- "2.6"
   - "2.7"
   - "3.2"
