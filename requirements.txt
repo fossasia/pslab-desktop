@@ -7,5 +7,5 @@ pygrace==0.4
 pyqtgraph==0.9.10
 pyserial==2.6
 scipy==0.13.3
-pyqt4-dev-tools         # for pyuic4
+#pyqt4-dev-tools         # for pyuic4
 
