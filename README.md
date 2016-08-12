@@ -29,7 +29,7 @@ To install PSLab on Debian based Gnu/Linux system, the following dependencies mu
 #####Now clone both the repositories [pslab-apps](https://github.com/fossasia/pslab-apps)  and [pslab](https://github.com/fossasia/pslab).
 
 
-#####Libraries must be installed in the following order
+#####Libraries must be installed in ~~the following order~~  any order
 
 1. pslab-apps
 2. pslab
