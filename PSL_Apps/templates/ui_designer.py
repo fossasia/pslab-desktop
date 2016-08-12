@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'PSL_Apps/templates/designer.ui'
 #
-# Created: Mon Jul 18 22:55:10 2016
+# Created: Mon Aug  8 20:50:32 2016
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
