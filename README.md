@@ -1,12 +1,18 @@
 # PSLab-apps
 GUI Experiments for PSLab from FOSSASIA 
 
+[![Build Status](https://travis-ci.org/fossasia/pslab-apps.svg?branch=development)](https://travis-ci.org/fossasia/pslab-apps)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8259e5c2220f484e95a88cf4aaed1a96)](https://www.codacy.com/app/mb/pslab-apps?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fossasia/pslab-apps&amp;utm_campaign=Badge_Grade)
+
 This repository is for Qt based applications for PSLab - GUI programs, widgets and templates for various experiments.
 This is also installable on linux machine. 
 
 * The project is inspired from ExpEYES  http://expeyes.in
 * FOSSASIA is supporting development and promotion of ExpEYES project since 2014 mainly through Google Summer of Code
 * The current work is a part of my GSoC-16 project
+
+##Communication
+Chat: [PhimpMe Slack Channel](http://fossasia.slack.com/messages/phimpme/) | [Get a Slack Invite](http://fossasia-slack.herokuapp.com/)
 
 ----------------
 
