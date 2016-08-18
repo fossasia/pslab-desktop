@@ -2,7 +2,6 @@
 GUI Experiments for PSLab from FOSSASIA 
 
 [![Build Status](https://travis-ci.org/fossasia/pslab-apps.svg?branch=development)](https://travis-ci.org/fossasia/pslab-apps)
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8259e5c2220f484e95a88cf4aaed1a96)](https://www.codacy.com/app/mb/pslab-apps?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fossasia/pslab-apps&amp;utm_campaign=Badge_Grade)
 
 This repository is for Qt based applications for PSLab - GUI programs, widgets and templates for various experiments.
