@@ -9,7 +9,7 @@ from __future__ import print_function
 
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from PSL_Apps.templates.widgets.nodeList import Ui_Form as nodeWidget
+from PSL_Apps.templates.widgets.ui_nodeList import Ui_Form as nodeWidget
 from PSL.SENSORS import HMC5883L,MPU6050,MLX90614,BMP180,TSL2561,SHT21
 from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints
@@ -17,13 +17,13 @@ import pyqtgraph as pg
 import numpy as np
 from PyQt4 import QtCore, QtGui
 
-from .templates import wirelessTemplate
+from .templates import ui_wirelessTemplate as wirelessTemplate
 
 import time,sys,functools
 
 params = {
-'image' : 'stream.png',
-'helpfile': 'http://fossasia.github.io/pslab.fossasia.org/',
+'image' : 'ico_sensor_w.png',
+'helpfile': 'http://seelablet.jithinbp.in',
 'name':'wireless\nsensors',
 'hint':'''
 	Plot values returned by sensors connected to the I2C input of wireless nodes.</br>
@@ -38,7 +38,7 @@ class AppWindow(QtGui.QMainWindow, wirelessTemplate.Ui_MainWindow,utilitiesClass
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
 		self.I=kwargs.get('I',None)
-		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.I.NRF.start_token_manager()
 		print (self.I.readLog()	)

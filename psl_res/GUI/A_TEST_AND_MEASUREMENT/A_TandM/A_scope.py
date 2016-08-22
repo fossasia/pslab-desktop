@@ -1,16 +1,17 @@
 #!/usr/bin/python
 '''
-oscilloscope application for FOSSASIA PSLab. \n
+oscilloscope application for PSLab. \n
 
 Also Includes XY plotting mode, and fitting against standard Sine/Square functions, and FFT\n
 '''
+#TODO : Fix scaling issues in fourier transform mode. The user should be able to pan and zoom fourier plots within limits
 
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from templates import analogScope
+from .templates import ui_analogScope as analogScope
 
 import sys,os,string
 import time
@@ -46,7 +47,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow,utilitiesClass):
 		from PSL.analyticsClass import analyticsClass
 		self.math = analyticsClass()
 
-		self.setWindowTitle('FOSSASIA PSLAb : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 		self.trace_colors=[(0,255,20),(255,0,0),(255,255,100),(10,255,255)]
 		self.plot=self.add2DPlot(self.plot_area,enableMenu=False)
 	
@@ -151,7 +152,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow,utilitiesClass):
 		self.I.configure_trigger(self.trigger_channel,self.triggerChannelName,0,prescaler = self.prescalerValue)
 		
 		self.autoRange()
-		self.timer = QtCore.QTimer()
+		self.timer = self.newTimer()
 		self.finished=False
 		self.timer.singleShot(500,self.start_capture)
 		self.enableShortcuts()
