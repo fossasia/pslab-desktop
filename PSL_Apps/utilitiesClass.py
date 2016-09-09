@@ -8,8 +8,8 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 import pyqtgraph as pg
-from PSL_Apps.templates.widgets import dial,button,selectAndButton,sineWidget,pwmWidget,supplyWidget,setStateList,sensorWidget
-from PSL_Apps.templates.widgets import spinBox,doubleSpinBox,dialAndDoubleSpin,pulseCounter,voltWidget,gainWidget,gainWidgetCombined
+from PSL_Apps.templates.widgets import ui_dial as dial,ui_button as button,ui_selectAndButton as selectAndButton,ui_sineWidget as sineWidget,ui_pwmWidget as pwmWidget,ui_supplyWidget as supplyWidget,ui_setStateList as setStateList,ui_sensorWidget as sensorWidget,ui_simpleButton as simpleButton, ui_dualButton as dualButton
+from PSL_Apps.templates.widgets import ui_spinBox as spinBox,ui_doubleSpinBox as doubleSpinBox,ui_dialAndDoubleSpin as dialAndDoubleSpin,ui_pulseCounter as pulseCounter,ui_voltWidget as voltWidget,ui_gainWidget as gainWidget,ui_gainWidgetCombined as gainWidgetCombined,ui_widebutton as widebutton,ui_displayWidget as displayWidget
 from PSL_Apps import saveProfile
 from PSL.commands_proto import applySIPrefix
 import numpy as np
@@ -19,6 +19,15 @@ try:
 except AttributeError:
     def _fromUtf8(s):
         return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
 
 class utilitiesClass():
 	"""
@@ -32,29 +41,34 @@ class utilitiesClass():
 	plots2D={}
 	total_plot_areas=0
 	funcList=[]
+	interactivePlots=[]
 	gl=None
 	black_trace_colors=[(0,255,20),(255,0,0),(255,255,100),(10,255,255)]
 	white_trace_colors=[(0,255,20),(255,0,0),(255,255,100),(10,255,255)]
 	black_trace_colors+=[QtGui.QColor(random.randint(50,255),random.randint(50,255),random.randint(50,255)) for a in range(50)]
 	white_trace_colors+=[QtGui.QColor(random.randint(50,200),random.randint(50,200),random.randint(50,200)) for a in range(50)]
 	
+	studioPlots={}
+	studioWidgets={}
 	properties={'colorScheme':'black'}
 	outputs = {
-		'W1':{'min':1,'max':5000,'tooltip':'Wavegen 1'},
-		'W2':{'min':1,'max':5000,'tooltip':'Wavegen 2'},
-		'SQR1':{'min':10,'max':100000,'tooltip':'Square Wave'},
-		'PV1':{'min':-5,'max':5,'tooltip':'Programmable Voltage #1'},
-		'PV2':{'min':-3.3,'max':3.3,'tooltip':'Programmable Voltage #2'},
-		'PV3':{'min':0,'max':3.3,'tooltip':'Programmable Voltage #3'},
-		'PCS':{'min':0,'max':2,'tooltip':'Programmable Current source'},
+		'W1':{'min':1,'max':5000,'tooltip':'Set the frequency of Wavegen 1(W1)'},
+		'W2':{'min':1,'max':5000,'tooltip':'Set the frequency of Wavegen 2(W2)'},
+		'SQR1':{'min':10,'max':100000,'tooltip':'Set the frequency of a Square Wave(SQR1)'},
+		'PV1':{'min':-5,'max':5,'tooltip':'Set the voltage of Programmable Voltage #1(PV1)'},
+		'PV2':{'min':-3.3,'max':3.3,'tooltip':'Set the voltage of Programmable Voltage #2(PV2)'},
+		'PV3':{'min':0,'max':3.3,'tooltip':'Set the voltage of Programmable Voltage #3(PV3)'},
+		'PCS':{'min':0,'max':2,'tooltip':'Set the current of Programmable Current source(PCS)\nSubject to load resistance!'},
 	}
 
 	def __init__(self):
 		sys.path.append('/usr/share/pslab')
-		pass
+
 
 	def enableShortcuts(self):
-		self.connect(QtGui.QShortcut(QtGui.QKeySequence(dial._translate("MainWindow", "Ctrl+S", None)), self), QtCore.SIGNAL('activated()'), self.saveData)
+		self.saveSignal = QtGui.QShortcut(QtGui.QKeySequence(QtCore.QCoreApplication.translate("MainWindow", "Ctrl+S", None)), self)
+		self.saveSignal.activated.connect(self.saveData)
+		
 
 
 	def applySIPrefix(self,value, unit='',precision=2 ):
@@ -168,7 +182,7 @@ class utilitiesClass():
 		if plot.sceneBoundingRect().contains(pos) and evt[0].button() == QtCore.Qt.RightButton:
 			plot.enableAutoRange(True,True)
 
-	def enableCrossHairs(self,plot,curves):
+	def enableCrossHairs(self,plot,curves=[]):
 		plot.setTitle('')
 		vLine = pg.InfiniteLine(angle=90, movable=False,pen=[100,100,200,200])
 		plot.addItem(vLine, ignoreBounds=True)
@@ -196,7 +210,7 @@ class utilitiesClass():
 
 			maxIndex = ns			
 			if index > 0 and index < maxIndex:
-				coords=''' '''
+				coords="<span style='color: rgb(255,255,255)'>%s</span>,"%self.applySIPrefix(index*tg/1e6,'S')
 				for col,a in zip(cols,axes):
 						try: coords+="<span style='color: rgb%s'>%0.3fV</span>," %(col, a[index])
 						except: pass
@@ -414,9 +428,18 @@ class utilitiesClass():
 			timer.singleShot(interval,timerCallback)
 			self.timers.append(timer)
 
-
-
-
+	def killAllTimers(self):
+		for a in self.timers:
+			try:
+				a.stop()
+				self.timers.remove(a)
+			except:
+				pass
+				
+	def newTimer(self):
+		timer = QtCore.QTimer()
+		self.timers.append(timer)
+		return timer
 
 	def displayDialog(self,txt=''):
 			QtGui.QMessageBox.about(self, 'Message',  txt)
@@ -552,10 +575,73 @@ class utilitiesClass():
 
 		def read(self):
 			retval = self.func()
-			#if abs(retval)<1e4 and abs(retval)>.01:self.value.setText('%.3f %s '%(retval,self.units))
-			#else: self.value.setText('%.3e %s '%(retval,self.units))
-			if isinstance(retval,numbers.Number):self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
+			if isinstance(retval,numbers.Number) and retval != np.Inf:self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
 			else: self.value.setText(str(retval))
+
+	class simpleButtonIcon(QtGui.QFrame,simpleButton.Ui_Form):
+		def __init__(self,**args):
+			super(utilitiesClass.simpleButtonIcon, self).__init__()
+			self.setupUi(self)
+			self.button.setText(args.get('TITLE','CLICK'))
+			self.func = args.get('FUNC',None)
+			if 'TOOLTIP' in args:self.widgetFrameOuter.setToolTip(args.get('TOOLTIP',''))
+
+		def clicked(self):
+			retval = self.func()
+			self.value.setText(str(retval))
+
+	class dualButtonIcon(QtGui.QFrame,dualButton.Ui_Form):
+		def __init__(self,**args):
+			super(utilitiesClass.dualButtonIcon, self).__init__()
+			self.setupUi(self)
+			self.title.setText(args.get('TITLE','select'))
+			self.funcA = args.get('FUNCA',None)
+			self.funcB = args.get('FUNCB',None)
+			self.buttonA.setText(args.get('A','A'))
+			self.buttonB.setText(args.get('B','B'))
+			if 'TOOLTIP' in args:self.widgetFrameOuter.setToolTip(args.get('TOOLTIP',''))
+
+		def clickedA(self):
+			retval = self.funcA()
+
+		def clickedB(self):
+			retval = self.funcB()
+
+
+
+	class wideButtonIcon(QtGui.QFrame,widebutton.Ui_Form,utils):
+		def __init__(self,**args):
+			super(utilitiesClass.wideButtonIcon, self).__init__()
+			self.setupUi(self)
+			self.name = args.get('TITLE','')
+			self.title.setText(self.name)
+			self.func = args.get('FUNC',None)
+			self.units = args.get('UNITS','')
+			if 'TOOLTIP' in args:self.widgetFrameOuter.setToolTip(args.get('TOOLTIP',''))
+
+
+		def read(self):
+			retval = self.func()
+			try:
+				if isinstance(retval,numbers.Number) and retval != np.Inf:self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
+				else: self.value.setText(retval)
+			except:self.value.setText(str(retval))
+
+
+	class displayIcon(QtGui.QFrame,displayWidget.Ui_Form,utils):
+		def __init__(self,**args):
+			super(utilitiesClass.displayIcon, self).__init__()
+			self.setupUi(self)
+			self.name = args.get('TITLE','')
+			self.title.setText(self.name)
+			self.units = args.get('UNITS','')
+			if 'TOOLTIP' in args:self.widgetFrameOuter.setToolTip(args.get('TOOLTIP',''))
+
+		def setValue(self,retval):
+			try:
+				if isinstance(retval,numbers.Number):self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
+				else: self.value.setText(retval)
+			except:self.value.setText(str(retval))
 
 	class selectAndButtonIcon(QtGui.QFrame,selectAndButton.Ui_Form,utils):
 		def __init__(self,**args):
@@ -574,7 +660,7 @@ class utilitiesClass():
 			retval = self.func(self.optionBox.currentText())
 			#if abs(retval)<1e4 and abs(retval)>.01:self.value.setText('%.3f %s '%(retval,self.units))
 			#else: self.value.setText('%.3e %s '%(retval,self.units))
-			if isinstance(retval,numbers.Number):self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
+			if isinstance(retval,numbers.Number) and retval != np.Inf:self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
 			else: self.value.setText(str(retval))
 			if self.linkFunc:
 				self.linkFunc(retval)
@@ -662,7 +748,7 @@ class utilitiesClass():
 			except:
 				imgloc = ''
 			self.hintText = '''
-			<img src="%s" align="left" width="120" style="margin: 0 20"/><strong>%s</strong><br>%s
+			<img src="%s" align="left" width="150" style="margin: 0 20"/><strong>%s</strong><br>%s
 			'''%(imgloc,genName.replace('\n',' '),self.hintText)
 			self.func = launchfunc			
 			self.clicked.connect(self.func)
@@ -916,27 +1002,65 @@ class utilitiesClass():
 
 
 	def addW1(self,I,link=None):
-		a={'TITLE':'Wave 1','MIN':1,'MAX':5000,'FUNC':self.I.set_w1,'TYPE':'dial','UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #1'}
+		a={'TITLE':'Wave 1','MIN':1,'MAX':5000,'FUNC':I.set_w1,'UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #1'}
 		if link: a['LINK'] = link
 		return self.dialAndDoubleSpinIcon(**a)
 
 
 	def addW2(self,I,link=None):
-		a={'TITLE':'Wave 2','MIN':1,'MAX':5000,'FUNC':self.I.set_w2,'TYPE':'dial','UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #2'}
+		a={'TITLE':'Wave 2','MIN':1,'MAX':5000,'FUNC':I.set_w2,'UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #2'}
 		if link: a['LINK'] = link
 		return self.dialAndDoubleSpinIcon(**a)
 
 	def addSQR1(self,I,link=None):
-		a={'TITLE':'SQR 1','MIN':1,'MAX':100000,'FUNC':self.I.sqr1,'TYPE':'dial','UNITS':'Hz','TOOLTIP':'Frequency of SQR1'}
+		a={'TITLE':'SQR 1','MIN':1,'MAX':100000,'FUNC':I.sqr1,'UNITS':'Hz','TOOLTIP':'Frequency of SQR1'}
 		if link: a['LINK'] = link
 		return self.dialAndDoubleSpinIcon(**a)
 
 	def addTimebase(self,I,func):
-		a={'TITLE':'TIMEBASE','MIN':0,'MAX':9,'FUNC':func,'TYPE':'dial','UNITS':'S','TOOLTIP':'Set Timebase of the oscilloscope'}
+		a={'TITLE':'TIMEBASE','MIN':0,'MAX':9,'FUNC':func,'UNITS':'S','TOOLTIP':'Set Timebase of the oscilloscope'}
 		T2 = self.dialIcon(**a)
 		T2.dial.setPageStep(1)
+		T2.dial.setValue(0)
 		return T2
 
+	def addRes(self,I,wide=None):
+		a={'TITLE':'RESISTANCE','FUNC':I.get_resistance,'UNITS':u"\u03A9",'TOOLTIP':'Read Resistance connected to SEN input '}
+		if wide: T2 = self.wideButtonIcon(**a)
+		else: T2 = self.buttonIcon(**a)
+		return T2
+
+	def addPauseButton(self,layout,func):
+		freezeButton = QtGui.QCheckBox(self)
+		freezeButton.setObjectName(_fromUtf8("freezeButton"))
+		freezeButton.setText("Pause")
+		layout.addWidget(freezeButton)
+		QtCore.QObject.connect(freezeButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), func)
+		return freezeButton
+
+	def addRegularButton(self,layout,func,name):
+		Button = QtGui.QPushButton(self)
+		Button.setObjectName(_fromUtf8("button"))
+		Button.setText(name)
+		layout.addWidget(Button)
+		QtCore.QObject.connect(Button, QtCore.SIGNAL(_fromUtf8("clicked()")), func)
+		return Button
+
+
+
+	def addHelpImageToLayout(self,layout,filename):
+		imgurl = pkg_resources.resource_filename('psl_res.HTML.images',filename)
+		return self.addPixMapToLayout(layout,QtGui.QPixmap(imgurl))
+
+	def addPixMapToLayout(self,layout,pixmap):
+		pic = QtGui.QLabel(self)
+		pic.setGeometry(10, 10, 250, 120)
+		self.setPixMapOnLabel(pic,pixmap)
+		layout.addWidget(pic)
+		return pic
+
+	def setPixMapOnLabel(self,pic,pixmap):
+		pic.setPixmap(pixmap.scaled(pic.size(), QtCore.Qt.KeepAspectRatio)) 
 
 
 	def saveToCSV(self,table):
@@ -958,21 +1082,6 @@ class utilitiesClass():
 							rowdata.append('')
 					writer.writerow(rowdata)
 
-	'''
-	def saveDataWindow(self,curveList,plot=None):
-		from utilityApps import spreadsheet
-		info = spreadsheet.AppWindow(self)
-		colnum=0;labels=[]
-		for a in curveList:
-			x,y = a.getData()
-			name = a.name()
-			if x!=None and y!=None:
-				info.setColumn(colnum,x);colnum+=1
-				info.setColumn(colnum,y);colnum+=1
-				labels.append('%s(X)'%(name));labels.append('%s(Y)'%(name));
-		info.table.setHorizontalHeaderLabels(labels)
-		info.show()
-	'''
 	
 	def saveDataWindow(self,curveList,plot=None):
 		from utilityApps import plotSaveWindow
@@ -1001,3 +1110,34 @@ class utilitiesClass():
 		filename = QtGui.QFileDialog.getOpenFileName(self,  "Load a Profile", expanduser("."), 'INI(*.ini)')
 		if filename :
 			saveProfile.guirestore(self, QtCore.QSettings(filename, QtCore.QSettings.IniFormat))
+
+	def getFile(self,filetype=None):
+		from os.path import expanduser
+		if filetype:
+			filename = QtGui.QFileDialog.getOpenFileName(self,  "Select File", expanduser("."))
+		else:
+			filename = QtGui.QFileDialog.getOpenFileName(self,  "Select File", expanduser("."),filetype)
+		return filename
+
+
+
+	######################### high level functions ##################################
+
+	def addWG(self,I,widget,layout):
+		studioCMDS = {'W1':self.addW1,'W2':self.addW2,'PV1':self.addPV1,'PV2':self.addPV2,'PV3':self.addPV3,'PCS':self.addPCS,'SQR1':self.addSQR1,'VOLTMETER':self.addVoltmeter,'OHMMETER':self.addRes}
+		name = widget.get('name',None)
+		TP = widget.get('type',None)
+		if not TP or not name: return
+		
+		if TP in studioCMDS.keys():
+			LINK = widget.get('LINK',None)
+			if LINK:
+				WG = studioCMDS[TP](I,LINK)
+			else:
+				WG = studioCMDS[TP](I)
+			layout.addWidget(WG)
+			self.studioWidgets[name]=WG
+			return WG
+		return None
+
+
