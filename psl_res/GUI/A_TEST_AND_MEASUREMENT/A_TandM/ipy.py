@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-Output Peripheral control for FOSSASIA PSLab -  version 1.0.0.
+Output Peripheral control for PSLab.
 '''
 
 from __future__ import print_function
@@ -13,7 +13,7 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from .templates import ipy
+from .templates import ui_ipy as ipy
 
 import sys,os,string
 import time

@@ -10,7 +10,7 @@ refer to SENSORS.supported
 from __future__ import print_function
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from .templates import sensorGrid
+from .templates import ui_sensorGrid as sensorGrid
 
 
 import pyqtgraph as pg
@@ -39,7 +39,7 @@ class AppWindow(QtGui.QMainWindow, sensorGrid.Ui_MainWindow,utilitiesClass):
 		if self.I:
 			self.I.I2C.init()
 			self.I.I2C.config(400e3)
-		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		from PSL.SENSORS.supported import supported
 		self.supported = supported
@@ -48,7 +48,7 @@ class AppWindow(QtGui.QMainWindow, sensorGrid.Ui_MainWindow,utilitiesClass):
 
 		self.foundSensors=[]
 		
-		self.looptimer = QtCore.QTimer()
+		self.looptimer = self.newTimer()
 		self.looptimer.timeout.connect(self.updateData)
 		self.looptimer.start(20)
 		self.deviceMenus=[]

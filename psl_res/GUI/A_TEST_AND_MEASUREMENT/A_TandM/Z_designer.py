@@ -640,7 +640,7 @@ class AppWindow(QtGui.QMainWindow, designer.Ui_MainWindow,utilitiesClass):
 	def saveProfile(self):
 		from os.path import expanduser
 		path = QtGui.QFileDialog.getSaveFileName(self, 'Save Profile',  expanduser("./"), 'CONF(*.conf)')
-		
+		#path = '/home/jithin/pro.conf'
 		if path:
 			sections = path.split('.')
 			if(sections[-1]!='conf'):path+='.conf'

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-oscilloscope for FOSSASIA PSLab - version 1.0.0. \n
+oscilloscope for the PSLab. \n
 
 Also Includes XY plotting mode, and fitting against standard Sine/Square functions\n
 '''
@@ -14,7 +14,7 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from templates import digitalScopeNoTrig
+from .templates import ui_digitalScopeNoTrig as digitalScopeNoTrig
 from PSL.commands_proto import applySIPrefix
 
 import sys,os,string
@@ -34,7 +34,7 @@ dacval=0
 from PSL.commands_proto import *
 from PSL_Apps.utilitiesClass import utilitiesClass
 params = {
-'image' : 'logic.png',
+'image' : 'ico_la.png',
 'name':'Logic\nAnalyzer',
 'hint':'4-Channel Logic analyzer that uses inputs ID1 through ID4. Capable of detecting various level changes in the input signal, and recording timestamps'
 }
@@ -47,7 +47,7 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow,utilitiesCla
 		from PSL.analyticsClass import analyticsClass
 		self.math = analyticsClass()
 
-		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.plot=self.add2DPlot(self.plot_area,enableMenu=False)
 		
@@ -105,7 +105,7 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow,utilitiesCla
 
 		self.showgrid()
 		self.set_digital_scope_time(0)
-		self.timer = QtCore.QTimer()
+		self.timer = self.newTimer()
 		self.finished=False
 		self.timer.timeout.connect(self.update)
 		self.timer.start(100)

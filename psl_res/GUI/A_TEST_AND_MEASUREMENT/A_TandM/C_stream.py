@@ -1,43 +1,27 @@
 #!/usr/bin/python
 '''
-Streaming Utility for FOSSASIA PSLab - version 1.0.0.
+Streaming Utility for PSLab.
 
 Evaluates user defined python statements and plots
 the return values as a function of time.
 Useful for monitoring time evolution of parameters
-measured by PSLab
+measured by the PSLab
 '''
 
 from __future__ import print_function
-import os
-os.environ['QT_API'] = 'pyqt'
-import sip
-sip.setapi("QString", 2)
-sip.setapi("QVariant", 2)
 
-
-from PyQt4 import QtCore, QtGui
 import time,sys
-from templates import arbitStream
 from PSL_Apps.utilitiesClass import utilitiesClass
-import sys,os,string
-import time
-import sys
+from templates import ui_arbitStream as arbitStream
+from PyQt4 import QtCore, QtGui
+import os,string
 
 import pyqtgraph as pg
-
 import numpy as np
 
 
-err_count=0
-trial = 0
-start_time = time.time()
-fps = None
-dacval=0
-
-
 params = {
-'image' : 'stream.png',
+'image' : 'ico_stream.png',
 'name':'Data\nStreaming',
 'hint':'A continuous data acquisition utility to visualize time dependent behaviour of any of the measurement functions contained in the PSLab python library.\nThese include get_freq,get_capacitance, and get_average_voltage'
 }
@@ -46,75 +30,74 @@ class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
-		self.I=kwargs.get('I',None)
+		self.I=kwargs.get('I',None)		
+		self.funcs = {k: getattr(self.I, k) for k in dir(self.I)}
+		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
+		from PSL.analyticsClass import analyticsClass
+		self.math = analyticsClass()
+		self.prescalerValue=0
 
-		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
-
-		self.plot=self.add2DPlot(self.plot_area)
+		self.plot=self.add2DPlot(self.plot_area,enableMenu=False); self.plot.setMouseEnabled(False,True)
 		labelStyle = {'color': 'rgb(255,255,255)', 'font-size': '11pt'}
-		self.plot.setLabel('left','Value -->', units='',**labelStyle)
+		self.plot.setLabel('left','Voltage', units='V',**labelStyle)
+		self.plot.setLabel('bottom','Time', units='S',**labelStyle)
 
-		self.totalpoints=2000
-		self.X=np.arange(self.totalpoints)
-		self.Y=np.zeros(self.totalpoints)
+		self.samples = 2000
+		self.legend = self.plot.addLegend(offset=(-10,30))
+		self.curve = self.addCurve(self.plot,'INPUT')
+		self.X=np.linspace(-10,0,self.samples);self.Y = np.zeros(self.samples)
 
-		self.plot.setXRange(0,self.totalpoints)
-		self.plot.setYRange(-16,16)
-		self.curve = self.addCurve(self.plot,name='Data'); self.curve.setPen(color=[255,255,255], width=1)
+		self.running=True
+		self.timer = self.newTimer()
+		self.timer.timeout.connect(self.run_np)
+		self.num=0
+		self.ST=time.time()
+		self.LUT = 0
+		self.timer.start(1)
 
 		self.streamfunc=self.cmdlist.currentText()
-		self.start_time=time.time()
-		self.num=0
-		self.arrow=pg.ArrowItem(angle=90)
-		self.plot.addItem(self.arrow)
-		self.plot_area.addWidget(self.plot)
-
-		self.looptimer = QtCore.QTimer()
-		self.looptimer.timeout.connect(self.acquire)
-		self.looptimer.start(1)
-
-		self.nm=0
-		self.start_time=time.time()
 		self.averagingSamples = 1
 
 	def stream(self):
-		self.looptimer.stop()
+		self.timer.stop()
 		self.streamfunc=self.cmdlist.currentText()
-		self.X=np.arange(self.totalpoints)
-		self.Y=np.zeros(self.totalpoints)
+		self.X=np.linspace(-10,0,self.samples);self.Y = np.zeros(self.samples)
+		self.timer = self.newTimer()
+		self.timer.timeout.connect(self.run_np)
 		self.num=0
+		self.LUT = 0
+		self.ST=time.time()
+		self.timer.start(1)
 
-		self.looptimer = QtCore.QTimer()
-		self.looptimer.timeout.connect(self.acquire)
-		self.looptimer.start(1)
+	def pause(self,v):
+		self.paused = v
+
 
 	def setAveraging(self):
 		self.averagingSamples = self.averageCount.value()
 
-	def acquire(self):
-		#if(self.nm<4095):
-		#	self.ad.set_voltage(self.nm)
-		#	self.nm+=1
-		#self.Y=np.roll(self.Y,-1)
-		if self.pause.isChecked():return
-		val=np.average([eval(self.streamfunc,globals(),{k: getattr(self.I, k) for k in dir(self.I)}) for a in range(self.averagingSamples)])
- 		self.Y[self.num]=val	#self.mag.read()[1]
-		self.msg.setText('%.4f'%(val))
-		try:
-			self.arrow.setPos(self.num,self.Y[self.num])
-		except:
-			print (self.num)
-		self.num+=1
-		if self.num>=self.totalpoints:
-			self.num=0
-		T=time.time()
-		if T-self.start_time>0.5:
-			self.curve.setData(self.X,self.Y)
-			self.start_time = T
 
+	def run_np(self):
+		if self.pause.isChecked() or not self.running: return
+
+		self.X = np.roll(self.X,-1)
+		self.Y = np.roll(self.Y,-1)
+		self.X[-1]=(time.time()-self.ST)
+		val=np.average([eval(self.streamfunc,globals(),self.funcs) for a in range(self.averagingSamples)])
+		self.Y[-1]=val
+		self.num+=1
+		if (self.X[-1]-self.LUT)>.2: #1 sec graph refresh
+			if not np.all(self.Y==np.inf):self.curve.setData(self.X,self.Y)
+			self.plot.enableAutoRange(axis = self.plot.plotItem.vb.XAxis)
+			self.msg.setText('%.4f'%(val))
+			self.LUT = self.X[-1]
 	def saveData(self):
 		self.pause.setChecked(True)
 		self.saveDataWindow([self.curve],self.plot)
+
+	def setDelay(self,d):
+		self.timer.stop()
+		self.timer.start(d)
 
 	def parseFunc(self,fn):
 		fn_name=fn.split('(')[0]
@@ -134,10 +117,10 @@ class AppWindow(QtGui.QMainWindow, arbitStream.Ui_MainWindow,utilitiesClass):
 			return method,int_args
 
 	def __del__(self):
-		self.looptimer.stop()
+		self.timer.stop()
 
 	def closeEvent(self, event):
-		self.looptimer.stop()
+		self.timer.stop()
 		self.finished=True
 
 
