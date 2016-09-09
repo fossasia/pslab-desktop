@@ -19,8 +19,8 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints
 
-from templates import sensorTemplate
-from PSL_Apps.templates.widgets.clicking import Ui_Form as Ui_Clicking
+from .templates import ui_sensorTemplate as sensorTemplate
+from PSL_Apps.templates.widgets.ui_clicking import Ui_Form as Ui_Clicking
 
 import pyqtgraph as pg
 import time,random,functools
@@ -30,7 +30,7 @@ import numpy as np
 from PyQt4 import QtCore, QtGui
 
 params = {
-'image' : 'sensors.png',
+'image' : 'ico_sensor.png',
 'name':'Sensor\nData Logger',
 'hint':'''
 	Plot values returned by sensors connected to the I2C input.</br>
@@ -51,7 +51,7 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 		print (self.I.readLog()	)
 		self.plot=self.add2DPlot(self.plot_area)
 		self.plot.setTitle('dsafd')
-		self.setWindowTitle('FOSSASIA PSLab : '+params.get('name','').replace('\n',' ') )
+		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.axisItems=[]
 
@@ -68,7 +68,7 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 		self.active_device_counter=0
 		self.right_axes=[]
 
-		self.looptimer = QtCore.QTimer()
+		self.looptimer = self.newTimer()
 		self.looptimer.timeout.connect(self.updatePlots)
 		self.looptimer.start(2)
 
