@@ -34,6 +34,14 @@ class utilitiesClass():
 	This class contains methods that simplify setting up and running
 	an experiment.
 	
+	feature list : 
+	
+	* 2D Plots
+	
+	  - Embed a PyQtgraph PlotWidget into a specified Qt Layout
+	  - Add curves into a supplied PlotWidget, and maintain a list.
+	  - Add crosshairs
+	
 	"""
 	timers=[]
 	viewBoxes=[]
@@ -64,14 +72,38 @@ class utilitiesClass():
 	def __init__(self):
 		sys.path.append('/usr/share/pslab')
 
-
 	def enableShortcuts(self):
+		"""
+		Enable the following shortcuts :
+		
+		* CTRL-S : Opens the saveData window for saving trace data . It will load the coordinate data from all curves created using :func:`addCurve`
+		
+		"""
+
 		self.saveSignal = QtGui.QShortcut(QtGui.QKeySequence(QtCore.QCoreApplication.translate("MainWindow", "Ctrl+S", None)), self)
 		self.saveSignal.activated.connect(self.saveData)
-		
-
 
 	def applySIPrefix(self,value, unit='',precision=2 ):
+			"""
+			Convert a given value into scientific notation
+			
+			.. tabularcolumns:: |p{3cm}|p{11cm}|
+			
+			===============  ============================================================================================
+			**Arguments** 
+			===============  ============================================================================================
+			value            The number to convert into a human readable form
+			unit             SI units to suffix. Leave blank if not needed
+			precision        Decimal precision digits
+			===============  ============================================================================================
+
+			.. code-block:: python
+
+				applySIPrefix(1010,'Hz')
+				>>> 1.01kHz
+			
+			"""
+
 			neg = False
 			if value < 0.:
 				value *= -1; neg = True
@@ -95,7 +127,6 @@ class utilitiesClass():
 			if abs(si_level) > prefix_levels:
 				raise ValueError("Exponent out range of available prefixes.")
 			return '%.*f %s%s' % (precision, value,PREFIXES[si_level + prefix_levels],unit)
-
 
 	class utils:
 		def __init__(self):
@@ -137,6 +168,9 @@ class utilitiesClass():
 			a.linkedViewChanged(plot.plotItem.vb, a.XAxis)
 
 	def setColorSchemeWhite(self):
+		"""
+		Set the plot background to white . This will also automatically change trace colours.
+		"""
 		self.properties['colorScheme']='white'
 		for plot in self.plots2D:
 			try:
@@ -171,11 +205,21 @@ class utilitiesClass():
 						d.setPen('k')
 				except Exception as ex: print ('error while changing scheme',ex)
 
-
 	def rightClickToZoomOut(self,plot):
+		"""
+		Enables zooming out when the user presses the right mouse button on the plot
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot             The plot to activate this feature on
+		===============  ============================================================================================
+		"""
+
 		clickEvent = functools.partial(self.autoRangePlot,plot)
 		return pg.SignalProxy(plot.scene().sigMouseClicked, rateLimit=60, slot=clickEvent)
-
 
 	def autoRangePlot(self,plot,evt):
 		pos = evt[0].scenePos()  ## using signal proxy turns original arguments into a tuple
@@ -183,6 +227,18 @@ class utilitiesClass():
 			plot.enableAutoRange(True,True)
 
 	def enableCrossHairs(self,plot,curves=[]):
+		"""
+		Enables crosshairs on the specified plot
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot             The plot to activate this feature on
+		===============  ============================================================================================
+		"""
+
 		plot.setTitle('')
 		vLine = pg.InfiniteLine(angle=90, movable=False,pen=[100,100,200,200])
 		plot.addItem(vLine, ignoreBounds=True)
@@ -202,6 +258,24 @@ class utilitiesClass():
 			plot.hLine.setPos(plot.mousePoint.y())
 
 	def displayCrossHairData(self,plot,fmode,ns,tg,axes,cols):
+		"""
+		.. warning:: beta function to extract specific coordinate data from curves , and show them as the plot title
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot             The plot to activate this feature on
+		fmode            Set to True if fourier transform mode is active
+		ns               Number of samples
+		tg               time gap
+		axes             axes
+		cols             list of trace colours
+		===============  ============================================================================================
+		"""
+
+
 		if plot.mousePoint:
 			if fmode:
 				index = int(ns*plot.mousePoint.x()*tg/1e6)
@@ -221,9 +295,11 @@ class utilitiesClass():
 				plot.vLine.setPos(-1)
 				plot.hLine.setPos(-1)
 
-
-
 	def setColorSchemeBlack(self):
+		"""
+		Changes plot background to black. Also changes plot colours
+		"""
+
 		self.properties['colorScheme']='black'
 		for plot in self.plots2D:
 			try:
@@ -264,16 +340,35 @@ class utilitiesClass():
 					c.setPen(color=self.black_trace_colors[n], width=3)
 					n+=1
 					if(n==54):break
-
-
 		
 	def random_color(self):
+		"""
+		Generate a random colour
+		
+		:return: QtGui.QColor object
+		"""
+
+
 		c=QtGui.QColor(random.randint(20,255),random.randint(20,255),random.randint(20,255))
 		if np.average(c.getRgb())<150:
 			c=self.random_color()
 		return c
 
 	def add2DPlot(self,plot_area,**args):
+		"""
+		Add a 2D plot to a specified Qt Layout
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot_area        QtGui.<some layout> to add a 2D plot to
+		===============  ============================================================================================
+		
+		:return: pyqtgraph.PlotWidget
+		"""
+
 		plot=pg.PlotWidget(**args)
 		plot.setMinimumHeight(250)
 		plot_area.addWidget(plot)
@@ -290,6 +385,19 @@ class utilitiesClass():
 
 
 	def add3DPlot(self,plot_area):
+		"""
+		Add a 3D plot to a specified Qt Layout
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot_area        QtGui.<some layout> to add a 3D plot to
+		===============  ============================================================================================
+		
+		:return: pyqtgraph.gl.GLViewWidget
+		"""
 		if not self.gl : self.__importGL__()
 		plot3d = self.gl.GLViewWidget()
 		#gx = self.gl.GLGridItem();gx.rotate(90, 0, 1, 0);gx.translate(-10, 0, 0);self.plot.addItem(gx)
@@ -307,8 +415,22 @@ class utilitiesClass():
 
 
 	def addCurve(self,plot,name='',**kwargs):
-		if(len(name)):curve = pg.PlotDataItem(name=name)
-		else:curve = pg.PlotCurveItem(**kwargs)
+		"""
+		Add a new curve to a 2D plot
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot             QPlotWidget created using :func:`add2DPlot`
+		name             something to call this trace. Shown in the legend too
+		===============  ============================================================================================
+		
+		:return: pyqtgraph.PlotDataItem
+		"""
+		#if(len(name)):curve = pg.PlotDataItem(name=name)
+		curve = pg.PlotCurveItem(name = name,**kwargs)
 		plot.addItem(curve)
 		if self.properties['colorScheme']=='white':
 			curve.setPen(kwargs.get('pen',{'color':self.white_trace_colors[len(self.plots2D[plot])],'width':1}))
@@ -319,6 +441,19 @@ class utilitiesClass():
 		return curve
 
 	def removeCurve(self,plot,curve):
+		"""
+		Remove a curve from a plot
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot             pyqtgraph.PlotWidget created using :func:`add2DPlot`
+		name             pyqtgraph.PlotDataItem created for the specified plot using :func:`addCurve`
+		===============  ============================================================================================
+		
+		"""
 		plot.removeItem(curve)
 		try:
 			self.plots2D[plot].pop(self.plots2D[plot].index(curve))
@@ -329,8 +464,38 @@ class utilitiesClass():
 	def rebuildLegend(self,plot):
 		return plot.addLegend(offset=(-10,30))
 
+	def renameLegendItem(self, legend,oldName,newName):
+		"""
+		Renames one item from the legend. 
+
+		==============  ========================================================
+		**Arguments:**
+		legend          legendItem
+		name			name of the entry
+		==============  ========================================================
+		"""
+		for sample, label in legend.items:
+			if label.text == oldName:  # hit
+				label.setText(newName)
+				legend.updateSize()                 # redraw box
+				return
+
 
 	def fetchColumns(self,qtablewidget,*args):
+		"""
+		Fetch columns from a QTableWidget
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		qtablewidget     Widget in question
+		*args            columns numbers
+		===============  ============================================================================================
+		
+		:return: 2D array of requested elements [[col1R0,col1,R1,col1,R3...col1Rn],[col2R0,col2,R1,col2,R3...col2Rn], ...]
+		"""
 		data = [[] for a in range(len(args))]
 		pos=0
 		for col in args:
@@ -371,6 +536,21 @@ class utilitiesClass():
 		self.curve_ext.setLabel('left',args.get('yLabel',''))
 
 	def addAxis(self,plot,**args):
+		"""
+		Add an axis on the right side
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		plot             pyqtgraph.PlotWidget
+		*args            
+		1. label         Label of the new axis
+		===============  ============================================================================================
+		
+		:return: pg.ViewBox
+		"""
 		p3 = pg.ViewBox()
 		ax3 = pg.AxisItem('right')
 		plot.plotItem.layout.addItem(ax3, 2, 3+len(plot.axisItems))
@@ -415,20 +595,70 @@ class utilitiesClass():
 
 
 	def loopTask(self,interval,func,*args):
-			timer = QtCore.QTimer()
-			timerCallback = functools.partial(func,*args)
-			timer.timeout.connect(timerCallback)
-			timer.start(interval)
-			self.timers.append(timer)
-			return timer
+		"""
+		Execute a function every 'interval' milliseconds
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		interval         Time delay between consecutive executions
+		func             function to be run
+		*args            arguments for that function. in order.
+		===============  ============================================================================================
+		
+		:return: the timer . You should store this if you will need to stop this event loop at some point
+		
+		.. code-block:: python
+		
+			tmr = loopTask(100,np.sin,np.pi/2)  #calculate sin(pi/2) every 100mS = 0.1 seconds			
+			#equivalent to :
+			while True:
+				np.sin(np.pi/2)
+				time.sleep(0.1)
+			
+		"""
+		timer = QtCore.QTimer()
+		timerCallback = functools.partial(func,*args)
+		timer.timeout.connect(timerCallback)
+		timer.start(interval)
+		self.timers.append(timer)
+		return timer
 		
 	def delayedTask(self,interval,func,*args):
-			timer = QtCore.QTimer()
-			timerCallback = functools.partial(func,*args)
-			timer.singleShot(interval,timerCallback)
-			self.timers.append(timer)
+		"""
+		Execute a function after 'interval' milliseconds
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		interval         Time delay before execution
+		func             function to be run
+		*args            arguments for that function. in order.
+		===============  ============================================================================================
+		
+		:return: the timer . 
+		
+		.. code-block:: python
+		
+			tmr = delayedTask(5000,np.sin,np.pi/2)  #calculate sin(pi/2) after 5 seconds			
+			#equivalent to :
+			time.sleep(5)
+			np.sin(np.pi/2)
+			
+		"""			
+		timer = QtCore.QTimer()
+		timerCallback = functools.partial(func,*args)
+		timer.singleShot(interval,timerCallback)
+		self.timers.append(timer)
 
 	def killAllTimers(self):
+		"""
+		Stop all timers created using either :func:`delayedTask` or :func:`loopTask`
+		"""			
 		for a in self.timers:
 			try:
 				a.stop()
@@ -437,15 +667,46 @@ class utilitiesClass():
 				pass
 				
 	def newTimer(self):
+		"""
+		Create a QtCore.QTimer object and return it.
+		A reference is also stored in order to keep track of it
+		"""			
+
 		timer = QtCore.QTimer()
 		self.timers.append(timer)
 		return timer
 
 	def displayDialog(self,txt=''):
-			QtGui.QMessageBox.about(self, 'Message',  txt)
+		"""
+		Show a pop up dialog with a message
+		"""			
+
+		QtGui.QMessageBox.about(self, 'Message',  txt)
 
 
 	class spinIcon(QtGui.QFrame,spinBox.Ui_Form,utils):
+		"""
+		Create a widget with a number entry field, and an associated function that is called when the value of the field changes
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		FUNC             function to be run when the value of the widget changes
+		UNITS			 SI units of the entry field
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		LINK             Another function to which the return value of FUNC is passed when an event occurs
+		MIN              minimum limit for the number entry
+		MAX              maximum limit for the number entry
+		===============  ============================================================================================
+		
+		:return: the spin widget . You may add this to any layout
+		
+			
+		"""			
 		def __init__(self,**args):
 			super(utilitiesClass.spinIcon, self).__init__()
 			self.setupUi(self)
@@ -469,9 +730,30 @@ class utilitiesClass():
 			else: self.value.setText(str(retval))
 			if self.linkFunc:
 				self.linkFunc(retval*self.scale,self.units)
-				#self.linkObj.setText('%.3f %s '%(retval*self.scale,self.units))
 
 	class doubleSpinIcon(QtGui.QFrame,doubleSpinBox.Ui_Form,utils):
+		"""
+		Create a widget with a number entry field with decimal support, and an associated function that is called when the value of the field changes
+			
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		FUNC             function to be run when the value of the widget changes
+		UNITS			 SI units of the entry field
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		LINK             Another function to which the return value of FUNC is passed when an event occurs
+		MIN              minimum limit for the number entry
+		MAX              maximum limit for the number entry
+		===============  ============================================================================================
+		
+		:return: the double spin widget . You may add this to any layout
+		
+			
+		"""			
 		def __init__(self,**args):
 			super(utilitiesClass.doubleSpinIcon, self).__init__()
 			self.setupUi(self)
@@ -494,10 +776,35 @@ class utilitiesClass():
 			#self.value.setText('%.3f %s '%(retval*self.scale,self.units))
 			if self.linkFunc:
 				self.linkFunc(retval*self.scale,self.units)
-				#self.linkObj.setText('%.3f %s '%(retval*self.scale,self.units))
-
 
 	class dialIcon(QtGui.QFrame,dial.Ui_Form,utils):
+		"""
+		Create a widget with a knob, and an associated function that is called when the knob is turned by the user
+		
+		.. figure:: images/dialIcon.png
+			:align: left
+			:figclass: align-center
+		
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		FUNC             function to be run when the knob is turned
+		UNITS			 SI units of the entry field
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		LINK             Another function to which the return value of FUNC is passed when an event occurs
+		MIN              minimum limit for the knob
+		MAX              maximum limit for the knob
+		===============  ============================================================================================
+		
+		:return: the spin widget . You may add this to any layout
+		
+			
+		"""			
 		def __init__(self,**args):
 			super(utilitiesClass.dialIcon, self).__init__()
 			self.setupUi(self)
@@ -525,11 +832,36 @@ class utilitiesClass():
 					self.linkFunc(retval*self.scale,self.units)
 					#self.linkObj.setText('%.3f %s '%(retval*self.scale,self.units))
 			else: self.value.setText(str(retval))
-			#self.value.setText('%.2f %s '%(retval*self.scale,self.units))
-
-
 
 	class dialAndDoubleSpinIcon(QtGui.QFrame,dialAndDoubleSpin.Ui_Form,utils):
+		"""
+		Create a widget with a knob, and an associated function that is called when the knob is turned by the user.
+		It also contains a number entry field connected to the knob if the user wishes to manually enter a value
+		
+		.. figure:: images/dialAndDoubleSpinIcon.png
+			:align: left
+			:figclass: align-center
+		
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		FUNC             function to be run when the knob is turned
+		UNITS			 SI units of the entry field
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		LINK             Another function to which the return value of FUNC is passed when an event occurs
+		MIN              minimum limit for the knob
+		MAX              maximum limit for the knob
+		===============  ============================================================================================
+		
+		:return: the widget . You may add this to any layout
+		
+			
+		"""			
 		def __init__(self,**args):
 			super(utilitiesClass.dialAndDoubleSpinIcon, self).__init__()
 			self.linkFunc = args.get('LINK',None)
@@ -561,8 +893,32 @@ class utilitiesClass():
 			except:
 				pass
 
-
 	class buttonIcon(QtGui.QFrame,button.Ui_Form,utils):
+		"""
+		Create a widget with a button, and an associated function that is called when the button is clicked.
+		The return value of the function is shown in a label on the same widget
+		
+		.. figure:: images/buttonIcon.png
+			:align: left
+			:figclass: align-center
+		
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		FUNC             function to be run when the button is clicked
+		UNITS			 SI units used when the user clicks the button, and the results are displayed in the label
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		===============  ============================================================================================
+		
+		:return: the widget . You may add this to any layout
+		
+			
+		"""	
 		def __init__(self,**args):
 			super(utilitiesClass.buttonIcon, self).__init__()
 			self.setupUi(self)
@@ -591,6 +947,30 @@ class utilitiesClass():
 			self.value.setText(str(retval))
 
 	class dualButtonIcon(QtGui.QFrame,dualButton.Ui_Form):
+		"""
+		Create a widget with two buttons, and associated functions that are called when the buttons are clicked.
+		The return values of the functions are not shown
+		
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		A                Text shown on button A
+		B                Text shown on button B
+		FUNCA            function to be run when the first button is clicked
+		FUNCB            function to be run when the second button is clicked
+		UNITS			 SI units used when the user clicks the button, and the results are displayed in the label
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		===============  ============================================================================================
+		
+		:return: the widget . You may add this to any layout
+		
+			
+		"""	
 		def __init__(self,**args):
 			super(utilitiesClass.dualButtonIcon, self).__init__()
 			self.setupUi(self)
@@ -607,9 +987,32 @@ class utilitiesClass():
 		def clickedB(self):
 			retval = self.funcB()
 
-
-
 	class wideButtonIcon(QtGui.QFrame,widebutton.Ui_Form,utils):
+		"""
+		Create a widget with a wide button, and an associated function that is called when the button is clicked.
+		The return value of the function is shown in a giant label on the same widget
+		
+		.. figure:: images/wideButtonIcon.png
+			:align: left
+			:figclass: align-center
+		
+		
+		.. tabularcolumns:: |p{3cm}|p{11cm}|
+		
+		===============  ============================================================================================
+		**Arguments** 
+		===============  ============================================================================================
+		*\*\kwargs
+		TITLE            Text shown on the top section of the widget
+		FUNC             function to be run when the button is clicked
+		UNITS			 SI units used when the user clicks the button, and the results are displayed in the label
+		TOOLTIP          text to be displayed when the mouse hovers over the widget
+		===============  ============================================================================================
+		
+		:return: the widget . You may add this to any layout
+		
+			
+		"""			
 		def __init__(self,**args):
 			super(utilitiesClass.wideButtonIcon, self).__init__()
 			self.setupUi(self)
@@ -626,7 +1029,6 @@ class utilitiesClass():
 				if isinstance(retval,numbers.Number) and retval != np.Inf:self.value.setText('%s'%(self.applySIPrefix(retval,self.units) ))
 				else: self.value.setText(retval)
 			except:self.value.setText(str(retval))
-
 
 	class displayIcon(QtGui.QFrame,displayWidget.Ui_Form,utils):
 		def __init__(self,**args):
@@ -712,8 +1114,6 @@ class utilitiesClass():
 			if self.linkFunc:
 				self.linkFunc(retval)
 
-
-
 	class pulseCounterIcon(QtGui.QFrame,pulseCounter.Ui_Form):
 		def __init__(self,I):
 			super(utilitiesClass.pulseCounterIcon, self).__init__()
@@ -729,8 +1129,6 @@ class utilitiesClass():
 		def reset(self):
 			chan = self.channelBox.currentText()
 			if len(chan):self.resetfn(chan)
-
-
 
 	class experimentIcon(QtGui.QPushButton):
 		mouseHover = QtCore.pyqtSignal(str)
@@ -764,8 +1162,6 @@ class utilitiesClass():
 		def leaveEvent(self, event):
 			self.mouseHover.emit('')
 
-
-
 	class experimentListItem(QtGui.QPushButton):
 		mouseHover = QtCore.pyqtSignal(str)
 		def __init__(self,basepackage,name,launchfunc):
@@ -791,8 +1187,6 @@ class utilitiesClass():
 
 		def leaveEvent(self, event):
 			self.mouseHover.emit('')
-
-
 
 	class sineWidget(QtGui.QWidget,sineWidget.Ui_Form):
 		def __init__(self,I):
@@ -832,7 +1226,6 @@ class utilitiesClass():
 		def setW2Type(self,val):
 			self.I.load_equation('W2',self.modes[val])
 
-
 	class sensorIcon(QtGui.QFrame,sensorWidget.Ui_Form):
 		def __init__(self,cls,**kwargs):
 			super(utilitiesClass.sensorIcon, self).__init__()
@@ -867,8 +1260,6 @@ class utilitiesClass():
 				res+=self.plotnames[a]+'\t%.3e\n'%(retval[a])
 			self.resultLabel.setText(res)
 
-
-
 	class pwmWidget(QtGui.QWidget,pwmWidget.Ui_Form):
 		def __init__(self,I):
 			super(utilitiesClass.pwmWidget, self).__init__()
@@ -898,8 +1289,6 @@ class utilitiesClass():
 			else:
 				print (self.setWindowTitle('Device Not Connected!'))
 
-
-
 	class voltWidget(QtGui.QWidget,voltWidget.Ui_Form,utils):
 		def __init__(self,I):
 			super(utilitiesClass.voltWidget, self).__init__()
@@ -926,8 +1315,6 @@ class utilitiesClass():
 				self.table.item(pos,3).setText(self.applySIPrefix(self.I.get_average_voltage(b),'V'))
 				pos+=1
 
-
-
 	class supplyWidget(QtGui.QWidget,supplyWidget.Ui_Form,utils):
 		def __init__(self,I):
 			super(utilitiesClass.supplyWidget, self).__init__()
@@ -950,9 +1337,6 @@ class utilitiesClass():
 			val=self.I.DAC.setVoltage('PCS',val/1.e3)
 			self.PCS_LABEL.setText(self.applySIPrefix(val,'A'))
 
-
-
-
 	class setStateIcon(QtGui.QFrame,setStateList.Ui_Form):
 		def __init__(self,**args):
 			super(utilitiesClass.setStateIcon, self).__init__()
@@ -967,8 +1351,6 @@ class utilitiesClass():
 		def toggle4(self,state):
 			self.I.set_state(SQR4 = state)
 
-
-
 	def addPV1(self,I,link=None):
 		tmpfunc = functools.partial(I.DAC.__setRawVoltage__,'PV1')
 		a1={'TITLE':'PV1','MIN':0,'MAX':4095,'FUNC':tmpfunc,'UNITS':'V','TOOLTIP':'Programmable Voltage Source 1'}
@@ -980,7 +1362,6 @@ class utilitiesClass():
 		a={'TITLE':'PV2','MIN':0,'MAX':4095,'FUNC':tmpfunc,'UNITS':'V','TOOLTIP':'Programmable Voltage Source 2'}
 		if link: a['LINK'] = link
 		return self.dialIcon(**a)
-
 
 	def addPV3(self,I,link=None):
 		tmpfunc = functools.partial(I.DAC.__setRawVoltage__,'PV3')
@@ -1000,12 +1381,10 @@ class utilitiesClass():
 		if link: a['LINK'] = link
 		return self.selectAndButtonIcon(**a)
 
-
 	def addW1(self,I,link=None):
 		a={'TITLE':'Wave 1','MIN':1,'MAX':5000,'FUNC':I.set_w1,'UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #1'}
 		if link: a['LINK'] = link
 		return self.dialAndDoubleSpinIcon(**a)
-
 
 	def addW2(self,I,link=None):
 		a={'TITLE':'Wave 2','MIN':1,'MAX':5000,'FUNC':I.set_w2,'UNITS':'Hz','TOOLTIP':'Frequency of waveform generator #2'}
@@ -1046,8 +1425,6 @@ class utilitiesClass():
 		QtCore.QObject.connect(Button, QtCore.SIGNAL(_fromUtf8("clicked()")), func)
 		return Button
 
-
-
 	def addHelpImageToLayout(self,layout,filename):
 		imgurl = pkg_resources.resource_filename('psl_res.HTML.images',filename)
 		return self.addPixMapToLayout(layout,QtGui.QPixmap(imgurl))
@@ -1061,7 +1438,6 @@ class utilitiesClass():
 
 	def setPixMapOnLabel(self,pic,pixmap):
 		pic.setPixmap(pixmap.scaled(pic.size(), QtCore.Qt.KeepAspectRatio)) 
-
 
 	def saveToCSV(self,table):
 		path = QtGui.QFileDialog.getSaveFileName(self, 'Save File', '~/', 'CSV(*.csv)')
@@ -1081,13 +1457,11 @@ class utilitiesClass():
 						else:
 							rowdata.append('')
 					writer.writerow(rowdata)
-
 	
 	def saveDataWindow(self,curveList,plot=None):
 		from utilityApps import plotSaveWindow
 		info = plotSaveWindow.AppWindow(self,curveList,plot)
 		info.show()
-
 
 	def savePro(self):
 		from os.path import expanduser
