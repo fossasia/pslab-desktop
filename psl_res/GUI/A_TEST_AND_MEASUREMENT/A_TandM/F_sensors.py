@@ -138,6 +138,34 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 				for a in bridge.params[i]:
 					Callback = functools.partial(getattr(bridge,i),a)
 					mini.addAction(str(a),Callback)
+			elif type(bridge.params[i]) == dict:  #Function with user defined variable input
+				mini=sub_menu.addMenu(i)
+				options =  bridge.params[i]
+				
+				#Data type: Default is integer.
+				# double : Create QDoubleSpinBox
+				# Integer : Create QSpinBox
+				# String : QLineEdit
+				dataType = options.get('dataType','integer')
+				if dataType in ['double','integer']:
+					if dataType == 'double':
+						Btn=QtGui.QDoubleSpinBox()
+					elif dataType == 'integer':
+						Btn=QtGui.QDoubleSpinBox()
+
+					def executeCallback():
+						getattr(bridge,i)(Btn.value())
+
+					Btn.setRange(options.get('min',0),options.get('max',100))
+					Btn.setPrefix(options.get('prefix',''))
+					Btn.setValue(options.get('value',0))
+					BtnAction = QtGui.QWidgetAction(mini)
+					BtnAction.setDefaultWidget(Btn)
+					mini.addAction(BtnAction)
+
+					#Btn.editingFinished.connect(executeCallback)  #Uncomment after discussion. Is this necessary, or should we just stick with the 'Apply' button?
+					mini.addAction('Apply' , executeCallback)
+
 		menu.addMenu(sub_menu)
 		self.paramMenus.insertWidget(0,menu)
 		self.deviceMenus.append(menu)
