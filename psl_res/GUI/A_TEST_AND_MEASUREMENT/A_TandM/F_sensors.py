@@ -19,7 +19,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints
 
-from .templates import ui_sensorTemplate as sensorTemplate
+from templates import ui_sensorTemplate as sensorTemplate
 from PSL_Apps.templates.widgets.ui_clicking import Ui_Form as Ui_Clicking
 
 import pyqtgraph as pg
@@ -50,7 +50,6 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 
 		print (self.I.readLog()	)
 		self.plot=self.add2DPlot(self.plot_area)
-		self.plot.setTitle('dsafd')
 		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.axisItems=[]
@@ -132,10 +131,13 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow,utilitiesClass):
 		menu.setMinimumHeight(25)
 		sub_menu = QtGui.QMenu('%s:%s'%(hex(bridge.ADDRESS),bridge.name[:15]))
 		for i in bridge.params: 
-			mini=sub_menu.addMenu(i) 
-			for a in bridge.params[i]:
-				Callback = functools.partial(getattr(bridge,i),a)
-				mini.addAction(str(a),Callback)
+			if bridge.params[i] is None:  #A function with no arguments.
+				sub_menu.addAction(str(i),getattr(bridge,i))
+			elif type(bridge.params[i]) == list:  #Function with pre-defined arguments  
+				mini=sub_menu.addMenu(i)
+				for a in bridge.params[i]:
+					Callback = functools.partial(getattr(bridge,i),a)
+					mini.addAction(str(a),Callback)
 		menu.addMenu(sub_menu)
 		self.paramMenus.insertWidget(0,menu)
 		self.deviceMenus.append(menu)
