@@ -9,7 +9,7 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from .templates import template_transient
+from templates import ui_template_transient as template_transient
 from PSL.SENSORS import MPU6050
 import numpy as np
 from PyQt4 import QtGui,QtCore
@@ -42,7 +42,8 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 		self.plot1.setLabel('bottom','Time -->', units='S',**labelStyle)
 
 		self.tg=2000
-		self.tgLabel.setText(str(2000*self.tg*1e-3)+'mS')
+		self.samples = 1000
+		self.tgLabel.setText(str(self.samples*self.tg*1e-3)+'mS')
 		self.curveGx = self.addCurve(self.plot1,'Gx')
 		self.curveGy = self.addCurve(self.plot1,'Gy')
 		self.curveGz = self.addCurve(self.plot1,'Gz')
@@ -67,13 +68,16 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 		self.Params=[]
 		
 	def run(self):
-		self.I.I2C.__captureStart__(self.IMU.ADDRESS,0x3B,14,2000,self.tg,'int')
-		print ("Sleeping for",self.I.I2C.total_samples*self.I.I2C.tg*1e-3+10,"mS")
-		self.loop=self.delayedTask(self.I.I2C.total_samples*self.I.I2C.tg*1e-3+10,self.plotData)
+		t = self.I.I2C.__captureStart__(self.IMU.ADDRESS,0x3B,14,self.samples,self.tg)
+		self.plot1.setXRange(0,t);	self.plot1.setLimits(xMin = 0,xMax=t)		
+
+		print ("Sleeping for",t,"S",t)
+		self.loop=self.delayedTask(t*1e3,self.plotData)  #t+10uS per sample
 
 	def plotData(self):
 		data = self.I.I2C.__retrievebuffer__()
-		self.t,self.Ax,self.Ay,self.Az,T,self.Gx,self.Gy,self.Gz = self.I.I2C.__dataProcessor__(data)	
+		self.t,self.Ax,self.Ay,self.Az,T,self.Gx,self.Gy,self.Gz = self.I.I2C.__dataProcessor__(data,'int')	
+		print (len(self.t),len(self.Ax))
 		self.curveAx.setData(self.t*1e-6,self.Ax)
 		self.curveAy.setData(self.t*1e-6,self.Ay)
 		self.curveAz.setData(self.t*1e-6,self.Az)
@@ -86,7 +90,7 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 	def setTimebase(self,T):
 		self.tgs = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000]
 		self.tg = self.tgs[T]
-		self.tgLabel.setText(str(2000*self.tg*1e-3)+'mS')
+		self.tgLabel.setText(str(self.samples*self.tg*1e-3)+'mS')
 
 	def fit(self):
 		if(not len(self.t)):return
@@ -111,6 +115,10 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 
 	def showData(self):
 		self.displayDialog('nothing')
+
+	def saveData(self):
+		self.saveDataWindow([self.curveGx,self.curveGy,self.curveGz,self.curveAx,self.curveAy,self.curveAz],self.plot1)
+
 		
 if __name__ == "__main__":
 	from PSL import sciencelab
