@@ -1,5 +1,4 @@
 DESTDIR =
-PYV=$(shell python -c "import sys;t='{v[0]}.{v[1]}'.format(v=list(sys.version_info[:2]));sys.stdout.write(t)");
 
 # the variable CUSTOM will be 'true' if we are *not* in the context of
 # building a debian package (you must be rrot or use fakeroot, the
