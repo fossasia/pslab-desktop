@@ -11,7 +11,7 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from PSL_Apps.templates import template_graph_nofft
+from PSL_Apps.templates import ui_template_graph_nofft
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
@@ -27,7 +27,7 @@ params = {
 
 }
 
-class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesClass):
+class AppWindow(QtGui.QMainWindow, ui_template_graph_nofft.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
