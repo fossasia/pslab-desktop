@@ -21,9 +21,11 @@ install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - sudo apt-get install -y libqt4-dev
-    - sudo apt-get install -y mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev
+    - sudo apt-get install -y mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev pyqt4-dev-tools
 #    - sudo apt-get install -y python3-sip python3-sip-dev python3-pyqt4 cmake
     # Qt4
+    # Attempt to invoke the Makefile as is
+    - make
     - pushd /builds
     # SIP
     - tar xzf /downloads/sip.tar.gz --keep-newer-files
