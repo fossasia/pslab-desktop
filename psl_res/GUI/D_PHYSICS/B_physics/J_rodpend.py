@@ -12,7 +12,7 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from .templates import rodpendulum
+from templates import ui_rodpendulum
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
@@ -28,7 +28,7 @@ params = {
 	'''
 }
 
-class AppWindow(QtGui.QMainWindow, rodpendulum.Ui_MainWindow,utilitiesClass):
+class AppWindow(QtGui.QMainWindow, ui_rodpendulum.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)

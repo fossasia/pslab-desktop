@@ -10,7 +10,7 @@ from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 from PSL.analyticsClass import analyticsClass
 
-from .templates import simplePendulum
+from templates import ui_simplePendulum
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
@@ -30,7 +30,7 @@ params = {
 
 }
 
-class AppWindow(QtGui.QMainWindow, simplePendulum.Ui_MainWindow,utilitiesClass):
+class AppWindow(QtGui.QMainWindow, ui_simplePendulum.Ui_MainWindow,utilitiesClass):
 	def __init__(self, parent=None,**kwargs):
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
@@ -46,7 +46,7 @@ class AppWindow(QtGui.QMainWindow, simplePendulum.Ui_MainWindow,utilitiesClass):
 
 		self.plot.setYRange(-8.5,8.5)
 		self.tg=100
-		self.tgLabel.setText(str(5000*self.tg*1e-3)+'S')
+		self.tgLabel.setText('total time: ' + str(5000*self.tg*1e-3)+'mS')
 		self.x=[]
 		self.CParams=[0,0,0,0,0]
 
