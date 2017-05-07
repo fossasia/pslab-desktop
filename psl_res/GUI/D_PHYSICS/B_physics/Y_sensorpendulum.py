@@ -69,14 +69,15 @@ class AppWindow(QtGui.QMainWindow, template_transient.Ui_MainWindow,utilitiesCla
 		
 	def run(self):
 		t = self.I.I2C.__captureStart__(self.IMU.ADDRESS,0x3B,14,self.samples,self.tg)
-		self.plot1.setXRange(0,t);	self.plot1.setLimits(xMin = 0,xMax=t)		
+		self.plot1.setXRange(0,t)
+		self.plot1.setLimits(xMin = 0,xMax=t)
 
 		print ("Sleeping for",t,"S",t)
 		self.loop=self.delayedTask(t*1e3,self.plotData)  #t+10uS per sample
 
 	def plotData(self):
 		data = self.I.I2C.__retrievebuffer__()
-		self.t,self.Ax,self.Ay,self.Az,T,self.Gx,self.Gy,self.Gz = self.I.I2C.__dataProcessor__(data,'int')	
+		self.t,self.Ax,self.Ay,self.Az,_,self.Gx,self.Gy,self.Gz = self.I.I2C.__dataProcessor__(data,'int')
 		print (len(self.t),len(self.Ax))
 		self.curveAx.setData(self.t*1e-6,self.Ax)
 		self.curveAy.setData(self.t*1e-6,self.Ay)
