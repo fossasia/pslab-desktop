@@ -1,5 +1,4 @@
 DESTDIR =
-PYV=$(shell python -c "import sys;t='{v[0]}.{v[1]}'.format(v=list(sys.version_info[:2]));sys.stdout.write(t)");
 
 # the variable CUSTOM will be 'true' if we are *not* in the context of
 # building a debian package (you must be rrot or use fakeroot, the
@@ -17,7 +16,7 @@ all:  $(UIfiles)
 	#make -C docs html
 	#make -C docs/misc all
 	#@echo $(UI_SOURCES)
-	$(PYV) setup.py build
+	python setup.py build
 
 
 ui_%.py: %.ui
@@ -53,6 +52,6 @@ install:
 
 	#cp docs/misc/build/*.html $(DESTDIR)/usr/share/doc/pslab/html
 	# create ditributions for current python distribution
-	$(PYV) setup.py install --install-layout=deb \
+	python setup.py install --install-layout=deb \
 	         --root=$(DESTDIR)/ --prefix=/usr
 	
