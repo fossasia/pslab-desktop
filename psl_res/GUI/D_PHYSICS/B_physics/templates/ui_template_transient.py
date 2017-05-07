@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'psl_res/GUI/D_PHYSICS/B_physics/templates/template_transient.ui'
 #
-# Created: Mon Jul 11 21:45:33 2016
-#      by: PyQt4 UI code generator 4.10.4
+# Created: Sat May  6 17:48:08 2017
+#      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -66,12 +66,6 @@ class Ui_MainWindow(object):
         self.frame_3.setObjectName(_fromUtf8("frame_3"))
         self.gridLayout = QtGui.QGridLayout(self.frame_3)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.pushButton_4 = QtGui.QPushButton(self.frame_3)
-        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
-        self.gridLayout.addWidget(self.pushButton_4, 0, 0, 1, 1)
-        self.pushButton = QtGui.QPushButton(self.frame_3)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
-        self.gridLayout.addWidget(self.pushButton, 0, 1, 1, 1)
         self.frame_6 = QtGui.QFrame(self.frame_3)
         self.frame_6.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QtGui.QFrame.Raised)
@@ -90,6 +84,9 @@ class Ui_MainWindow(object):
         self.horizontalSlider.setObjectName(_fromUtf8("horizontalSlider"))
         self.horizontalLayout_2.addWidget(self.horizontalSlider)
         self.gridLayout.addWidget(self.frame_6, 1, 0, 1, 2)
+        self.pushButton_4 = QtGui.QPushButton(self.frame_3)
+        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.gridLayout.addWidget(self.pushButton_4, 0, 0, 1, 1)
         self.horizontalLayout.addWidget(self.frame_3)
         self.frame_5 = QtGui.QFrame(self.frame)
         self.frame_5.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -176,17 +173,15 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.pushButton_6, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.showData)
         QtCore.QObject.connect(self.horizontalSlider, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), MainWindow.setTimebase)
         QtCore.QObject.connect(self.pushButton_7, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.saveData)
-        QtCore.QObject.connect(self.pushButton_4, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.ZeroToFive)
-        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.FiveToZero)
+        QtCore.QObject.connect(self.pushButton_4, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.run)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.widgetFrameOuter.setProperty("class", _translate("MainWindow", "PeripheralCollection", None))
         self.frame.setProperty("class", _translate("MainWindow", "PeripheralCollectionInner", None))
-        self.pushButton_4.setText(_translate("MainWindow", "0 -> 5 V", None))
-        self.pushButton.setText(_translate("MainWindow", "5 -> 0 V", None))
         self.tgLabel.setText(_translate("MainWindow", "time: mS", None))
+        self.pushButton_4.setText(_translate("MainWindow", "Acquire", None))
         self.pushButton_5.setText(_translate("MainWindow", "Fit selected region", None))
         self.pushButton_6.setText(_translate("MainWindow", "Show Fit Params", None))
         self.pushButton_7.setText(_translate("MainWindow", "Save Data", None))
