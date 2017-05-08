@@ -71,21 +71,8 @@
          <property name="class" stdset="0">
           <string>PeripheralCollection</string>
          </property>
-         <layout class="QFormLayout" name="formLayout">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
-          <item row="3" column="1">
-           <widget class="QProgressBar" name="progressBar">
-            <property name="value">
-             <number>0</number>
-            </property>
-            <property name="format">
-             <string>particle occupancy : %p%</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="4">
            <widget class="QProgressBar" name="timeProgressBar">
             <property name="value">
              <number>0</number>
@@ -95,17 +82,80 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Particle Occupancy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QProgressBar" name="progressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+            <property name="format">
+             <string>particle occupancy : %p%</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Sampling Progress</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_2">
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="integrationBox">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="prefix">
+             <string>Integration Time : </string>
+            </property>
+            <property name="minimum">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <number>60</number>
+            </property>
+            <property name="value">
+             <number>30</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSpinBox" name="sampleBox">
+            <property name="prefix">
+             <string>Total Samples       : </string>
+            </property>
+            <property name="minimum">
+             <number>5</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton_2">
             <property name="text">
-             <string>Particle Occupancy</string>
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string>Stop</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>save data</string>
             </property>
            </widget>
           </item>
@@ -303,7 +353,7 @@
                <x>0</x>
                <y>0</y>
                <width>565</width>
-               <height>413</height>
+               <height>421</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_4">
@@ -321,8 +371,8 @@
            </widget>
           </item>
          </layout>
-         <zorder>splitter</zorder>
-         <zorder></zorder>
+         <zorder>scrollArea</zorder>
+         <zorder>frame_3</zorder>
         </widget>
        </item>
       </layout>
@@ -339,13 +389,6 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionSave_as"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <action name="actionSave_as">
    <property name="text">
@@ -365,18 +408,50 @@
  <resources/>
  <connections>
   <connection>
-   <sender>actionSave_as</sender>
-   <signal>triggered()</signal>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>saveFile()</slot>
+   <slot>saveData()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>140</x>
+     <y>100</y>
     </hint>
     <hint type="destinationlabel">
-     <x>415</x>
-     <y>259</y>
+     <x>1002</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>start()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-14</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-22</x>
+     <y>38</y>
     </hint>
    </hints>
   </connection>
@@ -385,5 +460,6 @@
   <slot>saveFile()</slot>
   <slot>start()</slot>
   <slot>stop()</slot>
+  <slot>saveData()</slot>
  </slots>
 </ui>
