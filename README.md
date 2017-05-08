@@ -12,12 +12,15 @@ This is also installable on linux machine.
 * FOSSASIA is supporting development and promotion of ExpEYES project since 2014 mainly through Google Summer of Code
 * The current work is a part of my GSoC-16 project
 
-### Communication Chat: [Pocket Science Slack Channel](http://fossasia.slack.com/messages/pocketscience/) | [Get an Invite](http://fossasia-slack.herokuapp.com/)
+### Communication
 
-----------------
+Please join us on the following channels:
+* [Pocket Science Channel](https://gitter.im/fossasia/pslab)
+* [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
-Installation
-------------
+Our website is at: http://pslab.fossasia.org
+
+### Installation
 
 To install PSLab on Debian based Gnu/Linux system, the following dependencies must be installed.
 
