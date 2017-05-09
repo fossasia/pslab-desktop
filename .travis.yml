@@ -25,7 +25,6 @@ install:
 #    - sudo apt-get install -y python3-sip python3-sip-dev python3-pyqt4 cmake
     # Qt4
     # Attempt to invoke the Makefile as is
-    - make
     - pushd /builds
     # SIP
     - tar xzf /downloads/sip.tar.gz --keep-newer-files
@@ -37,10 +36,13 @@ install:
     # PyQt4
     - tar xzf /downloads/pyqt4.tar.gz --keep-newer-files
     - pushd PyQt-x11-gpl-4.11.3
-    - python configure.py -c --confirm-license --no-designer-plugin -e QtCore -e QtGui -e QtTest
+    - python configure.py -c --confirm-license -e QtCore -e QtGui -e QtTest -e QtDesigner
     - make
     - sudo make install
     - popd
+    - make
+
+
  # - "3.5"
 # command to install dependencies
 #install: "pip install -r requirements.txt"
