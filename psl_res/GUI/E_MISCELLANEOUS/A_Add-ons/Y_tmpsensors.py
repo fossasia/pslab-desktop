@@ -16,7 +16,7 @@ Currently Supports:\n
 from __future__ import print_function
 
 from PSL_Apps.templates.widgets.clicking import Ui_Form as Ui_Clicking
-from .templates import sensorTemplate
+from .templates import ui_sensorTemplate as sensorTemplate
 
 from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints

@@ -11,7 +11,7 @@
 """
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
-from templates import calibration_loader
+from templates import ui_calibration_loader as calibration_loader
 
 import numpy as np
 from PyQt4 import QtGui,QtCore

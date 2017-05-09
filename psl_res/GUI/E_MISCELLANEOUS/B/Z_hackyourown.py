@@ -10,7 +10,7 @@ refer to SENSORS.supported
 from __future__ import print_function
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from templates import hackYourOwn
+from templates import ui_hackYourOwn as hackYourOwn
 
 
 import pyqtgraph as pg

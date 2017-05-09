@@ -42,7 +42,7 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from .templates import template_transient
+from .templates import ui_template_transient as template_transient
 
 import numpy as np
 from PyQt4 import QtGui,QtCore

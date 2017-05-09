@@ -13,7 +13,7 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from PSL_Apps.templates import stepper
+from PSL_Apps.templates import ui_stepper as stepper
 
 import sys,os,string
 import time
