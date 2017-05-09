@@ -11,7 +11,7 @@ sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
-from templates import plotSave
+from templates import ui_plotSave as plotSave
 import sys,os,time
 import pyqtgraph as pg
 

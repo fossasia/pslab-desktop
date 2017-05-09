@@ -9,7 +9,7 @@ import os
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from .templates import NFC
+from .templates import ui_NFC as NFC
 import sys
 
 

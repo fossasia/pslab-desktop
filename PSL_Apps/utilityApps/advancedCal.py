@@ -12,7 +12,7 @@ sip.setapi("QVariant", 2)
 
 
 from PyQt4 import QtCore, QtGui
-from templates import advancedCal
+from templates import ui_advancedCal as advancedCal
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 import sys,os,string,time,struct

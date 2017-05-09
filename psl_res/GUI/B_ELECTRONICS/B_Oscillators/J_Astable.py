@@ -4,7 +4,7 @@
 
 ::
 
-    This experiment is used ........
+    This experiment is used to study astable multivibrator circuits
 
 """
 

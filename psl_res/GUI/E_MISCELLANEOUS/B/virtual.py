@@ -8,7 +8,7 @@ import os
 
 from PyQt4 import QtCore, QtGui
 import time,sys
-from templates import remote
+from templates import ui_remote as remote
 import sys,json,string
 import numpy as np
 

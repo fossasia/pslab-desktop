@@ -12,7 +12,7 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from PSL_Apps.templates import template_graph
+from PSL_Apps.templates import ui_template_graph as template_graph
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
