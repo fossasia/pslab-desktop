@@ -11,7 +11,7 @@ sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
-from .templates import aboutDevice
+from .templates import ui_aboutDevice as aboutDevice
 import sys,os,time
 
 

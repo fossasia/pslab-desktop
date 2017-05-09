@@ -12,7 +12,7 @@ sip.setapi("QVariant", 2)
 
 
 from PyQt4 import QtCore, QtGui
-from .templates import firePulses
+from .templates import ui_firePulses as firePulses
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 import sys,os,string,functools,time

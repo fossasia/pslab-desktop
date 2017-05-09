@@ -12,7 +12,7 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from templates import template_xc
+from templates import ui_template_xc as template_xc
 
 import numpy as np
 from PyQt4 import QtGui,QtCore

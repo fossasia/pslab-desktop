@@ -16,7 +16,7 @@ import time,sys
 import sys
 
 import pyqtgraph as pg
-from PSL_Apps.templates import template_bandpass
+from PSL_Apps.templates import ui_template_bandpass as template_bandpass
 
 import numpy as np
 

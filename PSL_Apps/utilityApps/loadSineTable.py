@@ -12,7 +12,7 @@ sip.setapi("QVariant", 2)
 
 
 from PyQt4 import QtCore, QtGui
-from .templates import loadSineTable
+from .templates import ui_loadSineTable as loadSineTable
 import sys,os,string,functools,time
 import numpy as np
 
