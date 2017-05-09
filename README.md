@@ -8,16 +8,17 @@ GUI Experiments for PSLab from FOSSASIA
 This repository is for Qt based applications for PSLab - GUI programs, widgets and templates for various experiments.
 This is also installable on linux machine. 
 
-* The project is inspired from ExpEYES  http://expeyes.in
-* FOSSASIA is supporting development and promotion of ExpEYES project since 2014 mainly through Google Summer of Code
-* The current work is a part of my GSoC-16 project
+The goal of PSLab is to create an Open Source hardware device (open on all layers) that can be used for experiments by teachers, students and citizen scientists. Our tiny pocket lab provides an array of sensors for doing science and engineering experiments. It provides functions of numerous measurement devices including an oscilloscope, a waveform generator, a frequency counter, a programmable voltage, current source and as a data logger.
 
-### Communication Chat: [Pocket Science Slack Channel](http://fossasia.slack.com/messages/pocketscience/) | [Get an Invite](http://fossasia-slack.herokuapp.com/)
+We are developing the experiments starting on the hardware to libraries and user interfaces for desktop PCs and Android apps for smartphones. The PSLab project is inspired by the work of the Open Science Hardware community and the ExpEYES project. Our website is at: http://pslab.fossasia.org
 
-----------------
+### Communication
 
-Installation
-------------
+Please join us on the following channels:
+* [Pocket Science Channel](https://gitter.im/fossasia/pslab)
+* [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
+
+### Installation
 
 To install PSLab on Debian based Gnu/Linux system, the following dependencies must be installed.
 
