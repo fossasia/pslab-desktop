@@ -5,6 +5,10 @@ Virtual Lab using PubNub
 
 from __future__ import print_function
 import os
+os.environ['QT_API'] = 'pyqt'
+import sip
+sip.setapi("QString", 2)
+sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 import time,sys
