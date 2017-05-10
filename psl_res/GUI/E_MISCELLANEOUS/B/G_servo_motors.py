@@ -5,6 +5,12 @@ Simple example demonstrating controlling servo motors with sliders
 
 from __future__ import print_function
 import sys,time
+import os
+os.environ['QT_API'] = 'pyqt'
+import sip
+sip.setapi("QString", 2)
+sip.setapi("QVariant", 2)
+
 from PyQt4 import QtGui, QtCore
 
 params = {
