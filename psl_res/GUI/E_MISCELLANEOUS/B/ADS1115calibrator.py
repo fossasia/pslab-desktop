@@ -30,7 +30,7 @@ import templates.ui_ADS1115calibrator as ADS1115calibrator
 import numpy as np
 from PyQt4 import QtGui,QtCore
 import pyqtgraph as pg
-import sys,functools,os,random,struct,time,serial.tools.list_ports
+import sys,functools,random,struct,time
 
 
 params = {
@@ -39,6 +39,18 @@ params = {
 'hint':'''Calibrate your device using a plugged in ADS1115 16-bit ADC and save values to a directory. Use the calibration loader utility to process the results and write to flash. Not for beginners!
 '''
 }
+
+
+def addCurve(plot,**kwargs):
+	C=pg.PlotCurveItem(**kwargs)
+	plot.addItem(C)
+	return C
+
+def stoa(s):
+	return [ord(a) for a in s]
+def atos(a):
+	return ''.join(chr(e) for e in a)
+
 
 
 class acquirer():
@@ -69,7 +81,7 @@ class acquirer():
 
 		self.Running = False
 		
-			
+		
 	def setADC(self,adc):
 		self.ADC = adc
 		self.ADC.setGain('GAIN_ONE') #unity gain
@@ -246,12 +258,12 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 				for b in range(8):
 					col=QtGui.QColor(random.randint(20,255),random.randint(20,255),random.randint(20,255))
 					name = '%s:%dx'%(a,self.I.gain_values[b])
-					self.curves[a][b]=self.addCurve(self.plot,pen=pg.mkPen(col, width=1),name=name)
+					self.curves[a][b]=addCurve(self.plot,pen=pg.mkPen(col, width=1),name=name)
 					item = self.addLabel(name,col);	self.curves[a][b].setClickable(True);	self.curves[a][b].sigClicked.connect(functools.partial(self.selectItem,item))
 			else:
 				col=QtGui.QColor(random.randint(20,255),random.randint(20,255),random.randint(20,255))
 				name = '%s:1x'%(a)
-				self.curves[a][0]=self.addCurve(self.plot,pen=pg.mkPen(col, width=1),name='%s:1x'%(a))
+				self.curves[a][0]=addCurve(self.plot,pen=pg.mkPen(col, width=1),name='%s:1x'%(a))
 				item = self.addLabel(name,col);	self.curves[a][0].setClickable(True);	self.curves[a][0].sigClicked.connect(functools.partial(self.selectItem,item))
 
 		self.shortlist=[]
@@ -263,16 +275,12 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 		"""
 		Create a QtCore.QTimer object and return it.
 		A reference is also stored in order to keep track of it
-		"""			
+		"""
 
 		timer = QtCore.QTimer()
 		self.timers.append(timer)
 		return timer
 
-	def addCurve(self,plot,**kwargs):
-		C=pg.PlotCurveItem(**kwargs)
-		plot.addItem(C)
-		return C
 		
 	def setType(self,v):
 		print ('only option is to calibrate only ADCs. TODO')
@@ -315,8 +323,8 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 				os.mkdir(tmpdir)
 				self.dirnameLabel.setText(tmpdir)
 				self.savedir = tmpdir
-			except:
-				print('directory exists. overwrite?')
+			except Exception as e:
+				print('directory exists. overwrite?',e.message)
 				reply = QtGui.QMessageBox.question(self, 'Message', 'directory exists. overwrite?', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 				if reply:
 					self.dirnameLabel.setText(tmpdir)
@@ -332,9 +340,9 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 	def closeEvent(self, evnt):
 		evnt.ignore()
 		try:self.timer.stop()
-		except: pass
+		except Exception as e: print (e)
 		try:self.A.timer.stop()
-		except: pass
+		except Exception as e: print (e)
 		self.askBeforeQuit()
 	
 	def askBeforeQuit(self):
@@ -362,10 +370,6 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 		try:self.A.timer.stop()
 		except: pass
 
-	def stoa(self,s):
-		return [ord(a) for a in s]
-	def atos(self,a):
-		return ''.join(chr(e) for e in a)
 
 	def saveData(self):
 		try:
@@ -393,42 +397,39 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 				actual = self.A.ADC_ACTUALS[a][0]
 				np.savetxt(os.path.join(self.savedir,'CALIB_%s_%dx.csv'%(a,1)),np.column_stack([actual,measured]))
 
-	def shorten(self,name,gain):
-		l = len(A)/2.
-		print ('Channel',l)
 		
 	def upload(self):
-		final_fitstr=self.stoa('PSLab SLOPES and OFFSETS``%s\n'%(time.ctime()))
+		final_fitstr=stoa('PSLab SLOPES and OFFSETS``%s\n'%(time.ctime()))
 		for a in self.A.ADC_VALUES:
 			keys=np.sort(self.A.ADC_VALUES[a].keys())
-			final_fitstr+=self.stoa('>|'+a+'|<')
+			final_fitstr+=stoa('>|'+a+'|<')
 			print (keys,self.A.ADC_ACTUALS[a])
 			source = self.I.analogInputSources[a]
-			for b in keys:				
+			for b in keys:
 				source.__setGain__(int(b)) #b=gain [0-7]
 				fitvals = np.polyfit(  source.voltToCode12(self.A.ADC_VALUES[a][b][1:]),self.A.ADC_ACTUALS[a][b][1:],2) #measured, actual, 2 degree.
 				fitstr=struct.pack('3f',*fitvals)
 				print (a,b,self.A.ADC_VALUES[a][b],len(fitstr),fitstr)
-				final_fitstr+=self.stoa(fitstr)
+				final_fitstr+=stoa(fitstr)
 
-		final_fitstr+=self.stoa('STOP')
+		final_fitstr+=stoa('STOP')
 
 		#DAC CALIBRATION
-		final_fitstr+=self.stoa('>|%s|<'%self.DAC_CHAN) #len(DAC_CHAN)==3 . mandatory		
+		final_fitstr+=stoa('>|%s|<'%self.DAC_CHAN) #len(DAC_CHAN)==3 . mandatory
 		VToCode = self.I.DAC.CHANS[self.DAC_CHAN].VToCode
 		fitvals = np.polyfit(VToCode(np.array(self.A.ADC_DIRECT)),VToCode(np.array(self.A.DAC_VALS)),2 )
 		fitstr = struct.pack('3f',*fitvals)
-		final_fitstr+=self.stoa(fitstr)
+		final_fitstr+=stoa(fitstr)
 
 		if self.A.SECOND_DAC:
-			final_fitstr+=self.stoa('>|%s|<'%self.DAC_CHAN2) #len(DAC_CHAN)==3 . mandatory		
+			final_fitstr+=stoa('>|%s|<'%self.DAC_CHAN2) #len(DAC_CHAN)==3 . mandatory
 			VToCode = self.I.DAC.CHANS[self.DAC_CHAN2].VToCode
 			fitvals = np.polyfit(VToCode(np.array(self.A.ADC_DIRECT2)),VToCode(np.array(self.A.DAC_VALS2)),2 )
 			fitstr = struct.pack('3f',*fitvals)
-			final_fitstr+=self.stoa(fitstr)
+			final_fitstr+=stoa(fitstr)
 
 
-		final_fitstr+=self.stoa('STOP')
+		final_fitstr+=stoa('STOP')
 
 		print('Writing adc slopes and offsets to Flash.....'+str(len(final_fitstr)))
 		print (final_fitstr)
