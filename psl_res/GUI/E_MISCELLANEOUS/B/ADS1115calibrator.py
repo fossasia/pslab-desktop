@@ -80,8 +80,6 @@ class acquirer():
 				self.ADC_ACTUALS[a][b]=[]
 
 		self.Running = False
-		
-		
 	def setADC(self,adc):
 		self.ADC = adc
 		self.ADC.setGain('GAIN_ONE') #unity gain
@@ -368,14 +366,14 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 		try:self.timer.stop()
 		except: pass
 		try:self.A.timer.stop()
-		except: pass
+		except Exception as e: print (e)
 
 
 	def saveData(self):
 		try:
 			os.mkdir(self.savedir)
-		except:
-			print('directory exists. overwriting')
+		except Exception as e:
+			print('directory exists. overwriting',e.message)
 		print ('saving to ',self.savedir)
 
 		DY = self.A.DAC_VALS
