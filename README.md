@@ -26,10 +26,10 @@ To install PSLab on Debian based Gnu/Linux system, the following dependencies mu
 
 * PyQt 4.7+, PySide, or PyQt5
 * python 2.6, 2.7, or 3.x
-* NumPy, Scipy
-* pyqt4-dev-tools         &nbsp;   **For pyuic4**
-* Pyqtgraph               &nbsp;  **For Plotting library**
-* pyopengl and qt-opengl  &nbsp;   **For 3D graphics**
+* NumPy, Scipy            &nbsp;   ** Analytical tools and array manipulations**
+* pyqt4-dev-tools         &nbsp;   **Contains Pyuic4 which compiles xml layout files into python template files**
+* Pyqtgraph               &nbsp;  **Primary Plotting library**
+* pyopengl and qt-opengl  &nbsp;   **For 3D graphics support in pyqtgraph**
 * iPython-qtconsole       &nbsp;   **optional**
 
 
@@ -59,15 +59,29 @@ and run the following (for both the repos)
 
 Now you are ready with the PSLab software on your machine :)
 
-For the main GUI (Control panel), you can run Experiments from the terminal.
+-----------------------
+For the main GUI (Control panel), you can run the Experiments app from the terminal.
 
     $ Experiments
+If the device was not detected , the following splash screen error will be displayed on launch:
+![](https://i1.wp.com/blog.fossasia.org/wp-content/uploads/2016/07/SplashNotConnected.png?w=625)
+
+Under normal circumstances, the splash screen will be followed by the application's main window
+![](https://i2.wp.com/blog.fossasia.org/wp-content/uploads/2016/07/SplashScreen.png?w=613)
+![](https://i0.wp.com/blog.fossasia.org/wp-content/uploads/2016/07/controlpanel.png?w=455)
+
 
 -----------------------
 
 #### Development Environment
 
 To set up the development environment, install the packages mentioned in dependencies. For building GUI's Qt Designer is used.
+
+### You can help
+```
+Please report a bug/install errors here 
+Your suggestions to improve PSLab are welcome :)
+```
 
 ### Blog posts related to PSLab on FOSSASIA blog 
 * [Installation of PSLab](http://blog.fossasia.org/pslab-code-repository-and-installation/)
