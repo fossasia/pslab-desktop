@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>index</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="">
+			<meta name="author" content="">
+			<title>PSLab help</title>
+			
+			<!-- core CSS -->
+			<link href="/css/bootstrap.min.css" rel="stylesheet">
+			<link href="/css/main.css" rel="stylesheet">
+			<link href="/css/highlight.css" rel="stylesheet">
+		</head>
+
+<body class="homepage">
+
+    <header id="header">
+
+	<nav class="navbar navbar-inverse"  role="banner">
+	  <div class="container-fluid">
+	    <div class="navbar-header pull-left">
+	            <a class="navbar-brand" href="/index.html"><img src="/images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
+	    </div>
+	    <ul class="nav navbar-nav pull-left">
+                        <li ><a href="/index.html">Home</a></li>
+                        <li class="active"><a href="/utilities/">Utilities</a></li>
+                        <li ><a href="/apps/">Experiments</a></li>
+	    </ul>
+	    <!--
+	    <form class="navbar-form navbar-left">
+	      <div class="form-group">
+		<input type="text" class="form-control" placeholder="Search">
+	      </div>
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </form>
+	    -->
+	  </div>
+	</nav>
+
+
+		
+    </header><!--/header-->
+
+		<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="/utilities/"> Utilities Section </a>
+  <a href="/apps/"> Experiments Section </a>
+  <hr>
+  <ul>
+	  
+		
+	  
+  </ul>
+  <hr>
+  <ul>
+	  
+		<li><a href="/apps/astable-multivibrator" title="Astable Multivibrator">Astable Multivibrator</a></li>
+	  
+		
+	  
+  </ul>
+
+</div>
+<div style="padding:10px;"><span id="menubutton" style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776; Experiments</span></div>
+
+<div id="main">
+
+	
+
+	<section id="recent-works">
+		<div class="container">
+			
+
+  <h2 id="general-purpose-utilities">General Purpose utilities</h2>
+
+<h3 id="code-example-to-acquire-a-trace-from-ch1-and-plot-it">Code example to acquire a trace from CH1, and plot it</h3>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#code snippet example</span>
+<span class="kn">from</span> <span class="nn">PSLab</span> <span class="kn">import</span> <span class="n">sciencelab</span>
+<span class="n">p</span><span class="o">=</span><span class="n">sciencelab</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">capture1</span><span class="p">(</span><span class="s">'CH1'</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+
+</div>
+
+<script type="text/javascript">
+var linkElement = document.createElement("link");
+linkElement.rel = "stylesheet";
+linkElement.href = "/css/leftnav.css"; 
+document.head.appendChild(linkElement);
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.getElementById("menubutton").style.visibility = "hidden";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("menubutton").style.visibility = "visible";
+}
+
+</script>
+
+
+
+
+		    <footer class="footer navbar-fixed-bottom">
+		      <div class="container">
+	    		<ul>
+	        		<li><a href="mailto:pslab-fossasia@google-groups.com">bug-reports</a></li>
+	        		<li><a href="https://fossasia.org/pslab">fossasia.org/pslab</a></li>
+			</ul>
+		      </div>
+		    </footer>
+
+    <!--
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/wow.min.js"></script>
+    -->
+	</body>
+</html>
