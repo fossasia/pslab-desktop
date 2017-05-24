@@ -16,8 +16,7 @@ from templates import ui_template_xc as template_xc
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
-import pyqtgraph as pg
-import sys,functools,time
+import sys,time
 
 params = {
 'image' : 'XCi.png',
@@ -34,7 +33,6 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
 		self.I=kwargs.get('I',None)
-		
 		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.plot1=self.add2DPlot(self.plot_area)
@@ -102,8 +100,6 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		self.p2.setLimits(yMax=8/self.resistance.value(),yMin=-8/self.resistance.value(),xMin=0,xMax=self.samples*self.tg*1e-6)
 		return self.samples*self.tg*1e-6
 
-
-
 	def fit(self):
 		print ("Adding...")
 		self.acquireParams = True
@@ -116,7 +112,7 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		self.I.capture_traces(2,self.samples,self.tg)
 		if self.running:self.timer.singleShot(self.samples*self.I.timebase*1e-3+50,self.plotData)
 
-	def plotData(self): 
+	def plotData(self):
 		while(not self.I.oscilloscope_progress()[0]):
 			time.sleep(0.1);n=0
 			print (self.I.timebase,'correction required',n)

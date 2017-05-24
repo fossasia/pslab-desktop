@@ -1,0 +1,24 @@
+name: PSLab documentation
+
+exclude: ['HTML','GUI','CONF','ICONS','README.md']
+include: ['apps','utilities']
+collections:
+ apps:
+  permalink: /apps/:path
+  output: true
+ utilities:
+  permalink: /utilities/:path
+  output: true
+
+future: true
+destination: MD_HTML
+permalink: pretty
+excerpt_separator: "<!--more-->"
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+ syntax_highlighter: rouge
+ input: GFM
+

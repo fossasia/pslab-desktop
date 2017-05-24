@@ -85,12 +85,9 @@ class acquirer():
 		self.ADC.setGain('GAIN_ONE') #unity gain
 		self.ADC.setChannel('UNI_0') #single ended 0
 		self.ADC.setDataRate(32)
-		
 	def setDAC(self,dac,dac2=None):
 		self.DAC_CHAN = dac
 		self.SECOND_DAC = dac2
-
-
 	def getAnotherPoint(self):
 		if self.vv>=3.2: #We're all done here.
 			self.Running = False
