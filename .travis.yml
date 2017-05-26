@@ -16,7 +16,6 @@ before_install:
     - curl -L http://www.pyqtgraph.org/downloads/0.10.0/pyqtgraph-0.10.0.tar.gz -o /downloads/pyqtgraph.tar.gz
     # Builds
     - sudo apt-get -qq update
-    - sudo apt-get install -y python-pyqtgraph
     - sudo mkdir -p /builds
     - sudo chmod a+rw /builds
 
