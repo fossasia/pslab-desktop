@@ -13,6 +13,7 @@ before_install:
     - sudo chmod a+rw /downloads
     - curl -L http://sourceforge.net/projects/pyqt/files/sip/sip-4.16.5/sip-4.16.5.tar.gz -o /downloads/sip.tar.gz 
     - curl -L http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.3/PyQt-x11-gpl-4.11.3.tar.gz -o /downloads/pyqt4.tar.gz
+    - curl -L http://www.pyqtgraph.org/downloads/0.10.0/pyqtgraph-0.10.0.tar.gz -o /downloads/pyqtgraph.tar.gz
     # Builds
     - sudo apt-get -qq update
     - sudo apt-get install -y python-pyqtgraph
@@ -41,6 +42,11 @@ install:
     - python configure.py -c --confirm-license -e QtCore -e QtGui -e QtTest -e QtDesigner
     - make
     - sudo make install
+    - popd
+    #pyqtgraph
+    - tar xzf /downloads/pyqtgraph.tar.gz --keep-newer-files
+    - pushd pyqtgraph-0.10.0
+    - sudo python setup.py install
     - popd
     - popd
     - make
