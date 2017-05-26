@@ -77,7 +77,6 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		self.acquireParams = False
 		self.currentRow=0
 		self.running=True
-		
 		self.plotAButton.setText('F vs Xc')
 		self.plotBButton.setText('F vs 1/Xc')
 		self.splitter.setSizes([10,1000])
@@ -133,8 +132,8 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 			pars1 = self.CC.sineFit(T,VC)
 			pars2 = self.CC.sineFit(T,I)#,freq=self.frq)
 			if pars1 and pars2:
-				a1,f1,o1,p1 = pars1
-				a2,f2,o2,p2 = pars2
+				a1,f1,_,p1 = pars1
+				a2,f2,_,p2 = pars2
 				f1=f1*1e-6
 				f2=f2*1e-6
 				if (a2 and a1) and (abs(f2-self.I.sine1freq)<10) and (abs(f1-self.I.sine1freq)<10):
@@ -164,7 +163,7 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 
 	def plotB(self):
 		F,XC = self.fetchColumns(self.resultsTable,0,3)
-		self.newPlot(F,1./np.array(XC),title = "F vs 1/XC: ",xLabel = 'F',yLabel='1/XC')        
+		self.newPlot(F,1./np.array(XC),title = "F vs 1/XC: ",xLabel = 'F',yLabel='1/XC')
 
 	def saveFile(self):
 		self.saveToCSV(self.resultsTable)

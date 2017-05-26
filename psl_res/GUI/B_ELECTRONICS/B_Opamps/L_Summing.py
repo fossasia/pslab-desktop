@@ -78,7 +78,6 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 
 		self.running=True
 		self.timer.singleShot(100,self.run)
-
 	def gainChanged(self,g):
 		self.autoRange()
 
@@ -97,7 +96,7 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 		R = [chan.calPoly10(0),chan.calPoly10(1023)]
 		R[0]=R[0]*.9;R[1]=R[1]*.9
 		self.plot.setLimits(yMax=max(R),yMin=min(R),xMin=0,xMax=xlen)
-		self.plot.setYRange(min(R),max(R))			
+		self.plot.setYRange(min(R),max(R))
 		self.plot.setXRange(0,xlen)
 		return self.samples*self.tg*1e-6
 	def run(self):
@@ -107,7 +106,7 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 			self.I.capture_traces(3,self.samples,self.tg)
 			if self.running:self.timer.singleShot(self.samples*self.I.timebase*1e-3+10,self.plotData)
 		except Exception as e:
-			pass
+			print (e)
 
 	def plotData(self):
 		if not self.running: return
@@ -122,7 +121,6 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 			self.I.__fetch_channel__(1)
 			self.I.__fetch_channel__(2)
 			self.I.__fetch_channel__(3)
-			
 			self.curve1.setData(self.I.achans[1].get_xaxis()*1e-6,self.I.achans[1].get_yaxis(),connect='finite')
 			self.curve2.setData(self.I.achans[2].get_xaxis()*1e-6,self.I.achans[2].get_yaxis(),connect='finite')
 			self.curve3.setData(self.I.achans[0].get_xaxis()*1e-6,self.I.achans[0].get_yaxis(),connect='finite')

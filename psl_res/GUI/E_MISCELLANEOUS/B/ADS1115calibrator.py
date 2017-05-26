@@ -132,7 +132,6 @@ class acquirer():
 
 		#DAC, CAP , CH1, CH2, CH3
 		try:
-				
 			self.parent.valueTable.item(0,0).setText('%.3f'%self.DAC_VALS[-1])
 			self.parent.valueTable.item(0,1).setText('%.3f'%self.ADC_DIRECT[-1])
 			self.parent.valueTable.item(0,2).setText('%.3f'%self.ADC_VALUES['CH1'][0][-1])
@@ -361,7 +360,7 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 		self.running =False
 		self.finished=True
 		try:self.timer.stop()
-		except: pass
+		except Exception as e: print(e)
 		try:self.A.timer.stop()
 		except Exception as e: print (e)
 
