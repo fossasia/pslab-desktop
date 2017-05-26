@@ -7,19 +7,8 @@ imagebase: astable-multivibrator
 ---
 
 
-
-> A block quote <br>
-> line 2 <br>
-> line 3
-
-
-### Sine wave plot
-------------------
-
-~~~html
-<a href="#">Hello world</a>
-~~~
-
+### Sine wave plot example
+--------------------------
 
 ```python
 from pylab import *
