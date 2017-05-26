@@ -2,8 +2,11 @@
 '''
 Lists the various available experiments and allows users to run them
 '''
-
 from __future__ import print_function
+
+
+import os
+
 from argparse import ArgumentParser
 import sys,time
 
@@ -12,11 +15,6 @@ parser = ArgumentParser()
 parser.add_argument("-P", dest="PortName", help="If you have connected multiple devices, provide the port name . e.g /dev/ttyACM0", metavar="PORT_NAME")
 args = parser.parse_args()
 
-import os
-os.environ['QT_API'] = 'pyqt'
-import sip
-sip.setapi("QString", 2)
-sip.setapi("QVariant", 2)
 from PyQt4 import QtCore, QtGui
 from PyQt4 import QtWebKit
 
