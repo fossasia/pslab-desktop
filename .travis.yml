@@ -24,7 +24,8 @@ install:
     - sh -e /etc/init.d/xvfb start
     - sudo apt-get install -y libqt4-dev
     - sudo apt-get install -y mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev
-#    - sudo apt-get install -y python3-sip python3-sip-dev python3-pyqt4 cmake
+    #The documentation states that pip install is automatically invoked based on requirements.txt, but that doesn't seem to be happening
+    - pip install -r requirements.txt
     # Qt4
     # Attempt to invoke the Makefile as is
     - pushd /builds
