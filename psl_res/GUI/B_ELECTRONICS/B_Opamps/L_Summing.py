@@ -12,12 +12,10 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from PSL_Apps.templates import template_graph_nofft
+from PSL_Apps.templates import ui_template_graph_nofft as template_graph_nofft
 
-import numpy as np
 from PyQt4 import QtGui,QtCore
-import pyqtgraph as pg
-import sys,functools,time
+import sys,time
 
 params = {
 'image' : 'clipping.png',
@@ -34,9 +32,7 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
 		self.I=kwargs.get('I',None)
-		
 		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
-
 		from PSL.analyticsClass import analyticsClass
 		self.math = analyticsClass()
 		self.prescalerValue=0
@@ -82,7 +78,6 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 
 		self.running=True
 		self.timer.singleShot(100,self.run)
-
 	def gainChanged(self,g):
 		self.autoRange()
 
@@ -101,21 +96,19 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 		R = [chan.calPoly10(0),chan.calPoly10(1023)]
 		R[0]=R[0]*.9;R[1]=R[1]*.9
 		self.plot.setLimits(yMax=max(R),yMin=min(R),xMin=0,xMax=xlen)
-		self.plot.setYRange(min(R),max(R))			
+		self.plot.setYRange(min(R),max(R))
 		self.plot.setXRange(0,xlen)
-
 		return self.samples*self.tg*1e-6
-
 	def run(self):
 		if not self.running: return
 		try:
 			self.I.configure_trigger(0,'CH1',0,prescaler = self.prescalerValue)
 			self.I.capture_traces(3,self.samples,self.tg)
 			if self.running:self.timer.singleShot(self.samples*self.I.timebase*1e-3+10,self.plotData)
-		except:
-			pass
+		except Exception as e:
+			print (e)
 
-	def plotData(self): 
+	def plotData(self):
 		if not self.running: return
 		try:
 			n=0
@@ -128,7 +121,6 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 			self.I.__fetch_channel__(1)
 			self.I.__fetch_channel__(2)
 			self.I.__fetch_channel__(3)
-			
 			self.curve1.setData(self.I.achans[1].get_xaxis()*1e-6,self.I.achans[1].get_yaxis(),connect='finite')
 			self.curve2.setData(self.I.achans[2].get_xaxis()*1e-6,self.I.achans[2].get_yaxis(),connect='finite')
 			self.curve3.setData(self.I.achans[0].get_xaxis()*1e-6,self.I.achans[0].get_yaxis(),connect='finite')
@@ -136,9 +128,8 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 			self.displayCrossHairData(self.plot,False,self.samples,self.I.timebase,[self.I.achans[1].get_yaxis(),self.I.achans[2].get_yaxis(),self.I.achans[0].get_yaxis()],[(0,255,0),(255,0,0),(255,255,0)])
 			
 			if self.running:self.timer.singleShot(100,self.run)
-		except Exception,e:
+		except Exception as e:
 			print (e)
-
 	def saveData(self):
 		self.saveDataWindow([self.curve1,self.curve2,self.curve3],self.plot)
 

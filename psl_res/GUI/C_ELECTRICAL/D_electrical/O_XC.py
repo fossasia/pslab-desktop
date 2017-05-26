@@ -12,12 +12,11 @@
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from templates import template_xc
+from templates import ui_template_xc as template_xc
 
 import numpy as np
 from PyQt4 import QtGui,QtCore
-import pyqtgraph as pg
-import sys,functools,time
+import sys,time
 
 params = {
 'image' : 'XCi.png',
@@ -34,7 +33,6 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		super(AppWindow, self).__init__(parent)
 		self.setupUi(self)
 		self.I=kwargs.get('I',None)
-		
 		self.setWindowTitle(self.I.H.version_string+' : '+params.get('name','').replace('\n',' ') )
 
 		self.plot1=self.add2DPlot(self.plot_area)
@@ -79,7 +77,6 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		self.acquireParams = False
 		self.currentRow=0
 		self.running=True
-		
 		self.plotAButton.setText('F vs Xc')
 		self.plotBButton.setText('F vs 1/Xc')
 		self.splitter.setSizes([10,1000])
@@ -102,8 +99,6 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		self.p2.setLimits(yMax=8/self.resistance.value(),yMin=-8/self.resistance.value(),xMin=0,xMax=self.samples*self.tg*1e-6)
 		return self.samples*self.tg*1e-6
 
-
-
 	def fit(self):
 		print ("Adding...")
 		self.acquireParams = True
@@ -116,7 +111,7 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 		self.I.capture_traces(2,self.samples,self.tg)
 		if self.running:self.timer.singleShot(self.samples*self.I.timebase*1e-3+50,self.plotData)
 
-	def plotData(self): 
+	def plotData(self):
 		while(not self.I.oscilloscope_progress()[0]):
 			time.sleep(0.1);n=0
 			print (self.I.timebase,'correction required',n)
@@ -137,8 +132,8 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 			pars1 = self.CC.sineFit(T,VC)
 			pars2 = self.CC.sineFit(T,I)#,freq=self.frq)
 			if pars1 and pars2:
-				a1,f1,o1,p1 = pars1
-				a2,f2,o2,p2 = pars2
+				a1,f1,_,p1 = pars1
+				a2,f2,_,p2 = pars2
 				f1=f1*1e-6
 				f2=f2*1e-6
 				if (a2 and a1) and (abs(f2-self.I.sine1freq)<10) and (abs(f1-self.I.sine1freq)<10):
@@ -168,7 +163,7 @@ class AppWindow(QtGui.QMainWindow, template_xc.Ui_MainWindow,utilitiesClass):
 
 	def plotB(self):
 		F,XC = self.fetchColumns(self.resultsTable,0,3)
-		self.newPlot(F,1./np.array(XC),title = "F vs 1/XC: ",xLabel = 'F',yLabel='1/XC')        
+		self.newPlot(F,1./np.array(XC),title = "F vs 1/XC: ",xLabel = 'F',yLabel='1/XC')
 
 	def saveFile(self):
 		self.saveToCSV(self.resultsTable)
