@@ -242,10 +242,7 @@ class AppWindow(QtGui.QMainWindow, ADS1115calibrator.Ui_MainWindow):
 
 		self.curves['DAC2']=pg.PlotCurveItem(pen=pg.mkPen([255,0,255], width=2),name='DAC2')
 		self.plot.addItem(self.curves['DAC2'])
-
 		#item = self.addLabel('DAC2',[255,255,255]); self.curves['DAC2'].setClickable(True);	self.curves['DAC2'].sigClicked.connect(functools.partial(self.selectItem,item))
-
-		
 		for a in self.INPUTS:
 			self.curves[a]={}
 			if self.I.analogInputSources[a].gainEnabled:
