@@ -1,3 +1,8 @@
+<!-- _includes/base.html -->
+
+
+
+
 <!DOCTYPE html>
 	<html>
 		<head>
@@ -9,9 +14,9 @@
 			<title>PSLab help</title>
 			
 			<!-- core CSS -->
-			<link href="/css/bootstrap.min.css" rel="stylesheet">
-			<link href="/css/main.css" rel="stylesheet">
-			<link href="/css/highlight.css" rel="stylesheet">
+			<link href="../css/bootstrap.min.css" rel="stylesheet">
+			<link href="../css/main.css" rel="stylesheet">
+			<link href="../css/highlight.css" rel="stylesheet">
 		</head>
 
 <body class="homepage">
@@ -21,12 +26,12 @@
 	<nav class="navbar navbar-inverse"  role="banner">
 	  <div class="container-fluid">
 	    <div class="navbar-header pull-left">
-	            <a class="navbar-brand" href="/index.html"><img src="/images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
+	            <a class="navbar-brand" href="../index.html"><img src="../images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
-                        <li ><a href="/index.html">Home</a></li>
-                        <li ><a href="/utilities/">Utilities</a></li>
-                        <li ><a href="/apps/">Experiments</a></li>
+                        <li ><a href="../index.html">Home</a></li>
+                        <li ><a href="../utilities/index.html">Utilities</a></li>
+                        <li ><a href="../apps/index.html">Experiments</a></li>
 	    </ul>
 	    <!--
 	    <form class="navbar-form navbar-left">
@@ -43,10 +48,20 @@
 		
     </header><!--/header-->
 
-		<div id="mySidenav" class="sidenav">
+		<!-- _includes/base.html -->
+
+
+
+
+<!-- _includes/base.html -->
+
+
+
+
+<div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="/utilities/"> Utilities Section </a>
-  <a href="/apps/"> Experiments Section </a>
+  <a href="../utilities/index.html"> Utilities Section </a>
+  <a href="../apps/index.html"> Experiments Section </a>
   <hr>
   <ul>
 	  
@@ -56,7 +71,7 @@
   <hr>
   <ul>
 	  
-		<li><a href="/apps/astable-multivibrator" title="Astable Multivibrator">Astable Multivibrator</a></li>
+		<li><a href="../apps/astable-multivibrator.html" title="Astable Multivibrator">Astable Multivibrator</a></li>
 	  
 		
 	  
@@ -100,18 +115,8 @@
 
 	
 
-  <blockquote>
-  <p>A block quote <br />
-line 2 <br />
-line 3</p>
-</blockquote>
-
-<h3 id="sine-wave-plot">Sine wave plot</h3>
+  <h3 id="sine-wave-plot-example">Sine wave plot example</h3>
 <hr />
-
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Hello world<span class="nt">&lt;/a&gt;</span>
-</code></pre>
-</div>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -128,7 +133,7 @@ line 3</p>
 <script type="text/javascript">
 var linkElement = document.createElement("link");
 linkElement.rel = "stylesheet";
-linkElement.href = "/css/leftnav.css"; 
+linkElement.href = "../css/leftnav.css"; 
 document.head.appendChild(linkElement);
 
 function openNav() {
