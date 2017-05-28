@@ -6,6 +6,8 @@ active: apps
 ---
 
 
+![]("images/accessories.png")
+![]("images/schematic.svg")
 
 ```python
 #code snippet example
