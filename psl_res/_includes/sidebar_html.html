@@ -1,17 +1,18 @@
+{% include base_url.html %}
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="/utilities/"> Utilities Section </a>
-  <a href="/apps/"> Experiments Section </a>
+  <a href="{{base}}/utilities/index.html"> Utilities Section </a>
+  <a href="{{base}}/apps/index.html"> Experiments Section </a>
   <hr>
   <ul>
 	  {% for p in site.utilities %}
-		{% if p.title!="index" %}<li><a href="{{ p.url }}" title="{{ p.title }}">{{p.title}}</a></li>{% endif %}
+		{% if p.title!="index" %}<li><a href="{{base}}{{ p.url }}.html" title="{{ p.title }}">{{p.title}}</a></li>{% endif %}
 	  {% endfor %}
   </ul>
   <hr>
   <ul>
 	  {% for p in site.apps %}
-		{% if p.active == "" or p.active == nil %}<li><a href="{{ p.url }}" title="{{ p.title }}">{{p.title}}</a></li>{% endif %}
+		{% if p.active == "" or p.active == nil %}<li><a href="{{base}}{{ p.url }}.html" title="{{ p.title }}">{{p.title}}</a></li>{% endif %}
 	  {% endfor %}
   </ul>
 
