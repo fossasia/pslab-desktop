@@ -1,3 +1,4 @@
+{% include base_url.html %}
 <!DOCTYPE html>
 	<html>
 		<head>
@@ -9,9 +10,9 @@
 			<title>PSLab help</title>
 			
 			<!-- core CSS -->
-			<link href="/css/bootstrap.min.css" rel="stylesheet">
-			<link href="/css/main.css" rel="stylesheet">
-			<link href="/css/highlight.css" rel="stylesheet">
+			<link href="{{base}}/css/bootstrap.min.css" rel="stylesheet">
+			<link href="{{base}}/css/main.css" rel="stylesheet">
+			<link href="{{base}}/css/highlight.css" rel="stylesheet">
 		</head>
 
 <body class="homepage">
@@ -21,12 +22,12 @@
 	<nav class="navbar navbar-inverse"  role="banner">
 	  <div class="container-fluid">
 	    <div class="navbar-header pull-left">
-	            <a class="navbar-brand" href="/index.html"><img src="/images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
+	            <a class="navbar-brand" href="{{base}}/index.html"><img src="{{base}}/images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
-                        <li {% if page.active == "home" %}class="active"{% endif %}><a href="/index.html">Home</a></li>
-                        <li {% if page.active == "utilities" %}class="active"{% endif %}><a href="/utilities/">Utilities</a></li>
-                        <li {% if page.active == "apps" %}class="active"{% endif %}><a href="/apps/">Experiments</a></li>
+                        <li {% if page.active == "home" %}class="active"{% endif %}><a href="{{base}}/index.html">Home</a></li>
+                        <li {% if page.active == "utilities" %}class="active"{% endif %}><a href="{{base}}/utilities/index.html">Utilities</a></li>
+                        <li {% if page.active == "apps" %}class="active"{% endif %}><a href="{{base}}/apps/index.html">Experiments</a></li>
 	    </ul>
 	    <!--
 	    <form class="navbar-form navbar-left">
