@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>index</title>
+			<title>Diode IV</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -31,7 +31,7 @@
 	    <ul class="nav navbar-nav pull-left">
                         <li ><a href="../index.html">Home</a></li>
                         <li ><a href="../utilities/index.html">Utilities</a></li>
-                        <li class="active"><a href="../apps/index.html">Experiments</a></li>
+                        <li ><a href="../apps/index.html">Experiments</a></li>
 	    </ul>
 	    <!--
 	    <form class="navbar-form navbar-left">
@@ -91,23 +91,24 @@
 <div id="main">
 
 	
+	<div class="center wow fadeInDown">
+		<br><h2>Diode IV</h2>
+		<p class="lead"> Diode I-V Characteristics</p>
+	</div>    
+	
 
 	<section id="recent-works">
 		<div class="container">
 			
 
-  <p><img src="&quot;images/accessories.png&quot;" alt="" />
-<img src="&quot;images/schematic.svg&quot;" alt="" /></p>
+  <p><img src="images/schematics/diodeIV.svg" alt="" width="400px" /></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#code snippet example</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<p>Connect the Diode from CH3 to Ground.
+Connect a 1k resistor from PV1 to CH3.</p>
 
-<span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">show</span><span class="p">()</span>
-</code></pre>
-</div>
+<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH3, and the known value of the resistor
+Acquired plots can be selectively displayed or deleted.</p>
+
 
 
 </div>
