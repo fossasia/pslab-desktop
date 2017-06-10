@@ -1,15 +1,15 @@
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>index</title>
-  </head>
-  <body style = "background-color:#fff">Diode I-V Characteristics<br>
+---
+layout: expt
+title: Diode IV
+date: 2017-06-10
+description: Diode I-V Characteristics
+---
 
-	<img src="images/diodeIV.svg" width="100%"><br>
-    Connect the Diode from CH1 to Ground.<br>
-    Connect a 1k resistor from PV1 to CH1<br>
-    <br>
-    PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor<br>
-    Acquired plots can be selectively displayed or deleted.<br>
-  </body>
-</html>
+![](images/schematics/diodeIV.svg){: width="400px"}
+
+Connect the Diode from CH3 to Ground.
+Connect a 1k resistor from PV1 to CH3.
+
+PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH3, and the known value of the resistor
+Acquired plots can be selectively displayed or deleted.
+
