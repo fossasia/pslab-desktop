@@ -18,4 +18,3 @@ Acquired plots can be selectively displayed or deleted.
 ![](images/screenshots/diodeIV.png){: width="700px"}
 
 
-
