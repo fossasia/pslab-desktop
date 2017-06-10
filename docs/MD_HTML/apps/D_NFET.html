@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>AC Generator</title>
+			<title>N-channel FET</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -94,8 +94,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>AC Generator</h2>
-		<p class="lead"> Make an AC generator using a magnet and a coil</p>
+		<br><h2>N-channel FET</h2>
+		<p class="lead"> Dependence of drain current on D-S voltage, and Gate Voltage</p>
 	</div>    
 	
 
@@ -103,17 +103,18 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/acgen.png" alt="" /></p>
+  <p><img src="images/schematics/njfet.svg" alt="" width="400px" /></p>
 
-<p>Make the connections to the solenoid as shown in the figure.<br />
-Now rotate a magnet on the plane containing its magnetic axis, and bring the solenoid close to it such that its axis is also parallel to this plane. Use the picture shown as a reference.<br />
-Observe the plot of the induced EMF, and calculate its time period. This time period should correspond to the RPM of the magnet.</p>
+<h2 id="dependence-of-drain-current-on-d-s-voltage-and-gate-voltage">Dependence of drain current on D-S voltage, and Gate Voltage</h2>
 
-<p>You may also mount the magnet on a dc motor in order to rotate it at a fairly constant speed. 
-Now monitor the induced waveform using the oscilloscope, and use the sine fit function to extract
-the frequency of the waveform. This should correspond with the rotational frequency of the magnet</p>
+<p>Set the gate voltage for various values between 0, and -2 V , and observe the effect on saturation current<br /></p>
 
-<p>Use the stroboscopic effect to verify that the motor is indeed spinning at this frequency.</p>
+<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor(560 ohms)
+Acquired plots can be selectively displayed or deleted.<br /></p>
+
+<h2 id="screenshot">screenshot</h2>
+
+<p><img src="images/screenshots/njfet.png" alt="" width="700px" /></p>
 
 
 
