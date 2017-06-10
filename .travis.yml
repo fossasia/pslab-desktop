@@ -43,6 +43,12 @@ install:
     - make
     - sudo make install
     - popd
+    #pslab-python
+    - git clone https://github.com/fossasia/pslab-python.git
+    - pushd pslab-python
+    - sudo make install
+    - popd
+    - popd
     - make
 
 
