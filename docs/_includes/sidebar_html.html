@@ -1,0 +1,20 @@
+{% include base_url.html %}
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="{{base}}/utilities/index.html"> Utilities Section </a>
+  <a href="{{base}}/apps/index.html"> Experiments Section </a>
+  <hr>
+  <ul>
+	  {% for p in site.utilities %}
+		{% if p.title!="index" %}<li><a href="{{base}}{{ p.url }}.html" title="{{ p.title }}">{{p.title}}</a></li>{% endif %}
+	  {% endfor %}
+  </ul>
+  <hr>
+  <ul>
+	  {% for p in site.apps %}
+		{% if p.active == "" or p.active == nil %}<li><a href="{{base}}{{ p.url }}.html" title="{{ p.title }}">{{p.title}}</a></li>{% endif %}
+	  {% endfor %}
+  </ul>
+
+</div>
+<div style="padding:10px;"><span id="menubutton" style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776; Experiments</span></div>

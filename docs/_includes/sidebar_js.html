@@ -1,0 +1,19 @@
+<script type="text/javascript">
+var linkElement = document.createElement("link");
+linkElement.rel = "stylesheet";
+linkElement.href = "{{base}}/css/leftnav.css"; 
+document.head.appendChild(linkElement);
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.getElementById("menubutton").style.visibility = "hidden";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("menubutton").style.visibility = "visible";
+}
+
+</script>
