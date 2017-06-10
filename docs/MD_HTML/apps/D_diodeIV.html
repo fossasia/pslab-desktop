@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>AC Generator</title>
+			<title>Diode IV</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -94,8 +94,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>AC Generator</h2>
-		<p class="lead"> Make an AC generator using a magnet and a coil</p>
+		<br><h2>Diode IV</h2>
+		<p class="lead"> Diode I-V Characteristics</p>
 	</div>    
 	
 
@@ -103,17 +103,17 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/acgen.png" alt="" /></p>
+  <p><img src="images/schematics/diodeIV.svg" alt="" width="400px" /></p>
 
-<p>Make the connections to the solenoid as shown in the figure.<br />
-Now rotate a magnet on the plane containing its magnetic axis, and bring the solenoid close to it such that its axis is also parallel to this plane. Use the picture shown as a reference.<br />
-Observe the plot of the induced EMF, and calculate its time period. This time period should correspond to the RPM of the magnet.</p>
+<p>Connect the Diode from CH3 to Ground.
+Connect a 1k resistor from PV1 to CH3.</p>
 
-<p>You may also mount the magnet on a dc motor in order to rotate it at a fairly constant speed. 
-Now monitor the induced waveform using the oscilloscope, and use the sine fit function to extract
-the frequency of the waveform. This should correspond with the rotational frequency of the magnet</p>
+<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH3, and the known value of the resistor
+Acquired plots can be selectively displayed or deleted.</p>
 
-<p>Use the stroboscopic effect to verify that the motor is indeed spinning at this frequency.</p>
+<h2 id="screenshot">screenshot</h2>
+
+<p><img src="images/screenshots/diodeIV.png" alt="" width="700px" /></p>
 
 
 
