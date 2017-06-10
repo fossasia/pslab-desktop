@@ -19,3 +19,4 @@ Acquired plots can be selectively displayed or deleted.<br>
 
 ![](images/screenshots/njfet.png){: width="700px"}
 
+
