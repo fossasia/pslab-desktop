@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>AC Generator</title>
+			<title>Transistor CE</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -98,8 +98,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>AC Generator</h2>
-		<p class="lead"> Make an AC generator using a magnet and a coil</p>
+		<br><h2>Transistor CE</h2>
+		<p class="lead"> Output characteristics of transistors in the common emitter configuration</p>
 	</div>    
 	
 
@@ -107,17 +107,15 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/acgen.png" alt="" /></p>
+  <h2 id="output-characteristics">Output Characteristics</h2>
+<p><img src="images/schematics/tranCE.svg" alt="" width="300px" /></p>
 
-<p>Make the connections to the solenoid as shown in the figure.<br />
-Now rotate a magnet on the plane containing its magnetic axis, and bring the solenoid close to it such that its axis is also parallel to this plane. Use the picture shown as a reference.<br />
-Observe the plot of the induced EMF, and calculate its time period. This time period should correspond to the RPM of the magnet.</p>
+<p>Make the connections as shown in the figure.</p>
 
-<p>You may also mount the magnet on a dc motor in order to rotate it at a fairly constant speed. 
-Now monitor the induced waveform using the oscilloscope, and use the sine fit function to extract
-the frequency of the waveform. This should correspond with the rotational frequency of the magnet</p>
+<p>Select a voltage at PV2, for setting base current. This voltage, in combination with the 200K series resistor acts as a passive constant current source
+the Collector voltage and current are measured by the program and plotted in real time.</p>
 
-<p>Use the stroboscopic effect to verify that the motor is indeed spinning at this frequency.</p>
+<p>An ammeter is not shown , but current is calculated using the measured voltage drop across the known resistor. I = (PV1-CH1)/1k</p>
 
 
 
