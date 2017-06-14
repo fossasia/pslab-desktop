@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>AC Generator</title>
+			<title>resistors</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -96,8 +96,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>AC Generator</h2>
-		<p class="lead"> Make an AC generator using a magnet and a coil</p>
+		<br><h2>resistors</h2>
+		<p class="lead"> Elementary experiments with resistors</p>
 	</div>    
 	
 
@@ -105,18 +105,48 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/acgen.png" alt="" /></p>
+  <h2 id="study-how-resistors-behave-in-combination">Study how resistors behave in combination</h2>
 
-<p>Make the connections to the solenoid as shown in the figure.<br />
-Now rotate a magnet on the plane containing its magnetic axis, and bring the solenoid close to it such that its axis is also parallel to this plane. Use the picture shown as a reference.<br />
-Observe the plot of the induced EMF, and calculate its time period. This time period should correspond to the RPM of the magnet.</p>
+<p>Measure the values of the resistors by individually connecting them between SEN and GND, and note these.<br /></p>
 
-<p>You may also mount the magnet on a dc motor in order to rotate it at a fairly constant speed. 
-Now monitor the induced waveform using the oscilloscope, and use the sine fit function to extract
-the frequency of the waveform. This should correspond with the rotational frequency of the magnet</p>
+<p><img src="images/schematics/RMeasure.svg" alt="" width="300px" /></p>
 
-<p>Use the stroboscopic effect to verify that the motor is indeed spinning at this frequency.</p>
+<h2 id="in-series">In Series</h2>
 
+<p>Connect the two resistors in series as shown below, and observe the combined resistance. Rtotal = R1+R2.<br /></p>
+
+<p><img src="images/schematics/RSeriesSimple.svg" alt="" width="300px" /></p>
+
+<h2 id="in-parallel">In Parallel</h2>
+
+<p>Now connect them in parallel, and confirm that <br /></p>
+
+<p><img src="images/schematics/RParallelFormula.gif" alt="" width="300px" /></p>
+
+<p><img src="images/schematics/RParallelSimple.svg" alt="" width="300px" /></p>
+
+<h2 id="calculate-net-resistance-of-resistors-connected-in-parallel">Calculate net resistance of resistors connected in parallel.</h2>
+
+<script>
+function cal2(){
+	var r1,r2,deno,num;
+	r1 = document.form2.r1.value;
+	r2 = document.form2.r2.value;
+	num = r1*r2;
+	deno = parseInt(r1)+parseInt(r2);
+	console.log(r1,r2,num,deno);
+	document.form2.answer.value=num/deno;
+}
+</script>
+
+<form name="form2">
+R1  :<input type="text" size="20" name="r1" value="1000" />Ohms<br />
+R2  :<input type="text" size="20" name="r2" value="1000" />Ohms<br />
+<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
+Total Resistance:<input type="text" size="20" name="answer" />Ohms<br />
+</form>
+
+<h3>.</h3>
 
 
 </div>
