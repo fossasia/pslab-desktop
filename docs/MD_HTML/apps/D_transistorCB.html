@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>resistors</title>
+			<title>Transistor CB</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -102,8 +102,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>resistors</h2>
-		<p class="lead"> Elementary experiments with resistors</p>
+		<br><h2>Transistor CB</h2>
+		<p class="lead"> Common base characteristics of transistors</p>
 	</div>    
 	
 
@@ -111,48 +111,17 @@
 		<div class="container">
 			
 
-  <h2 id="study-how-resistors-behave-in-combination">Study how resistors behave in combination</h2>
+  <h2 id="circuit-diagram">Circuit Diagram</h2>
+<p><img src="images/schematics/tranCB.svg" alt="" width="300px" /></p>
 
-<p>Measure the values of the resistors by individually connecting them between SEN and GND, and note these.<br /></p>
+<p>Make the connections as shown in the figure.</p>
 
-<p><img src="images/schematics/RMeasure.svg" alt="" width="300px" /></p>
+<p>Select a voltage at PV2, for setting emitter current.</p>
 
-<h2 id="in-series">In Series</h2>
+<p>the Collector voltage and current are measured by the program and plotted in real time.</p>
 
-<p>Connect the two resistors in series as shown below, and observe the combined resistance. Rtotal = R1+R2.<br /></p>
+<p>An ammeter is not shown , but current is calculated using the measured voltage drop across the known resistor. I = (PV1-CH1)/1k</p>
 
-<p><img src="images/schematics/RSeriesSimple.svg" alt="" width="300px" /></p>
-
-<h2 id="in-parallel">In Parallel</h2>
-
-<p>Now connect them in parallel, and confirm that <br /></p>
-
-<p><img src="images/schematics/RParallelFormula.gif" alt="" width="300px" /></p>
-
-<p><img src="images/schematics/RParallelSimple.svg" alt="" width="300px" /></p>
-
-<h2 id="calculate-net-resistance-of-resistors-connected-in-parallel">Calculate net resistance of resistors connected in parallel.</h2>
-
-<script>
-function cal2(){
-	var r1,r2,deno,num;
-	r1 = document.form2.r1.value;
-	r2 = document.form2.r2.value;
-	num = r1*r2;
-	deno = parseInt(r1)+parseInt(r2);
-	console.log(r1,r2,num,deno);
-	document.form2.answer.value=num/deno;
-}
-</script>
-
-<form name="form2">
-R1  :<input type="text" size="20" name="r1" value="1000" />Ohms<br />
-R2  :<input type="text" size="20" name="r2" value="1000" />Ohms<br />
-<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
-Total Resistance:<input type="text" size="20" name="answer" />Ohms<br />
-</form>
-
-<h3>.</h3>
 
 
 </div>
