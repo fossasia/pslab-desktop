@@ -49,9 +49,10 @@ install:
     # Doesn't work
     #- sudo make install
     # Also doesn't work. installs to /usr/... library not found
-    #- sudo python setup.py install
+    - sudo python setup.py install
     #This had better work. explicitly adding pslab-python to the path variable
-    - export PATH=$PATH:$PWD/
+
+    - cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python2.7.13/lib/python2.7/site-packages/     
     - popd
     - popd
     - make
