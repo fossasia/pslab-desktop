@@ -1,21 +1,29 @@
+---
+layout: expt
+title: Dust Sensor
+date: 2017-05-28
+description: Measure particulate matter concentration using the DSM501A sensor
+---
 
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>index</title>
-  </head>
-  <body style = "background-color:#fff"><br>
+## DSM501A Dust Sensor
 
-	<h3>DSM501A Dust Sensor</h3>
-	<a href="https://www.elecrow.com/wiki/images/3/3a/DSM501.pdf">Data sheet</a> <br><br>
-	Make the Connections as following.<br>
-	PIN #2 -> ID1 <br>
-	PIN #3 -> 5V / SQR1 <br>
-	PIN #5 -> GND <br>
-	ID1 monitors the PWM output of the sensor and calculates the occupancy.<br><br>
+[Data Sheet](https://www.elecrow.com/wiki/images/3/3a/DSM501.pdf)
 
-	<h3>Screenshot : Dust concentration indoors</h3>
-	<img src="screenshots/PSL_DSM501A.png" style="max-width:800px;width:100%"><br>
-	
-  </body>
-</html>
+Make the Connections as following.
++ PIN #2 -> ID1 . This is the actual signal
++ PIN #3 -> 5V / SQR1 . If SQR1 is selected, it must be set to HIGH via the advanced controls tab
++ PIN #5 -> GND 
+
+ID1 monitors the PWM output of the sensor and calculates the occupancy ratio. The integration time is the amount of time over which the occupancy is measured. It can be a maximum of 60 seconds.
+
+
+## Photograph : DSM501a
+
+![](images/photographs/dsm501a.jpg ){: width="300px"}
+
+
+## Screenshot : Dust concentration indoors
+
+![](images/screenshots/PSL_DSM501A.png ){: width="700px"}
+
+

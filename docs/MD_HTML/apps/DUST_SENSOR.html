@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Astable Multivibrator</title>
+			<title>Dust Sensor</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -102,47 +102,35 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Astable Multivibrator</h2>
-		<p class="lead"> Multivibrator circuit using a pair of transistors</p>
+		<br><h2>Dust Sensor</h2>
+		<p class="lead"> Measure particulate matter concentration using the DSM501A sensor</p>
 	</div>    
 	
 
 	<section id="recent-works">
 		<div class="container">
 			
-			<div class="row" >
-				<div class=" col-xs-12 col-sm-6 col-md-6">
-					<img class="img-responsive" style="bottom:0px;" src="images/screenshots/astable-multivibrator.png">
-					<h3 style="text-align:center;">Screenshot</h3>
-				</div>		
-				<div class=" col-xs-12 col-sm-6 col-md-6">
-					<img class="img-responsive" style="bottom:0px;" src="images/photographs/astable-multivibrator.png">
-					<h3 style="text-align:center;">Photograph</h3>
-				</div>		
-			</div>
 
-			<div class="row" >
-				<div >
-					<img class="img-responsive" style="bottom:0px; width:500px" src="images/schematics/astable-multivibrator.svg">
-					<h3 style="text-align:center;">Schematic</h3>
-				</div>		
-			</div>
+  <h2 id="dsm501a-dust-sensor">DSM501A Dust Sensor</h2>
 
-		</div>
-	</section>
+<p><a href="https://www.elecrow.com/wiki/images/3/3a/DSM501.pdf">Data Sheet</a></p>
 
-	
+<p>Make the Connections as following.</p>
+<ul>
+  <li>PIN #2 -&gt; ID1 . This is the actual signal</li>
+  <li>PIN #3 -&gt; 5V / SQR1 . If SQR1 is selected, it must be set to HIGH via the advanced controls tab</li>
+  <li>PIN #5 -&gt; GND</li>
+</ul>
 
-  <h3 id="sine-wave-plot-example">Sine wave plot example</h3>
-<hr />
+<p>ID1 monitors the PWM output of the sensor and calculates the occupancy ratio. The integration time is the amount of time over which the occupancy is measured. It can be a maximum of 60 seconds.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sine</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">show</span><span class="p">()</span>
-</code></pre>
-</div>
+<h2 id="photograph--dsm501a">Photograph : DSM501a</h2>
+
+<p><img src="images/photographs/dsm501a.jpg" alt="" width="300px" /></p>
+
+<h2 id="screenshot--dust-concentration-indoors">Screenshot : Dust concentration indoors</h2>
+
+<p><img src="images/screenshots/PSL_DSM501A.png" alt="" width="700px" /></p>
 
 
 

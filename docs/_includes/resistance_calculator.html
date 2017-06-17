@@ -1,0 +1,23 @@
+## Calculate net resistance of resistors connected in parallel.
+
+
+<script>
+function cal2(){
+	var r1,r2,deno,num;
+	r1 = document.form2.r1.value;
+	r2 = document.form2.r2.value;
+	num = r1*r2;
+	deno = parseInt(r1)+parseInt(r2);
+	console.log(r1,r2,num,deno);
+	document.form2.answer.value=num/deno;
+}
+</script>
+
+
+<form name="form2">
+R1  :<input type="text" size="20" name="r1" value = "1000">Ohms<br>
+R2  :<input type="text" size="20" name="r2" value = "1000">Ohms<br>
+<input type="button" name="B1" value="Calculate" onclick="cal2()"><br>
+Total Resistance:<input type="text" size="20" name="answer">Ohms<br>
+</form>
+

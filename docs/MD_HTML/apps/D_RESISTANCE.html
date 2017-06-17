@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Astable Multivibrator</title>
+			<title>resistors</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -102,48 +102,57 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Astable Multivibrator</h2>
-		<p class="lead"> Multivibrator circuit using a pair of transistors</p>
+		<br><h2>resistors</h2>
+		<p class="lead"> Elementary experiments with resistors</p>
 	</div>    
 	
 
 	<section id="recent-works">
 		<div class="container">
 			
-			<div class="row" >
-				<div class=" col-xs-12 col-sm-6 col-md-6">
-					<img class="img-responsive" style="bottom:0px;" src="images/screenshots/astable-multivibrator.png">
-					<h3 style="text-align:center;">Screenshot</h3>
-				</div>		
-				<div class=" col-xs-12 col-sm-6 col-md-6">
-					<img class="img-responsive" style="bottom:0px;" src="images/photographs/astable-multivibrator.png">
-					<h3 style="text-align:center;">Photograph</h3>
-				</div>		
-			</div>
 
-			<div class="row" >
-				<div >
-					<img class="img-responsive" style="bottom:0px; width:500px" src="images/schematics/astable-multivibrator.svg">
-					<h3 style="text-align:center;">Schematic</h3>
-				</div>		
-			</div>
+  <h2 id="study-how-resistors-behave-in-combination">Study how resistors behave in combination</h2>
 
-		</div>
-	</section>
+<p>Measure the values of the resistors by individually connecting them between SEN and GND, and note these.<br /></p>
 
-	
+<p><img src="images/schematics/RMeasure.svg" alt="" width="300px" /></p>
 
-  <h3 id="sine-wave-plot-example">Sine wave plot example</h3>
-<hr />
+<h2 id="in-series">In Series</h2>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sine</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">show</span><span class="p">()</span>
-</code></pre>
-</div>
+<p>Connect the two resistors in series as shown below, and observe the combined resistance. Rtotal = R1+R2.<br /></p>
 
+<p><img src="images/schematics/RSeriesSimple.svg" alt="" width="300px" /></p>
+
+<h2 id="in-parallel">In Parallel</h2>
+
+<p>Now connect them in parallel, and confirm that <br /></p>
+
+<p><img src="images/schematics/RParallelFormula.gif" alt="" width="300px" /></p>
+
+<p><img src="images/schematics/RParallelSimple.svg" alt="" width="300px" /></p>
+
+<h2 id="calculate-net-resistance-of-resistors-connected-in-parallel">Calculate net resistance of resistors connected in parallel.</h2>
+
+<script>
+function cal2(){
+	var r1,r2,deno,num;
+	r1 = document.form2.r1.value;
+	r2 = document.form2.r2.value;
+	num = r1*r2;
+	deno = parseInt(r1)+parseInt(r2);
+	console.log(r1,r2,num,deno);
+	document.form2.answer.value=num/deno;
+}
+</script>
+
+<form name="form2">
+R1  :<input type="text" size="20" name="r1" value="1000" />Ohms<br />
+R2  :<input type="text" size="20" name="r2" value="1000" />Ohms<br />
+<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
+Total Resistance:<input type="text" size="20" name="answer" />Ohms<br />
+</form>
+
+<h3>.</h3>
 
 
 </div>
