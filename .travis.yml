@@ -46,8 +46,12 @@ install:
     #pslab-python
     - git clone https://github.com/fossasia/pslab-python.git
     - pushd pslab-python
+    # Doesn't work
     #- sudo make install
-    - sudo python setup.py install
+    # Also doesn't work. installs to /usr/... library not found
+    #- sudo python setup.py install
+    #This had better work. explicitly adding pslab-python to the path variable
+    - export PATH=$PATH:$PWD/
     - popd
     - popd
     - make
