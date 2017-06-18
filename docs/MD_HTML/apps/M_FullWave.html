@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>index</title>
+			<title>Full-Wave Rectifier</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -31,7 +31,7 @@
 	    <ul class="nav navbar-nav pull-left">
                         <li ><a href="../index.html">Home</a></li>
                         <li ><a href="../utilities/index.html">Utilities</a></li>
-                        <li class="active"><a href="../apps/index.html">Experiments</a></li>
+                        <li ><a href="../apps/index.html">Experiments</a></li>
 	    </ul>
 	    <!--
 	    <form class="navbar-form navbar-left">
@@ -105,23 +105,26 @@
 <div id="main">
 
 	
+	<div class="center wow fadeInDown">
+		<br><h2>Full-Wave Rectifier</h2>
+		<p class="lead"> Study a fullwave rectifier using the sine wave generators</p>
+	</div>    
+	
 
 	<section id="recent-works">
 		<div class="container">
 			
 
-  <p><img src="&quot;images/accessories.png&quot;" alt="" />
-<img src="&quot;images/schematic.svg&quot;" alt="" /></p>
+  <p><img src="images/schematics/fullwave.svg" alt="" width="300px" /></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#code snippet example</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<p>Full wave rectifiers combine the positive halves of 180 degree out of phase input waveforms such as those output from AC transformers with a center tap.</p>
 
-<span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">show</span><span class="p">()</span>
-</code></pre>
-</div>
+<p>The rectified signal can be further filtered with a capacitor in order to obtain a low ripple DC voltage.</p>
+
+<p>In case a transformer is not available, the sine wave generators of the PSLab can be to the same frequency, but with 180 degree phase difference in order to behave like one.</p>
+
+<p>Two diodes are used to clip out the negative parts of both inputs, and combine them into a single output which is always in the positive region.</p>
+
 
 
 </div>
