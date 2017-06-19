@@ -1,18 +1,31 @@
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>index</title>
-  </head>
-  <body style = "background-color:#fff">Half Wave Rectifier<br>
+---
+layout: expt
+title: Half-Wave Rectifier
+date: 2017-06-18
+description: Study a halfwave rectifier using a sine wave generator
+---
 
-	<img src="images/halfwave.svg" width="100%"><br>
+Half wave rectifiers clip out the negative part of the input waveform. The rectified signal can be further filtered with a capacitor in order to obtain a low ripple DC voltage.
 
-	Make the Connections as shown in the figure.<br>
-	CH1 monitors the original waveform output from W1.<br>
-	CH2 monitors the rectified waveform .<br><br>
-	Connect a load resistor to remove noise from the output.<br>
-	to observe the effect of filtering, connect a capacitor to GND.<br>
-	Connect various capacitors to study how their values affect the output signal.
-	
-  </body>
-</html>
+Only a diode is needed to clip out the negative part of the input signal.
+
+
+![](images/schematics/halfwave.svg){:width="300px"}
+
+
+Make the Connections as shown in the figure.
+
+CH1 monitors the original waveform output from W1.
+
+CH2 monitors the rectified waveform .
+
+Connect a load resistor to remove noise from the output.
+
+to observe the effect of filtering, connect a capacitor to GND.
+
+Connect various capacitors to study how their values affect the output signal.
+
+
+
+
+
