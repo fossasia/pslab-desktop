@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Diode IV</title>
+			<title>Ramp Generator</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -110,8 +110,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Diode IV</h2>
-		<p class="lead"> Diode I-V Characteristics</p>
+		<br><h2>Ramp Generator</h2>
+		<p class="lead"> Create a linear ramp-generator</p>
 	</div>    
 	
 
@@ -119,17 +119,19 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/diodeIV.svg" alt="" width="400px" /></p>
+  <h2 id="introduction">Introduction</h2>
 
-<p>Connect the Diode from CH3 to Ground.
-Connect a 1k resistor from PV1 to CH3.</p>
+<p>This ramp generator creates a linearly rising voltage output when triggered with a rising edge input pulse</p>
 
-<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH3, and the known value of the resistor
-Acquired plots can be selectively displayed or deleted.</p>
+<p><img src="images/schematics/rampgen.svg" alt="" width="300px" /></p>
 
-<h2 id="screenshot">screenshot</h2>
+<ul>
+  <li>Make the Connections as shown in the figure.</li>
+  <li>Click on RUN . This sets SQR1 to HIGH, and CH1 monitors the ramp output.</li>
+  <li>After acquiring data, SQR1 is set to LOW automatically</li>
+</ul>
 
-<p><img src="images/screenshots/diodeIV.png" alt="" width="700px" /></p>
+<p><img src="images/screenshots/rampgen.png" alt="" width="600px" /></p>
 
 
 
