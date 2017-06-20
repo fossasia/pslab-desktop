@@ -1,15 +1,20 @@
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>index</title>
-  </head>
-  <body style = "background-color:#fff">Op-Amps : Ramp Generator<br>
+---
+layout: expt
+title: Ramp Generator
+date: 2017-05-28
+description: Create a linear ramp-generator
+---
 
-	<img src="images/rampgen.svg" width="100%"><br>
+## Introduction
 
-	Make the Connections as shown in the figure.<br>
-	Click on RUN . This sets SQR1 to HIGH, and CH1 monitors the ramp output.<br>
-	After acquiring data, SQR1 is set to LOW automatically <br>
+This ramp generator creates a linearly rising voltage output when triggered with a rising edge input pulse
 
-  </body>
-</html>
+![](images/schematics/rampgen.svg ){: width="300px"}
+
++ Make the Connections as shown in the figure.
++ Click on RUN . This sets SQR1 to HIGH, and CH1 monitors the ramp output.
++ After acquiring data, SQR1 is set to LOW automatically 
+
+
+![](images/screenshots/rampgen.png ){: width="600px"}
+

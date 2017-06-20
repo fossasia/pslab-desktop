@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Diode IV</title>
+			<title>Precision Rectifier</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -110,8 +110,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Diode IV</h2>
-		<p class="lead"> Diode I-V Characteristics</p>
+		<br><h2>Precision Rectifier</h2>
+		<p class="lead"> Precision half-wave rectifier using an op-amp</p>
 	</div>    
 	
 
@@ -119,17 +119,22 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/diodeIV.svg" alt="" width="400px" /></p>
+  <h2 id="introduction">Introduction</h2>
 
-<p>Connect the Diode from CH3 to Ground.
-Connect a 1k resistor from PV1 to CH3.</p>
+<p>The precision rectifier, also known as a super diode, is a configuration obtained with an op-amp in order to have a circuit behave like an ideal diode and rectifier.<br />
+This example shows half-wave rectification using this circuit. Notice how the peaks of both input and output coincide. In the simple diode based rectifier, the 0.6 volt forward threshold voltage causes a similar difference in the peak heights of the input and output waveforms.</p>
 
-<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH3, and the known value of the resistor
-Acquired plots can be selectively displayed or deleted.</p>
+<p><img src="images/schematics/precision-rectifier.svg" alt="" width="300px" /></p>
 
-<h2 id="screenshot">screenshot</h2>
+<ul>
+  <li>Make the Connections as shown in the figure.</li>
+  <li>CH1 monitors the original waveform output from W1.</li>
+  <li>CH2 monitors the rectified waveform .</li>
+</ul>
 
-<p><img src="images/screenshots/diodeIV.png" alt="" width="700px" /></p>
+<p>Click anywhere on the plot to activate crosshairs, and note voltage values of the input and output peaks.</p>
+
+<p><img src="images/screenshots/precision-rectifier.png" alt="" width="600px" /></p>
 
 
 
