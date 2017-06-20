@@ -1,26 +1,27 @@
+---
+layout: expt
+title: Random Sampling
+date: 2017-06-20
+description: Study the probability distributions of waveforms
+---
 
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-  </head>
+## Introduction
 
-  <body>
-	<h3>Probability distributions of waveforms</h3>
-	<img src="images/PlotAC.svg" style="width:100%;max-width:500px;"><br>
-	<br>In this experiment, we will measure voltages of an input signal at random intervals, and plot a histogram that shows the time spent in each amplitude range.<br>
-	For example, a sine wave spends maximum time at its extremities, so the histogram will have the highest peaks at either end, and the lowest ones near the mean.<br><br>
-	Connect W1 to CH1, and run the experiment to characterize a sine/triangular wave, and then connect SQR1 to characterize a square wave<br>
+In this experiment, we will measure voltages of an input signal at random intervals, and plot a histogram that shows the time spent in each amplitude range.
 
-	<h3>Sinusoidal Wave : Screenshot</h3>
-	<img src="screenshots/random_sine.png" width="100%"><br>
-	<h3>Triangular Wave : Screenshot</h3>
-	<img src="screenshots/random_triangle.png" width="100%"><br>
-	<h3>Square Wave : Screenshot</h3>
-	<img src="screenshots/random_square.png" width="100%"><br>
-	<h3>Screenshot</h3>
-	<img src="screenshots/random_sampling.png" width="100%"><br>
+For example, a sine wave spends maximum time at its extremities, so the histogram will have the highest peaks at either end, and the lowest ones near the mean.
+
+Connect W1 to CH1, and run the experiment to characterize a sine/triangular wave, and then connect SQR1 to characterize a square wave
+
+![](images/schematics/PlotAC.svg ){: width="300px"}
 
 
-  </body>
+## Sinusoidal Wave : Screenshot
+![](images/screenshots/random_sine.png ){: width="600px"}
 
-</html>
+## Triangular Wave : Screenshot
+![](images/screenshots/random_triangle.png ){: width="600px"}
+
+
+## Square Wave Wave : Screenshot
+![](images/screenshots/random_square.png ){: width="600px"}
