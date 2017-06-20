@@ -1,6 +1,6 @@
 ---
 layout: expt
-title: resistors
+title: Resistors
 date: 2017-05-28
 description: Elementary experiments with resistors
 ---
