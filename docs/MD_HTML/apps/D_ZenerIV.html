@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Half-Wave Rectifier</title>
+			<title>Zener Diode IV</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -116,8 +116,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Half-Wave Rectifier</h2>
-		<p class="lead"> Study a halfwave rectifier using a sine wave generator</p>
+		<br><h2>Zener Diode IV</h2>
+		<p class="lead"> Zener Diode's I-V Characteristics. Reverse as well as forward biased</p>
 	</div>    
 	
 
@@ -125,23 +125,17 @@
 		<div class="container">
 			
 
-  <p>Half wave rectifiers clip out the negative part of the input waveform. The rectified signal can be further filtered with a capacitor in order to obtain a low ripple DC voltage.</p>
+  <p><img src="images/schematics/zener.svg" alt="" width="400px" /></p>
 
-<p>Only a diode is needed to clip out the negative part of the input signal.</p>
+<p>Connect the Diode from CH1 to Ground.
+Connect a 1k resistor from PV1 to CH1.</p>
 
-<p><img src="images/schematics/halfwave.svg" alt="" width="300px" /></p>
+<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor
+Acquired plots can be selectively displayed or deleted.</p>
 
-<p>Make the Connections as shown in the figure.</p>
+<h2 id="screenshot">screenshot</h2>
 
-<p>CH1 monitors the original waveform output from W1.</p>
-
-<p>CH2 monitors the rectified waveform .</p>
-
-<p>Connect a load resistor to remove noise from the output.</p>
-
-<p>to observe the effect of filtering, connect a capacitor to GND.</p>
-
-<p>Connect various capacitors to study how their values affect the output signal.</p>
+<p><img src="images/screenshots/zenerIV.png" alt="" width="700px" /></p>
 
 
 
