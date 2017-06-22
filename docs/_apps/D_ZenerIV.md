@@ -1,20 +1,20 @@
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>index</title>
-  </head>
-  <body style = "background-color:#fff"><br>
-	<h3>Zener Diode I-V Characteristics</h3>
+---
+layout: expt
+title: Zener Diode IV
+date: 2017-06-10
+description: Zener Diode's I-V Characteristics. Reverse as well as forward biased
+---
 
-	<img src="images/zener.svg" width="100%"><br>
-    Connect the Diode from CH1 to Ground.<br>
-    Connect a 1k resistor from PV1 to CH1<br>
-    <br>
-    PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor<br>
-    Acquired plots can be selectively displayed or deleted.<br>
+![](images/schematics/zener.svg){: width="400px"}
 
-	<h3>Screenshot</h3>
-	<img src="screenshots/zener IV.png" width="100%"><br>
+Connect the Diode from CH1 to Ground.
+Connect a 1k resistor from PV1 to CH1.
 
-  </body>
-</html>
+PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor
+Acquired plots can be selectively displayed or deleted.
+
+## screenshot
+
+![](images/screenshots/zenerIV.png){: width="700px"}
+
+

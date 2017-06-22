@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Ramp Generator</title>
+			<title>Capacitors 101</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -118,8 +118,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Ramp Generator</h2>
-		<p class="lead"> Create a linear ramp-generator</p>
+		<br><h2>Capacitors 101</h2>
+		<p class="lead"> Introduction to capacitors</p>
 	</div>    
 	
 
@@ -127,19 +127,58 @@
 		<div class="container">
 			
 
-  <h2 id="introduction">Introduction</h2>
+  <h2 id="make-your-own-parallel-plate-capacitor">Make your own parallel plate capacitor</h2>
 
-<p>This ramp generator creates a linearly rising voltage output when triggered with a rising edge input pulse</p>
+<p><img src="images/schematics/pPlate.svg" alt="" width="400px" /></p>
 
-<p><img src="images/schematics/rampgen.svg" alt="" width="300px" /></p>
+<p>Stick a square piece of aluminium tape on either side of a piece of butter paper. Ensure that the two plates do not touch each other along the edges, and are separated by the butter paper.</p>
 
-<ul>
-  <li>Make the Connections as shown in the figure.</li>
-  <li>Click on RUN . This sets SQR1 to HIGH, and CH1 monitors the ramp output.</li>
-  <li>After acquiring data, SQR1 is set to LOW automatically</li>
-</ul>
+<p>Connect one plate to SEN, and the other to GND, and measure the capacitance.</p>
 
-<p><img src="images/screenshots/rampgen.png" alt="" width="600px" /></p>
+<p>Now cut this capacitor along the center, such that the area is reduced by half, and measure capacitance again.</p>
+
+<h2 id="study-how-capacitors-behave-in-combination">Study how capacitors behave in combination</h2>
+
+<p>Measure the values of the capacitors by individually connecting them between CAP and GND, and note these.</p>
+
+<p><img src="images/schematics/CMeasure.svg" alt="" width="400px" /></p>
+
+<h2 id="in-parallel">In Parallel</h2>
+
+<p><img src="images/schematics/CParallelSimple.svg" alt="" width="400px" /></p>
+
+<p>Connect the two capacitors in parallel as shown below, and observe the combined capacitance. Ctotal = C1+C2.</p>
+
+<h2 id="in-series">In Series</h2>
+
+<p><img src="images/schematics/CSeriesSimple.svg" alt="" width="400px" /></p>
+
+<p>Now connect them in series, and measure the net capacitance</p>
+
+<h2 id="screenshot">screenshot</h2>
+
+<p><img src="images/screenshots/capacitance_measurement.png" alt="" width="300px" /></p>
+
+<h2 id="calculate-net-capacitance-of-capacitors-connected-in-series">Calculate net capacitance of capacitors connected in series.</h2>
+
+<script>
+function cal2(){
+	var r1,r2,deno,num;
+	r1 = document.form2.r1.value;
+	r2 = document.form2.r2.value;
+	num = r1*r2;
+	deno = parseFloat(r1)+parseFloat(r2);
+	console.log(r1,r2,num,deno);
+	document.form2.answer.value=num/deno;
+}
+</script>
+
+<form name="form2">
+C1  :<input type="text" size="20" name="r1" value="1e-6" />F<br />
+C2  :<input type="text" size="20" name="r2" value="1e-6" />F<br />
+<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
+Total Capacitance:<input type="text" size="20" name="answer" />F<br />
+</form>
 
 
 

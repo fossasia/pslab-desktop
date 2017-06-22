@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Ramp Generator</title>
+			<title>Zener Diode IV</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -118,8 +118,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Ramp Generator</h2>
-		<p class="lead"> Create a linear ramp-generator</p>
+		<br><h2>Zener Diode IV</h2>
+		<p class="lead"> Zener Diode's I-V Characteristics. Reverse as well as forward biased</p>
 	</div>    
 	
 
@@ -127,19 +127,17 @@
 		<div class="container">
 			
 
-  <h2 id="introduction">Introduction</h2>
+  <p><img src="images/schematics/zener.svg" alt="" width="400px" /></p>
 
-<p>This ramp generator creates a linearly rising voltage output when triggered with a rising edge input pulse</p>
+<p>Connect the Diode from CH1 to Ground.
+Connect a 1k resistor from PV1 to CH1.</p>
 
-<p><img src="images/schematics/rampgen.svg" alt="" width="300px" /></p>
+<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor
+Acquired plots can be selectively displayed or deleted.</p>
 
-<ul>
-  <li>Make the Connections as shown in the figure.</li>
-  <li>Click on RUN . This sets SQR1 to HIGH, and CH1 monitors the ramp output.</li>
-  <li>After acquiring data, SQR1 is set to LOW automatically</li>
-</ul>
+<h2 id="screenshot">screenshot</h2>
 
-<p><img src="images/screenshots/rampgen.png" alt="" width="600px" /></p>
+<p><img src="images/screenshots/zenerIV.png" alt="" width="700px" /></p>
 
 
 
