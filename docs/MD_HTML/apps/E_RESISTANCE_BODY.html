@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Capacitors 101</title>
+			<title>Body Resistance</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -122,8 +122,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Capacitors 101</h2>
-		<p class="lead"> Introduction to capacitors</p>
+		<br><h2>Body Resistance</h2>
+		<p class="lead"> Measure the resistance of the human body</p>
 	</div>    
 	
 
@@ -131,58 +131,73 @@
 		<div class="container">
 			
 
-  <h2 id="make-your-own-parallel-plate-capacitor">Make your own parallel plate capacitor</h2>
+  <h1 id="measure-the-internal-resistance-of-the-human-body">Measure the internal resistance of the human body</h1>
 
-<p><img src="images/schematics/pPlate.svg" alt="" width="400px" /></p>
+<p><img src="images/screenshots/bodyResistance.png" alt="" width="600px" /></p>
 
-<p>Stick a square piece of aluminium tape on either side of a piece of butter paper. Ensure that the two plates do not touch each other along the edges, and are separated by the butter paper.</p>
+<p>Ensure that your fingers do not have bruises or cuts!</p>
 
-<p>Connect one plate to SEN, and the other to GND, and measure the capacitance.</p>
+<p>The voltage output has been set to 3.0 Volts.  Hold a wire connected to PV3, and with your other hand, hold a wire connected to CH3.</p>
 
-<p>Now cut this capacitor along the center, such that the area is reduced by half, and measure capacitance again.</p>
+<p>The input impedance of CH3 is 1MOhm , so a tiny amount of current flows through your body, and also the 1MOhm resistor which is connected internally.</p>
 
-<h2 id="study-how-capacitors-behave-in-combination">Study how capacitors behave in combination</h2>
+<p>CH3 measures the voltage drop across the 1MOhm resistor, and therefore, we can calculate the voltage drop across your body (PV3-CH3) .</p>
 
-<p>Measure the values of the capacitors by individually connecting them between CAP and GND, and note these.</p>
+<h2 id="calculations">Calculations</h2>
 
-<p><img src="images/schematics/CMeasure.svg" alt="" width="400px" /></p>
+<p>The current flowing through the circuit , according to Ohm’s law, is I = V/R = V(CH3)/1,000,000 .
+The voltage drop across your body = ( V(PV3)(3.0) - V(CH3)(measured))<br />
+Body’s resistance = voltage drop/current(I)</p>
 
-<h2 id="in-parallel">In Parallel</h2>
+<div class="container">
+  <h2>Enter the measured values in the following boxes and click to calculate the internal resistance</h2>
+  <form class="form-horizontal" name="form2">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Voltage at PV3  :</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" name="v1" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Measured Voltage  :</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" name="v2" />
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-4">
+        <input type="button" class="btn btn-default" onclick="cal2()" value="Calculate" />
+      </div>
+    </div>
 
-<p><img src="images/schematics/CParallelSimple.svg" alt="" width="400px" /></p>
+    <div class="form-group">
+      <label class="left-label control-label col-sm-12" id="answerv">Voltage Drop(PV3-CH3):</label>
+    </div>
+    <div class="form-group">
+      <label class="left-label control-label col-sm-12" id="answeri">Current Flow:</label>
+    </div>
+    <div class="form-group">
+      <label class="left-label control-label col-sm-12" id="answerr">Body Resistance:</label>
+    </div>
 
-<p>Connect the two capacitors in parallel as shown below, and observe the combined capacitance. Ctotal = C1+C2.</p>
-
-<h2 id="in-series">In Series</h2>
-
-<p><img src="images/schematics/CSeriesSimple.svg" alt="" width="400px" /></p>
-
-<p>Now connect them in series, and measure the net capacitance</p>
-
-<h2 id="screenshot">screenshot</h2>
-
-<p><img src="images/screenshots/capacitance_measurement.png" alt="" width="300px" /></p>
-
-<h2 id="calculate-net-capacitance-of-capacitors-connected-in-series">Calculate net capacitance of capacitors connected in series.</h2>
+  </form>
+</div>
 
 <script>
 function cal2(){
-	var r1,r2,deno,num;
-	r1 = document.form2.r1.value;
-	r2 = document.form2.r2.value;
-	num = r1*r2;
-	deno = parseFloat(r1)+parseFloat(r2);
-	console.log(r1,r2,num,deno);
-	document.form2.answer.value=num/deno;
+	var v1,v2,r1,i;
+	r1 = 1000000;
+	v1 = document.form2.v1.value;
+	v2 = document.form2.v2.value;
+	i = v2/r1 ;
+	document.getElementById('answerv').innerHTML="Voltage Drop(PV3-CH3): "+(v1-v2)*1e3+" milliVolts";
+	document.getElementById('answeri').innerHTML="Current Flow: "+1e9*i+" NanoAmperes";
+	document.getElementById('answerr').innerHTML="Body Resistance: "+1e-6*(v1-v2)/i+" MegaOhms";
 }
 </script>
 
-<form name="form2">
-C1  :<input type="text" size="20" name="r1" value="1e-6" />F<br />
-C2  :<input type="text" size="20" name="r2" value="1e-6" />F<br />
-<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
-Total Capacitance:<input type="text" size="20" name="answer" />F<br />
-</form>
+<h2 id="screenshot">Screenshot</h2>
+<p><img src="images/screenshots/HumanBodyResistance.png" alt="" width="600px" /></p>
 
 
 

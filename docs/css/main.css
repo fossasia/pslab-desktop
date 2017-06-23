@@ -196,7 +196,10 @@ body > section {
   margin: 0
 }
 
-
+.form-horizontal .left-label{
+/* text-align:right; */
+text-align:left;
+}
 
 input.search-form{
   background: transparent;
