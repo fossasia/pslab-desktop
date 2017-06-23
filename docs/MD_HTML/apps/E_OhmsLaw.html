@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Precision Rectifier</title>
+			<title>Ohm's Law</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -124,8 +124,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Precision Rectifier</h2>
-		<p class="lead"> Precision half-wave rectifier using an op-amp</p>
+		<br><h2>Ohm's Law</h2>
+		<p class="lead"> Introduction to Ohm's Law</p>
 	</div>    
 	
 
@@ -133,22 +133,21 @@
 		<div class="container">
 			
 
-  <h2 id="introduction">Introduction</h2>
+  <p><img src="images/schematics/ohms.svg" alt="" width="300px" /></p>
 
-<p>The precision rectifier, also known as a super diode, is a configuration obtained with an op-amp in order to have a circuit behave like an ideal diode and rectifier.<br />
-This example shows half-wave rectification using this circuit. Notice how the peaks of both input and output coincide. In the simple diode based rectifier, the 0.6 volt forward threshold voltage causes a similar difference in the peak heights of the input and output waveforms.</p>
+<p>Make the Connections as shown in the figure.</p>
 
-<p><img src="images/schematics/precision-rectifier.svg" alt="" width="300px" /></p>
+<p>CH1 monitors the Voltage across the resistor.</p>
 
-<ul>
-  <li>Make the Connections as shown in the figure.</li>
-  <li>CH1 monitors the original waveform output from W1.</li>
-  <li>CH2 monitors the rectified waveform .</li>
-</ul>
+<p>PCS sets a suitable current flow through the resistor .</p>
 
-<p>Click anywhere on the plot to activate crosshairs, and note voltage values of the input and output peaks.</p>
+<p>Calculate the voltage across the resistor for various different currents, and plot them.</p>
 
-<p><img src="images/screenshots/precision-rectifier.png" alt="" width="600px" /></p>
+<p>Do Not use high value resistors, because the current source will not be able adjust to such high levels to ensure the right amount of current flow. Up to 200 ohms is ideal</p>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="images/screenshots/ohms_law.png" alt="" width="700px" /></p>
 
 
 
