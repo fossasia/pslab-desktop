@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Precision Rectifier</title>
+			<title>Body Resistance</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -124,8 +124,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Precision Rectifier</h2>
-		<p class="lead"> Precision half-wave rectifier using an op-amp</p>
+		<br><h2>Body Resistance</h2>
+		<p class="lead"> Measure the resistance of the human body</p>
 	</div>    
 	
 
@@ -133,22 +133,73 @@
 		<div class="container">
 			
 
-  <h2 id="introduction">Introduction</h2>
+  <h1 id="measure-the-internal-resistance-of-the-human-body">Measure the internal resistance of the human body</h1>
 
-<p>The precision rectifier, also known as a super diode, is a configuration obtained with an op-amp in order to have a circuit behave like an ideal diode and rectifier.<br />
-This example shows half-wave rectification using this circuit. Notice how the peaks of both input and output coincide. In the simple diode based rectifier, the 0.6 volt forward threshold voltage causes a similar difference in the peak heights of the input and output waveforms.</p>
+<p><img src="images/screenshots/bodyResistance.png" alt="" width="600px" /></p>
 
-<p><img src="images/schematics/precision-rectifier.svg" alt="" width="300px" /></p>
+<p>Ensure that your fingers do not have bruises or cuts!</p>
 
-<ul>
-  <li>Make the Connections as shown in the figure.</li>
-  <li>CH1 monitors the original waveform output from W1.</li>
-  <li>CH2 monitors the rectified waveform .</li>
-</ul>
+<p>The voltage output has been set to 3.0 Volts.  Hold a wire connected to PV3, and with your other hand, hold a wire connected to CH3.</p>
 
-<p>Click anywhere on the plot to activate crosshairs, and note voltage values of the input and output peaks.</p>
+<p>The input impedance of CH3 is 1MOhm , so a tiny amount of current flows through your body, and also the 1MOhm resistor which is connected internally.</p>
 
-<p><img src="images/screenshots/precision-rectifier.png" alt="" width="600px" /></p>
+<p>CH3 measures the voltage drop across the 1MOhm resistor, and therefore, we can calculate the voltage drop across your body (PV3-CH3) .</p>
+
+<h2 id="calculations">Calculations</h2>
+
+<p>The current flowing through the circuit , according to Ohm’s law, is I = V/R = V(CH3)/1,000,000 .
+The voltage drop across your body = ( V(PV3)(3.0) - V(CH3)(measured))<br />
+Body’s resistance = voltage drop/current(I)</p>
+
+<div class="container">
+  <h2>Enter the measured values in the following boxes and click to calculate the internal resistance</h2>
+  <form class="form-horizontal" name="form2">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Voltage at PV3  :</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" name="v1" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Measured Voltage  :</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" name="v2" />
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-4">
+        <input type="button" class="btn btn-default" onclick="cal2()" value="Calculate" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="left-label control-label col-sm-12" id="answerv">Voltage Drop(PV3-CH3):</label>
+    </div>
+    <div class="form-group">
+      <label class="left-label control-label col-sm-12" id="answeri">Current Flow:</label>
+    </div>
+    <div class="form-group">
+      <label class="left-label control-label col-sm-12" id="answerr">Body Resistance:</label>
+    </div>
+
+  </form>
+</div>
+
+<script>
+function cal2(){
+	var v1,v2,r1,i;
+	r1 = 1000000;
+	v1 = document.form2.v1.value;
+	v2 = document.form2.v2.value;
+	i = v2/r1 ;
+	document.getElementById('answerv').innerHTML="Voltage Drop(PV3-CH3): "+(v1-v2)*1e3+" milliVolts";
+	document.getElementById('answeri').innerHTML="Current Flow: "+1e9*i+" NanoAmperes";
+	document.getElementById('answerr').innerHTML="Body Resistance: "+1e-6*(v1-v2)/i+" MegaOhms";
+}
+</script>
+
+<h2 id="screenshot">Screenshot</h2>
+<p><img src="images/screenshots/HumanBodyResistance.png" alt="" width="600px" /></p>
 
 
 
