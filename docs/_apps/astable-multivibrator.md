@@ -3,19 +3,22 @@ layout: expt
 title: Astable Multivibrator
 date: 2017-05-21
 description: Multivibrator circuit using a pair of transistors
-imagebase: astable-multivibrator
 ---
 
 
-### Sine wave plot example
---------------------------
+An astable-multivibrator circuit's output oscillates continuously between its two unstable states.
 
-```python
-from pylab import *
-import numpy as np
-x=np.linspace(0,2*np.pi,100)
-plot(x,np.sine(x))
-show()
-```
+It does not require an external trigger, and the time period of each states are determined by the RC time constant
+
+## Schematic 
+
+![](images/schematics/astable-multivibrator.svg){: width="400px"}
+
+## Screenshot
 
 
+![](images/screenshots/astable-multivibrator.png)
+
+
+## additional reading
+[Tutorial](http://www.electronics-tutorials.ws/waveforms/astable.html)
