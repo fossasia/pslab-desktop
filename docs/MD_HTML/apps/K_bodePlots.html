@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>N-channel FET</title>
+			<title>Bode Plots</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -126,8 +126,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>N-channel FET</h2>
-		<p class="lead"> Dependence of drain current on D-S voltage, and Gate Voltage</p>
+		<br><h2>Bode Plots</h2>
+		<p class="lead"> Frequency and phase response of filter circuits</p>
 	</div>    
 	
 
@@ -135,18 +135,27 @@
 		<div class="container">
 			
 
-  <p><img src="images/schematics/njfet.svg" alt="" width="400px" /></p>
+  <h2 id="multiple-feedback-band-pass-filter-16-khz">Multiple Feedback Band-Pass Filter: 1.6 Khz</h2>
 
-<h2 id="dependence-of-drain-current-on-d-s-voltage-and-gate-voltage">Dependence of drain current on D-S voltage, and Gate Voltage</h2>
+<p><img src="images/schematics/multiple-feedback1.svg" alt="" width="400px" /></p>
 
-<p>Set the gate voltage for various values between 0, and -2 V , and observe the effect on saturation current<br /></p>
+<h2 id="multiple-feedback-band-pass-filter-600-hz">Multiple Feedback Band-Pass Filter: 600 Hz</h2>
 
-<p>PV1 is varied in steps, and for each step the current is calculated from the difference between voltages at PV1 and CH1, and the known value of the resistor(560 ohms)
-Acquired plots can be selectively displayed or deleted.<br /></p>
+<p><img src="images/schematics/multiple-feedback2.svg" alt="" width="400px" /></p>
 
-<h2 id="screenshot">screenshot</h2>
+<p>Make the Connections as shown in the figure.</p>
 
-<p><img src="images/screenshots/njfet.png" alt="" width="700px" /></p>
+<p>CH1 monitors the original waveform output from W1.</p>
+
+<p>CH2 monitors the filter’s output .</p>
+
+<p>Set the frequency range to study the behaviour in, and click on START .
+The app then outputs a sine wave with an incrementing frequency on W1 which is connected to the input of the circuit under test.
+The amplitudes and phases of the input and output waveforms are recorded for each frequency in order to obtain the bode plots.</p>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="images/screenshots/filter.png" alt="" /></p>
 
 
 
