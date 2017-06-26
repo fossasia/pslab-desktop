@@ -20,5 +20,5 @@ It does not require an external trigger, and the time period of each states are 
 ![](images/screenshots/astable-multivibrator.png)
 
 
-## additional reading
+## Additional reading
 [Tutorial](http://www.electronics-tutorials.ws/waveforms/astable.html)
