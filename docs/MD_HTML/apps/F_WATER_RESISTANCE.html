@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Lemon cell</title>
+			<title>Resistance of Water</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -128,8 +128,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Lemon cell</h2>
-		<p class="lead"> experiments with a lemon cell</p>
+		<br><h2>Resistance of Water</h2>
+		<p class="lead"> Measure the AC and DC resistance of water</p>
 	</div>    
 	
 
@@ -137,51 +137,25 @@
 		<div class="container">
 			
 
-  <h2 id="measure-the-voltage-of-a-lemon-cell">Measure the voltage of a lemon cell</h2>
+  <h2 id="schematic">Schematic</h2>
 
-<p><img src="images/schematics/lemon_cell.png" alt="" width="250px" /></p>
+<p><img src="images/schematics/waterRes.png" alt="" width="400px" /></p>
 
-<p>Make the connections as shown in the figure. Use a copper wire, and a galvanized(coated with zinc) nail as the two electrodes. 
-Observe the voltmeter for CH1 ,and note the values . Also observe, that the graph for CH1 is a straight line. This is because the voltage is constant.</p>
+<h2 id="dc-resistance">DC resistance</h2>
 
-<h2 id="measure-the-internal-resistance-of-a-lemon-cell">Measure the internal resistance of a lemon cell</h2>
+<p>Make the connections as shown in the figure.</p>
 
-<p><img src="images/schematics/lemon_cell_ir.png" alt="" width="250px" /></p>
+<p>The voltage output of PV3 has already been set to 2.0 Volts.</p>
 
-<p>The purpose of this section is to understand why the lemon cell is not adequate to supply high currents.
-Connect a 1000 (1K) Ohm resistor across the lemon cell, and observe that the voltage has now reduced.</p>
+<p>The voltage measured by CH1 will be proportional to the current flowing through the circuit, and since the water is connected in series with this circuit, this current must also flow through it.</p>
 
-<p>This is a consequence of the internal resistance of the lemon cell, and using the measured voltage difference caused by connecting this resistor, we can calculate it.
-The current flowing through the circuit with the load resistor connected, according to Ohm’s law, is I = V/R = V(CH1)/1000 .
-The voltage drop = ( V(CH1) without R connected - V(CH1) with R connected ) 
-Internal resistance = voltage drop/current(I)</p>
+<h2 id="ac-resistance">AC Resistance</h2>
 
-<p>Enter the measured values in the following boxes and click to calculate the internal resistance</p>
-<form name="form2">
-V(CH1) without R  :<input type="text" size="20" name="v1" />Volts<br />
-V(CH1) with R  :<input type="text" size="20" name="v2" />Volts<br />
-Series Resistance :<input type="text" size="20" name="r1" value="1000" />Ohms<br />
-<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
-Internal Resistance:<input type="text" size="20" name="answer" />Ohms<br />
-</form>
+<p>This part uses a voltage source that is oscillating back and forth between 3.0 Volts, and -3.0 Volts. The frequency of oscillations can be set using the dial.</p>
 
-<script>
-function cal2(){
-	var v1,v2,r1,i;
-	r1 = document.form2.r1.value;
-	v1 = document.form2.v1.value;
-	v2 = document.form2.v2.value;
-	i = v2/r1 ;
-	document.form2.answer.value=(v1-v2)/i;
-}
-</script>
+<p>Connect W1 in place of PV3, and set its amplitude to maximum using the knob. Connect CH2 to W1 : This is to monitor its output simultaneously.</p>
 
-<p><img src="images/schematics/lemon_battery.png" alt="" width="500px" /></p>
-
-<p>Connect three lemon cells in series, and note the voltage. Try connecting an LED to this battery.</p>
-
-<h3 id="screenshot">Screenshot</h3>
-<p><img src="images/screenshots/lemoncell.png" alt="" /></p>
+<p>The amplitude of the graph for CH1 depicts the current flow. Is the amplitude dependent on the frequency of the input waveform?</p>
 
 
 
