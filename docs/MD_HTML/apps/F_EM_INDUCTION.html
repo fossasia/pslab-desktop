@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Ramp Generator</title>
+			<title>Mutual Inductance</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -132,8 +132,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Ramp Generator</h2>
-		<p class="lead"> Create a linear ramp-generator</p>
+		<br><h2>Mutual Inductance</h2>
+		<p class="lead"> Study Electromagnetic induction using two solenoids and the waveform generators</p>
 	</div>    
 	
 
@@ -141,19 +141,20 @@
 		<div class="container">
 			
 
-  <h2 id="introduction">Introduction</h2>
+  <h2 id="schematic">Schematic</h2>
 
-<p>This ramp generator creates a linearly rising voltage output when triggered with a rising edge input pulse</p>
+<p><img src="images/schematics/mutual-inductance.svg" alt="" width="400px" /></p>
 
-<p><img src="images/schematics/rampgen.svg" alt="" width="300px" /></p>
+<p>Make the connections to the solenoid as shown in the figure.</p>
 
-<ul>
-  <li>Make the Connections as shown in the figure.</li>
-  <li>Click on RUN . This sets SQR1 to HIGH, and CH1 monitors the ramp output.</li>
-  <li>After acquiring data, SQR1 is set to LOW automatically</li>
-</ul>
+<p>Now set the frequency of W1 to 1KHz . The oscillating potential difference across coil A , also called the primary,
+results in an oscillating magnetic field.</p>
 
-<p><img src="images/screenshots/rampgen.png" alt="" width="600px" /></p>
+<p>Now place the second coil , the secondary, in front of the primary coil such that their magnetic axes are aligned.</p>
+
+<p>Observe the induced EMF in the secondary, and its correlation to the primary. Try reversing the solenoid direction.</p>
+
+<p>Confirm that a fixed magnetic field does not induce a voltage, and that the induced voltage is proportional to changing fields only. You can do this by connecting the primary to PV1 rather than W1, and setting a voltage on it.</p>
 
 
 
