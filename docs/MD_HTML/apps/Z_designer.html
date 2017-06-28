@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<title>Capacitors 101</title>
+			<title>Experiment Designer</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="description" content="">
@@ -134,8 +134,8 @@
 
 	
 	<div class="center wow fadeInDown">
-		<br><h2>Capacitors 101</h2>
-		<p class="lead"> Introduction to capacitors</p>
+		<br><h2>Experiment Designer</h2>
+		<p class="lead"> Create your own data acquisition sequence</p>
 	</div>    
 	
 
@@ -143,58 +143,52 @@
 		<div class="container">
 			
 
-  <h2 id="make-your-own-parallel-plate-capacitor">Make your own parallel plate capacitor</h2>
+  <p>The Experiment Designer allows you to define the control and readback sequences of parameters and execute them, explained below
+using Transistor CE characteristics as an example.</p>
 
-<p><img src="images/schematics/pPlate.svg" alt="" width="400px" /></p>
+<p>To plot Vc vs Ic, we need to:</p>
+<ol>
+  <li>Select a base current by setting the value of PV2.</li>
+  <li>Sweep PV1 from 0 to 5V in steps and read CH1 (Vc) in each step.</li>
+  <li>Calculate Ic by the equation (PV1 - CH1)/Rc</li>
+  <li>Plot CH1 vs Ic</li>
+</ol>
 
-<p>Stick a square piece of aluminium tape on either side of a piece of butter paper. Ensure that the two plates do not touch each other along the edges, and are separated by the butter paper.</p>
+<p>Step 1: Select PV2 for manual control and PV1 for sweep as shown below.
+Add a derived parameter for Ic using the format I = (PV1() - CH1())/1000, the empty parantheses are necessary in the equation.</p>
 
-<p>Connect one plate to SEN, and the other to GND, and measure the capacitance.</p>
+<h1 id="screenshots">Screenshots</h1>
 
-<p>Now cut this capacitor along the center, such that the area is reduced by half, and measure capacitance again.</p>
+<h2 id="help-file-for-the-diode-iv-experiment-shown-alongside-the-designer">Help file for the diode IV experiment shown alongside the designer</h2>
+<p><img src="images/screenshots/design1.png" alt="" width="800px" /></p>
 
-<h2 id="study-how-capacitors-behave-in-combination">Study how capacitors behave in combination</h2>
+<h2 id="set-up-the-experiment">Set up the experiment</h2>
+<p><img src="images/screenshots/design2.png" alt="" width="800px" /></p>
+<ul>
+  <li>Select PV1 as a sweep channel that will be set to 100 equally spaced values between 0V and 5V</li>
+  <li>Select CH1 as a readback channel to read the voltage drop across the diode</li>
+  <li>add a derived channel Ic , <code class="highlighter-rouge">(PV1() - CH1())/1000</code> . This equation calculates the current flow for us</li>
+  <li>Click on the <code class="highlighter-rouge">Prepare Experiment</code> button</li>
+</ul>
 
-<p>Measure the values of the capacitors by individually connecting them between CAP and GND, and note these.</p>
+<h2 id="make-the-measurements">Make the measurements</h2>
+<p><img src="images/screenshots/design3.png" alt="" width="800px" /></p>
+<ul>
+  <li>Click on Evaluate all rows to get the entire dataset.</li>
+  <li>Select CH1, current(Ic) columns, and click on the plot button. Hold down the <code class="highlighter-rouge">ctrl</code> key to select multiple columns. You can also drag across the title bars to select adjacent columns</li>
+</ul>
 
-<p><img src="images/schematics/CMeasure.svg" alt="" width="400px" /></p>
+<h2 id="plotting-the-columns">Plotting the columns</h2>
+<p><img src="images/screenshots/design4.png" alt="" width="800px" /></p>
+<ul>
+  <li>If the order of the selected columns should be reversed, you can specify that at this point</li>
+</ul>
 
-<h2 id="in-parallel">In Parallel</h2>
+<h2 id="your-plot-is-ready">Your plot is ready!</h2>
+<p><img src="images/screenshots/design5.png" alt="" width="800px" /></p>
 
-<p><img src="images/schematics/CParallelSimple.svg" alt="" width="400px" /></p>
-
-<p>Connect the two capacitors in parallel as shown below, and observe the combined capacitance. Ctotal = C1+C2.</p>
-
-<h2 id="in-series">In Series</h2>
-
-<p><img src="images/schematics/CSeriesSimple.svg" alt="" width="400px" /></p>
-
-<p>Now connect them in series, and measure the net capacitance</p>
-
-<h2 id="screenshot">screenshot</h2>
-
-<p><img src="images/screenshots/capacitance_measurement.png" alt="" width="300px" /></p>
-
-<h2 id="calculate-net-capacitance-of-capacitors-connected-in-series">Calculate net capacitance of capacitors connected in series.</h2>
-
-<script>
-function cal2(){
-	var r1,r2,deno,num;
-	r1 = document.form2.r1.value;
-	r2 = document.form2.r2.value;
-	num = r1*r2;
-	deno = parseFloat(r1)+parseFloat(r2);
-	console.log(r1,r2,num,deno);
-	document.form2.answer.value=num/deno;
-}
-</script>
-
-<form name="form2">
-C1  :<input type="text" size="20" name="r1" value="1e-6" />F<br />
-C2  :<input type="text" size="20" name="r2" value="1e-6" />F<br />
-<input type="button" name="B1" value="Calculate" onclick="cal2()" /><br />
-Total Capacitance:<input type="text" size="20" name="answer" />F<br />
-</form>
+<h2 id="use-the-save-option-to-view-raw-data-as-well-as-save-it-to-csvtxtpngsvg-formats">Use the save option to view raw data as well as save it to csv,txt,png,svg… formats</h2>
+<p><img src="images/screenshots/design6.png" alt="" width="800px" /></p>
 
 
 

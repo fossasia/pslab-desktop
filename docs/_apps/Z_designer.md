@@ -1,39 +1,47 @@
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>Experiment Designer</title>
-  </head>
-  <body style = "background-color:#fff">Experiment Designer<br>
-	<img src="images/astable-trans.svg" style="width:100%;max-width:500px;"><br>
+---
+layout: expt
+title: Experiment Designer
+date: 2017-05-28
+description: Create your own data acquisition sequence
+---
 
-Experiment Designer allows you to define the control and readback sequences of parameters and execute them, explained below
-using Transistor CE characteristics as an example.<br><br>
+The Experiment Designer allows you to define the control and readback sequences of parameters and execute them, explained below
+using Transistor CE characteristics as an example.
 
-To plot Vc vs Ic, we need to:<br>
-1. Select a base current by setting the value of PV2.<br>
-2. Sweep PV1 from 0 to 5V in steps and read CH1 (Vc) in each step. <br>
-3. Calculate Ic by the equation (PV1 - CH1)/Rc<br>
-4. Plot CH1 vs Ic<br>
+To plot Vc vs Ic, we need to:
+1. Select a base current by setting the value of PV2.
+2. Sweep PV1 from 0 to 5V in steps and read CH1 (Vc) in each step.
+3. Calculate Ic by the equation (PV1 - CH1)/Rc
+4. Plot CH1 vs Ic
 
-Step 1: Select PV2 for manual control and PV1 for sweep as shown below.<br>
-        Add a derived parameter for Ic using the format I = (PV1() - CH1())/1000, the empty parantheses are
-        necessary in the equation.        <br>
-	<h3>Screenshot</h3>
-	<img src="screenshots/design2a.png" width="100%"><br>
+Step 1: Select PV2 for manual control and PV1 for sweep as shown below.
+Add a derived parameter for Ic using the format I = (PV1() - CH1())/1000, the empty parantheses are necessary in the equation.        
+
+# Screenshots
+
+## Help file for the diode IV experiment shown alongside the designer
+![](images/screenshots/design1.png){: width="800px"}
+
+## Set up the experiment
+![](images/screenshots/design2.png){: width="800px"}
+* Select PV1 as a sweep channel that will be set to 100 equally spaced values between 0V and 5V
+* Select CH1 as a readback channel to read the voltage drop across the diode
+* add a derived channel Ic , `(PV1() - CH1())/1000` . This equation calculates the current flow for us
+* Click on the `Prepare Experiment` button
+
+## Make the measurements
+![](images/screenshots/design3.png){: width="800px"}
+* Click on Evaluate all rows to get the entire dataset.
+* Select CH1, current(Ic) columns, and click on the plot button. Hold down the `ctrl` key to select multiple columns. You can also drag across the title bars to select adjacent columns
+
+## Plotting the columns
+![](images/screenshots/design4.png){: width="800px"}
+* If the order of the selected columns should be reversed, you can specify that at this point
 
 
-	<h3>Screenshot</h3>
-	<img src="screenshots/design3.png" width="100%"><br>
+## Your plot is ready!
+![](images/screenshots/design5.png){: width="800px"}
 
-	<h3>Screenshot</h3>
-	<img src="screenshots/design4.png" width="100%"><br>
-	
-	<h3>Screenshot</h3>
-	<img src="screenshots/design5.png" width="100%"><br>
+## Use the save option to view raw data as well as save it to csv,txt,png,svg... formats
+![](images/screenshots/design6.png){: width="800px"}
 
-	<h3>Screenshot</h3>
-	<img src="screenshots/design6.png" width="100%"><br>
-
-
-  </body>
-</html>
