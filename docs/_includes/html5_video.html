@@ -1,0 +1,9 @@
+{% if include.title %}
+<h2 style="text-align:left;">{{include.title}}</h2><hr>
+{% else %}
+<h2 style="text-align:left;">Video : Click to play</h2><hr>
+{% endif %}
+<video width="600" controls poster="{{include.poster}}">
+  <source src="{{include.url}}" type="video/ogg">
+  Your browser does not support HTML5 video.
+</video>
