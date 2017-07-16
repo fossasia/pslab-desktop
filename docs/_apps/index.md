@@ -1,13 +1,10 @@
 ---
-layout: expt
+layout: exptSidebar
 title: "index"
 description: "introduction to experiment related apps goes on this page"
 active: apps
 ---
 
-
-![]("images/accessories.png")
-![]("images/schematic.svg")
 
 ```python
 #code snippet example
