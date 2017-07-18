@@ -7,9 +7,10 @@
     top: 0;
     left: 0;
     background-color: #ccc;
-    overflow-x: hidden;
+    overflow:scroll; 
     transition: 0.5s;
     padding-top: 40px;
+    margin-bottom: 100px;
 }
 
 .sidenav a {
