@@ -1,0 +1,14 @@
+metadata:
+  author: FOSSASIA
+  projectname: PSLAb-desktop-apps
+  version: development
+
+build:
+  doctheme: sphinx_fossasia_theme
+  docpath: docs
+  logo: docs/images/logo.png
+  markdown_flavour: markdown_github
+
+publish:
+  ghpages:
+    docurl: yaydoc.fossasia.org
