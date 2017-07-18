@@ -6,7 +6,7 @@ metadata:
 build:
   doctheme: sphinx_fossasia_theme
   docpath: docs
-  logo: docs/images/logo.png
+  logo: images/logo.png
   markdown_flavour: markdown_github
 
 publish:
