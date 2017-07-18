@@ -11,4 +11,4 @@ build:
 
 publish:
   ghpages:
-    docurl: yaydoc.fossasia.org
+    docurl: pslabdesktop.fossasia.org
