@@ -8,7 +8,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 app.secret_key = 'yet another secret key'
 
 mysql = MySQL()
- 
+
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root123'
