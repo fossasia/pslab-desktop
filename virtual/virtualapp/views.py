@@ -11,7 +11,6 @@ class dummy:
 	def __init__(self):
 		self.x=np.linspace(0,8*np.pi,samples)
 		self.r = random.random()
-		pass
 	def capture1(self,chan,samples,tg):
 		'''
 		Example doc for capture command. returns a sine wave
