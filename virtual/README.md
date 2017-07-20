@@ -26,10 +26,12 @@ coming soon.
 
 + Install THE MYSQL DATABASE
   + sudo apt-get install mysql-server
-  + sudo apt-get install nginx 
   + provide the password. Username is root by default
 
-pip install flask flask-mysql 
+The following command will install flask as well as dependencies such as Jinja2, itsdangerous, click, and Werkzeug
+sudo pip install flask
+
+sudo pip install flask-mysql
 
 
 ## Configuring the database
@@ -92,6 +94,7 @@ DELIMITER ;
 
 create a procedure to validate a login attempt
 ```
+use VirtualUsers;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(
 IN p_username VARCHAR(100)
@@ -161,4 +164,10 @@ END$$
  
 DELIMITER ;
 ```
+
+
+## Running the app
+
+`./run.py`
+navigate to localhost:5000 in your web browser
 
