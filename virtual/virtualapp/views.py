@@ -10,6 +10,7 @@ import inspect,random
 class dummy:
 	def __init__(self):
 		self.x=np.linspace(0,8*np.pi,samples)
+		self.r = random.random()
 		pass
 	def capture1(self,chan,samples,tg):
 		'''
@@ -25,11 +26,9 @@ class dummy:
 		a454
 		*&^ "23"
 		'''
-		a = self.x #does nothing except prevent codacy
-		return random.random()
+		return self.r+random.random()
 	def set_pv1(self,val):
-		a = self.x #does nothing except prevent codacy
-		return val
+		return val+self.r
 
 
 try:
