@@ -40,6 +40,37 @@
       </form>
         <h3 id="message" class="text-muted">_</h3>
       </div>
+ 
+    <script type="text/javascript">
+       $(function() {
+		$('#btnSignUp').click(function() {
+	 
+			$.ajax({
+				url: '/signUp',
+				data: $('form').serialize(),
+				type: 'POST',
+				dataType:'json',
+				success: function(response) {
+					if (response.hasOwnProperty('error')){
+						$('#message').css("color", "red");
+						$('#message').html(String(response.error));
+						}
+					else if (response.hasOwnProperty('message')){
+						$('#message').css("color", "green");
+						$('#message').html(response.message);
+						}
+					console.log(response);
+				},
+				error: function(response) {
+					$('#message').css("color", "red");
+					$('#message').html('Sign-Up failed. ');
+					console.log(response);
+				}
+			});
+		});
+	});
+
+	</script>
        
  
       <footer class="footer">
