@@ -7,7 +7,7 @@ from werkzeug import generate_password_hash, check_password_hash
 import inspect,random
 import numpy as np
 # A dummy class that will pretend to be a minimal PSLab . we shall use this for testing purposes.
-class dummy:
+class dummy(object):
 	def __init__(self):
 		self.x=np.linspace(0,8*np.pi,200)
 		self.r = random.random()
@@ -75,7 +75,7 @@ def signUp():
 		_hashed_password = generate_password_hash(_password)
 		cursor.callproc('sp_createUser',(_name,_email,_hashed_password))
 		print 'old ',_password,len(_password),'LENGTH : ',len(_hashed_password)
-		data = cursor.fetchall()		 
+		data = cursor.fetchall()
 		if len(data) is 0:
 			conn.commit()
 			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
@@ -84,6 +84,10 @@ def signUp():
 	else:
 		return json.dumps({'error':'Fill all the required fields!'})
 
+@app.route('/showSignIn')
+@app.route('/showSignin')
+def showSignin():
+    return render_template('signin.html')
 
 
 
