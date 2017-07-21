@@ -5,18 +5,20 @@ from flask import Flask, render_template,request,json,session,redirect,jsonify
 #import os
 
 import inspect,random
-
+import numpy as np
 # A dummy class that will pretend to be a minimal PSLab . we shall use this for testing purposes.
 class dummy:
 	def __init__(self):
-		self.x=np.linspace(0,8*np.pi,samples)
+		self.x=np.linspace(0,8*np.pi,200)
 		self.r = random.random()
 	def capture1(self,chan,samples,tg):
 		'''
 		Example doc for capture command. returns a sine wave
 		'''
+		self.x=np.linspace(0,8*np.pi,samples)
 		return self.x,np.sin(self.x+np.pi*random.random()/10)
 	def capture2(self,samples,tg):
+		self.x=np.linspace(0,8*np.pi,samples)
 		return self.x,np.sin(self.x+np.pi*random.random()/10),np.sin(self.x+np.pi*random.random()/10)
 
 	def get_voltage(self,chan):
@@ -49,6 +51,18 @@ for a in dir(I):
 @app.route('/index')
 @app.route('/main')
 def index():
-    return render_template('index.html')
+	'''
+	Home Page link
+	'''
+	return render_template('index.html')
+
+@app.route('/showSignUp')
+def showSignUp():
+	'''
+	Sign-up Page link
+	'''
+	return render_template('signup.html')
+
+
 
 
