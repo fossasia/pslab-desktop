@@ -112,6 +112,14 @@ def validateLogin():
 		return render_template('error.html',error = str(e))
 
 
+@app.route('/userHome')
+def userHome():
+	if session.get('user'):
+		print session['user']
+		return render_template('userHome.html',username = session['user'][0])
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')    
+
 @app.route('/logout')
 def logout():
     session.pop('user',None)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Pocket Science Lab: Virtual Lab</title>
+ 
+    <script src="../static/js/jquery.js"></script>        
+    <script src="../static/js/bootstrap.min.js"></script>        
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="../static/css/narrow.css" rel="stylesheet">
+    <link href="../static/css/signup.css" rel="stylesheet">
+
+</head>
+ 
+<body data-spy="scroll" data-target=".navbar" data-offset="100">
+ 
+<!-- Scrollspy nav menu --> 
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#section1">PSLab Virtual Lab : <span style="color:#afa">{{username}}</span></a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav navbar-right">
+				<!--<li role="presentation"><img style="margin-top:10px;display:none;" src="../static/images/busy.gif" id="busy-gif" /></li>-->
+				<li role="presentation"><a href="/showAddScript">New Python Script</a></li>
+				<li role="presentation" class="active"><a href="/logout">Logout</a>
+				</li>
+			</ul>
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="#section1">Your Scripts</a></li>
+			<li><a href="#section2">Experiments</a></li>
+			<li><a href="#section3">Function List</a></li>
+		  </ul>
+      </div>
+    </div>
+  </div>
+</nav>    
+
+
+<div class="contents" style="margin: 0 auto;width:95%;"> 
+<!-- Scrollspy nav Contents --> 
+
+    <div >
+
+      <div id="section1">    
+        <h3>Your Scripts </h3>
+      </div>
+
+      <div id="section2"> 
+        <h3>Selection of pre-written scripts for experiments</h3><hr class="style1">
+      </div>        
+
+      <div id="section3">         
+        <h3>Function calls to access the hardware</h3><hr class="style1">
+      </div>
+
+    </div>
+
+       <footer class="footer">
+            <p>User Home</p>
+        </footer>
+ 
+    </div>
+  </body>
+</html>
