@@ -39,7 +39,9 @@ sudo pip install flask-mysql
   - [x] SignUp hook
   - [x] SignUp database updation procedure
   - [x] SignIn hook
-  - [ ] SignIn database verification
+  - [x] SignIn database verification
+  - [ ] User script page hook
+  - [ ] Process and store a user written script
 
 - Frontend
   - [x] css files : Bootstrap, custom css
@@ -48,8 +50,10 @@ sudo pip install flask-mysql
   - [x] SignUp.html
   - [x] SignUp AJAX callbacks
   - [x] SignIn.html
-  - [ ] SignIn AJAX callback and redirection to user's homepage
-  - [ ] UserHome.html
+  - [x] SignIn AJAX callback and redirection to user's homepage
+  - [x] UserHome.html
+  - [x] logout hook
+  - [ ] Page to add a user written script
 
 
 ## Configuring the database
