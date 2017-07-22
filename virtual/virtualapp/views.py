@@ -91,3 +91,29 @@ def showSignin():
 
 
 
+@app.route('/validateLogin',methods=['POST'])
+def validateLogin():
+	try:
+		_username = request.form['inputEmail']
+		_password = request.form['inputPassword']
+		cursor.callproc('sp_validateLogin',(_username,))
+		data = cursor.fetchall()
+		if len(data) > 0:
+			print 'new ',_password,len(_password),str(data[0][3]),len(data[0][3])
+			if check_password_hash(str(data[0][3]),_password):
+				session['user'] = [data[0][1],data[0][0]]
+				return redirect('/userHome')
+			else:
+				return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
+		else:
+			return render_template('error.html',error = 'Wrong Email address or Password. no len')	
+
+	except Exception as e:
+		return render_template('error.html',error = str(e))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect('/')
+
