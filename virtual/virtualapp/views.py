@@ -106,7 +106,7 @@ def validateLogin():
 			else:
 				return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
 		else:
-			return render_template('error.html',error = 'Wrong Email address or Password. no len')	
+			return render_template('error.html',error = 'Wrong Email address or Password. no len')
 
 	except Exception as e:
 		return render_template('error.html',error = str(e))
@@ -118,7 +118,7 @@ def userHome():
 		print session['user']
 		return render_template('userHome.html',username = session['user'][0])
 	else:
-		return render_template('error.html',error = 'Unauthorized Access')    
+		return render_template('error.html',error = 'Unauthorized Access')
 
 @app.route('/logout')
 def logout():
