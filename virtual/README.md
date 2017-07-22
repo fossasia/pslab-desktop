@@ -33,6 +33,24 @@ sudo pip install flask
 
 sudo pip install flask-mysql
 
+## Implemented features
+- backend
+  - [x] homepage hook
+  - [x] SignUp hook
+  - [x] SignUp database updation procedure
+  - [x] SignIn hook
+  - [ ] SignIn database verification
+
+- Frontend
+  - [x] css files : Bootstrap, custom css
+  - [x] js files : Jquery
+  - [x] homepage.html
+  - [x] SignUp.html
+  - [x] SignUp AJAX callbacks
+  - [x] SignIn.html
+  - [ ] SignIn AJAX callback and redirection to user's homepage
+  - [ ] UserHome.html
+
 
 ## Configuring the database
 
