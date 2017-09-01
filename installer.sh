@@ -40,13 +40,14 @@ echo -e "${YELLOW}Setting up qtconsole is completed!${NOCOLOR}"
 # Clone Desktop apps and Python repos
 apt-get install git -y
 echo -e "${YELLOW}Setting up git is completed!${NOCOLOR}"
+cd /opt/
 git clone https://github.com/fossasia/pslab-desktop-apps.git
 git clone https://github.com/fossasia/pslab-python.git
 
 # cd into Python repo and install
 echo -e "${YELLOW}Cloning repositories is completed!${NOCOLOR}"
 echo -e "${YELLOW}Installing python repository ...${NOCOLOR}"
-cd pslab-python
+cd /opt/pslab-python
 make clean
 make
 make install
@@ -54,8 +55,7 @@ make install
 echo -e "${YELLOW}Python repository installed!${NOCOLOR}"
 # cd into Desktop apps repo and install
 echo -e "${YELLOW}Installing desktop application ...${NOCOLOR}"
-cd ..
-cd pslab-desktop-apps
+cd /opt/pslab-desktop-apps
 make clean
 make
 make install
