@@ -26,13 +26,16 @@ echo -e "${YELLOW}Setting up Numpy and Scipy is completed!${NOCOLOR}"
 apt-get install pyqt4-dev-tools -y
 echo -e "${YELLOW}Setting up dev tools is completed!${NOCOLOR}"
 # Install PyQt Graph
-pip install pyqtgraph -y
+pip install pyqtgraph
 echo -e "${YELLOW}Setting up PyQt Graph is completed!${NOCOLOR}"
 # Install PyOpenGl
-pip install PyOpenGL -y
+pip install PyOpenGL
 echo -e "${YELLOW}Setting up PyOpenGL is completed!${NOCOLOR}"
+# Install QtOpenGl
+apt-get install python-qt4-gl -y
+echo -e "${YELLOW}Setting up QtOpenGl is completed!${NOCOLOR}"
 # Install iPython Console
-pip install qtconsole -y
+pip install qtconsole
 echo -e "${YELLOW}Setting up qtconsole is completed!${NOCOLOR}"
 # Clone Desktop apps and Python repos
 apt-get install git -y
