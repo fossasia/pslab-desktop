@@ -46,13 +46,13 @@ git clone https://github.com/fossasia/pslab-python.git
 
 # cd into Python repo and install
 echo -e "${YELLOW}Cloning repositories is completed!${NOCOLOR}"
-echo -e "${YELLOW}Installing python repository ...${NOCOLOR}"
+echo -e "${YELLOW}Installing Python Communication Library ...${NOCOLOR}"
 cd /opt/pslab-python
 make clean
 make
 make install
 
-echo -e "${YELLOW}Python repository installed!${NOCOLOR}"
+echo -e "${YELLOW}Python Communication Library installed!${NOCOLOR}"
 # cd into Desktop apps repo and install
 echo -e "${YELLOW}Installing desktop application ...${NOCOLOR}"
 cd /opt/pslab-desktop-apps
