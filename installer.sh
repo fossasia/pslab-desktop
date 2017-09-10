@@ -59,7 +59,15 @@ cd /opt/pslab-desktop-apps
 make clean
 make
 make install
-echo -e "${ORANGE}Desktop application installed!${NOCOLOR}"
-echo -e "${GREEN}Starting application!${NOCOLOR}"
 
-Experiments
+echo -e "${GREEN}Desktop application installed!${NOCOLOR}"
+
+echo -en "${YELLOW}Do you want to open PSLab Application now $*? [y/n] ${NOCOLOR}"
+read -N 1 REPLY
+echo
+if test "$REPLY" = "y" -o "$REPLY" = "Y"; then
+	echo -e "${GREEN}Starting application!${NOCOLOR}"
+	Experiments
+else
+	echo -e "${GREEN}Installation complete!${NOCOLOR}"
+fi
