@@ -59,7 +59,7 @@ PSLab desktop application requires the following libraries pre-installed in the 
 The installation can be performed by running the `installer.sh` script as follows;
 First download the installer.sh file from the following link. You may right click on the link and click "Save Link As..." to save the file.
 
-[Installer.sh](https://github.com/fossasia/pslab-desktop-apps/blob/development/Installer.sh)
+[Installer.sh](https://github.com/fossasia/pslab-desktop-apps/blob/development/installer.sh)
 
 Then browse to the folder where the `installer.sh` file was downloaded and type the following commands.
 
