@@ -20,6 +20,8 @@ Please join us on the following channels:
 
 ### Installation
 
+#### Installing the manual way
+
 To install PSLab on Debian based Gnu/Linux system, the following dependencies must be installed.
 
 #### Dependencies
@@ -58,6 +60,22 @@ and run the following (for both the repos)
     $ sudo make install
 
 Now you are ready with the PSLab software on your machine :)
+
+#### Install using the `installer.sh` script
+
+Installation of PSLab desktop app is made easier using the `installer.sh` script. First you have to make the file an executable. Go to the directory where the `installer.sh` file is downloaded and then execute the following command.
+
+```
+sudo chmod +x installer.sh
+```
+
+This will ask for your password to proceed. Once it is completed, run the intaller by the following command;
+
+```
+sudo ./installer.sh
+```
+
+This will install the PSLab desktop application in the /opt/ directory. Once the installation is completed it will prompt to open the application. Press `Y` to launch PSLab desktop application for the first time or press `N` to exit the installer. 
 
 -----------------------
 For the main GUI (Control panel), you can run the Experiments app from the terminal.
