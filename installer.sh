@@ -62,10 +62,7 @@ make install
 
 echo -e "${GREEN}Desktop application installed!${NOCOLOR}"
 
-echo -en "${YELLOW}Do you want to open PSLab Application now $*? [y/n] ${NOCOLOR}"
-read -N 1 REPLY
-echo
-if test "$REPLY" = "y" -o "$REPLY" = "Y"; then
+if (whiptail --title "Open PSLab Desktop Application" --yesno "Do you want to open PSLab Application now?" 8 46) then
 	echo -e "${GREEN}Starting application!${NOCOLOR}"
 	Experiments
 else
