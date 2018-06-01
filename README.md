@@ -20,19 +20,44 @@ Please join us on the following channels:
 
 ### Installation
 
+#### Install using the `installer.sh` script
+
+Installation of PSLab desktop app is made easier using the `installer.sh` script. For this you need to have a working Internet connection.
+
+As the first step open up the console. Keyboard shortcut <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> would open up the console window.
+Type the following command to download the `installer.sh` script.
+
+```
+wget https://raw.github.com/fossasia/pslab-desktop-apps/development/installer.sh
+``` 
+
+Once the download is complete, make the file an executable using the following command.
+
+```
+sudo chmod +x installer.sh
+```
+
+You will be prompted to enter your password to proceed. Once it is complete, run the intaller by the following command;
+
+```
+sudo ./installer.sh
+```
+
+This will install the PSLab desktop application along with the libraries in the `/opt/` directory. Installation will complete with a dialog box asking if you want to open up the PSLab desktop application. Select `Yes` and the application will open. If you want to just exit, select `No`. 
+
 #### Installing the manual way
 
 To install PSLab on Debian based Gnu/Linux system, the following dependencies must be installed.
 
 #### Dependencies
 
-* PyQt 4.7+, PySide, or PyQt5
-* python 2.6, 2.7, or 3.x
+* PyQt 4.7
+* Pthon 2.6, 2.7
 * NumPy, Scipy            &nbsp;   **Analytical tools and array manipulations**
-* pyqt4-dev-tools         &nbsp;   **Contains Pyuic4 which compiles xml layout files into python template files**
-* Pyqtgraph               &nbsp;   **Primary Plotting library**
-* pyopengl and qt-opengl  &nbsp;   **For 3D graphics support in pyqtgraph**
-* iPython-qtconsole       &nbsp;   **optional**
+* PyQt4-dev-tools         &nbsp;   **Contains Pyuic4 which compiles xml layout files into python template files**
+* PyQtgraph               &nbsp;   **Primary Plotting library**
+* Pyopengl and Qt-opengl  &nbsp;   **For 3D graphics support in pyqtgraph**
+* iPython-qtconsole       &nbsp;   **Optional**
 
 
 ##### Now clone both the repositories [pslab-apps](https://github.com/fossasia/pslab-apps)  and [pslab](https://github.com/fossasia/pslab).
@@ -60,22 +85,6 @@ and run the following (for both the repos)
     $ sudo make install
 
 Now you are ready with the PSLab software on your machine :)
-
-#### Install using the `installer.sh` script
-
-Installation of PSLab desktop app is made easier using the `installer.sh` script. First you have to make the file an executable. Go to the directory where the `installer.sh` file is downloaded and then execute the following command.
-
-```
-sudo chmod +x installer.sh
-```
-
-This will ask for your password to proceed. Once it is completed, run the intaller by the following command;
-
-```
-sudo ./installer.sh
-```
-
-This will install the PSLab desktop application in the /opt/ directory. Once the installation is completed it will prompt to open the application. Press `Y` to launch PSLab desktop application for the first time or press `N` to exit the installer. 
 
 -----------------------
 For the main GUI (Control panel), you can run the Experiments app from the terminal.
