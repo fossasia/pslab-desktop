@@ -1,0 +1,133 @@
+<!-- _includes/base.html -->
+
+
+
+
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>AC and DC</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="">
+			<meta name="author" content="">
+			<title>PSLab help</title>
+			
+			<!-- core CSS -->
+			<link href="../css/bootstrap.min.css" rel="stylesheet">
+			<link href="../css/main.css" rel="stylesheet">
+			<link href="../css/highlight.css" rel="stylesheet">
+		</head>
+
+<body class="homepage">
+
+    <header id="header">
+
+	<nav class="navbar navbar-inverse"  role="banner">
+	  <div class="container-fluid">
+	    <div class="navbar-header pull-left">
+	            <a class="navbar-brand" href="../index.html"><img src="../images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
+	    </div>
+	    <ul class="nav navbar-nav pull-left">
+                        <li ><a href="../index.html">Home</a></li>
+                        <li ><a href="../utilities/index.html">Utilities</a></li>
+                        <li ><a href="../apps/index.html">Experiments</a></li>
+	    </ul>
+	    <!--
+	    <form class="navbar-form navbar-left">
+	      <div class="form-group">
+		<input type="text" class="form-control" placeholder="Search">
+	      </div>
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </form>
+	    -->
+	  </div>
+	</nav>
+
+
+		
+    </header><!--/header-->
+
+		<!-- _includes/base.html -->
+
+
+
+
+<div id="main">
+
+	
+	<div class="center wow fadeInDown">
+		<br><h2>AC and DC</h2>
+		<p class="lead"> Study the difference between AC and DC circuits</p>
+	</div>    
+	
+
+	<section id="recent-works">
+		<div class="container">
+			
+
+  <h2 id="measure-the-voltage-of-a-dry-cell">Measure the voltage of a dry cell</h2>
+<p><img src="images/schematics/acdc1.svg" alt="" width="300px" /></p>
+
+<p>Make the connections as shown in the figure. Use a common dry cell battery<br />
+Note the values shown by the voltmeter for CH1 . Also observe, that the graph for CH1 is a straight line. This is because the voltage is constant.</p>
+
+<h2 id="measure-the-voltage-of-a-dry-cell---2">Measure the voltage of a dry cell - 2</h2>
+<p><img src="images/schematics/acdc2.svg" alt="" width="300px" /></p>
+
+<p>The polarity of the battery has been reversed. Observe that the voltmeter for CH1 has changed its sign.<br /><br /></p>
+
+<h2 id="learn-how-to-use-the-programmable-voltage-source">Learn how to use the programmable voltage source</h2>
+<p><img src="images/schematics/acdc3.svg" alt="" width="300px" /></p>
+
+<p>PV1,PV2, and PV3 are voltage sources whose output voltage can be controlled via the software.  Connect PV1 to CH1, and observe the plot as well as the measured DC voltage of CH1.<br />
+Now drag the PV1 dial, or use the mouse scroll wheel over it,  to change the voltage output from PV1.  Read the voltage, and observe that the voltage always stays close to the set value.<br /><br /></p>
+
+<h2 id="learn-how-to-use-the-programmable-waveform-generator">Learn how to use the programmable waveform generator</h2>
+<p><img src="images/schematics/acdc4.svg" alt="" width="300px" /></p>
+
+<p>W1, and W2 are oscillating voltage sources whose output frequency can be controlled via the software.  Connect W1 to CH2, and observe that the plot oscillates around the horizontal axis.<br />
+Measure the DC voltage of CH2, and observe that the values fluctuate. <br /></p>
+
+<p>Set W1 frequency to 500Hz using the dial, and click on the plot to activate the crosshairs. Note the time period of the oscillations, and confirm that the measured frequency is the same as that which was set.<br />
+You may use the ‘pause’ button located at the bottom right of the window in order to freeze the graph before taking readings.<br /></p>
+
+<h2 id="power-line-pickup">Power Line Pickup</h2>
+
+<p><img src="images/schematics/acdc5.svg" alt="" width="300px" /></p>
+
+<p>Connect a long wire to CH2, and observe that the plot starts oscillating around the horizontal axis.<br />
+Note the time period of the oscillations by using the crosshairs, and confirm that the measured frequency is the same as that which was set.<br />
+The timescale of the plot is set to 10mS , so you may simply count the total number of cycles on the plot in order to measure the frequency<br /></p>
+
+<p><img src="images/screenshots/acdc.png" alt="" /></p>
+
+
+
+</div>
+
+
+
+
+
+	<div class="footer navbar-fixed-bottom" >
+	    <footer >
+	      <div class="container">
+    		<ul>
+        		<li><a href="mailto:pslab-fossasia@google-groups.com">bug-reports</a></li>
+        		<li><a href="https://fossasia.org/pslab">fossasia.org/pslab</a></li>
+		</ul>
+	      </div>
+	    </footer>
+	 </div>
+
+    <!--
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/wow.min.js"></script>
+    -->
+	</body>
+</html>

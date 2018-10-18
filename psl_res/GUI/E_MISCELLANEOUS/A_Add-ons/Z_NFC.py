@@ -5,11 +5,9 @@ uses chip select 1
 '''
 
 from __future__ import print_function
-import os
 
 from PyQt4 import QtCore, QtGui
-import time,sys
-from .templates import NFC
+from .templates import ui_NFC as NFC
 import sys
 
 
@@ -32,12 +30,10 @@ class AppWindow(QtGui.QMainWindow, NFC.Ui_MainWindow):
 			QtGui.QMessageBox.about(self, 'Error', 'Card reader not detected')
 			print ("No")
 		else:
-			ret =  self.MF.getStatus()
-			
+			self.MF.getStatus()
 			self.UID = False
 			self.present =False
 			self.key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
-			
 			self.looptimer = QtCore.QTimer()
 			self.looptimer.timeout.connect(self.autoscan)
 			self.looptimer.start(500)
@@ -47,7 +43,7 @@ class AppWindow(QtGui.QMainWindow, NFC.Ui_MainWindow):
 		self.detect.setText( "Searching ..." )
 		(status,TagType) = self.MF.MFRC522_Request(self.MF.PICC_CMD_REQA)
 		if status == self.MF.MI_OK:
-			print ("Found")
+			print ("Found",TagType)
 			self.detect.setText( "Card detected" )
 			(status,uid) = self.MF.MFRC522_Anticoll()
 			if status == self.MF.MI_OK:
@@ -130,7 +126,7 @@ class AppWindow(QtGui.QMainWindow, NFC.Ui_MainWindow):
 					for a in data:
 						txt+=chr(a)
 				else:
-					txt+= "Sector read failed. Auth Err." 
+					txt+= "Sector read failed. Auth Err."
 
 				self.MF.MFRC522_StopCrypto1()
 

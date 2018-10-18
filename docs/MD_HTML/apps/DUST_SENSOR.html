@@ -1,0 +1,118 @@
+<!-- _includes/base.html -->
+
+
+
+
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Dust Sensor</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="">
+			<meta name="author" content="">
+			<title>PSLab help</title>
+			
+			<!-- core CSS -->
+			<link href="../css/bootstrap.min.css" rel="stylesheet">
+			<link href="../css/main.css" rel="stylesheet">
+			<link href="../css/highlight.css" rel="stylesheet">
+		</head>
+
+<body class="homepage">
+
+    <header id="header">
+
+	<nav class="navbar navbar-inverse"  role="banner">
+	  <div class="container-fluid">
+	    <div class="navbar-header pull-left">
+	            <a class="navbar-brand" href="../index.html"><img src="../images/logo.png" style="max-height:50px;background:#7a7;" alt="logo"></a>
+	    </div>
+	    <ul class="nav navbar-nav pull-left">
+                        <li ><a href="../index.html">Home</a></li>
+                        <li ><a href="../utilities/index.html">Utilities</a></li>
+                        <li ><a href="../apps/index.html">Experiments</a></li>
+	    </ul>
+	    <!--
+	    <form class="navbar-form navbar-left">
+	      <div class="form-group">
+		<input type="text" class="form-control" placeholder="Search">
+	      </div>
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </form>
+	    -->
+	  </div>
+	</nav>
+
+
+		
+    </header><!--/header-->
+
+		<!-- _includes/base.html -->
+
+
+
+
+<div id="main">
+
+	
+	<div class="center wow fadeInDown">
+		<br><h2>Dust Sensor</h2>
+		<p class="lead"> Measure particulate matter concentration using the DSM501A sensor</p>
+	</div>    
+	
+
+	<section id="recent-works">
+		<div class="container">
+			
+
+  <h2 id="dsm501a-dust-sensor">DSM501A Dust Sensor</h2>
+
+<p><a href="https://www.elecrow.com/wiki/images/3/3a/DSM501.pdf">Data Sheet</a></p>
+
+<p>Make the Connections as following.</p>
+<ul>
+  <li>PIN #2 -&gt; ID1 . This is the actual signal</li>
+  <li>PIN #3 -&gt; 5V / SQR1 . If SQR1 is selected, it must be set to HIGH via the advanced controls tab</li>
+  <li>PIN #5 -&gt; GND</li>
+</ul>
+
+<p>ID1 monitors the PWM output of the sensor and calculates the occupancy ratio. The integration time is the amount of time over which the occupancy is measured. It can be a maximum of 60 seconds.</p>
+
+<h2 id="photograph--dsm501a">Photograph : DSM501a</h2>
+
+<p><img src="images/photographs/dsm501a.jpg" alt="" width="300px" /></p>
+
+<h2 id="screenshot--dust-concentration-indoors">Screenshot : Dust concentration indoors</h2>
+
+<p><img src="images/screenshots/PSL_DSM501A.png" alt="" width="700px" /></p>
+
+
+
+</div>
+
+
+
+
+
+	<div class="footer navbar-fixed-bottom" >
+	    <footer >
+	      <div class="container">
+    		<ul>
+        		<li><a href="mailto:pslab-fossasia@google-groups.com">bug-reports</a></li>
+        		<li><a href="https://fossasia.org/pslab">fossasia.org/pslab</a></li>
+		</ul>
+	      </div>
+	    </footer>
+	 </div>
+
+    <!--
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/wow.min.js"></script>
+    -->
+	</body>
+</html>

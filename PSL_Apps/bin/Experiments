@@ -2,8 +2,11 @@
 '''
 Lists the various available experiments and allows users to run them
 '''
-
 from __future__ import print_function
+
+
+import os
+
 from argparse import ArgumentParser
 import sys,time
 
@@ -11,12 +14,8 @@ parser = ArgumentParser()
 # Add more options if you like
 parser.add_argument("-P", dest="PortName", help="If you have connected multiple devices, provide the port name . e.g /dev/ttyACM0", metavar="PORT_NAME")
 args = parser.parse_args()
+from PSL_Apps.utilitiesClass import utilitiesClass
 
-import os
-os.environ['QT_API'] = 'pyqt'
-import sip
-sip.setapi("QString", 2)
-sip.setapi("QVariant", 2)
 from PyQt4 import QtCore, QtGui
 from PyQt4 import QtWebKit
 
@@ -27,7 +26,6 @@ except AttributeError:
         return s
 
 from PSL_Apps.stylesheets import styles
-from PSL_Apps.utilitiesClass import utilitiesClass
 from PSL_Apps.templates import ui_single_col_exp as single_col_exp
 
 import os,string,time,pkgutil,importlib,functools,pkg_resources
@@ -167,7 +165,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 
 		self.helpView = QtWebKit.QWebView()
 		self.helpLayout.addWidget(self.helpView)
-		self.helpView.setUrl(QtCore.QUrl(pkg_resources.resource_filename('psl_res.HTML','index.html')))
+		self.helpView.setUrl(QtCore.QUrl("../../docs/MD_HTML/index.html"))
 		#from PSL_Apps.utilityApps.indexGen import autogen
 		#self.helpView.setHtml(autogen(pkg_resources.resource_listdir('psl_res','HTML')))
 

@@ -17,7 +17,6 @@ all:  $(UIfiles)
 	#make -C docs/misc all
 	#@echo $(UI_SOURCES)
 	python setup.py build
-	python3 setup.py build
 
 
 ui_%.py: %.ui
@@ -52,8 +51,7 @@ install:
 	cp -r psl_res/* $(DESTDIR)/usr/share/pslab/psl_res/
 
 	#cp docs/misc/build/*.html $(DESTDIR)/usr/share/doc/pslab/html
-	# create ditributions for Python2 and Python3
+	# create ditributions for current python distribution
 	python setup.py install --install-layout=deb \
 	         --root=$(DESTDIR)/ --prefix=/usr
-	python3 setup.py install --install-layout=deb \
-	         --root=$(DESTDIR)/ --prefix=/usr
+	
