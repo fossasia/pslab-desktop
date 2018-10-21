@@ -225,10 +225,8 @@ Resultant plot :
 
 
 ### You can help
-```
-Please report a bug/install errors here 
-Your suggestions to improve PSLab are welcome :)
-```
+Please report bugs or install errors here.
+Your suggestions to improve PSLab are welcome. :)
 
 ### Blog posts related to PSLab on FOSSASIA blog 
 * [Installation of PSLab](http://blog.fossasia.org/pslab-code-repository-and-installation/)
