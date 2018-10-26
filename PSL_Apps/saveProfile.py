@@ -11,9 +11,14 @@
 #
 #===================================================================
 
-import sys
-from PyQt4 import QtCore, QtGui
 import inspect
+import sys
+from PyQt4 import QtGui
+
+try:
+    unicode        # Python 2
+except NameError:
+    unicode = str  # Python 3
 
 #===================================================================
 # save "ui" controls and values to registry "setting"

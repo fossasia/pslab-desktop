@@ -1,18 +1,47 @@
-import time,random,functools,pkgutil,importlib,functools,pkg_resources
+import functools
+import importlib
+import numbers
+import os
+import random
+import sys
 
-import os,numbers
-os.environ['QT_API'] = 'pyqt'
+import pkg_resources
+
+import numpy as np
+import pyqtgraph as pg
 import sip
+from PSL_Apps import saveProfile
+from PSL_Apps.templates.widgets import ui_button as button
+from PSL_Apps.templates.widgets import ui_dial as dial
+from PSL_Apps.templates.widgets import \
+    ui_dialAndDoubleSpin as dialAndDoubleSpin
+from PSL_Apps.templates.widgets import ui_displayWidget as displayWidget
+from PSL_Apps.templates.widgets import ui_doubleSpinBox as doubleSpinBox
+from PSL_Apps.templates.widgets import ui_dualButton as dualButton
+from PSL_Apps.templates.widgets import ui_gainWidget as gainWidget
+from PSL_Apps.templates.widgets import \
+    ui_gainWidgetCombined as gainWidgetCombined
+from PSL_Apps.templates.widgets import ui_pulseCounter as pulseCounter
+from PSL_Apps.templates.widgets import ui_pwmWidget as pwmWidget
+from PSL_Apps.templates.widgets import ui_selectAndButton as selectAndButton
+from PSL_Apps.templates.widgets import ui_sensorWidget as sensorWidget
+from PSL_Apps.templates.widgets import ui_setStateList as setStateList
+from PSL_Apps.templates.widgets import ui_simpleButton as simpleButton
+from PSL_Apps.templates.widgets import ui_sineWidget as sineWidget
+from PSL_Apps.templates.widgets import ui_spinBox as spinBox
+from PSL_Apps.templates.widgets import ui_supplyWidget as supplyWidget
+from PSL_Apps.templates.widgets import ui_voltWidget as voltWidget
+from PSL_Apps.templates.widgets import ui_widebutton as widebutton
+from PyQt4 import QtCore, QtGui
+
+os.environ['QT_API'] = 'pyqt'
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
-from PyQt4 import QtCore, QtGui
-import pyqtgraph as pg
-from PSL_Apps.templates.widgets import ui_dial as dial,ui_button as button,ui_selectAndButton as selectAndButton,ui_sineWidget as sineWidget,ui_pwmWidget as pwmWidget,ui_supplyWidget as supplyWidget,ui_setStateList as setStateList,ui_sensorWidget as sensorWidget,ui_simpleButton as simpleButton, ui_dualButton as dualButton
-from PSL_Apps.templates.widgets import ui_spinBox as spinBox,ui_doubleSpinBox as doubleSpinBox,ui_dialAndDoubleSpin as dialAndDoubleSpin,ui_pulseCounter as pulseCounter,ui_voltWidget as voltWidget,ui_gainWidget as gainWidget,ui_gainWidgetCombined as gainWidgetCombined,ui_widebutton as widebutton,ui_displayWidget as displayWidget
-from PSL_Apps import saveProfile
-from PSL.commands_proto import applySIPrefix
-import numpy as np
+try:
+    unicode        # Python 2
+except NameError:
+    unicode = str  # Python 3
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -1513,5 +1542,3 @@ class utilitiesClass():
 			self.studioWidgets[name]=WG
 			return WG
 		return None
-
-
