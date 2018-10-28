@@ -110,7 +110,7 @@ class AppWindow(QtGui.QMainWindow, ui_template_graph_nofft.Ui_MainWindow,utiliti
 			#self.displayCrossHairData(self.plot,False,self.samples,self.I.timebase,[y],[(0,255,0)])
 			self.I.set_state(SQR1=False) #Set SQR1 to 0
 			return 'Done'
-		except Exception,e:
+		except Exception as e:
 			print (e)
 			return 'Error'
 
