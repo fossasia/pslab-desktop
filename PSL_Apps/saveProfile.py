@@ -1,6 +1,6 @@
 #===================================================================
 # Module with functions to save & restore qt widget values
-# Written by: Alan Lilly 
+# Written by: Alan Lilly
 # Website: http://panofish.net
 #===================================================================
 
