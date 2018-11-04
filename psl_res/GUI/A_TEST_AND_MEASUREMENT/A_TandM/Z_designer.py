@@ -5,24 +5,31 @@ design experiments
 '''
 from __future__ import print_function
 
-from PSL.SENSORS.supported import supported as I2CSensors
-from PSL.SENSORS.supported import nameMap as I2CSensorsNameMap
+import functools
+import numbers
+import sys
+import time
 
-from PSL_Apps.utilitiesClass import utilitiesClass
+from pkg_resources import resource_filename, resource_listdir
+
+import numpy as np
+import pyqtgraph as pg
+from PSL.SENSORS.supported import nameMap as I2CSensorsNameMap
+from PSL.SENSORS.supported import supported as I2CSensors
 from PSL_Apps.templates import ui_designer as designer
+from PSL_Apps.templates.widgets.ui_customFunc import Ui_Form as ui_custom
+from PSL_Apps.templates.widgets.ui_customSensor import \
+    Ui_Form as ui_customSensor
+from PSL_Apps.templates.widgets.ui_customSweep import Ui_Form as ui_customSweep
 from PSL_Apps.templates.widgets.ui_sweep import Ui_Form as ui_sweep
 from PSL_Apps.templates.widgets.ui_sweepTitle import Ui_Form as ui_sweepTitle
-from PSL_Apps.templates.widgets.ui_customFunc import Ui_Form as ui_custom
-from PSL_Apps.templates.widgets.ui_customSensor import Ui_Form as ui_customSensor
-from PSL_Apps.templates.widgets.ui_customSweep import Ui_Form as ui_customSweep
-
-import pyqtgraph as pg
-import time,random,functools,numbers,importlib,os,sys
-from pkg_resources import resource_listdir,resource_filename
-import numpy as np
-
-
+from PSL_Apps.utilitiesClass import utilitiesClass
 from PyQt4 import QtCore, QtGui
+
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
 
 params = {
 'image' : 'sensors.png',
