@@ -88,7 +88,7 @@ class AppWindow(QtGui.QMainWindow, remote.Ui_MainWindow):
 				self.results_2.append('%s : %s'%( response.status, response.reason))
 				data = response.read()
 				conn.close()
-			except Exception,e:
+			except Exception as e:
 				self.results_2.append('Error : %s'%( e.message))
 				pass
 
@@ -111,7 +111,7 @@ class AppWindow(QtGui.QMainWindow, remote.Ui_MainWindow):
 				#while self.hw_lock and self.active: pass
 				#self.hw_lock=True
 				self.thingSpeakCommand=[method,total_args]
-		except Exception,e:
+		except Exception as e:
 			self.results_2.append('Set Error : %s'%( e.message))
 			pass
 
@@ -144,7 +144,7 @@ class AppWindow(QtGui.QMainWindow, remote.Ui_MainWindow):
 			elif msg_type == 'R':
 				self.resSlot.emit(str(message),'reply')		
 				
-		except Exception,e:
+		except Exception as e:
 			self.responseLabel.setText (e.message)
 
 	def writeResults(self,txt,t):
@@ -164,7 +164,7 @@ class AppWindow(QtGui.QMainWindow, remote.Ui_MainWindow):
 		if state: #Enable listen
 			try:
 				self.pubnub.subscribe(self.I.hexid,callback = self.callback)
-			except Exception,e:
+			except Exception as e:
 				self.responseLabel.setText (e)
 		else:
 			self.pubnub.unsubscribe(self.I.hexid)			
@@ -175,7 +175,7 @@ class AppWindow(QtGui.QMainWindow, remote.Ui_MainWindow):
 			self.pubnub = Pubnub(
 				publish_key = str(self.pubEdit.text()),
 				subscribe_key = str(self.subEdit.text()))
-		except Exception,e:
+		except Exception as e:
 			self.responseLabel.setText (e)
 
 	def __del__(self):

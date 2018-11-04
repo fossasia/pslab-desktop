@@ -12,8 +12,12 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 from .templates import ui_aboutDevice as aboutDevice
-import sys,os,time
+import sys
 
+try:
+    unicode        # Python 2
+except NameError:
+    unicode = str  # Python 3
 
 
 class AppWindow(QtGui.QMainWindow, aboutDevice.Ui_MainWindow):

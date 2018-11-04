@@ -122,7 +122,7 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 			self.curveCH2.setData(x*1e-6,self.I.achans[1].get_yaxis())
 			#self.displayCrossHairData(self.plot,False,self.samples,self.I.timebase,[y],[(0,255,0)])
 			return 'Done'
-		except Exception,e:
+		except Exception as e:
 			print (e)
 			return 'Error'
 
