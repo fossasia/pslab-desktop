@@ -123,7 +123,7 @@ class AppWindow(QtGui.QMainWindow, template_graph_nofft.Ui_MainWindow,utilitiesC
 			self.plot.setLimits(xMax = xlen)
 			self.plot.setXRange(0,xlen)
 			return xlen
-		except Exception,e:
+		except Exception as e:
 			print(e)
 		
 	def closeEvent(self, event):
