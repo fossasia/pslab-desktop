@@ -35,107 +35,85 @@ class myTable(QtGui.QTableWidget):
                 item = QtGui.QTableWidgetItem()
                 item.setText(b)
                 self.setItem(row, col, item)
-                col+=1
-            row+=1;col=0
-
+                col+= 1
+            row += 1; col = 0
 
 class AppWindow(QtGui.QMainWindow, loadSineTable.Ui_MainWindow):
-	def __init__(self, parent=None,**kwargs):
-		super(AppWindow, self).__init__(parent)
-		self.setupUi(self)
-		self.I=kwargs.get('I',None)
+    def __init__(self, parent=None, **kwargs):
+        super(AppWindow, self).__init__(parent)
+        self.setupUi(self)
+        self.I = kwargs.get('I', None)
 
-		self.setWindowTitle('Load arbitrary waveforms : '+self.I.H.version_string.decode("utf-8"))
-		self.table = myTable()
-		self.tableLayout.addWidget(self.table)
-		
+        self.setWindowTitle('Load arbitrary waveforms : '+ self.I.H.version_string.decode("utf-8"))
+        self.table = myTable()
+        self.tableLayout.addWidget(self.table)
+	
+    # generic reset function for reset1 and reset2
+    def reset(self, num):
+        self.I.load_equation('W' + str(num), 'sine')
+        y1 = np.sin(np.linspace(0, np.pi * 2, 512 + 1)[:-1])
+        for a in range(512):
+            item = self.table.item(a, num - 1)
+            if item == None:
+                item = QtGui.QTableWidgetItem()
+                self.table.setItem(a, num - 1, item)
+            item.setText('%.5f' % y1[a])
+        QtGui.QMessageBox.about(self, 'Sine Wave', 'Table Contents set to sine')
+        
+    def reset1(self):
+        self.reset(1)
 
-	def reset1(self):
-		self.I.load_equation('W1','sine')
-		y1=np.sin(np.linspace(0,np.pi*2,512+1)[:-1])
-		for a in range(512):
-			item =self.table.item(a,0)
-			if item==None:
-				item = QtGui.QTableWidgetItem()
-				self.table.setItem(a,0,item)
-			item.setText('%.5f'%y1[a])
-		QtGui.QMessageBox.about(self, 'Sine Wave','Table Contents set to sine')
+    def reset2(self):
+        self.reset(2)
 
-	def reset2(self):
-		self.I.load_equation('W2','sine')
-		y1=np.sin(np.linspace(0,np.pi*2,512+1)[:-1])
-		for a in range(512):
-			item =self.table.item(a,1)
-			if item==None:
-				item = QtGui.QTableWidgetItem()
-				self.table.setItem(a,1,item)
-			item.setText('%.5f'%y1[a])
-		QtGui.QMessageBox.about(self, 'Sine Wave','Table Contents set to sine')
+   # generic setTria func
+    def setTria(self, num):
+        function = lambda x: abs(x % 4 - 2) - 1
+        span = np.linspace(-1, 3, 512)
+        for a in range(512):
+            item = self.table.item(a, num - 1)
+            if item == None:
+                item = QtGui.QTableWidgetItem()
+                self.table.setItem(a, num - 1, item)
+            item.setText('%d' % (512 * function(span[a])))
+        self.loadSine(num, 'tria')
+        QtGui.QMessageBox.about(self, 'Triangular Wave', 'Table Contents set to Triangular')
+
+        
+    def setTria1(self):
+        self.setTria(1)
+
+    def setTria2(self):
+        self.setTria(2)
+    
+    # generic loadSine class for 1 and 2
+    def loadSine(self, num, mode='arbit'):
+        tbl = []
+        for a in range(512):
+            item = self.table.item(a, num - 1)
+            if item:
+                try:
+                    tbl.append(float(item.text()))
+                except:
+                    break
+            else:
+                break
+        if len(tbl) == 512:
+            print('loading table')
+            self.I.load_table('W' + str(num), tbl, mode)
+        else:
+            QtGui.QMessageBox.about(self, 'Error', 'Check data points')
+
+    def loadSine1(self, mode='arbit'):
+        self.loadSine(1, mode)
+
+    def loadSine2(self, mode='arbit'):
+        self.loadSine(2, mode)
+
+    def __del__(self):
+        print('bye')
 
 
-	def setTria1(self):
-		function = lambda x: abs(x%4-2)-1
-		span = np.linspace(-1,3,512)
-		for a in range(512):
-			item =self.table.item(a,0)
-			if item==None:
-				item = QtGui.QTableWidgetItem()
-				self.table.setItem(a,0,item)
-			item.setText('%d'%abs(a-256))
-			item.setText('%d'%(512*function(span[a])) )
-		self.loadSine1('tria')
-		QtGui.QMessageBox.about(self, 'Triangular Wave','Table Contents set to Triangular')
-
-	def setTria2(self):
-		function = lambda x: abs(x%4-2)-1
-		span = np.linspace(-1,3,512)
-		for a in range(512):
-			item =self.table.item(a,1)
-			if item==None:
-				item = QtGui.QTableWidgetItem()
-				self.table.setItem(a,1,item)
-			item.setText('%d'%(512*function(span[a])))
-		self.loadSine2('tria')
-		QtGui.QMessageBox.about(self, 'Triangular Wave','Table Contents set to Triangular')
-
-
-	def loadSine1(self,mode='arbit'):
-		tbl = []
-		for a in range(512):
-			item = self.table.item(a,0)
-			if item:
-				try:
-					tbl.append (float(item.text()))
-				except:
-					break
-			else:
-				break
-		if len(tbl)==512:
-			print ('loading table')
-			self.I.load_table('W1',tbl,mode)
-		else:
-			QtGui.QMessageBox.about(self, 'Error','Check data points')
-
-	def loadSine2(self,mode='arbit'):
-		tbl = []
-		for a in range(512):
-			item = self.table.item(a,1)
-			if item:
-				try:
-					tbl.append (float(item.text()))
-				except:
-					break
-			else:
-				break
-		if len(tbl)==512:
-			print ('loading table')
-			self.I.load_table('W2',tbl,mode)
-		else:
-			QtGui.QMessageBox.about(self, 'Error','Check data points')
-
-	def __del__(self):
-		print ('bye')
-				
 if __name__ == "__main__":
     from PSL import sciencelab
     app = QtGui.QApplication(sys.argv)
