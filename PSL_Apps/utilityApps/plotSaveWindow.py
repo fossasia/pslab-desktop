@@ -12,9 +12,13 @@ sip.setapi("QVariant", 2)
 
 from PyQt4 import QtCore, QtGui
 from templates import ui_plotSave as plotSave
-import sys,os,time
+import sys
 import pyqtgraph as pg
 
+try:
+    unicode        # Python 2
+except NameError:
+    unicode = str  # Python 3
 
 
 class AppWindow(QtGui.QMainWindow, plotSave.Ui_MainWindow):

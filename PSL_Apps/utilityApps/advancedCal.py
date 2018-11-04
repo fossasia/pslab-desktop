@@ -112,7 +112,7 @@ class AppWindow(QtGui.QMainWindow, advancedCal.Ui_MainWindow,utilitiesClass):
 					else:
 						print ('Done',V,C,CT)
 						return C
-		except Exception, ex:
+		except Exception as ex:
 			self.displayDialog(ex.message)
 
 
