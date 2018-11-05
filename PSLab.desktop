@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec="Experiments"
+Name=PSLab Desktop
+Comment=PSLab for desktop
+Icon=/opt/pslab-desktop-apps/docs/images/icon.png

@@ -60,6 +60,16 @@ make clean
 make
 make install
 
+if (whiptail --title "Add PSLab Desktop Application" --yesno "Do you want to add PSLab Application to desktop and dash now?" 8 46) then
+	echo -e "${GREEN}Application shortcuts are set!${NOCOLOR}"
+	cp PSLab.desktop ~/Desktop/PSLab.desktop
+	cp PSLab.desktop ~/.local/share/applications/PSLab.desktop
+	cd ~/Desktop
+	chmod +x PSLab.desktop
+else
+	echo -e "${GREEN}Skipping shortcut creation!${NOCOLOR}"
+fi
+
 echo -e "${GREEN}Desktop application installed!${NOCOLOR}"
 
 if (whiptail --title "Open PSLab Desktop Application" --yesno "Do you want to open PSLab Application now?" 8 46) then
