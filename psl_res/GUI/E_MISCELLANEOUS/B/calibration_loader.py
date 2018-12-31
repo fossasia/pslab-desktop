@@ -14,7 +14,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from templates import ui_calibration_loader as calibration_loader
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools,os,random,struct,time
 

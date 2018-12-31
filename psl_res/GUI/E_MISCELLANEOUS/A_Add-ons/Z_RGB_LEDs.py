@@ -5,7 +5,7 @@ Simple example demonstrating controlling servo motors with sliders
 
 from __future__ import print_function
 import sys,time
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 import pyqtgraph as pg
 
 params = {

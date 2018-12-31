@@ -13,7 +13,7 @@ from __future__ import print_function
 import time,sys
 from PSL_Apps.utilitiesClass import utilitiesClass
 from templates import ui_arbitStream as arbitStream
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 import os,string
 
 import pyqtgraph as pg

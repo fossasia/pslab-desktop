@@ -6,7 +6,7 @@ uses chip select 1
 
 from __future__ import print_function
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 from .templates import ui_NFC as NFC
 import sys
 

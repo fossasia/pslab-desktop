@@ -45,7 +45,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from .templates import ui_template_transient as template_transient
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,time
 

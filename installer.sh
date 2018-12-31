@@ -17,13 +17,13 @@ apt-get install python-pip python-dev build-essential -y
 sudo pip install --upgrade pip
 echo -e "${YELLOW}Setting up pip is completed!${NOCOLOR}"
 # Install PyQt
-apt-get install python-qt4 -y
+apt-get install python-qt5 -y
 echo -e "${YELLOW}Setting up PyQt is completed!${NOCOLOR}"
 # Install Numpy and Scipy
 apt-get install python-numpy python-scipy -y
 echo -e "${YELLOW}Setting up Numpy and Scipy is completed!${NOCOLOR}"
 # Install Dev Tools
-apt-get install pyqt4-dev-tools -y
+apt-get install pyqt5-dev-tools -y
 echo -e "${YELLOW}Setting up dev tools is completed!${NOCOLOR}"
 # Install PyQt Graph
 pip install pyqtgraph
@@ -32,7 +32,7 @@ echo -e "${YELLOW}Setting up PyQt Graph is completed!${NOCOLOR}"
 pip install PyOpenGL
 echo -e "${YELLOW}Setting up PyOpenGL is completed!${NOCOLOR}"
 # Install QtOpenGl
-apt-get install python-qt4-gl -y
+apt-get install python-qt5-gl -y
 echo -e "${YELLOW}Setting up QtOpenGl is completed!${NOCOLOR}"
 # Install iPython Console
 pip install qtconsole

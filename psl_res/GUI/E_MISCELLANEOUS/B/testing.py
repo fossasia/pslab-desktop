@@ -14,7 +14,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from PSL_Apps.utilityApps.templates import ui_testing as testing
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools,os,random,struct,time,string
 

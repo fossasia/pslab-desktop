@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'nrf.ui'
 
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -92,4 +92,4 @@ class Ui_Form(object):
         self.pushButton.setText(QtGui.QApplication.translate("Form", "Refresh Node List", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox.setText(QtGui.QApplication.translate("Form", "Register New Nodes", None, QtGui.QApplication.UnicodeUTF8))
 
-from PyQt4 import QtWebKit
+from PyQt5 import QtWebKit

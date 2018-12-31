@@ -9,7 +9,7 @@ Also Includes XY plotting mode, and fitting against standard Sine/Square functio
 from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 import time,sys
 from .templates import ui_ampMod as ampMod
 

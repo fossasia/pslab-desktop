@@ -15,7 +15,7 @@ from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints
 import pyqtgraph as pg
 import numpy as np
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 from .templates import ui_wirelessTemplate as wirelessTemplate
 

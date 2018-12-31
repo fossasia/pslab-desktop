@@ -16,7 +16,7 @@ from PSL_Apps.templates import ui_template_graph_nofft as template_graph_nofft
 
 import numpy as np
 from scipy.signal import butter, lfilter
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools,time
 

@@ -8,7 +8,7 @@ import time,sys,os
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 from .templates import ui_NFET as NFET
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 import pyqtgraph as pg
 
 import numpy as np

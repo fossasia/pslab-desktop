@@ -10,7 +10,7 @@ import sip
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 from templates import ui_plotSave as plotSave
 import sys
 import pyqtgraph as pg

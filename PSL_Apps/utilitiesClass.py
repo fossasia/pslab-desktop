@@ -32,7 +32,7 @@ from PSL_Apps.templates.widgets import ui_spinBox as spinBox
 from PSL_Apps.templates.widgets import ui_supplyWidget as supplyWidget
 from PSL_Apps.templates.widgets import ui_voltWidget as voltWidget
 from PSL_Apps.templates.widgets import ui_widebutton as widebutton
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 os.environ['QT_API'] = 'pyqt'
 sip.setapi("QString", 2)

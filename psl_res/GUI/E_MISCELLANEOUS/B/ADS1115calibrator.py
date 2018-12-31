@@ -28,7 +28,7 @@ sip.setapi("QVariant", 2)
 import templates.ui_ADS1115calibrator as ADS1115calibrator
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools,random,struct,time
 
