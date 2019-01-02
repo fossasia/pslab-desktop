@@ -13,7 +13,7 @@
 
 import inspect
 import sys
-from PyQt4 import QtGui
+from PyQt5 import QtGui
 
 try:
     unicode        # Python 2

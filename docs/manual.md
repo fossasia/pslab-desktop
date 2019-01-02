@@ -48,10 +48,10 @@ The PSLab device has 36 pins.
 
 PSLab desktop application requires the following libraries pre-installed in the PC running Linux.
 
-- PyQt 4.7
+- PyQt 5
 - python 2.6, 2.7, or 3.x
 - NumPy, Scipy
-- pyqt4-dev-tools
+- pyqt5-dev-tools
 - Pyqtgraph
 - pyopengl and qt-opengl
 - iPython-qtconsole

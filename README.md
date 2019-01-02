@@ -34,7 +34,7 @@ wget https://raw.github.com/fossasia/pslab-desktop-apps/development/installer.sh
 Once the download is complete, make the file an executable using the following command.
 
 ```
-sudo chmod +x installer.sh
+chmod +x installer.sh
 ```
 
 You will be prompted to enter your password to proceed. Once it is complete, run the intaller by the following command;
@@ -51,10 +51,10 @@ To install PSLab on Debian based Gnu/Linux system, the following dependencies mu
 
 #### Dependencies
 
-* PyQt 4.7
-* Pthon 2.6, 2.7
+* Python 3.5
+* PyQt5
+* PyQt5-dev-tools         &nbsp;   **Contains pyuic5 which compiles xml layout files into python template files**
 * NumPy, Scipy            &nbsp;   **Analytical tools and array manipulations**
-* PyQt4-dev-tools         &nbsp;   **Contains Pyuic4 which compiles xml layout files into python template files**
 * PyQtgraph               &nbsp;   **Primary Plotting library**
 * Pyopengl and Qt-opengl  &nbsp;   **For 3D graphics support in pyqtgraph**
 * iPython-qtconsole       &nbsp;   **Optional**
@@ -78,9 +78,9 @@ To install PSLab on Debian based Gnu/Linux system, the following dependencies mu
 
 and run the following (for both the repos)
 
-    $ sudo make clean
+    $ make clean
 
-    $ sudo make
+    $ make
 
     $ sudo make install
 

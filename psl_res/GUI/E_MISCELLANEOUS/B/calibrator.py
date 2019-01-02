@@ -25,7 +25,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from templates import ui_calibrator as calibrator
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools,os,random,struct,time,serial.tools.list_ports
 

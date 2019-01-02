@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'template_bandpass.ui'
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

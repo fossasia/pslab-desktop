@@ -11,7 +11,7 @@ sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 import time,sys
 from PSL_Apps.templates import ui_stepper as stepper
 

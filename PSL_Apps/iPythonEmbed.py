@@ -14,14 +14,14 @@ class QIPythonWidget(RichIPythonWidget):
 		self.kernel_manager = kernel_manager = QtInProcessKernelManager()
 		print ('kernel manager starting')
 		kernel_manager.start_kernel()
-		kernel_manager.kernel.gui = 'qt4'
+		kernel_manager.kernel.gui = 'qt5'
 		self.kernel_client = kernel_client = self._kernel_manager.client()
 		kernel_client.start_channels()
 	
 		def stop():
 				kernel_client.stop_channels()
 				kernel_manager.shutdown_kernel()
-				guisupport.get_app_qt4().exit()            
+				guisupport.get_app_qt5().exit()            
 		self.exit_requested.connect(stop)
 
 	def pushVariables(self,variableDict):

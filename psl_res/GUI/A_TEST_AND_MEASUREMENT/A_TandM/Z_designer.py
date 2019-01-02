@@ -24,7 +24,7 @@ from PSL_Apps.templates.widgets.ui_customSweep import Ui_Form as ui_customSweep
 from PSL_Apps.templates.widgets.ui_sweep import Ui_Form as ui_sweep
 from PSL_Apps.templates.widgets.ui_sweepTitle import Ui_Form as ui_sweepTitle
 from PSL_Apps.utilitiesClass import utilitiesClass
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 try:
     xrange          # Python 2

@@ -16,8 +16,7 @@ parser.add_argument("-P", dest="PortName", help="If you have connected multiple 
 args = parser.parse_args()
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from PyQt4 import QtCore, QtGui
-from PyQt4 import QtWebKit
+from PyQt5 import QtCore, QtGui
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -163,12 +162,6 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 		self.menu_entries=[]
 		self.menu_group=None
 
-		self.helpView = QtWebKit.QWebView()
-		self.helpLayout.addWidget(self.helpView)
-		self.helpView.setUrl(QtCore.QUrl("../../docs/MD_HTML/index.html"))
-		#from PSL_Apps.utilityApps.indexGen import autogen
-		#self.helpView.setHtml(autogen(pkg_resources.resource_listdir('psl_res','HTML')))
-
 		self.shortlist=[]
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.locateDevices)
@@ -268,19 +261,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				appLocation = submodule+'.'+app
 				fname = app+'.'+'.html'
 
-
-				#Find a universally available helpfile
-				helpurl = pkg_resources.resource_filename('psl_res.HTML',app+'.html')
-				if not os.path.isfile(helpurl): helpurl=None
-
-				#Find a locally available helpfile, and use it if it exists
-				try:
-					localhelpurl = pkg_resources.resource_filename(submodule+'.'+'HTML',app+'.html')
-					if os.path.isfile(localhelpurl): helpurl=localhelpurl
-				except:
-					pass
-
-				fn = functools.partial(self.launchFunc,appLocation,helpurl)
+				fn = functools.partial(self.launchFunc,appLocation)
 				self.funcs.append(fn)
 				icon = self.experimentIcon(submodule,app,fn)
 				self.ExperimentLayout.addWidget(icon,self.row,self.col)
@@ -288,13 +269,6 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 				self.col+=1
 
 			self.col=0;self.row+=1
-
-	def setHelpUrl(self,fname): #fname must reside in psl_res.HTML
-		helpurl = pkg_resources.resource_filename('psl_res.HTML',fname)
-		if not os.path.isfile(helpurl): helpurl=None
-		self.helpView.setUrl(QtCore.QUrl(helpurl))          
-		self.tabWidget.setCurrentIndex(1)
-		
 
 	def clearExperimentIcons(self):
 		while self.ExperimentLayout.count():
@@ -307,7 +281,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 	def setHint(self,t):
 		self.hintText.setHtml(t)
 
-	def launchFunc(self,fname,helpurl):
+	def launchFunc(self,fname):
 		if self.I.connected:
 			try:
 				if self.runningApp:
@@ -322,8 +296,6 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow,utilitiesClas
 			inst.setGeometry(500, 50,size.width(), size.height())
 
 			self.runningApp = inst
-			#Load help HTML if found
-			self.helpView.setUrl(QtCore.QUrl(helpurl))          
 			self.tabWidget.setCurrentIndex(1)
 
 		else:

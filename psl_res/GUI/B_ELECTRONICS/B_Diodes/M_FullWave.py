@@ -16,7 +16,7 @@ from PSL.analyticsClass import analyticsClass
 from PSL_Apps.templates import ui_template_graph as  template_graph_nofft
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools,time
 

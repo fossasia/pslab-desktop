@@ -15,7 +15,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from PSL_Apps.templates import ui_graph_and_sheet as graph_and_sheet
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import pyqtgraph as pg
 import sys,functools
 

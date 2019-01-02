@@ -6,7 +6,7 @@ from PSL_Apps.utilitiesClass import utilitiesClass
 from templates import ui_dsm501 as dsm501
 
 import numpy as np
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 import sys,time
 
 params = {

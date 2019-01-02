@@ -6,7 +6,7 @@ Check the range of your RF Nodes by counting dropped packets.
 """
 
 import sys,time,functools
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 import numpy as np
 params = {
 'image' : 'rgbled.png',
