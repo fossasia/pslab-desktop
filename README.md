@@ -129,7 +129,7 @@ The ScienceLab class does the following crucial jobs during the creation of an i
 + Load calibration constants, polynomials, and tables
 + Create a socket to indicate ownership of the device being used
 
-Once the device has been succesfully opened, the instance of ScienceLab.py can be used to access its various features.
+Once the device has been successfully opened, the instance of ScienceLab.py can be used to access its various features.
 Here's an example script to read values from a magnetometer connected to the I2C port of the PSLab
 ```
 >>> from PSL import sciencelab
