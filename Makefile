@@ -16,7 +16,7 @@ all:  $(UIfiles)
 	#make -C docs html
 	#make -C docs/misc all
 	#@echo $(UI_SOURCES)
-	python setup.py build
+	python3 setup.py build
 
 
 ui_%.py: %.ui
@@ -38,8 +38,8 @@ clean:
 	if $(CUSTOM); then make uninstall_custom; fi
 
 uninstall_custom:
-	rm -rf /usr/lib/python2.7/dist-packages/PSL_Apps*
-	sudo rm -rf /usr/lib/python2.7/dist-packages/psl_res
+	rm -rf /usr/lib/python3/dist-packages/PSL_Apps*
+	sudo rm -rf /usr/lib/python3/dist-packages/psl_res
 	sudo rm -f /usr/bin/Experiments
 
 IMAGEDIR=$(DESTDIR)/usr/share/doc/pslab-common/images
@@ -52,6 +52,6 @@ install:
 
 	#cp docs/misc/build/*.html $(DESTDIR)/usr/share/doc/pslab/html
 	# create ditributions for current python distribution
-	python setup.py install --install-layout=deb \
+	python3 setup.py install --install-layout=deb \
 	         --root=$(DESTDIR)/ --prefix=/usr
 	

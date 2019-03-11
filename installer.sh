@@ -10,23 +10,26 @@ echo -e "${GREEN}Welcome to PSLab Desktop app installer${NOCOLOR}"
 echo -e "${YELLOW}Installing ...${NOCOLOR}"
 apt-get update
 # Install Python
-apt-get install python -y
+apt-get install python3.6 -y
 echo -e "${YELLOW}Setting up Python is completed!${NOCOLOR}"
 # Install pip
-apt-get install python-pip python-dev build-essential -y
-sudo pip install --upgrade pip
+apt-get install python3-pip -y
+apt-get install python-dev build-essential -y
+sudo pip3 install --upgrade pip
 echo -e "${YELLOW}Setting up pip is completed!${NOCOLOR}"
 # Install PyQt
 apt-get install python-qt5 -y
 echo -e "${YELLOW}Setting up PyQt is completed!${NOCOLOR}"
 # Install Numpy and Scipy
-apt-get install python-numpy python-scipy -y
+pip3 install scipy numpy
 echo -e "${YELLOW}Setting up Numpy and Scipy is completed!${NOCOLOR}"
+pip3 install pyserial
+echo -e "${YELLOW}Setting up PySerial is completed!${NOCOLOR}"
 # Install Dev Tools
 apt-get install pyqt5-dev-tools -y
 echo -e "${YELLOW}Setting up dev tools is completed!${NOCOLOR}"
 # Install PyQt Graph
-pip install pyqtgraph
+pip3 install pyqtgraph
 echo -e "${YELLOW}Setting up PyQt Graph is completed!${NOCOLOR}"
 # Install PyOpenGl
 pip install PyOpenGL
@@ -36,12 +39,13 @@ apt-get install python-qt5-gl -y
 echo -e "${YELLOW}Setting up QtOpenGl is completed!${NOCOLOR}"
 # Install iPython Console
 pip install qtconsole
+pip3 install
 echo -e "${YELLOW}Setting up qtconsole is completed!${NOCOLOR}"
 # Clone Desktop apps and Python repos
 apt-get install git -y
 echo -e "${YELLOW}Setting up git is completed!${NOCOLOR}"
 cd /opt/
-git clone https://github.com/fossasia/pslab-desktop-apps.git
+git clone https://github.com/fossasia/pslab-desktop.git
 git clone https://github.com/fossasia/pslab-python.git
 
 # cd into Python repo and install
@@ -55,7 +59,7 @@ make install
 echo -e "${YELLOW}Python Communication Library installed!${NOCOLOR}"
 # cd into Desktop apps repo and install
 echo -e "${YELLOW}Installing desktop application ...${NOCOLOR}"
-cd /opt/pslab-desktop-apps
+cd /opt/pslab-desktop
 make clean
 make
 make install
