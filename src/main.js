@@ -1,6 +1,8 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const { ipcMain } = require('electron');
+const loadBalancer = require('electron-load-balancer');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -40,3 +42,11 @@ app.on('activate', function() {
 });
 
 /* ----------------------------------- Your code starts here ------------------------------------- */
+
+loadBalancer.register(ipcMain, {
+	oscilloscope: '/src/background_tasks/oscilloscope.html',
+});
+
+ipcMain.on('TO_RENDERER_OSC_DATA', (event, args) => {
+	mainWindow.webContents.send('TO_RENDERER_OSC_DATA', args);
+});

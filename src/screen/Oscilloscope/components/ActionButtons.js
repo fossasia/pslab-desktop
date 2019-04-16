@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Icon } from 'antd';
 import { ButtonWrapper } from './ActionButtons.styles';
 
-const ActionButtons = props => {
+const ActionButtons = ({ isReading, onToggleRead }) => {
 	return (
 		<ButtonWrapper>
-			<Button block size="large">
-				<Icon type="play-circle" />
+			<Button onClick={onToggleRead} block size="large">
+				{isReading ? <Icon type="loading" /> : <Icon type="caret-right" />}
 			</Button>
 			<Button block size="large">
 				<Icon type="deployment-unit" />

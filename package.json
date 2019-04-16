@@ -5,7 +5,7 @@
   "dependencies": {
     "antd": "^3.16.2",
     "electron": "^4.1.4",
-    "electron-load-balancer": "^1.0.4",
+    "electron-load-balancer": "^1.0.5",
     "python-shell": "^1.0.7",
     "react": "^16.8.6",
     "react-custom-scrollbars": "^4.2.1",
@@ -39,6 +39,7 @@
   ],
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "devtron": "^1.4.0",
     "electron-react-devtools": "^0.5.3",
     "wait-on": "^3.2.0"
   }
