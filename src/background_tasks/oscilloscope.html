@@ -1,0 +1,29 @@
+<script>
+	const { PythonShell } = require('python-shell');
+	const { ipcRenderer } = require('electron');
+	const path = require('path');
+
+	const options = {
+		pythonPath: 'python3',
+		// time_gap( usec ), no_samples, channel_name, delay( millisec )
+		args: [10, 1000, 'CH1', 100]
+	};
+
+	let pyshell = new PythonShell(path.join(__dirname, '/../engine/oscilloscope.py'), options);
+
+	pyshell.on('message', function(results) {
+		try {
+			const parsedOutput = JSON.parse(results).map((item, index) => {
+				return { time: index, voltage: item };
+			});
+			ipcRenderer.send('TO_RENDERER', parsedOutput);
+		} catch (error) {
+			console.log(error);
+		}
+	});
+
+	ipcRenderer.on('TO_HIDDEN', (event, arg) => {
+		if (arg === 'STOP') pyshell.send('STOP');
+		ipcRenderer.send('TO_MAIN_TASK_FINISHED');
+	});
+</script>
