@@ -9,10 +9,6 @@ import PowerSource from './screen/PowerSource';
 import Settings from './screen/Settings';
 import './App.css';
 
-const electron = window.require('electron');
-const fs = electron.remote.require('fs');
-const ipcRenderer = electron.ipcRenderer;
-
 class App extends Component {
 	render() {
 		return (

@@ -1,29 +1,50 @@
 <script>
 	const { PythonShell } = require('python-shell');
 	const { ipcRenderer } = require('electron');
+	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
 
-	const options = {
-		pythonPath: 'python3',
-		// time_gap( usec ), no_samples, channel_name, delay( millisec )
-		args: [10, 1000, 'CH1', 100]
-	};
+	loadBalancer.onInitialize(ipcRenderer, 'oscilloscope', initialValues => {
+		/* -------------------- Blocking code here ----------------------- */
 
-	let pyshell = new PythonShell(path.join(__dirname, '/../engine/oscilloscope.py'), options);
+		const { numberOfSamples, timeGap, activeChannels, delay } = initialValues;
 
-	pyshell.on('message', function(results) {
-		try {
-			const parsedOutput = JSON.parse(results).map((item, index) => {
-				return { time: index, voltage: item };
-			});
-			ipcRenderer.send('TO_RENDERER', parsedOutput);
-		} catch (error) {
-			console.log(error);
-		}
-	});
+		const options = {
+			pythonPath: 'python3',
+			args: [
+				'OSC',
+				timeGap,
+				numberOfSamples,
+				delay,
+				activeChannels['ch1'] ? 1 : 0,
+				activeChannels['ch2'] ? 1 : 0,
+				activeChannels['ch3'] ? 1 : 0,
+				activeChannels['ch4'] ? 1 : 0,
+			],
+		};
 
-	ipcRenderer.on('TO_HIDDEN', (event, arg) => {
-		if (arg === 'STOP') pyshell.send('STOP');
-		ipcRenderer.send('TO_MAIN_TASK_FINISHED');
+		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), options);
+
+		loadBalancer.onFinish(ipcRenderer, 'oscilloscope', () => {
+			pyshell.send('STOP');
+		});
+
+		pyshell.on('message', function(results) {
+			try {
+				const parsedJSON = JSON.parse(results);
+				const keys = Object.keys(parsedJSON);
+				parsedOutput = parsedJSON[keys[0]].map((item, index) => {
+					return {
+						timeGap: index * timeGap,
+						[keys[0]]: item,
+					};
+				});
+				ipcRenderer.send('TO_RENDERER_OSC_DATA', parsedOutput);
+			} catch (error) {
+				console.log(error);
+			}
+		});
+
+		/* --------------------------------------------------------------- */
 	});
 </script>
