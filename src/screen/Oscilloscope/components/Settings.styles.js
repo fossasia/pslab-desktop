@@ -2,16 +2,20 @@ import styled from 'styled-components';
 
 export const SettingsContainer = styled.div`
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 16px);
 	display: flex;
 	flex-direction: column;
-
-	& > * {
-		margin: 16px 16px 0px 16px;
-	}
+	margin: 8px 0px 0px 16px;
 `;
 
 export const SettingsWrapper = styled.div`
 	width: calc(100% - 32px);
-	height: 100%;
+`;
+
+export const OptionsRowWrapper = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 8px 0px;
+	min-width: 80%;
 `;

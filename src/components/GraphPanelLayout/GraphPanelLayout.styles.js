@@ -29,7 +29,7 @@ export const ButtonContainer = styled.div`
 export const ButtonWrapper = styled.div``;
 
 export const SettingsContainer = styled.div`
-  width: 28em;
+  width: 30em;
   display: flex;
   flex-direction: column;
 `;
