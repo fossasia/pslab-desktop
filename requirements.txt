@@ -1,4 +1,0 @@
-pyqtgraph >= 0.10.0
-setuptools >= 35.0.2
-SIP >= 4.19.8
-PyQt5 >= 5.11.3

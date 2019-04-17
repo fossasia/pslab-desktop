@@ -1,0 +1,45 @@
+{
+  "name": "electron-react-scaffold",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.16.2",
+    "electron": "^4.1.4",
+    "electron-load-balancer": "^1.0.4",
+    "python-shell": "^1.0.7",
+    "react": "^16.8.6",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^16.8.6",
+    "react-icons": "^3.5.0",
+    "react-redux": "^7.0.1",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "recharts": "^1.5.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.2.0"
+  },
+  "scripts": {
+    "react": "BROWSER=NONE react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron": "DEV=1 electron .",
+    "start": "concurrently 'npm run react' 'wait-on http://localhost:3000/ && npm run electron'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "main": "src/main.js",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "electron-react-devtools": "^0.5.3",
+    "wait-on": "^3.2.0"
+  }
+}

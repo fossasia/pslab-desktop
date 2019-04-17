@@ -4,3 +4,36 @@ __pycache__
 PSL_Apps.egg-info
 build
 ui_*.py
+
+
+#-------------------- Electron -----------------------------
+.DS_Store
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/jest_0
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/.idea
+package-lock.json
+yarn.lock
+.vscode/
+
+# Deploy keys should never be committed
+deploy_key
