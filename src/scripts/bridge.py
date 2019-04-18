@@ -34,7 +34,7 @@ class Oscilloscope:
         while self.isReading:
             x, y = self.device.capture1(
                 'CH1', self.number_of_samples, self.time_gap)
-            output = {'ch1': y.tolist()}
+            output = {'type': 'START_OSC', 'ch1': y.tolist()}
             print(json.dumps(output))
             sys.stdout.flush()
             time.sleep(0.001 * self.delay)
@@ -49,12 +49,19 @@ class Oscilloscope:
 
 
 def main():
-    I = sciencelab.connect()
+    I = None
+    try:
+        I = sciencelab.connect()
+        output = {'type': 'DEVICE_CONNECTION_STATUS', 'isConnected': True}
+    except:
+        output = {'type': 'DEVICE_CONNECTION_STATUS', 'isConnected': False}
+    print(json.dumps(output))
+    sys.stdout.flush()
+
     while(True):
         in_stream_data = input()
         parsed_stream_data = json.loads(in_stream_data)
         command = parsed_stream_data['command']
-
 
         # ---------------------------- Oscilloscope block ------------------------------
         if command == 'START_OSC':
@@ -83,7 +90,7 @@ def main():
 
             data_read_thread.join()
 
-        # -------------------------- Script termination block ---------------------------- 
+        # -------------------------- Script termination block ----------------------------
         if command == 'KILL':
             break
 

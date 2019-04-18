@@ -18,7 +18,7 @@ const Graph = ({data, activeChannels}) => {
 				margin={{
 					top: 48,
 					right: 48,
-					left: 16,
+					left: 0,
 					bottom: 32,
 				}}
 			>

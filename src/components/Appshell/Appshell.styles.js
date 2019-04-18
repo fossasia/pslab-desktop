@@ -14,6 +14,30 @@ export const ChildrenContainer = styled.div`
 	height: 100%;
 `;
 
+export const ChildrenWrapper = styled.div`
+	width: 100%;
+	height: calc( 100% - 4em );
+`;
+
+export const AppBar = styled.div`
+	width: 100%;
+	height: 4em;
+	display: flex;
+	background: ${theme.gradient};
+`;
+
+export const TitleContainer = styled.div`
+`;
+
+export const ButtonContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 0px 16px 0px 16px;
+	z-index: 999;
+`;
+
 export const NavigationContainer = styled.div`
 	width: 4em;
 	background-color: ${theme.navigationBackground};

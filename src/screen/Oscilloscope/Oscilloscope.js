@@ -27,11 +27,6 @@ class Oscilloscope extends Component {
 			this.setState({
 				data: args,
 			});
-			console.log(args);
-		});
-
-		ipcRenderer.on('DEBUG', (event, args) => {
-			console.log(args);
 		});
 	}
 
@@ -45,15 +40,15 @@ class Oscilloscope extends Component {
 			isReading: !prevState.isReading,
 		}));
 		if (isReading) {
-			loadBalancer.send(ipcRenderer, 'oscilloscope', {
+			loadBalancer.send(ipcRenderer, 'linker', {
 				command: 'STOP_OSC',
 			});
 		} else {
-			loadBalancer.send(ipcRenderer, 'oscilloscope', {
+			loadBalancer.send(ipcRenderer, 'linker', {
 				command: 'START_OSC',
 				timeGap: 10,
-				numberOfSamples: 5000,
-				delay: 50,
+				numberOfSamples: 1000,
+				delay: 30,
 				ch1: activeChannels['ch1'],
 				ch2: activeChannels['ch2'],
 				ch3: activeChannels['ch3'],

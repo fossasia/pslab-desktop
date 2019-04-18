@@ -4,7 +4,7 @@
 	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
 
-	loadBalancer.onInitialize(ipcRenderer, 'oscilloscope', initialValues => {
+	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
 		/* -------------------- Blocking code here ----------------------- */
 
 		let activeCommandProps = null;
@@ -14,21 +14,24 @@
 
 		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), options);
 
-		loadBalancer.onFinish(ipcRenderer, 'oscilloscope', () => {
+		loadBalancer.onFinish(ipcRenderer, 'linker', () => {
 			pyshell.send({
 				command: 'KILL',
 			});
 		});
 
-		loadBalancer.on(ipcRenderer, 'oscilloscope', args => {
+		loadBalancer.on(ipcRenderer, 'linker', args => {
 			activeCommandProps = args;
 			pyshell.send(JSON.stringify(args));
 		});
 
 		pyshell.on('message', function(results) {
-			if (activeCommandProps.command === 'START_OSC') {
-				try {
-					const parsedJSON = JSON.parse(results);
+			try {
+				const parsedJSON = JSON.parse(results);
+				if (
+					parsedJSON['type'] === 'START_OSC' &&
+					activeCommandProps.command === 'START_OSC'
+				) {
 					parsedOutput = parsedJSON['ch1'].map((item, index) => {
 						return {
 							timeGap: index * activeCommandProps.timeGap,
@@ -36,9 +39,11 @@
 						};
 					});
 					ipcRenderer.send('TO_RENDERER_DATA', parsedOutput);
-				} catch (error) {
-					console.log(error);
+				} else if (parsedJSON['type'] === 'DEVICE_CONNECTION_STATUS') {
+					ipcRenderer.send('TO_RENDERER_STATUS', parsedJSON);
 				}
+			} catch (error) {
+				console.log(error);
 			}
 		});
 

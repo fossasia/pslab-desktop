@@ -44,11 +44,15 @@ app.on('activate', function() {
 /* ----------------------------------- Your code starts here ------------------------------------- */
 
 loadBalancer.register(ipcMain, {
-	oscilloscope: '/src/background_tasks/oscilloscope.html',
+	linker: '/src/background_tasks/linker.html',
 });
 
 ipcMain.on('TO_RENDERER_DATA', (event, args) => {
 	mainWindow.webContents.send('TO_RENDERER_DATA', args);
+});
+
+ipcMain.on('TO_RENDERER_STATUS', (event, args) => {
+	mainWindow.webContents.send('TO_RENDERER_STATUS', args);
 });
 
 ipcMain.on('DEBUG', (event, args) => {

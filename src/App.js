@@ -13,28 +13,47 @@ const ipcRenderer = electron.ipcRenderer;
 const loadBalancer = window.require('electron-load-balancer');
 
 class App extends Component {
-	componentDidMount() {
-		loadBalancer.startBackgroundProcess(ipcRenderer, 'oscilloscope', {
-			numberOfSamples: 1000,
-			timeGap: 10,
-			activeChannels: {
-				ch1: true,
-				ch2: false,
-				ch3: false,
-				ch4: false,
-			},
-			delay: 100,
+	constructor(props) {
+		super(props);
+		this.state = {
+			isConnected: false,
+		};
+	}
+
+	onConnectToggle = () => {
+		const { isConnected } = this.state;
+		if (!isConnected) {
+			loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
+		} else {
+			loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+		}
+		this.setState({
+			isConnected: !isConnected,
 		});
+	};
+
+	componentDidMount() {
+		ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+			const { isConnected } = args;
+			this.setState({
+				isConnected,
+			});
+			!isConnected && loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+		});
+		loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
 	}
 
 	componentWillUnmount() {
-		loadBalancer.stopBackgroundProcess(ipcRenderer, 'oscilloscope');
+		ipcRenderer.removeAllListeners('TO_RENDERER_STATUS');
+		loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
 	}
 
 	render() {
+		const { isConnected } = this.state;
+
 		return (
 			<HashRouter>
-				<Appshell>
+				<Appshell isConnected={isConnected} onConnectToggle={this.onConnectToggle}>
 					<Switch>
 						<Route path="/" exact component={Home} />
 						<Route path="/oscilloscope" exact component={Oscilloscope} />
