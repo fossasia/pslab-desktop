@@ -52,8 +52,8 @@ class Oscilloscope extends Component {
 			loadBalancer.send(ipcRenderer, 'oscilloscope', {
 				command: 'START_OSC',
 				timeGap: 10,
-				numberOfSamples: 1000,
-				delay: 100,
+				numberOfSamples: 5000,
+				delay: 50,
 				ch1: activeChannels['ch1'],
 				ch2: activeChannels['ch2'],
 				ch3: activeChannels['ch3'],
