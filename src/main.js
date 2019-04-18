@@ -47,6 +47,10 @@ loadBalancer.register(ipcMain, {
 	oscilloscope: '/src/background_tasks/oscilloscope.html',
 });
 
-ipcMain.on('TO_RENDERER_OSC_DATA', (event, args) => {
-	mainWindow.webContents.send('TO_RENDERER_OSC_DATA', args);
+ipcMain.on('TO_RENDERER_DATA', (event, args) => {
+	mainWindow.webContents.send('TO_RENDERER_DATA', args);
+});
+
+ipcMain.on('DEBUG', (event, args) => {
+	mainWindow.webContents.send('DEBUG', args);
 });

@@ -6,16 +6,16 @@ import json
 
 
 class Oscilloscope:
-    def __init__(self, I):
+    def __init__(self, I, time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4):
         self.device = I
         self.isReading = False
-        self.time_gap = int(sys.argv[2])
-        self.number_of_samples = int(sys.argv[3])
-        self.delay = int(sys.argv[4])
-        self.ch1 = int(sys.argv[5])
-        self.ch2 = int(sys.argv[6])
-        self.ch3 = int(sys.argv[7])
-        self.ch4 = int(sys.argv[8])
+        self.time_gap = time_gap
+        self.number_of_samples = number_of_samples
+        self.delay = delay
+        self.ch1 = ch1
+        self.ch2 = ch2
+        self.ch3 = ch3
+        self.ch4 = ch4
 
     def readData(self):
         # call appropriate function depending
@@ -49,28 +49,43 @@ class Oscilloscope:
 
 
 def main():
-    try:
-        I = sciencelab.connect()
-        instrument_type = sys.argv[1]
+    I = sciencelab.connect()
+    while(True):
+        in_stream_data = input()
+        parsed_stream_data = json.loads(in_stream_data)
+        command = parsed_stream_data['command']
 
-        if instrument_type == 'OSC':
+
+        # ---------------------------- Oscilloscope block ------------------------------
+        if command == 'START_OSC':
             # for test
             I.set_sine1(1000)
 
-            oscilloscope = Oscilloscope(I)
+            time_gap = parsed_stream_data['timeGap']
+            number_of_samples = parsed_stream_data['numberOfSamples']
+            delay = parsed_stream_data['delay']
+            ch1 = parsed_stream_data['ch1']
+            ch2 = parsed_stream_data['ch2']
+            ch3 = parsed_stream_data['ch3']
+            ch4 = parsed_stream_data['ch4']
+
+            oscilloscope = Oscilloscope(
+                I, time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4)
             data_read_thread = oscilloscope.readData()
 
             data_read_thread.start()
 
-            command = input()
-            if command == "STOP":
+            in_stream_data = input()
+            parsed_stream_data = json.loads(in_stream_data)
+            command = parsed_stream_data['command']
+            if command == "STOP_OSC":
                 oscilloscope.isReading = False
 
             data_read_thread.join()
 
-    except:
-        # Print error code for connection error
-        pass
+        # -------------------------- Script termination block ---------------------------- 
+        if command == 'KILL':
+            break
 
 
 if __name__ == '__main__':
