@@ -7,41 +7,38 @@
 	loadBalancer.onInitialize(ipcRenderer, 'oscilloscope', initialValues => {
 		/* -------------------- Blocking code here ----------------------- */
 
-		const { numberOfSamples, timeGap, activeChannels, delay } = initialValues;
-
+		let activeCommandProps = null;
 		const options = {
 			pythonPath: 'python3',
-			args: [
-				'OSC',
-				timeGap,
-				numberOfSamples,
-				delay,
-				activeChannels['ch1'] ? 1 : 0,
-				activeChannels['ch2'] ? 1 : 0,
-				activeChannels['ch3'] ? 1 : 0,
-				activeChannels['ch4'] ? 1 : 0,
-			],
 		};
 
 		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), options);
 
 		loadBalancer.onFinish(ipcRenderer, 'oscilloscope', () => {
-			pyshell.send('STOP');
+			pyshell.send({
+				command: 'KILL',
+			});
+		});
+
+		loadBalancer.on(ipcRenderer, 'oscilloscope', args => {
+			activeCommandProps = args;
+			pyshell.send(JSON.stringify(args));
 		});
 
 		pyshell.on('message', function(results) {
-			try {
-				const parsedJSON = JSON.parse(results);
-				const keys = Object.keys(parsedJSON);
-				parsedOutput = parsedJSON[keys[0]].map((item, index) => {
-					return {
-						timeGap: index * timeGap,
-						[keys[0]]: item,
-					};
-				});
-				ipcRenderer.send('TO_RENDERER_OSC_DATA', parsedOutput);
-			} catch (error) {
-				console.log(error);
+			if (activeCommandProps.command === 'START_OSC') {
+				try {
+					const parsedJSON = JSON.parse(results);
+					parsedOutput = parsedJSON['ch1'].map((item, index) => {
+						return {
+							timeGap: index * activeCommandProps.timeGap,
+							ch1: item,
+						};
+					});
+					ipcRenderer.send('TO_RENDERER_DATA', parsedOutput);
+				} catch (error) {
+					console.log(error);
+				}
 			}
 		});
 
