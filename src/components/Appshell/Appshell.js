@@ -8,8 +8,13 @@ import {
 	BottomNavigationWrapper,
 	Spacer,
 	NavigationTab,
-	AppIconWrapper
+	AppIconWrapper,
+	ChildrenWrapper,
+	ButtonContainer,
+	TitleContainer,
+	AppBar,
 } from './Appshell.styles';
+import { Button, Icon } from 'antd';
 import AppIcon from '../../resources/app_icon.svg';
 import { MdGridOn, MdSettings, MdTimeline, MdExposure } from 'react-icons/md';
 
@@ -28,22 +33,22 @@ const topNavigationItems = [
 		name: 'Power Source',
 		redirectPath: '/powersource',
 		icon: <MdExposure size={'2.2em'} />,
-	}
+	},
 ];
 
-const Appshell = props => {
-	const { children, location } = props;
-
+const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
 	return (
 		<AppshellContainer>
 			<NavigationContainer>
 				<AppIconWrapper>
-					<img style={
-						{
+					<img
+						style={{
 							height: '3em',
-							width: 'auto'
-						}
-					} alt="App Icon" src={AppIcon}/>
+							width: 'auto',
+						}}
+						alt="App Icon"
+						src={AppIcon}
+					/>
 				</AppIconWrapper>
 				<TopNavigationWrapper>
 					{topNavigationItems.map((item, index) => {
@@ -65,7 +70,25 @@ const Appshell = props => {
 					</Link>
 				</BottomNavigationWrapper>
 			</NavigationContainer>
-			<ChildrenContainer>{children}</ChildrenContainer>
+			<ChildrenContainer>
+				<AppBar>
+					<TitleContainer />
+					<Spacer />
+					<ButtonContainer>
+						<Button
+							// disabled={isConnected}
+							onClick={onConnectToggle}
+							type="normal"
+							shape="round"
+							icon={isConnected ? "usb" : "api"}
+							size={'large'}
+						>
+							{isConnected ? "Disconnect" : "Connect"}
+						</Button>
+					</ButtonContainer>
+				</AppBar>
+				<ChildrenWrapper>{children}</ChildrenWrapper>
+			</ChildrenContainer>
 		</AppshellContainer>
 	);
 };

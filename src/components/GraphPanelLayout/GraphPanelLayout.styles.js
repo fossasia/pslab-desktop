@@ -4,8 +4,8 @@ import theme from '../../theme';
 export const ThickBar = styled.div`
 	position: absolute;
 	right: 0;
-	top: 0;
-	height: 30%;
+	top: 4em;
+	height: calc( (100% - 4em) * 0.25 );
 	width: calc(100% - 3.5em);
 	background: ${theme.gradient};
 	z-index: 0;
@@ -20,7 +20,7 @@ export const LayoutContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  height: 30%;
+  height: 25%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -42,8 +42,9 @@ export const SettingsWrapper = styled.div`
 export const GraphContainer = styled.div`
   flex: 1;
   display: flex;
-  align-items: center;
+  transform: translateY(-5%);
   justify-content: flex-end;
+  align-items: center;
 `;
 
 export const GraphWrapper = styled.div`

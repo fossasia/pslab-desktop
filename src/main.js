@@ -1,6 +1,8 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const { ipcMain } = require('electron');
+const loadBalancer = require('electron-load-balancer');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -40,3 +42,19 @@ app.on('activate', function() {
 });
 
 /* ----------------------------------- Your code starts here ------------------------------------- */
+
+loadBalancer.register(ipcMain, {
+	linker: '/src/background_tasks/linker.html',
+});
+
+ipcMain.on('TO_RENDERER_DATA', (event, args) => {
+	mainWindow.webContents.send('TO_RENDERER_DATA', args);
+});
+
+ipcMain.on('TO_RENDERER_STATUS', (event, args) => {
+	mainWindow.webContents.send('TO_RENDERER_STATUS', args);
+});
+
+ipcMain.on('DEBUG', (event, args) => {
+	mainWindow.webContents.send('DEBUG', args);
+});

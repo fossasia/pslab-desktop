@@ -8,16 +8,52 @@ import LogicAnalyser from './screen/LogicAnalyser';
 import PowerSource from './screen/PowerSource';
 import Settings from './screen/Settings';
 import './App.css';
-
 const electron = window.require('electron');
-const fs = electron.remote.require('fs');
 const ipcRenderer = electron.ipcRenderer;
+const loadBalancer = window.require('electron-load-balancer');
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isConnected: false,
+		};
+	}
+
+	onConnectToggle = () => {
+		const { isConnected } = this.state;
+		if (!isConnected) {
+			loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
+		} else {
+			loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+		}
+		this.setState({
+			isConnected: !isConnected,
+		});
+	};
+
+	componentDidMount() {
+		ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+			const { isConnected } = args;
+			this.setState({
+				isConnected,
+			});
+			!isConnected && loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+		});
+		loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
+	}
+
+	componentWillUnmount() {
+		ipcRenderer.removeAllListeners('TO_RENDERER_STATUS');
+		loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+	}
+
 	render() {
+		const { isConnected } = this.state;
+
 		return (
 			<HashRouter>
-				<Appshell>
+				<Appshell isConnected={isConnected} onConnectToggle={this.onConnectToggle}>
 					<Switch>
 						<Route path="/" exact component={Home} />
 						<Route path="/oscilloscope" exact component={Oscilloscope} />

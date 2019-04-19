@@ -9,7 +9,7 @@ export const SettingsContainer = styled.div`
 `;
 
 export const SettingsWrapper = styled.div`
-	width: calc(100% - 32px);
+	width: calc(100% - 16px);
 `;
 
 export const OptionsRowWrapper = styled.div`
