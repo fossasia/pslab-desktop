@@ -8,7 +8,6 @@ const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
 
 function createWindow() {
-	const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
 	const startUrl = process.env.DEV
 		? 'http://localhost:3000'
 		: url.format({
@@ -17,7 +16,10 @@ function createWindow() {
 				slashes: true,
 		  });
 
-	mainWindow = new BrowserWindow({ width, height });
+	mainWindow = new BrowserWindow({show: false})
+	mainWindow.maximize()
+	mainWindow.show()
+
 	mainWindow.loadURL(startUrl);
 	mainWindow.webContents.openDevTools();
 
