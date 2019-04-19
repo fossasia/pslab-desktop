@@ -3,50 +3,41 @@
 	const { ipcRenderer } = require('electron');
 	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
-
+	const { oscilloscopeDataProcessor } = require('../util/preProcessor.js');
 	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
 		/* -------------------- Blocking code here ----------------------- */
-
 		let activeCommandProps = null;
 		const options = {
 			pythonPath: 'python3',
 		};
-
 		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), options);
-
 		loadBalancer.onFinish(ipcRenderer, 'linker', () => {
 			pyshell.send({
 				command: 'KILL',
 			});
 		});
-
 		loadBalancer.on(ipcRenderer, 'linker', args => {
 			activeCommandProps = args;
 			pyshell.send(JSON.stringify(args));
 		});
-
 		pyshell.on('message', function(results) {
 			try {
 				const parsedJSON = JSON.parse(results);
-				if (
-					parsedJSON['type'] === 'START_OSC' &&
-					activeCommandProps.command === 'START_OSC'
-				) {
-					parsedOutput = parsedJSON['ch1'].map((item, index) => {
-						return {
-							timeGap: index * activeCommandProps.timeGap,
-							ch1: item,
-						};
-					});
-					ipcRenderer.send('TO_RENDERER_DATA', parsedOutput);
-				} else if (parsedJSON['type'] === 'DEVICE_CONNECTION_STATUS') {
-					ipcRenderer.send('TO_RENDERER_STATUS', parsedJSON);
+				switch (parsedJSON['type']) {
+					case 'START_OSC':
+						parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+						ipcRenderer.send('TO_RENDERER_DATA', parsedOutput);
+						break;
+					case 'DEVICE_CONNECTION_STATUS':
+						ipcRenderer.send('TO_RENDERER_STATUS', parsedJSON);
+						break;
+					default:
+						break;
 				}
 			} catch (error) {
 				console.log(error);
 			}
 		});
-
 		/* --------------------------------------------------------------- */
 	});
 </script>
