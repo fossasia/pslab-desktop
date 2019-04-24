@@ -14,11 +14,19 @@ class Oscilloscope extends Component {
 			isReading: false,
 			activeChannels: {
 				ch1: true,
-				ch2: false,
+				ch2: true,
 				ch3: false,
 				ch4: false,
 			},
-			data: [],
+			data: [
+				{
+					ch1: 0,
+					ch2: 0,
+					ch3: 0,
+					ch4: 0,
+					timeGap: 0
+				},
+			],
 		};
 	}
 
@@ -48,7 +56,7 @@ class Oscilloscope extends Component {
 				command: 'START_OSC',
 				timeGap: 10,
 				numberOfSamples: 1000,
-				delay: 30,
+				delay: 100,
 				ch1: activeChannels['ch1'],
 				ch2: activeChannels['ch2'],
 				ch3: activeChannels['ch3'],
