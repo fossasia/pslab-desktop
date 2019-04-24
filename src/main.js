@@ -18,7 +18,10 @@ function createWindow() {
 				slashes: true,
 		  });
 
-	mainWindow = new BrowserWindow({ width: 800, height: 600 });
+	mainWindow = new BrowserWindow({show: false})
+	mainWindow.maximize()
+	mainWindow.show()
+
 	mainWindow.loadURL(startUrl);
 	mainWindow.webContents.openDevTools();
 
