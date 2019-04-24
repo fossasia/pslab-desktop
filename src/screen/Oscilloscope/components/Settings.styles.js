@@ -14,7 +14,7 @@ export const SettingsWrapper = styled.div`
 
 export const OptionsRowWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 8px 0px;
   min-width: 80%;

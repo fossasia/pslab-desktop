@@ -1,5 +1,14 @@
 import React from 'react';
-import { Card, Checkbox, Select, Slider } from 'antd';
+import {
+  Card,
+  Checkbox,
+  Select,
+  Typography,
+  Divider,
+  FormControlLabel,
+  MenuItem,
+} from '@material-ui/core';
+import { Slider } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
 import {
   SettingsContainer,
@@ -8,23 +17,29 @@ import {
 } from './Settings.styles';
 import { options } from './settingOptions';
 
-const { Option } = Select;
-
 const Settings = props => {
   return (
     <SettingsContainer>
       <Scrollbars autoHide autoHideTimeout={1000}>
         <SettingsWrapper>
-          <Card style={{ marginBottom: 8 }} title="Channel Parameters">
+          <Card style={{ margin: '8px 0px' }}>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h6"
+              variant="h6"
+            >
+              Channel Parameters
+            </Typography>
+            <Divider />
             <OptionsRowWrapper>
-              <Checkbox>CH1</Checkbox>
+              <FormControlLabel control={<Checkbox />} label="CH1" />
               <div>
                 <span style={{ marginRight: 4 }}>Range</span>
-                <Select defaultValue="16" style={{ width: 100 }}>
+                <Select style={{ width: 100 }}>
                   {Object.entries(options.Range1).map(el => {
                     const key = el[0];
                     const value = el[1];
-                    return <Option value={key}>{value}</Option>;
+                    return <MenuItem value={key}>{value}</MenuItem>;
                   })}
                 </Select>
               </div>
@@ -32,53 +47,61 @@ const Settings = props => {
                 {Object.entries(options.Channel1).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
             </OptionsRowWrapper>
             <OptionsRowWrapper>
-              <Checkbox>CH2</Checkbox>
+              <FormControlLabel control={<Checkbox />} label="CH2" />
               <div>
                 <span style={{ marginRight: 4 }}>Range</span>
-                <Select defaultValue="16" style={{ width: 100 }}>
+                <Select style={{ width: 100 }}>
                   {Object.entries(options.Range1).map(el => {
                     const key = el[0];
                     const value = el[1];
-                    return <Option value={key}>{value}</Option>;
+                    return <MenuItem value={key}>{value}</MenuItem>;
                   })}
                 </Select>
               </div>
-              <Select defaultValue="CH" style={{ width: 80 }} disabled>
-                <Option value="CH">CH2</Option>
+              <Select style={{ width: 80 }}>
+                <MenuItem value="CH2">CH2</MenuItem>
               </Select>
             </OptionsRowWrapper>
             <OptionsRowWrapper>
-              <Checkbox>CH3(+/- 3.3V)</Checkbox>
-              <Checkbox>Mic</Checkbox>
-              <Select defaultValue="Select Mic" style={{ width: 120 }}>
+              <FormControlLabel control={<Checkbox />} label="CH3(+/- 3.3V)" />
+              <FormControlLabel control={<Checkbox />} label="Mic" />
+              <Select style={{ width: 120 }}>
                 {Object.entries(options.Mic).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
             </OptionsRowWrapper>
           </Card>
         </SettingsWrapper>
         <SettingsWrapper>
-          <Card style={{ marginBottom: 8 }} title="Timebase and Trigger">
+          <Card style={{ margin: '8px 0px' }}>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h6"
+              variant="h6"
+            >
+              Timebase and Trigger
+            </Typography>
+            <Divider />
             <OptionsRowWrapper>
               <span style={{ marginRight: 4 }}>TimeBase</span>
               <Slider defaultValue={30} tipFormatter={value => `${value}s`} />
               100 s
             </OptionsRowWrapper>
             <OptionsRowWrapper>
-              <Checkbox>Trigger</Checkbox>
-              <Select defaultValue="CH1" style={{ width: 100 }}>
+              <FormControlLabel control={<Checkbox />} label="Trigger" />
+              <Select style={{ width: 100 }}>
                 {Object.entries(options.Select).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
               <Slider defaultValue={30} tipFormatter={value => `${value}s`} />V
@@ -86,53 +109,72 @@ const Settings = props => {
           </Card>
         </SettingsWrapper>
         <SettingsWrapper>
-          <Card style={{ marginBottom: 8 }} title="Data Analysis">
+          <Card style={{ margin: '8px 0px' }}>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h6"
+              variant="h6"
+            >
+              Data Analysis
+            </Typography>
+            <Divider />
             <OptionsRowWrapper>
-              <Select defaultValue="Sine" style={{ width: 100 }}>
+              <Select style={{ width: 100 }}>
                 {Object.entries(options.FitSelect).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
-              <Select defaultValue="None" style={{ width: 100 }}>
+              <Select style={{ width: 100 }}>
                 {Object.entries(options.DataAnalysisSelect).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
-              <Select defaultValue="None" style={{ width: 100 }}>
+              <Select style={{ width: 100 }}>
                 {Object.entries(options.DataAnalysisSelect).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
             </OptionsRowWrapper>
             <OptionsRowWrapper>
-              <Checkbox>Fourier Transforms</Checkbox>
+              <FormControlLabel
+                control={<Checkbox />}
+                label="Fourier Transforms"
+              />
             </OptionsRowWrapper>
           </Card>
         </SettingsWrapper>
         <SettingsWrapper>
-          <Card title="XY Plot">
+          <Card style={{ margin: '8px 0px' }}>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h6"
+              variant="h6"
+            >
+              XY Plot
+            </Typography>
+            <Divider />
             <OptionsRowWrapper>
-              <Checkbox>Enable XY Plot</Checkbox>
+              <FormControlLabel control={<Checkbox />} label="Enable XY Plot" />
             </OptionsRowWrapper>
             <OptionsRowWrapper>
-              <Select defaultValue="CH1" style={{ width: 100 }}>
+              <Select style={{ width: 100 }}>
                 {Object.entries(options.Select).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
-              <Select defaultValue="CH2" style={{ width: 100 }}>
+              <Select style={{ width: 100 }}>
                 {Object.entries(options.Select).map(el => {
                   const key = el[0];
                   const value = el[1];
-                  return <Option value={key}>{value}</Option>;
+                  return <MenuItem value={key}>{value}</MenuItem>;
                 })}
               </Select>
             </OptionsRowWrapper>

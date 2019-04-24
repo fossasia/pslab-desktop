@@ -8,6 +8,8 @@ import LogicAnalyser from './screen/LogicAnalyser';
 import PowerSource from './screen/PowerSource';
 import Settings from './screen/Settings';
 import './App.css';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { theme } from './MUItheme';
 
 const electron = window.require('electron');
 
@@ -54,20 +56,22 @@ class App extends Component {
     const { isConnected } = this.state;
 
     return (
-      <HashRouter>
-        <Appshell
-          isConnected={isConnected}
-          onConnectToggle={this.onConnectToggle}
-        >
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/oscilloscope" exact component={Oscilloscope} />
-            <Route path="/logicanalyser" exact component={LogicAnalyser} />
-            <Route path="/powersource" exact component={PowerSource} />
-            <Route path="/settings" exact component={Settings} />
-          </Switch>
-        </Appshell>
-      </HashRouter>
+      <MuiThemeProvider theme={theme}>
+        <HashRouter>
+          <Appshell
+            isConnected={isConnected}
+            onConnectToggle={this.onConnectToggle}
+          >
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/oscilloscope" exact component={Oscilloscope} />
+              <Route path="/logicanalyser" exact component={LogicAnalyser} />
+              <Route path="/powersource" exact component={PowerSource} />
+              <Route path="/settings" exact component={Settings} />
+            </Switch>
+          </Appshell>
+        </HashRouter>
+      </MuiThemeProvider>
     );
   }
 }
