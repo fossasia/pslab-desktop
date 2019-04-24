@@ -1,3 +1,3 @@
-export const roundOff = (num) => {
-	return +num.toFixed(2);
+export default function roundOff(num) {
+  return +num.toFixed(2);
 }

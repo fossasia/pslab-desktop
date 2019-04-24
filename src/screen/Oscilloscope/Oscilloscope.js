@@ -3,80 +3,84 @@ import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
 import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
+
 const electron = window.require('electron');
-const ipcRenderer = electron.ipcRenderer;
+const { ipcRenderer } = electron;
 const loadBalancer = window.require('electron-load-balancer');
 
 class Oscilloscope extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isReading: false,
-			activeChannels: {
-				ch1: true,
-				ch2: true,
-				ch3: false,
-				ch4: false,
-			},
-			data: [
-				{
-					ch1: 0,
-					ch2: 0,
-					ch3: 0,
-					ch4: 0,
-					timeGap: 0
-				},
-			],
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      isReading: false,
+      activeChannels: {
+        ch1: true,
+        ch2: true,
+        ch3: false,
+        ch4: false,
+      },
+      data: [
+        {
+          ch1: 0,
+          ch2: 0,
+          ch3: 0,
+          ch4: 0,
+          timeGap: 0,
+        },
+      ],
+    };
+  }
 
-	componentDidMount() {
-		ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
-			this.setState({
-				data: args,
-			});
-		});
-	}
+  componentDidMount() {
+    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
+      this.setState({
+        data: args,
+      });
+    });
+  }
 
-	componentWillUnmount() {
-		ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
-	}
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+  }
 
-	onToggleRead = event => {
-		const { isReading, activeChannels } = this.state;
-		this.setState(prevState => ({
-			isReading: !prevState.isReading,
-		}));
-		if (isReading) {
-			loadBalancer.send(ipcRenderer, 'linker', {
-				command: 'STOP_OSC',
-			});
-		} else {
-			loadBalancer.send(ipcRenderer, 'linker', {
-				command: 'START_OSC',
-				timeGap: 10,
-				numberOfSamples: 1000,
-				delay: 100,
-				ch1: activeChannels['ch1'],
-				ch2: activeChannels['ch2'],
-				ch3: activeChannels['ch3'],
-				ch4: activeChannels['ch4'],
-			});
-		}
-	};
+  onToggleRead = event => {
+    const { isReading, activeChannels } = this.state;
+    this.setState(prevState => ({
+      isReading: !prevState.isReading,
+    }));
+    if (isReading) {
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'STOP_OSC',
+      });
+    } else {
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'START_OSC',
+        timeGap: 10,
+        numberOfSamples: 1000,
+        delay: 100,
+        ch1: activeChannels.ch1,
+        ch2: activeChannels.ch2,
+        ch3: activeChannels.ch3,
+        ch4: activeChannels.ch4,
+      });
+    }
+  };
 
-	render() {
-		const { data, activeChannels, isReading } = this.state;
-		return (
-			<GraphPanelLayout
-				settings={<Settings />}
-				actionButtons={
-					<ActionButtons isReading={isReading} onToggleRead={this.onToggleRead} />
-				}
-				graph={<Graph data={data} activeChannels={activeChannels} />}
-			/>
-		);
-	}
+  render() {
+    const { data, activeChannels, isReading } = this.state;
+    return (
+      <GraphPanelLayout
+        settings={<Settings />}
+        actionButtons={
+          <ActionButtons
+            isReading={isReading}
+            onToggleRead={this.onToggleRead}
+          />
+        }
+        graph={<Graph data={data} activeChannels={activeChannels} />}
+      />
+    );
+  }
 }
 
 export default Oscilloscope;
