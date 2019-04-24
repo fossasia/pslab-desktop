@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Icon } from '@material-ui/core';
-import { MdGridOn, MdSettings, MdTimeline, MdExposure } from 'react-icons/md';
+import { Button } from '@material-ui/core';
+import ConnectedIcon from '@material-ui/icons/Usb';
+import DisconnectedIcon from '@material-ui/icons/Warning';
+import OscilloscopeIcon from '@material-ui/icons/ViewComfy';
+import LogicAnalyserIcon from '@material-ui/icons/InsertChart';
+import PowerSourceIcon from '@material-ui/icons/FlashOn';
+import WaveGeneratorIcon from '@material-ui/icons/GraphicEq';
+import SettingIcon from '@material-ui/icons/Settings';
 import {
   AppshellContainer,
   ChildrenContainer,
@@ -22,17 +28,22 @@ const topNavigationItems = [
   {
     name: 'Oscilloscope',
     redirectPath: '/oscilloscope',
-    icon: <MdGridOn size="2.2em" />,
+    icon: <OscilloscopeIcon style={{ fontSize: '2.2em' }} />,
   },
   {
     name: 'Logica Analyser',
     redirectPath: '/logicanalyser',
-    icon: <MdTimeline size="2.2em" />,
+    icon: <LogicAnalyserIcon style={{ fontSize: '2.2em' }} />,
   },
   {
     name: 'Power Source',
     redirectPath: '/powersource',
-    icon: <MdExposure size="2.2em" />,
+    icon: <PowerSourceIcon style={{ fontSize: '2.2em' }} />,
+  },
+  {
+    name: 'Wave Generator',
+    redirectPath: '/wavegenerator',
+    icon: <WaveGeneratorIcon style={{ fontSize: '2.2em' }} />,
   },
 ];
 
@@ -67,7 +78,7 @@ const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
         <BottomNavigationWrapper>
           <Link to="/settings">
             <NavigationTab>
-              <MdSettings size="2.2em" />
+              <SettingIcon style={{ fontSize: '2.2em' }} />
             </NavigationTab>
           </Link>
         </BottomNavigationWrapper>
@@ -77,17 +88,19 @@ const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
           <TitleContainer />
           <Spacer />
           <ButtonContainer>
-            {/* <Button */}
             <Button
-              variant="contained"
+              variant="outlined"
               size="medium"
-              color="primary"
-              // disabled={isConnected}
+              color="inherit"
+              disabled={isConnected}
               onClick={onConnectToggle}
-              style={{ borderRadius: '20px' }}
             >
-              <Icon>{isConnected ? 'usb' : 'cast'}</Icon>
-              {isConnected ? 'Disconnect' : 'Connect'}
+              {isConnected ? (
+                <ConnectedIcon style={{ fontSize: 20 }} />
+              ) : (
+                <DisconnectedIcon style={{ fontSize: 20 }} />
+              )}
+              {isConnected ? 'Connected' : 'Disconnected'}
             </Button>
           </ButtonContainer>
         </AppBar>
