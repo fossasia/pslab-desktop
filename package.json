@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/lab": "^3.0.0-alpha.30",
     "antd": "^3.16.2",
     "electron": "^4.1.4",
     "electron-load-balancer": "^1.0.6",

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Slider, Button, Icon } from 'antd';
+import { Card, Button, Icon, Typography, Divider } from '@material-ui/core';
+import { Slider } from 'antd';
 import {
   CardContainer,
   ButtonContainer,
@@ -17,7 +18,15 @@ const Settings = props => {
     <CardContainer>
       <CardColumnWrapper>
         <div>
-          <Card title="PV1">
+          <Card>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h4"
+              variant="h4"
+            >
+              PV1
+            </Typography>
+            <Divider />
             <InstrumentContainer>
               <SliderContainer>
                 <Slider
@@ -40,18 +49,20 @@ const Settings = props => {
                   <Button
                     disabled={pv1 === -5}
                     onClick={onPressButton('pv1', false)}
-                    block
                     size="large"
+                    color="secondary"
+                    variant="outlined"
                   >
-                    <Icon type="minus" />
+                    <Icon>remove</Icon>
                   </Button>
                   <Button
                     disabled={pv1 === 5}
                     onClick={onPressButton('pv1', true)}
-                    block
+                    color="secondary"
+                    variant="outlined"
                     size="large"
                   >
-                    <Icon type="plus" />
+                    <Icon>add</Icon>
                   </Button>
                 </ButtonContainer>
               </DisplayContainer>
@@ -59,7 +70,15 @@ const Settings = props => {
           </Card>
         </div>
         <div>
-          <Card title="PV2">
+          <Card>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h4"
+              variant="h4"
+            >
+              PV2
+            </Typography>
+            <Divider />
             <InstrumentContainer>
               <SliderContainer>
                 <Slider
@@ -82,18 +101,20 @@ const Settings = props => {
                   <Button
                     disabled={pv2 === -3.3}
                     onClick={onPressButton('pv2', false)}
-                    block
+                    color="secondary"
+                    variant="outlined"
                     size="large"
                   >
-                    <Icon type="minus" />
+                    <Icon>remove</Icon>
                   </Button>
                   <Button
                     disabled={pv2 === 3.3}
                     onClick={onPressButton('pv2', true)}
-                    block
+                    color="secondary"
+                    variant="outlined"
                     size="large"
                   >
-                    <Icon type="plus" />
+                    <Icon>add</Icon>
                   </Button>
                 </ButtonContainer>
               </DisplayContainer>
@@ -103,7 +124,15 @@ const Settings = props => {
       </CardColumnWrapper>
       <CardColumnWrapper>
         <div>
-          <Card title="PV3">
+          <Card>
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h4"
+              variant="h4"
+            >
+              PV3
+            </Typography>
+            <Divider />
             <InstrumentContainer>
               <SliderContainer>
                 <Slider
@@ -125,18 +154,20 @@ const Settings = props => {
                   <Button
                     disabled={pv3 === 0}
                     onClick={onPressButton('pv3', false)}
-                    block
+                    color="secondary"
+                    variant="outlined"
                     size="large"
                   >
-                    <Icon type="minus" />
+                    <Icon>remove</Icon>
                   </Button>
                   <Button
                     disabled={pv3 === 3.3}
                     onClick={onPressButton('pv3', true)}
-                    block
+                    color="secondary"
+                    variant="outlined"
                     size="large"
                   >
-                    <Icon type="plus" />
+                    <Icon>add</Icon>
                   </Button>
                 </ButtonContainer>
               </DisplayContainer>
@@ -145,6 +176,14 @@ const Settings = props => {
         </div>
         <div>
           <Card title="PCS">
+            <Typography
+              style={{ padding: '0.6rem' }}
+              component="h4"
+              variant="h4"
+            >
+              PCS
+            </Typography>
+            <Divider />
             <InstrumentContainer>
               <SliderContainer>
                 <Slider
@@ -166,18 +205,20 @@ const Settings = props => {
                   <Button
                     disabled={pcs === 0}
                     onClick={onPressButton('pcs', false)}
-                    block
                     size="large"
+                    color="secondary"
+                    variant="outlined"
                   >
-                    <Icon type="minus" />
+                    <Icon>remove</Icon>
                   </Button>
                   <Button
                     disabled={pcs === 3.3}
                     onClick={onPressButton('pcs', true)}
-                    block
                     size="large"
+                    color="secondary"
+                    variant="outlined"
                   >
-                    <Icon type="plus" />
+                    <Icon>add</Icon>
                   </Button>
                 </ButtonContainer>
               </DisplayContainer>

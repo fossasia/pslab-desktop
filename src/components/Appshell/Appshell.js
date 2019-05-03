@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Icon } from '@material-ui/core';
 import { MdGridOn, MdSettings, MdTimeline, MdExposure } from 'react-icons/md';
 import {
   AppshellContainer,
@@ -77,14 +77,16 @@ const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
           <TitleContainer />
           <Spacer />
           <ButtonContainer>
+            {/* <Button */}
             <Button
+              variant="contained"
+              size="medium"
+              color="primary"
               // disabled={isConnected}
               onClick={onConnectToggle}
-              type="normal"
-              shape="round"
-              icon={isConnected ? 'usb' : 'api'}
-              size="large"
+              style={{ borderRadius: '20px' }}
             >
+              <Icon>{isConnected ? 'usb' : 'cast'}</Icon>
               {isConnected ? 'Disconnect' : 'Connect'}
             </Button>
           </ButtonContainer>
