@@ -2,21 +2,21 @@ import styled from 'styled-components';
 import theme from '../../theme';
 
 export const ThickBar = styled.div`
-	position: absolute;
-	right: 0;
-	top: 4em;
-	height: calc( (100% - 4em) * 0.25 );
-	width: calc(100% - 3.5em);
-	background: ${theme.gradient};
-	z-index: 0;
+  position: absolute;
+  right: 0;
+  top: 4em;
+  height: calc((100% - 4em) * 0.25);
+  width: calc(100% - 3.5em);
+  background: ${theme.gradient};
+  z-index: 0;
 `;
 
 export const LayoutContainer = styled.div`
-	background-color: ${theme.primaryBackground};
-	height: 100%;
-	width: 100%;
-	z-index: 1;
-	display: flex;
+  background-color: ${theme.primaryBackground};
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  display: flex;
 `;
 
 export const ButtonContainer = styled.div`
@@ -55,6 +55,6 @@ export const GraphWrapper = styled.div`
   background-color: #ffffff;
   z-index: 1;
   border: 1px solid #e8e8e8;
-  color: rgba(0,0,0,0.65);
+  color: rgba(0, 0, 0, 0.65);
   border-radius: 2px;
 `;
