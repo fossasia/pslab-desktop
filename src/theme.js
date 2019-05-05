@@ -1,20 +1,50 @@
-const theme = {
-  primaryColor: '#673ab7',
-  primaryColorFade: '#d1c4e9',
-  appIconBackground: '#ffffff',
-  linkColor: '#1890ff',
-  successColor: '#52c41a',
-  warningColor: '#faad14',
-  errorColor: '#f5222d',
-  headingColor: 'rgba(0, 0, 0, .85)',
-  textColor: 'rgba(0, 0, 0, .65)',
-  textColorSecondary: 'rgba(0, 0, 0, .45)',
-  disabledColor: 'rgba(0, 0, 0, .25)',
-  borderRadiusBase: '4px',
-  gradient:
-    'rgb(220, 90, 50) linear-gradient(-90deg, rgb(220, 90, 50), rgb(196, 74, 103)) repeat scroll 0% 0%',
-  primaryBackground: '#fafafa',
-  navigationBackground: '#bdbdbd',
-};
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  pallet: {
+    common: {
+      black: '#000',
+      white: '#fff',
+    },
+    background: {
+      paper: 'rgba(255, 255, 255, 1)',
+      default: 'rgba(181, 181, 181, 0.2)',
+    },
+    primary: {
+      light: 'rgba(142, 155, 224, 1)',
+      main: 'rgba(107, 2, 246, 1)',
+      dark: '#303f9f',
+      contrastText: 'rgba(255, 255, 255, 1)',
+    },
+    secondary: {
+      light: 'rgba(220, 90, 50, 1)',
+      main: 'rgba(255, 5, 5, 1)',
+      dark: 'rgba(196, 74, 103, 1)',
+      contrastText: '#fff',
+    },
+    error: {
+      light: '#e57373',
+      main: '#f44336',
+      dark: '#d32f2f',
+      contrastText: '#fff',
+    },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.54)',
+      disabled: 'rgba(0, 0, 0, 0.38)',
+      hint: 'rgba(0, 0, 0, 0.38)',
+    },
+    linkColor: '#1890ff',
+    headingColor: 'rgba(0, 0, 0, .85)',
+    disabledColor: 'rgba(0, 0, 0, .25)',
+    gradient:
+      'rgb(220, 90, 50) linear-gradient(-90deg, rgb(220, 90, 50), rgb(196, 74, 103)) repeat scroll 0% 0%',
+    iconBackground: '#ffffff',
+    navigationBackground: '#bdbdbd',
+    ch1Color: '#ff9800',
+    ch2Color: '#03a9f4',
+    ch3Color: '#4caf50',
+  },
+});
 
 export default theme;

@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-scaffold",
+  "name": "pslab-desktop",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "@material-ui/lab": "^3.0.0-alpha.30",
     "antd": "^3.16.2",
-    "electron": "^4.1.4",
-    "electron-load-balancer": "^1.0.6",
+    "electron-load-balancer": "^1.0.7",
     "python-shell": "^1.0.7",
     "react": "^16.8.6",
     "react-custom-scrollbars": "^4.2.1",
@@ -19,16 +19,20 @@
     "recharts": "^1.5.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "typescript": "^3.4.5"
   },
   "scripts": {
-    "react": "BROWSER=NONE react-scripts start",
-    "build": "react-scripts build",
+    "react-start": "BROWSER=NONE react-scripts start",
+    "electron-start": "DEV=1 electron .",
+    "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+    "react-build": "react-scripts build",
+    "electron-build": "electron-builder --linux -c.extraMetadata.main=build/electron.js",
+    "build": "npm run react-build && npm run electron-build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "DEV=1 electron .",
-    "start": "concurrently 'npm run react' 'wait-on http://localhost:3000/ && npm run electron'",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css,md}": [
@@ -39,7 +43,8 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "main": "src/main.js",
+  "homepage": "./",
+  "main": "public/electron.js",
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -50,6 +55,8 @@
     "babel-eslint": "^10.0.1",
     "concurrently": "^4.1.0",
     "devtron": "^1.4.0",
+    "electron": "^4.1.4",
+    "electron-builder": "^20.39.0",
     "electron-react-devtools": "^0.5.3",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
@@ -70,5 +77,29 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "author": {
+    "name": "FOSSASIA",
+    "email": "humble.discipulus@gmail.com",
+    "url": "https://pslab.io/"
+  },
+  "build": {
+    "appId": "123xyz",
+    "productName": "PSLab Desktop",
+    "copyright": "Copyright © 2019 FOSSASIA",
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "category": "Utility"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extends": null
   }
 }

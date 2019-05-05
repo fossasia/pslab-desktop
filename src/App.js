@@ -9,7 +9,8 @@ import PowerSource from './screen/PowerSource';
 import Settings from './screen/Settings';
 import './App.css';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { theme } from './MUItheme';
+import { ThemeProvider } from 'styled-components';
+import theme from './theme';
 
 const electron = window.require('electron');
 
@@ -21,6 +22,7 @@ class App extends Component {
     super(props);
     this.state = {
       isConnected: false,
+      isConnecting: true,
     };
   }
 
@@ -29,6 +31,7 @@ class App extends Component {
       const { isConnected } = args;
       this.setState({
         isConnected,
+        isConnecting: false,
       });
       !isConnected && loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
     });
@@ -40,37 +43,31 @@ class App extends Component {
     loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
   }
 
-  onConnectToggle = () => {
-    const { isConnected } = this.state;
-    if (!isConnected) {
-      loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
-    } else {
-      loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
-    }
-    this.setState({
-      isConnected: !isConnected,
-    });
-  };
-
   render() {
     const { isConnected } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
-        <HashRouter>
-          <Appshell
-            isConnected={isConnected}
-            onConnectToggle={this.onConnectToggle}
-          >
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/oscilloscope" exact component={Oscilloscope} />
-              <Route path="/logicanalyser" exact component={LogicAnalyser} />
-              <Route path="/powersource" exact component={PowerSource} />
-              <Route path="/settings" exact component={Settings} />
-            </Switch>
-          </Appshell>
-        </HashRouter>
+        <ThemeProvider theme={theme.pallet}>
+          <HashRouter>
+            <Appshell
+              isConnected={isConnected}
+              onConnectToggle={this.onConnectToggle}
+            >
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route
+                  path="/oscilloscope"
+                  exact
+                  component={() => <Oscilloscope isConnected={isConnected} />}
+                />
+                <Route path="/logicanalyser" exact component={LogicAnalyser} />
+                <Route path="/powersource" exact component={PowerSource} />
+                <Route path="/settings" exact component={Settings} />
+              </Switch>
+            </Appshell>
+          </HashRouter>
+        </ThemeProvider>
       </MuiThemeProvider>
     );
   }

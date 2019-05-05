@@ -9,7 +9,7 @@ export const options = {
     '0.5': '+/-500V',
     '160': '+/-160V',
   },
-  Channel1: {
+  Map1: {
     CH1: 'CH1',
     CH2: 'CH2',
     CH3: 'CH3',

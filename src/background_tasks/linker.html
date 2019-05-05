@@ -6,20 +6,21 @@
 	const { oscilloscopeDataProcessor } = require('../util/preProcessor.js');
 	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
 		/* -------------------- Blocking code here ----------------------- */
-		let activeCommandProps = null;
-		const options = {
+
+		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
 			pythonPath: 'python3',
-		};
-		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), options);
+		});
+
 		loadBalancer.onFinish(ipcRenderer, 'linker', () => {
 			pyshell.send({
 				command: 'KILL',
 			});
 		});
+
 		loadBalancer.on(ipcRenderer, 'linker', args => {
-			activeCommandProps = args;
 			pyshell.send(JSON.stringify(args));
 		});
+
 		pyshell.on('message', function(results) {
 			try {
 				const parsedJSON = JSON.parse(results);
