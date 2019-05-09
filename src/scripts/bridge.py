@@ -49,6 +49,16 @@ def main():
         if command == "CONFIG_OSC":
             pass
 
+        if command == 'CONFIG_PWR_SRC':
+            pcs_value = parsed_stream_data['timeGap']
+            pc1_value = parsed_stream_data['numberOfSamples']
+            pc2_value = parsed_stream_data['delay']
+            pc3_value = parsed_stream_data['ch1']
+            I.set_pcs(pcs_value)
+            I.set_pv1(pc1_value)
+            I.set_pv2(pc2_value)
+            I.set_pv3(pc3_value)
+
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':
             break
