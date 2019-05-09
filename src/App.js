@@ -7,7 +7,6 @@ import Oscilloscope from './screen/Oscilloscope';
 import LogicAnalyser from './screen/LogicAnalyser';
 import PowerSource from './screen/PowerSource';
 import Settings from './screen/Settings';
-import './App.css';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
