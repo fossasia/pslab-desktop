@@ -10,24 +10,24 @@ const { BrowserWindow } = electron;
 let mainWindow;
 
 function createWindow() {
-	const startUrl = process.env.DEV
-		? 'http://localhost:3000'
-		: url.format({
-				pathname: path.join(__dirname, '/../build/index.html'),
-				protocol: 'file:',
-				slashes: true,
-		  });
+  const startUrl = process.env.DEV
+    ? 'http://localhost:3000'
+    : url.format({
+        pathname: path.join(__dirname, '/../build/index.html'),
+        protocol: 'file:',
+        slashes: true,
+      });
 
-	mainWindow = new BrowserWindow({show: false})
-	mainWindow.maximize()
-	mainWindow.show()
+  mainWindow = new BrowserWindow({ show: false });
+  mainWindow.maximize();
+  mainWindow.show();
 
-	mainWindow.loadURL(startUrl);
-	process.env.DEV && mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(startUrl);
+  process.env.DEV && mainWindow.webContents.openDevTools();
 
-	mainWindow.on('closed', function() {
-		mainWindow = null;
-	});
+  mainWindow.on('closed', function() {
+    mainWindow = null;
+  });
 }
 
 app.on('ready', createWindow);
