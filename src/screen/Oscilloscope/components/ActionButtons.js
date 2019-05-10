@@ -3,10 +3,10 @@ import ReadIcon from '@material-ui/icons/PlayCircleFilled';
 import StopIcon from '@material-ui/icons/PauseCircleFilled';
 import RecordIcon from '@material-ui/icons/RadioButtonChecked';
 import { Button } from '@material-ui/core';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { ButtonWrapper } from './ActionButtons.styles';
 
-const styles = theme => ({
+const styles = () => ({
   buttonMargin: {
     margin: '0px 0px 0px 16px',
   },
@@ -42,4 +42,4 @@ const ActionButtons = ({ isConnected, isReading, onToggleRead, classes }) => {
   );
 };
 
-export default withTheme()(withStyles(styles)(ActionButtons));
+export default withStyles(styles)(ActionButtons);
