@@ -20,12 +20,8 @@ class PowerSouce extends Component {
 
   sendConfigToDevice = values =>
     debounce(() => {
-      console.log('command fired', {
-        command: 'CONFIG_PWR_SRC',
-        ...values,
-      });
       loadBalancer.send(ipcRenderer, 'linker', {
-        command: 'CONFIG_PWR_SRC',
+        command: 'SET_CONFIG_PWR_SRC',
         ...values,
       });
     }, 500);
