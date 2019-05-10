@@ -22,10 +22,6 @@ export const ButtonContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 16px 16px 16px 16px;
-
-  & > * + * {
-    margin: 0px 0px 0px 16px;
-  }
 `;
 
 export const DisplayContainer = styled.div`
@@ -35,7 +31,7 @@ export const DisplayContainer = styled.div`
 
 export const SliderContainer = styled.div`
   display: flex;
-  margin: 16px 32px 16px 16px;
+  margin: 8px 0px 16px 32px;
 `;
 
 export const InstrumentContainer = styled.div`

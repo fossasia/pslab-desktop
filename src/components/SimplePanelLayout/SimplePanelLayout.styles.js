@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../../theme';
 
 export const ThickBar = styled.div`
   position: absolute;
@@ -7,7 +6,7 @@ export const ThickBar = styled.div`
   top: 4em;
   height: calc((100% - 4em) * 0.25);
   width: calc(100% - 3.5em);
-  background: ${theme.gradient};
+  background: ${props => props.theme.gradient};
   z-index: 0;
 `;
 
@@ -18,7 +17,7 @@ export const LayoutWrapper = styled.div`
 `;
 
 export const LayoutContainer = styled.div`
-  background-color: ${theme.primaryBackground};
+  background-color: ${props => props.theme.background.default};
   height: 100%;
   width: 100%;
   z-index: 1;
