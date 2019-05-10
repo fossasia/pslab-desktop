@@ -50,14 +50,14 @@ def main():
             pass
 
         if command == 'CONFIG_PWR_SRC':
-            pcs_value = parsed_stream_data['timeGap']
-            pc1_value = parsed_stream_data['numberOfSamples']
-            pc2_value = parsed_stream_data['delay']
-            pc3_value = parsed_stream_data['ch1']
+            pcs_value = parsed_stream_data['pcs']
+            pv1_value = parsed_stream_data['pv1']
+            pv2_value = parsed_stream_data['pv2']
+            pv3_value = parsed_stream_data['pv3']
             I.set_pcs(pcs_value)
-            I.set_pv1(pc1_value)
-            I.set_pv2(pc2_value)
-            I.set_pv3(pc3_value)
+            I.set_pv1(pv1_value)
+            I.set_pv2(pv2_value)
+            I.set_pv3(pv3_value)
 
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':
