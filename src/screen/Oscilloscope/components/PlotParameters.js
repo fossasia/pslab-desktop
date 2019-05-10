@@ -11,11 +11,11 @@ import {
   FormControl,
   InputLabel,
 } from '@material-ui/core';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
 
-const styles = theme => ({
+const styles = () => ({
   formControl: {
     margin: '0px 16px 0px 0px',
   },
@@ -80,10 +80,14 @@ class AnalysisParameters extends Component {
                 />
               }
             >
-              {Object.entries(options.Select).map(el => {
-                const key = el[0];
-                const value = el[1];
-                return <MenuItem value={key}>{value}</MenuItem>;
+              {Object.entries(options.Select).map((item, index) => {
+                const key = item[0];
+                const value = item[1];
+                return (
+                  <MenuItem key={index} value={key}>
+                    {value}
+                  </MenuItem>
+                );
               })}
             </Select>
           </FormControl>
@@ -104,10 +108,14 @@ class AnalysisParameters extends Component {
                 />
               }
             >
-              {Object.entries(options.Select).map(el => {
-                const key = el[0];
-                const value = el[1];
-                return <MenuItem value={key}>{value}</MenuItem>;
+              {Object.entries(options.Select).map((item, index) => {
+                const key = item[0];
+                const value = item[1];
+                return (
+                  <MenuItem key={index} value={key}>
+                    {value}
+                  </MenuItem>
+                );
               })}
             </Select>
           </FormControl>
@@ -117,4 +125,4 @@ class AnalysisParameters extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(AnalysisParameters));
+export default withStyles(styles)(AnalysisParameters);
