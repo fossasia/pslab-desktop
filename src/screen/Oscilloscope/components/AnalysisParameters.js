@@ -45,9 +45,9 @@ class AnalysisParameters extends Component {
       transformType,
       transformChannel1,
       transformChannel2,
-      onTOggleFourierTransform,
       onChangeTransformType,
       onChangeTransformChannel,
+      onToggleCheckBox,
       classes,
     } = this.props;
     const { analysisTypeLabelWidth, analysisChannelLabelWidth } = this.state;
@@ -59,13 +59,22 @@ class AnalysisParameters extends Component {
         </Typography>
         <Divider />
         <OptionsRowWrapper>
-          <FormControlLabel control={<Checkbox />} label="Fourier Transforms" />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isFourierTransformActive}
+                onChange={onToggleCheckBox('isFourierTransformActive')}
+              />
+            }
+            label="Fourier Transforms"
+          />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
           <FormControl
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isFourierTransformActive}
           >
             <InputLabel
               ref={ref => {
@@ -101,6 +110,7 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isFourierTransformActive}
           >
             <InputLabel
               ref={ref => {
@@ -108,11 +118,11 @@ class AnalysisParameters extends Component {
               }}
               htmlFor="outlined-analysis-channel"
             >
-              Channel
+              Channel 1
             </InputLabel>
             <Select
               value={transformChannel1}
-              onChange={onChangeTransformChannel}
+              onChange={onChangeTransformChannel('transformChannel1')}
               input={
                 <OutlinedInput
                   labelWidth={analysisChannelLabelWidth}
@@ -136,11 +146,14 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isFourierTransformActive}
           >
-            <InputLabel htmlFor="outlined-analysis-channel">Channel</InputLabel>
+            <InputLabel htmlFor="outlined-analysis-channel">
+              Channel 2
+            </InputLabel>
             <Select
               value={transformChannel2}
-              onChange={onChangeTransformChannel}
+              onChange={onChangeTransformChannel('transformChannel2')}
               input={
                 <OutlinedInput
                   labelWidth={analysisChannelLabelWidth}

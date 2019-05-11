@@ -55,15 +55,17 @@ class App extends Component {
   componentDidMount() {
     ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
       const { isConnected, message, deviceName, portName } = args;
-      this.setState({
-        isConnected,
-        deviceInformation: deviceName
-          ? {
-              deviceName,
-              portName,
-            }
-          : null,
-      });
+      this.state.isConnected !== isConnected &&
+        this.setState({
+          isConnected,
+          deviceInformation: deviceName
+            ? {
+                deviceName,
+                portName,
+              }
+            : null,
+        });
+
       if (!isConnected) {
         loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
         if (!this.reconnect) {
@@ -115,10 +117,10 @@ class App extends Component {
               open={snackbar.isOpen}
               onClose={this.onCloseSnackBar}
               ContentProps={{
-                'aria-describedby': 'message-id',
+                'aria-describedby': 'snackbar',
               }}
               autoHideDuration={snackbar.timeout}
-              message={<span id="message-id">{snackbar.message}</span>}
+              message={<span id="snackbar">{snackbar.message}</span>}
             />
           </HashRouter>
         </ThemeProvider>
