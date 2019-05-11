@@ -12,9 +12,10 @@
 		});
 
 		loadBalancer.onFinish(ipcRenderer, 'linker', () => {
-			pyshell.send({
+			pyshell.send(
+				JSON.stringify({
 				command: 'KILL',
-			});
+			}));
 		});
 
 		loadBalancer.on(ipcRenderer, 'linker', args => {

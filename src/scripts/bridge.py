@@ -1,22 +1,22 @@
-from PSL import sciencelab
 import sys
 import threading
 import json
 from oscilloscope import Oscilloscope
+from device_detection import Device_detection
 
 
 def main():
     I = None
     oscilloscope = None
-    data_read_thread = None
+    oscilloscope_data_read_thread = None
+    device_detection = None
+    device_detection_thread = None
 
-    try:
-        I = sciencelab.connect()
-        output = {'type': 'DEVICE_CONNECTION_STATUS', 'isConnected': True}
-    except:
-        output = {'type': 'DEVICE_CONNECTION_STATUS', 'isConnected': False}
-    print(json.dumps(output))
-    sys.stdout.flush()
+    # connection and connection check loop initialization
+    device_detection = Device_detection()
+    device_detection_thread = device_detection.async_connect()
+    device_detection_thread.start()
+    I = device_detection.device
 
     while(True):
         in_stream_data = input()
@@ -39,17 +39,18 @@ def main():
 
             oscilloscope = Oscilloscope(
                 I, time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4)
-            data_read_thread = oscilloscope.readData()
-            data_read_thread.start()
+            oscilloscope_data_read_thread = oscilloscope.readData()
+            oscilloscope_data_read_thread.start()
 
         if command == "STOP_OSC":
             oscilloscope.isReading = False
-            data_read_thread.join()
+            oscilloscope_data_read_thread.join()
 
         if command == "CONFIG_OSC":
             pass
 
-        if command == 'CONFIG_PWR_SRC':
+        # -------------------------- Power Source block ---------------------------------
+        if command == 'SET_CONFIG_PWR_SRC':
             pcs_value = parsed_stream_data['pcs']
             pv1_value = parsed_stream_data['pv1']
             pv2_value = parsed_stream_data['pv2']
@@ -61,8 +62,10 @@ def main():
 
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':
-            break
+            exit()
 
 
 if __name__ == '__main__':
     main()
+    print("app exited successfully")
+    sys.stdout.flush()

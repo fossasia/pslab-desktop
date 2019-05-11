@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-
+import Snackbar from '@material-ui/core/Snackbar';
 import Appshell from './components/Appshell';
 import Home from './screen/Home';
 import Oscilloscope from './screen/Oscilloscope';
@@ -21,19 +21,64 @@ class App extends Component {
     super(props);
     this.state = {
       isConnected: false,
-      isConnecting: true,
+      deviceInformation: null,
+      snackbar: {
+        isOpen: false,
+        message: '',
+        timeout: 4000,
+      },
     };
   }
 
+  onOpenSnackBar = ({ message, timeout = 2500, variant }) => {
+    this.setState(prevState => ({
+      ...prevState,
+      snackbar: {
+        ...prevState.snackbar,
+        isOpen: true,
+        message,
+      },
+    }));
+  };
+
+  onCloseSnackBar = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      snackbar: {
+        ...prevState.snackbar,
+        isOpen: false,
+        message: '',
+      },
+    }));
+  };
+
   componentDidMount() {
     ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
-      const { isConnected } = args;
+      const { isConnected, message, deviceName, portName } = args;
       this.setState({
         isConnected,
-        isConnecting: false,
+        deviceInformation: deviceName
+          ? {
+              deviceName,
+              portName,
+            }
+          : null,
       });
-      !isConnected && loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+      if (!isConnected) {
+        loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+        if (!this.reconnect) {
+          this.onOpenSnackBar({ message });
+          this.reconnect = setInterval(() => {
+            loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
+          }, 2500);
+        }
+      } else {
+        this.onOpenSnackBar({ message });
+        clearInterval(this.reconnect);
+        this.reconnect = false;
+      }
     });
+
     loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
   }
 
@@ -43,7 +88,7 @@ class App extends Component {
   }
 
   render() {
-    const { isConnected } = this.state;
+    const { isConnected, deviceInformation, snackbar } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -51,7 +96,7 @@ class App extends Component {
           <HashRouter>
             <Appshell
               isConnected={isConnected}
-              onConnectToggle={this.onConnectToggle}
+              deviceInformation={deviceInformation}
             >
               <Switch>
                 <Route path="/" exact component={Home} />
@@ -65,6 +110,16 @@ class App extends Component {
                 <Route path="/settings" exact component={Settings} />
               </Switch>
             </Appshell>
+            <Snackbar
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              open={snackbar.isOpen}
+              onClose={this.onCloseSnackBar}
+              ContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              autoHideDuration={snackbar.timeout}
+              message={<span id="message-id">{snackbar.message}</span>}
+            />
           </HashRouter>
         </ThemeProvider>
       </MuiThemeProvider>

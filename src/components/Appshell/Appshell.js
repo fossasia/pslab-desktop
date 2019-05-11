@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
+import { IconButton } from '@material-ui/core';
 import ConnectedIcon from '@material-ui/icons/Usb';
 import DisconnectedIcon from '@material-ui/icons/Warning';
 import OscilloscopeIcon from '@material-ui/icons/ViewComfy';
@@ -8,6 +9,7 @@ import LogicAnalyserIcon from '@material-ui/icons/InsertChart';
 import PowerSourceIcon from '@material-ui/icons/FlashOn';
 import WaveGeneratorIcon from '@material-ui/icons/GraphicEq';
 import SettingIcon from '@material-ui/icons/Settings';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
   AppshellContainer,
   ChildrenContainer,
@@ -23,6 +25,12 @@ import {
   AppBar,
 } from './Appshell.styles';
 import AppIcon from '../../resources/app_icon.svg';
+
+const styles = theme => ({
+  iconButton: {
+    color: theme.pallet.common.white,
+  },
+});
 
 const topNavigationItems = [
   {
@@ -47,7 +55,13 @@ const topNavigationItems = [
   },
 ];
 
-const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
+const Appshell = ({
+  isConnected,
+  deviceInformation,
+  children,
+  location,
+  classes,
+}) => {
   return (
     <AppshellContainer>
       <NavigationContainer>
@@ -88,20 +102,23 @@ const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
           <TitleContainer />
           <Spacer />
           <ButtonContainer>
-            <Button
-              variant="outlined"
-              size="medium"
-              color="inherit"
-              disabled={isConnected}
-              onClick={onConnectToggle}
+            <Tooltip
+              title={
+                deviceInformation
+                  ? `Device name: ${deviceInformation.deviceName} Port: ${
+                      deviceInformation.portName
+                    }`
+                  : 'No device connected'
+              }
             >
-              {isConnected ? (
-                <ConnectedIcon style={{ fontSize: 20 }} />
-              ) : (
-                <DisconnectedIcon style={{ fontSize: 20 }} />
-              )}
-              {isConnected ? 'Connected' : 'Disconnected'}
-            </Button>
+              <IconButton className={classes.iconButton} size="medium">
+                {isConnected ? (
+                  <ConnectedIcon style={{ fontSize: 24 }} />
+                ) : (
+                  <DisconnectedIcon style={{ fontSize: 24 }} />
+                )}
+              </IconButton>
+            </Tooltip>
           </ButtonContainer>
         </AppBar>
         <ChildrenWrapper>{children}</ChildrenWrapper>
@@ -110,4 +127,4 @@ const Appshell = ({ isConnected, onConnectToggle, children, location }) => {
   );
 };
 
-export default withRouter(Appshell);
+export default withRouter(withTheme()(withStyles(styles)(Appshell)));
