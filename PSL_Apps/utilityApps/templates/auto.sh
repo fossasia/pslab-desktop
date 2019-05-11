@@ -1,8 +1,10 @@
-pyuic4 controlWidgets.ui -o controlWidgets.py
-pyuic4 loadSineTable.ui -o loadSineTable.py
-pyuic4 firePulses.ui -o firePulses.py
-pyuic4 aboutDevice.ui -o aboutDevice.py
-pyuic4 plotSave.ui -o plotSave.py
-pyuic4 advancedCal.ui -o advancedCal.py
+#!/usr/bin/env bash
+pyuic5 -x aboutDevice.ui -o auto_aboutDevice.py
+pyuic5 -x advancedCal.ui -o auto_advancedCal.py
+pyuic5 -x controlWidgets.ui -o auto_controlWidgets.py
+pyuic5 -x firePulses.ui -o auto_firePulses.py
+pyuic5 -x loadSineTable.ui -o auto_loadSineTable.py
+pyuic5 -x plotSave.ui -o auto_plotSave.py
+pyuic5 -x testing.ui -o auto_testing.py
 
 

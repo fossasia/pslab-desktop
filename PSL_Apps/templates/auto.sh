@@ -1,33 +1,52 @@
-#pyuic4 aboutDevice.ui -o aboutDevice.py
-#pyuic4 sensorTemplate.ui -o sensorTemplate.py
-#pyuic4 wirelessTemplate.ui -o wirelessTemplate.py
-pyuic4 template_graph.ui -o template_graph.py
-pyuic4 template_graph_nofft.ui -o template_graph_nofft.py
-pyuic4 simpleTemplate.ui -o simpleTemplate.py
-#pyuic4 graph_and_sheet.ui -o graph_and_sheet.py
-#pyuic4 arbitStream.ui -o arbitStream.py
-#pyuic4 single_col_exp.ui -o single_col_exp.py
-#pyuic4 controlWidgets.ui -o controlWidgets.py
-#pyuic4 sensorGrid.ui -o sensorGrid.py
-#pyuic4 remote.ui -o remote.py
-#
+#!/usr/bin/env bash
+# UIs in template directory
+pyuic5 -x controlWidgets.ui -o auto_controlWidgets.py
+pyuic5 -x designer.ui -o auto_designer.py
+pyuic5 -x graph_and_sheet.ui -o auto_graph_and_sheet.py
+pyuic5 -x icon.ui -o auto_icon.py
+pyuic5 -x nodeList.ui -o auto_nodeList.py
+pyuic5 -x rectifier.ui -o auto_rectifier.py
+pyuic5 -x scope.ui -o auto_scope.py
+pyuic5 -x sensors.ui -o auto_sensors.py
+pyuic5 -x simplePendulum.ui -o auto_simplePendulum.py
+pyuic5 -x simpleTemplate.ui -o auto_simpleTemplate.py
+pyuic5 -x single_col_exp.ui -o auto_single_col_exp.py
+pyuic5 -x stepper.ui -o auto_stepper.py
+pyuic5 -x template_bandpass.ui -o auto_template_bandpass.py
+pyuic5 -x template_experiments.ui -o auto_template_experiments.py
+pyuic5 -x template_graph_nofft.ui -o auto_template_graph_nofft.py
+pyuic5 -x template_graph.ui -o auto_template_graph.py
+pyuic5 -x twit.ui -o auto_twit.py
+pyuic5 -x widget_layout.ui -o auto_widget_layout.py
+
+# UIs in widget directory
 cd widgets/
-#pyuic4 dial.ui -o dial.py 
-#pyuic4 dialAndDoubleSpin.ui -o dialAndDoubleSpin.py 
-#pyuic4 pulseCounter.ui -o pulseCounter.py 
-#pyuic4 button.ui -o button.py
-pyuic4 dualButton.ui -o dualButton.py
-#pyuic4 widebutton.ui -o widebutton.py
-#pyuic4 sensorWidget.ui -o sensorWidget.py
-#pyuic4 selectAndButton.ui -o selectAndButton.py
-#pyuic4 spinBox.ui -o spinBox.py
-#pyuic4 doubleSpinBox.ui -o doubleSpinBox.py
-#pyuic4 sineWidget.ui -o sineWidget.py
-#pyuic4 pwmWidget.ui -o pwmWidget.py
-#pyuic4 supplyWidget.ui -o supplyWidget.py
-#pyuic4 voltWidget.ui -o voltWidget.py
-#pyuic4 setStateList.ui -o setStateList.py
-#pyuic4 gainWidget.ui -o gainWidget.py
-#pyuic4 gainWidgetCombined.ui -o gainWidgetCombined.py
-pyuic4 interactivePlot.ui -o interactivePlot.py
+pyuic5 -x spinBox.ui -o auto_spinBox.py
+pyuic5 -x dial.ui -o auto_dial.py
+pyuic5 -x widebutton.ui -o auto_widebutton.py
+pyuic5 -x dialAndDoubleSpin.ui -o auto_dialAndDoubleSpin.py
+pyuic5 -x customFunc.ui -o auto_customFunc.py
+pyuic5 -x pwmWidget.ui -o auto_pwmWidget.py
+pyuic5 -x sineWidget.ui -o auto_sineWidget.py
+pyuic5 -x sweepTitle.ui -o auto_sweepTitle.py
+pyuic5 -x dualButton.ui -o auto_dualButton.py
+pyuic5 -x sweep.ui -o auto_sweep.py
+pyuic5 -x gainWidgetCombined.ui -o auto_gainWidgetCombined.py
+pyuic5 -x clicking.ui -o auto_clicking.py
+pyuic5 -x sensorWidget.ui -o auto_sensorWidget.py
+pyuic5 -x displayWidget.ui -o auto_displayWidget.py
+pyuic5 -x customSweep.ui -o auto_customSweep.py
+pyuic5 -x gainWidget.ui -o auto_gainWidget.py
+pyuic5 -x selectAndButton.ui -o auto_selectAndButton.py
+pyuic5 -x pulseCounter.ui -o auto_pulseCounter.py
+pyuic5 -x button.ui -o auto_button.py
+pyuic5 -x simpleButton.ui -o auto_simpleButton.py
+pyuic5 -x setStateList.ui -o auto_setStateList.py
+pyuic5 -x customSensor.ui -o auto_customSensor.py
+pyuic5 -x interactivePlot.ui -o auto_interactivePlot.py
+pyuic5 -x nodeList.ui -o auto_nodeList.py
+pyuic5 -x doubleSpinBox.ui -o auto_doubleSpinBox.py
+pyuic5 -x supplyWidget.ui -o auto_supplyWidget.py
+pyuic5 -x voltWidget.ui -o auto_voltWidget.py
+
 cd ..

@@ -23,7 +23,7 @@ except AttributeError:
     def _fromUtf8(s):
         return s
 
-from PSL_Apps.templates import ui_single_col_exp as single_col_exp
+from PSL_Apps.templates import auto_single_col_exp as single_col_exp
 
 import os, pkgutil, importlib, functools, pkg_resources
 
@@ -107,7 +107,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
         self.subSectionList = []
         self.subSectionPaths = []
         self.tmpTimer = QtCore.QTimer()
-        self.tmpTimer.singleShot(2, functools.partial(self.loadSectionList, 'psl_res.GUI'))
+        self.tmpTimer.singleShot(2, functools.partial(self.loadSectionList, 'PSL_Resources.GUI'))
 
         #################################   POPULATE CONTROLS TAB  ##########################################
         row = 0;

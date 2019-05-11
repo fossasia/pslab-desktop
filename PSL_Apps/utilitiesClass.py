@@ -9,39 +9,34 @@ import pkg_resources
 
 import numpy as np
 import pyqtgraph as pg
-import sip
+import PyQt5.sip as sip
 from PSL_Apps import saveProfile
-from PSL_Apps.templates.widgets import ui_button as button
-from PSL_Apps.templates.widgets import ui_dial as dial
-from PSL_Apps.templates.widgets import \
-    ui_dialAndDoubleSpin as dialAndDoubleSpin
-from PSL_Apps.templates.widgets import ui_displayWidget as displayWidget
-from PSL_Apps.templates.widgets import ui_doubleSpinBox as doubleSpinBox
-from PSL_Apps.templates.widgets import ui_dualButton as dualButton
-from PSL_Apps.templates.widgets import ui_gainWidget as gainWidget
-from PSL_Apps.templates.widgets import \
-    ui_gainWidgetCombined as gainWidgetCombined
-from PSL_Apps.templates.widgets import ui_pulseCounter as pulseCounter
-from PSL_Apps.templates.widgets import ui_pwmWidget as pwmWidget
-from PSL_Apps.templates.widgets import ui_selectAndButton as selectAndButton
-from PSL_Apps.templates.widgets import ui_sensorWidget as sensorWidget
-from PSL_Apps.templates.widgets import ui_setStateList as setStateList
-from PSL_Apps.templates.widgets import ui_simpleButton as simpleButton
-from PSL_Apps.templates.widgets import ui_sineWidget as sineWidget
-from PSL_Apps.templates.widgets import ui_spinBox as spinBox
-from PSL_Apps.templates.widgets import ui_supplyWidget as supplyWidget
-from PSL_Apps.templates.widgets import ui_voltWidget as voltWidget
-from PSL_Apps.templates.widgets import ui_widebutton as widebutton
+from PSL_Apps.templates.widgets import auto_button as button
+from PSL_Apps.templates.widgets import auto_dial as dial
+from PSL_Apps.templates.widgets import auto_dialAndDoubleSpin as dialAndDoubleSpin
+from PSL_Apps.templates.widgets import auto_displayWidget as displayWidget
+from PSL_Apps.templates.widgets import auto_doubleSpinBox as doubleSpinBox
+from PSL_Apps.templates.widgets import auto_dualButton as dualButton
+from PSL_Apps.templates.widgets import auto_gainWidget as gainWidget
+from PSL_Apps.templates.widgets import auto_gainWidgetCombined as gainWidgetCombined
+from PSL_Apps.templates.widgets import auto_pulseCounter as pulseCounter
+from PSL_Apps.templates.widgets import auto_pwmWidget as pwmWidget
+from PSL_Apps.templates.widgets import auto_selectAndButton as selectAndButton
+from PSL_Apps.templates.widgets import auto_sensorWidget as sensorWidget
+from PSL_Apps.templates.widgets import auto_setStateList as setStateList
+from PSL_Apps.templates.widgets import auto_simpleButton as simpleButton
+from PSL_Apps.templates.widgets import auto_sineWidget as sineWidget
+from PSL_Apps.templates.widgets import auto_spinBox as spinBox
+from PSL_Apps.templates.widgets import auto_supplyWidget as supplyWidget
+from PSL_Apps.templates.widgets import auto_voltWidget as voltWidget
+from PSL_Apps.templates.widgets import auto_widebutton as widebutton
 from PyQt5 import QtCore, QtGui
 
 os.environ['QT_API'] = 'pyqt'
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
-try:
-    unicode  # Python 2
-except NameError:
-    unicode = str  # Python 3
+unicode = str  # Python 3
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -141,7 +136,7 @@ class utilitiesClass():
 
         neg = False
         if value < 0.:
-            value *= -1;
+            value *= -1
             neg = True
         elif value == 0.:
             return '0 '  # mantissa & exponnt both 0
@@ -172,7 +167,7 @@ class utilitiesClass():
         def applySIPrefix(self, value, unit='', precision=2):
             neg = False
             if value < 0.:
-                value *= -1;
+                value *= -1
                 neg = True
             elif value == 0.:
                 return '0 '  # mantissa & exponnt both 0
@@ -285,7 +280,7 @@ class utilitiesClass():
         plot.addItem(vLine, ignoreBounds=True)
         hLine = pg.InfiniteLine(angle=0, movable=False, pen=[100, 100, 200, 200])
         plot.addItem(hLine, ignoreBounds=True)
-        plot.hLine = hLine;
+        plot.hLine = hLine
         plot.vLine = vLine
         crossHairPartial = functools.partial(self.crossHairEvent, plot)
         proxy = pg.SignalProxy(plot.scene().sigMouseClicked, rateLimit=60, slot=crossHairPartial)
@@ -1201,7 +1196,7 @@ class utilitiesClass():
                     imgloc = pkg_resources.resource_filename(basepackage + '.icons',
                                                              _fromUtf8(tmp.params.get('image', '')))
                 else:
-                    imgloc = pkg_resources.resource_filename('psl_res.ICONS', _fromUtf8(tmp.params.get('image', '')))
+                    imgloc = pkg_resources.resource_filename('PSL_Resources.ICONS', _fromUtf8(tmp.params.get('image', '')))
             except:
                 imgloc = ''
             self.hintText = '''
@@ -1509,7 +1504,7 @@ class utilitiesClass():
         return Button
 
     def addHelpImageToLayout(self, layout, filename):
-        imgurl = pkg_resources.resource_filename('psl_res.HTML.images', filename)
+        imgurl = pkg_resources.resource_filename('PSL_Resources.HTML.images', filename)
         return self.addPixMapToLayout(layout, QtGui.QPixmap(imgurl))
 
     def addPixMapToLayout(self, layout, pixmap):

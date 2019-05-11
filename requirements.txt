@@ -1,4 +1,7 @@
 pyqtgraph >= 0.10.0
 setuptools >= 35.0.2
-SIP >= 4.19.8
-PyQt5 >= 5.11.3
+PyQt5-sip >= 4.19.17
+PyQt5 >= 5.12.2
+PyQtWebEngine >= 5.12.1
+numpy >= 1.16.3
+pyserial >= 3.4
