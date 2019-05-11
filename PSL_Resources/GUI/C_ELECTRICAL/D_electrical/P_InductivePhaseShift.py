@@ -15,7 +15,7 @@ import sys
 import time
 
 from PyQt5 import QtGui, QtCore
-from templates import ui_template_xl as template_xl
+from .templates import auto_template_xl as template_xl
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

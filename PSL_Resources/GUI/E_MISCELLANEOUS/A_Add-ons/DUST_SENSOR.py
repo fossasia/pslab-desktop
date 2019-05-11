@@ -7,7 +7,7 @@ import time
 
 import numpy as np
 from PyQt5 import QtGui, QtCore
-from templates import ui_dsm501 as dsm501
+from .templates import auto_dsm501 as dsm501
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

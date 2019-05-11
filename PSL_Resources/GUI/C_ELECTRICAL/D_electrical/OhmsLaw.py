@@ -15,7 +15,7 @@ import sys
 
 from PyQt5 import QtGui, QtCore
 
-from PSL_Apps.templates import ui_graph_and_sheet as graph_and_sheet
+from PSL_Apps.templates import auto_graph_and_sheet as graph_and_sheet
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 params = {

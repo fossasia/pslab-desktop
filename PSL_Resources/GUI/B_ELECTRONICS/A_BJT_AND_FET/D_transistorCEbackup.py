@@ -13,7 +13,7 @@ import time
 
 import pyqtgraph as pg
 from PyQt5 import QtGui
-from templates import ui_transistor as transistor
+from .templates import auto_transistor as transistor
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

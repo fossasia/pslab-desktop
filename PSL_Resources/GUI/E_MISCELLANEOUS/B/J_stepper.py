@@ -8,13 +8,13 @@ from __future__ import print_function
 import os
 
 os.environ['QT_API'] = 'pyqt'
-import sip
+import PyQt5.sip as sip
 
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
 from PyQt5 import QtGui
-from PSL_Apps.templates import ui_stepper as stepper
+from PSL_Apps.templates import auto_stepper as stepper
 
 import sys
 

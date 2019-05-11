@@ -15,7 +15,7 @@ import pyqtgraph as pg
 from PyQt5 import QtGui
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from .templates import ui_NFET as NFET
+from .templates import auto_NFET as NFET
 
 params = {
     'image': 'transistorCE.png',

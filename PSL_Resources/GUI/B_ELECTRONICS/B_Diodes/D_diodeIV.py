@@ -10,7 +10,7 @@ import time
 
 import pyqtgraph as pg
 from PyQt5 import QtCore, QtGui
-from templates import ui_diodeIV as diodeIV
+from .templates import auto_diodeIV as diodeIV
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

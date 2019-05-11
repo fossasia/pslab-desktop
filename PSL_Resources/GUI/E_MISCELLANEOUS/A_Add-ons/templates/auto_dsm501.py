@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'dsm501.ui'
+# Form implementation generated from reading ui file 'PSL_Resources/GUI/E_MISCELLANEOUS/A_Add-ons/templates/dsm501.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -188,13 +188,3 @@ class Ui_MainWindow(object):
         self.actionSave_as.setShortcut(_translate("MainWindow", "Ctrl+S"))
 
 
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'sensorTemplate.ui'
+# Form implementation generated from reading ui file 'PSL_Resources/GUI/E_MISCELLANEOUS/A_Add-ons/templates/sensorTemplate.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -96,13 +96,3 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Auto Scan"))
 
 
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

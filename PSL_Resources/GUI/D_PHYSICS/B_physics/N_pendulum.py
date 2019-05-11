@@ -15,7 +15,7 @@ import numpy as np
 import pyqtgraph as pg
 from PSL.analyticsClass import analyticsClass
 from PyQt5 import QtGui, QtCore
-from templates import ui_simplePendulum
+from .templates import auto_simplePendulum
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

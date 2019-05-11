@@ -49,7 +49,7 @@ import pyqtgraph as pg
 from PyQt5 import QtGui, QtCore
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from .templates import ui_template_transient as template_transient
+from .templates import auto_template_transient as template_transient
 
 params = {
     'image': 'transient.png',

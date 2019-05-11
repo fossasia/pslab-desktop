@@ -10,7 +10,7 @@ import sys
 
 from PyQt5 import QtCore, QtGui
 
-from .templates import ui_NFC as NFC
+from .templates import auto_NFC as NFC
 
 params = {
     'image': 'mf522.png',

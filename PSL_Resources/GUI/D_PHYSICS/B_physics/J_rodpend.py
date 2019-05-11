@@ -16,7 +16,7 @@ import time
 
 import numpy as np
 from PyQt5 import QtGui, QtCore
-from templates import ui_rodpendulum
+from .templates import auto_rodpendulum
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

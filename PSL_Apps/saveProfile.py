@@ -16,10 +16,7 @@ import sys
 
 from PyQt5 import QtGui
 
-try:
-    unicode  # Python 2
-except NameError:
-    unicode = str  # Python 3
+unicode = str  # Python 3
 
 
 # ===================================================================

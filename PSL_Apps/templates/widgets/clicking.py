@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'clicking.ui'
 
 
-import sip,os
+import PyQt5.sip as sip,os
 
 os.environ['QT_API'] = 'pyqt'
 sip.setapi("QString", 2)

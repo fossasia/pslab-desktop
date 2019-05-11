@@ -30,7 +30,7 @@ import time
 import numpy as np
 import pyqtgraph as pg
 from PyQt5 import QtGui, QtCore
-from templates import ui_calibrator as calibrator
+from .templates import auto_calibrator as calibrator
 
 # from __future__ import print_function
 from PSL_Apps.utilitiesClass import utilitiesClass

@@ -14,7 +14,7 @@ import sys
 
 from PyQt5 import QtGui, QtCore
 
-from PSL_Apps.templates import ui_template_graph_nofft
+from PSL_Apps.templates import auto_template_graph_nofft
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 params = {

@@ -15,7 +15,7 @@ import pyqtgraph.flowchart.library as fclib
 from PyQt5 import QtGui
 from pyqtgraph.flowchart import Flowchart, Node
 from pyqtgraph.flowchart.library.common import CtrlNode
-from templates import ui_hackYourOwn as hackYourOwn
+from .templates import auto_hackYourOwn as hackYourOwn
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

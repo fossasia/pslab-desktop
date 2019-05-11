@@ -14,7 +14,7 @@ import numpy as np
 import pyqtgraph as pg
 from PSL.SENSORS import MPU6050
 from PyQt5 import QtGui, QtCore
-from templates import ui_template_transient as template_transient
+from .templates import auto_template_transient as template_transient
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

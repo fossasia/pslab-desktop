@@ -14,7 +14,7 @@ import time
 import numpy as np
 from PyQt5 import QtGui
 
-from PSL_Apps.templates import ui_template_bandpass as template_bandpass
+from PSL_Apps.templates import auto_template_bandpass as template_bandpass
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 params = {

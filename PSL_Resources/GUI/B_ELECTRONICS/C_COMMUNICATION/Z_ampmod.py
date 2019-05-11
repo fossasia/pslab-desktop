@@ -16,7 +16,7 @@ import pyqtgraph as pg
 from PyQt5 import QtCore, QtGui
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from .templates import ui_ampMod as ampMod
+from .templates import auto_ampMod as ampMod
 
 err_count = 0
 trial = 0

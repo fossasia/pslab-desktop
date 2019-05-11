@@ -17,7 +17,7 @@ import numpy as np
 from PyQt5 import QtGui, QtCore
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from .templates import ui_template_xl as template_xl
+from .templates import auto_template_xl as template_xl
 
 params = {
     'image': 'LCRsteady.png',

@@ -16,7 +16,7 @@ import time
 
 import numpy as np
 from PyQt5 import QtGui, QtCore
-from templates import ui_template_xc as template_xc
+from .templates import auto_template_xc as template_xc
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

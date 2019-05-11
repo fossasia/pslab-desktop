@@ -8,13 +8,13 @@ from __future__ import print_function
 import os
 
 os.environ['QT_API'] = 'pyqt'
-import sip
+import PyQt5.sip as sip
 
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
 from PyQt5 import QtGui
-from .templates import ui_loadSineTable as loadSineTable
+from .templates import auto_loadSineTable as loadSineTable
 import sys
 import numpy as np
 

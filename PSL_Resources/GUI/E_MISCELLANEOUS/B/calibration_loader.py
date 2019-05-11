@@ -21,7 +21,7 @@ import time
 import numpy as np
 import pyqtgraph as pg
 from PyQt5 import QtGui, QtCore
-from templates import ui_calibration_loader as calibration_loader
+from .templates import auto_calibration_loader as calibration_loader
 
 from PSL_Apps.utilitiesClass import utilitiesClass
 

@@ -8,13 +8,13 @@ from __future__ import print_function
 import os
 
 os.environ['QT_API'] = 'pyqt'
-import sip
+import PyQt5.sip as sip
 
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
 from PyQt5 import QtCore, QtGui
-from .templates import ui_firePulses as firePulses
+from .templates import auto_firePulses as firePulses
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 import sys

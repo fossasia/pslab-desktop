@@ -15,7 +15,7 @@ import sys
 
 from PyQt5 import QtGui
 
-from PSL_Apps.templates import ui_widget_layout as widget_layout
+from PSL_Apps.templates import auto_widget_layout as widget_layout
 from PSL_Apps.utilitiesClass import utilitiesClass
 
 params = {

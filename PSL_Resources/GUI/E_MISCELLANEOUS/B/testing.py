@@ -22,7 +22,7 @@ import numpy as np
 from PyQt5 import QtGui, QtCore
 
 from PSL_Apps.utilitiesClass import utilitiesClass
-from PSL_Apps.utilityApps.templates import ui_testing as testing
+from PSL_Apps.utilityApps.templates import auto_testing as testing
 
 params = {
     'image': '',
