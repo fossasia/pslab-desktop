@@ -3,4 +3,5 @@
 __pycache__
 PSL_Apps.egg-info
 build
+.idea
 ui_*.py
