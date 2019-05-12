@@ -104,12 +104,18 @@ class App extends Component {
                 <Route path="/" exact component={Home} />
                 <Route
                   path="/oscilloscope"
-                  exact
-                  component={() => <Oscilloscope isConnected={isConnected} />}
+                  render={props => (
+                    <Oscilloscope
+                      {...props}
+                      isAuthed={true}
+                      isConnected={isConnected}
+                    />
+                  )}
                 />
-                <Route path="/logicanalyser" exact component={LogicAnalyser} />
-                <Route path="/powersource" exact component={PowerSource} />
-                <Route path="/settings" exact component={Settings} />
+
+                <Route path="/logicanalyser" component={LogicAnalyser} />
+                <Route path="/powersource" component={PowerSource} />
+                <Route path="/settings" component={Settings} />
               </Switch>
             </Appshell>
             <Snackbar
