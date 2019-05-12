@@ -41,7 +41,7 @@ class TimeParameters extends Component {
 
   render() {
     const {
-      onToggleTrigger,
+      onToggleCheckBox,
       onChangeTriggerVoltage,
       onChangeTriggerChannel,
       onChangeTimeBase,
@@ -60,11 +60,20 @@ class TimeParameters extends Component {
         </Typography>
         <Divider />
         <OptionsRowWrapper>
-          <FormControlLabel control={<Checkbox />} label="Trigger" />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isTriggerActive}
+                onChange={onToggleCheckBox('isTriggerActive')}
+              />
+            }
+            label="Trigger"
+          />
           <FormControl
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isTriggerActive}
           >
             <InputLabel
               ref={ref => {
@@ -75,7 +84,7 @@ class TimeParameters extends Component {
               Channel
             </InputLabel>
             <Select
-              value={triggerVoltage}
+              value={triggerVoltageChannel}
               onChange={onChangeTriggerChannel}
               input={
                 <OutlinedInput
@@ -96,15 +105,26 @@ class TimeParameters extends Component {
               })}
             </Select>
           </FormControl>
-          <Slider classes={{ container: classes.slider }} />
+          <Slider
+            classes={{ container: classes.slider }}
+            disabled={!isTriggerActive}
+            step={1}
+            value={triggerVoltage}
+            min={-8}
+            max={8}
+            onChange={onChangeTriggerVoltage}
+          />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
           <span style={{ marginRight: 16 }}>TimeBase</span>
           <Slider
+            disabled={!isTriggerActive}
             classes={{ container: classes.slider }}
-            value={20}
-            aria-labelledby="label"
-            onChange={this.handleChange}
+            step={1}
+            value={timeBase}
+            min={10}
+            max={800}
+            onChange={onChangeTimeBase}
           />
         </OptionsRowWrapper>
       </SettingsWrapper>

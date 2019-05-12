@@ -24,28 +24,27 @@ class Oscilloscope extends Component {
       ],
       activeChannels: {
         ch1: true,
-        ch2: true,
+        ch2: false,
         ch3: false,
         ch4: false,
       },
       channelRanges: {
-        ch1: '+/-8V',
-        ch2: '+/-8V',
-        ch3: '+/-8V',
-        ch4: '+/-8V',
+        ch1: '8',
+        ch2: '8',
+        ch3: '3',
       },
       channelMaps: {
         ch1: 'CH1',
-        ch2: 'Ch2',
-        ch3: 'Ch3',
-        ch4: 'CH4',
+        ch2: 'CH2',
+        ch3: 'Inbuilt',
       },
+      mapToMic: false,
       triggerVoltage: 5,
       timeBase: 100,
       triggerVoltageChannel: 'CH1',
       isTriggerActive: false,
       isFourierTransformActive: false,
-      transformType: 'sin fit',
+      transformType: 'Sine',
       transformChannel1: 'CH1',
       transformChannel2: 'CH2',
       isXYPlotActive: false,
@@ -95,11 +94,10 @@ class Oscilloscope extends Component {
   };
 
   onToggleChannel = channelName => event => {
-    console.log(event);
     this.setState(prevState => ({
       activeChannels: {
         ...prevState.activeChannels,
-        [channelName]: event.target.checked,
+        [channelName]: !prevState.activeChannels[channelName],
       },
     }));
   };
@@ -108,7 +106,7 @@ class Oscilloscope extends Component {
     this.setState(prevState => ({
       channelRanges: {
         ...prevState.channelRanges,
-        [channelName]: event.target.checked,
+        [channelName]: event.target.value,
       },
     }));
   };
@@ -117,21 +115,49 @@ class Oscilloscope extends Component {
     this.setState(prevState => ({
       channelMaps: {
         ...prevState.channelMaps,
-        [channelName]: event.target.checked,
+        [channelName]: event.target.value,
       },
     }));
   };
 
-  onToggleTrigger = () => {};
-  onChangeTriggerVoltage = () => {};
-  onChangeTriggerChannel = () => {};
-  onChangeTimeBase = () => {};
+  onToggleCheckBox = type => event => {
+    this.setState(prevState => ({
+      [type]: !prevState[type],
+    }));
+  };
 
-  onTOggleFourierTransform = () => {};
-  onChangeTransformType = () => {};
-  onChangeTransformChannel = () => {};
+  onChangeTriggerVoltage = (event, value) => {
+    this.setState(prevState => ({
+      triggerVoltage: value,
+    }));
+  };
+  onChangeTriggerChannel = event => {
+    this.setState(prevState => ({
+      triggerVoltageChannel: event.target.value,
+    }));
+  };
+  onChangeTimeBase = (event, value) => {
+    this.setState(prevState => ({
+      timeBase: value,
+    }));
+  };
 
-  onChangePlotChannel = () => {};
+  onChangeTransformType = event => {
+    this.setState(prevState => ({
+      transformType: event.target.value,
+    }));
+  };
+  onChangeTransformChannel = channelNumber => event => {
+    this.setState(prevState => ({
+      [channelNumber]: event.target.value,
+    }));
+  };
+
+  onChangePlotChannel = channelNumber => event => {
+    this.setState(prevState => ({
+      [channelNumber]: event.target.value,
+    }));
+  };
 
   render() {
     const {
@@ -140,6 +166,7 @@ class Oscilloscope extends Component {
       activeChannels,
       channelRanges,
       channelMaps,
+      mapToMic,
       triggerVoltage,
       timeBase,
       triggerVoltageChannel,
@@ -157,6 +184,8 @@ class Oscilloscope extends Component {
       <GraphPanelLayout
         settings={
           <Settings
+            mapToMic={mapToMic}
+            onToggleCheckBox={this.onToggleCheckBox}
             onToggleChannel={this.onToggleChannel}
             onChangeChannelRange={this.onChangeChannelRange}
             onChangeChannelMap={this.onChangeChannelMap}
@@ -164,14 +193,16 @@ class Oscilloscope extends Component {
             activeChannels={activeChannels}
             channelMaps={channelMaps}
             triggerVoltage={triggerVoltage}
+            onChangeTriggerVoltage={this.onChangeTriggerVoltage}
             timeBase={timeBase}
+            onChangeTimeBase={this.onChangeTimeBase}
             triggerVoltageChannel={triggerVoltageChannel}
+            onChangeTriggerChannel={this.onChangeTriggerChannel}
             isTriggerActive={isTriggerActive}
             isFourierTransformActive={isFourierTransformActive}
             transformType={transformType}
             transformChannel1={transformChannel1}
             transformChannel2={transformChannel2}
-            onTOggleFourierTransform={this.onTOggleFourierTransform}
             onChangeTransformType={this.onChangeTransformType}
             onChangeTransformChannel={this.onChangeTransformChannel}
             isXYPlotActive={isXYPlotActive}

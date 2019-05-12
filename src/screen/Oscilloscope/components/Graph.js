@@ -9,8 +9,9 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
+import { withTheme } from 'styled-components';
 
-const Graph = ({ data, activeChannels }) => {
+const Graph = ({ data, activeChannels,theme }) => {
   return (
     <ResponsiveContainer>
       <LineChart
@@ -33,7 +34,7 @@ const Graph = ({ data, activeChannels }) => {
             yAxisId="left"
             type="monotone"
             dataKey="ch1"
-            stroke="#8884d8"
+            stroke={theme.ch1Color}
             dot={false}
             activeDot={{ r: 4 }}
           />
@@ -43,7 +44,7 @@ const Graph = ({ data, activeChannels }) => {
             yAxisId="left"
             type="monotone"
             dataKey="ch2"
-            stroke="#82ca9d"
+            stroke={theme.ch2Color}
             dot={false}
             activeDot={{ r: 4 }}
           />
@@ -53,7 +54,7 @@ const Graph = ({ data, activeChannels }) => {
             yAxisId="left"
             type="monotone"
             dataKey="ch3"
-            stroke="#ff5722"
+            stroke={theme.ch3Color}
             dot={false}
             activeDot={{ r: 4 }}
           />
@@ -73,4 +74,4 @@ const Graph = ({ data, activeChannels }) => {
   );
 };
 
-export default Graph;
+export default withTheme(Graph);

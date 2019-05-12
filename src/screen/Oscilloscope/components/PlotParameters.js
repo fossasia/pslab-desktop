@@ -39,6 +39,7 @@ class AnalysisParameters extends Component {
   render() {
     const {
       isXYPlotActive,
+      onToggleCheckBox,
       plotChannel1,
       plotChannel2,
       onChangePlotChannel,
@@ -53,13 +54,22 @@ class AnalysisParameters extends Component {
         </Typography>
         <Divider />
         <OptionsRowWrapper>
-          <FormControlLabel control={<Checkbox />} label="Enable XY Plot" />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isXYPlotActive}
+                onChange={onToggleCheckBox('isXYPlotActive')}
+              />
+            }
+            label="Enable XY Plot"
+          />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
           <FormControl
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isXYPlotActive}
           >
             <InputLabel
               ref={ref => {
@@ -67,11 +77,11 @@ class AnalysisParameters extends Component {
               }}
               htmlFor="outlined-trigger-channel"
             >
-              Channel
+              Channel 1
             </InputLabel>
             <Select
               value={plotChannel1}
-              onChange={onChangePlotChannel}
+              onChange={onChangePlotChannel('plotChannel1')}
               input={
                 <OutlinedInput
                   labelWidth={plotChannelLabelWidth}
@@ -95,11 +105,14 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isXYPlotActive}
           >
-            <InputLabel htmlFor="outlined-trigger-channel">Channel</InputLabel>
+            <InputLabel htmlFor="outlined-trigger-channel">
+              Channel 2
+            </InputLabel>
             <Select
               value={plotChannel2}
-              onChange={onChangePlotChannel}
+              onChange={onChangePlotChannel('plotChannel2')}
               input={
                 <OutlinedInput
                   labelWidth={plotChannelLabelWidth}

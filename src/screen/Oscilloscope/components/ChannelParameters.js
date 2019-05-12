@@ -38,6 +38,15 @@ const styles = theme => ({
       },
     },
   },
+  ch3colorSwitchBase: {
+    color: theme.pallet.ch3Color,
+    '&$colorChecked': {
+      color: theme.pallet.ch3Color,
+      '& + $colorBar': {
+        backgroundColor: theme.pallet.ch3Color,
+      },
+    },
+  },
   colorBar: {},
   colorChecked: {},
   ch2Switch: {
@@ -74,6 +83,8 @@ class ChannelParameters extends Component {
       onToggleChannel,
       onChangeChannelRange,
       onChangeChannelMap,
+      mapToMic,
+      onToggleCheckBox,
       classes,
     } = this.props;
     const { RangeLabelWidth, MapLabelWidth, MicLabelWidth } = this.state;
@@ -93,8 +104,8 @@ class ChannelParameters extends Component {
                 value={'CH1'}
                 classes={{
                   switchBase: classes.ch1colorSwitchBase,
-                  checked: classes.colorBar,
-                  bar: classes.colorChecked,
+                  checked: classes.colorChecked,
+                  bar: classes.colorBar,
                 }}
               />
             }
@@ -180,8 +191,8 @@ class ChannelParameters extends Component {
                 value={'ch2'}
                 classes={{
                   switchBase: classes.ch2colorSwitchBase,
-                  checked: classes.colorBar,
-                  bar: classes.colorChecked,
+                  checked: classes.colorChecked,
+                  bar: classes.colorBar,
                 }}
               />
             }
@@ -252,19 +263,28 @@ class ChannelParameters extends Component {
                 onChange={onToggleChannel('ch3')}
                 value={'ch3'}
                 classes={{
-                  switchBase: classes.ch2colorSwitchBase,
-                  checked: classes.colorBar,
-                  bar: classes.colorChecked,
+                  switchBase: classes.ch3colorSwitchBase,
+                  checked: classes.colorChecked,
+                  bar: classes.colorBar,
                 }}
               />
             }
             label="CH3"
           />
-          <FormControlLabel control={<Checkbox />} label="Mic" />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={mapToMic}
+                onChange={onToggleCheckBox('mapToMic')}
+              />
+            }
+            label="Mic"
+          />
           <FormControl
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!mapToMic}
           >
             <InputLabel
               ref={ref => {
@@ -275,8 +295,8 @@ class ChannelParameters extends Component {
               Mic Type
             </InputLabel>
             <Select
-              value={channelMaps.ch2}
-              onChange={onChangeChannelMap('ch2')}
+              value={channelMaps.ch3}
+              onChange={onChangeChannelMap('ch3')}
               input={
                 <OutlinedInput
                   labelWidth={MicLabelWidth}

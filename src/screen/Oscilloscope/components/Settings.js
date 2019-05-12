@@ -25,17 +25,20 @@ const Settings = ({
   transformType,
   transformChannel1,
   transformChannel2,
-  onTOggleFourierTransform,
   onChangeTransformType,
   onChangeTransformChannel,
   isXYPlotActive,
   plotChannel1,
   plotChannel2,
   onChangePlotChannel,
+  mapToMic,
+  onToggleCheckBox,
 }) => (
   <SettingsContainer>
     <Scrollbars autoHide autoHideTimeout={1000}>
       <ChannelParameters
+        onToggleCheckBox={onToggleCheckBox}
+        mapToMic={mapToMic}
         activeChannels={activeChannels}
         channelRanges={channelRanges}
         channelMaps={channelMaps}
@@ -44,7 +47,6 @@ const Settings = ({
         onChangeChannelMap={onChangeChannelMap}
       />
       <TimeParameters
-        onToggleTrigger={onToggleTrigger}
         onChangeTriggerVoltage={onChangeTriggerVoltage}
         onChangeTriggerChannel={onChangeTriggerChannel}
         onChangeTimeBase={onChangeTimeBase}
@@ -52,18 +54,20 @@ const Settings = ({
         timeBase={timeBase}
         triggerVoltageChannel={triggerVoltageChannel}
         isTriggerActive={isTriggerActive}
+        onToggleCheckBox={onToggleCheckBox}
       />
       <AnalysisParameters
         isFourierTransformActive={isFourierTransformActive}
         transformType={transformType}
         transformChannel1={transformChannel1}
         transformChannel2={transformChannel2}
-        onTOggleFourierTransform={onTOggleFourierTransform}
+        onToggleCheckBox={onToggleCheckBox}
         onChangeTransformType={onChangeTransformType}
         onChangeTransformChannel={onChangeTransformChannel}
       />
       <PlotParameters
         isXYPlotActive={isXYPlotActive}
+        onToggleCheckBox={onToggleCheckBox}
         plotChannel1={plotChannel1}
         plotChannel2={plotChannel2}
         onChangePlotChannel={onChangePlotChannel}
