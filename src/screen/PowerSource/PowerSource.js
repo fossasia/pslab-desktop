@@ -18,6 +18,25 @@ class PowerSouce extends Component {
     };
   }
 
+  componentDidMount() {
+    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
+      const { pv1, pv2, pv3, pcs } = args;
+      this.setState({
+        pv1: roundOff(pv1),
+        pv2: roundOff(pv2),
+        pv3: roundOff(pv3),
+        pcs: roundOff(pcs),
+      });
+    });
+    loadBalancer.send(ipcRenderer, 'linker', {
+      command: 'GET_CONFIG_PWR_SRC',
+    });
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+  }
+
   sendConfigToDevice = values =>
     debounce(() => {
       loadBalancer.send(ipcRenderer, 'linker', {
@@ -45,7 +64,7 @@ class PowerSouce extends Component {
         [pinType]: roundOff(this.state[pinType] + (isPositive ? 0.01 : -0.01)),
       },
       () => {
-        this.sendCommand({
+        this.sendConfigToDevice({
           ...this.state,
         })();
       },

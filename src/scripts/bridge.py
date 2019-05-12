@@ -60,6 +60,19 @@ def main():
             I.set_pv2(pv2_value)
             I.set_pv3(pv3_value)
 
+        if command == 'GET_CONFIG_PWR_SRC':
+            pcs_value = I.get_pcs()
+            pv1_value = I.get_pv1()
+            pv2_value = I.get_pv2()
+            pv3_value = I.get_pv3()
+            output = {'type': 'GET_CONFIG_PWR_SRC',
+                      'pcs': pcs_value,
+                      'pv1': pv1_value,
+                      'pv2': pv2_value,
+                      'pv3': pv3_value}
+            print(json.dumps(output))
+            sys.stdout.flush()
+
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':
             exit()
