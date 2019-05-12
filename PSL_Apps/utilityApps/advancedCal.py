@@ -6,18 +6,20 @@ Output Peripheral control for FOSSASIA PSLab - version 1.0.0.
 from __future__ import print_function
 
 import os
+import struct
+import sys
+import time
+
+import PyQt5.sip as sip
+from PyQt5 import QtCore, QtGui
+
+from PSL_Apps.utilitiesClass import utilitiesClass
+from PSL_Apps.utilityApps.templates import auto_advancedCal as advancedCal
 
 os.environ['QT_API'] = 'pyqt'
-import PyQt5.sip as sip
 
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
-
-from PyQt5 import QtCore, QtGui
-from PSL_Apps.utilityApps.templates import auto_advancedCal as advancedCal
-from PSL_Apps.utilitiesClass import utilitiesClass
-
-import sys, time, struct
 
 
 class myTable(QtGui.QTableWidget):
@@ -133,9 +135,8 @@ class AppWindow(QtGui.QMainWindow, advancedCal.Ui_MainWindow, utilitiesClass):
             item = self.table.item(a + 4, 2)
             vals.append(float(item.text()))
         print(vals, self.stoa(struct.pack('7f', *vals)))
-        cap_and_pcs = self.I.write_bulk_flash(self.I.CAP_AND_PCS,
-                                              self.stoa('READY' + struct.pack('7f', *vals)))  # READY+calibration_string
-
+        # READY + clibration_string
+        self.I.write_bulk_flash(self.I.CAP_AND_PCS, self.stoa('READY' + struct.pack('7f', *vals)))
         self.I.SOCKET_CAPACITANCE = vals[0]
         self.I.__calibrate_ctmu__(vals[3:])
         self.I.DAC.CHANS['PCS'].load_calibration_twopoint(vals[1], vals[2])  # Slope and offset for current source

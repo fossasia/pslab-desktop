@@ -4,7 +4,8 @@ dist: trusty
 sudo: true
 
 python:
-  - "3.5"
+    - "3.5"
+    - "3.6"
 
 before_install:
     - sudo apt-get -qq update
@@ -15,21 +16,18 @@ install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - sudo apt-get install -y pyqt5-dev-tools
-    - sudo apt-get install -y mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev
-    #The documentation states that pip install is automatically invoked based on requirements.txt, but that doesn't seem to be happening
+    # Install dependencies
     - pip install -r requirements.txt
-    #pslab-python
+    # Install pslab-python repo
     - git clone https://github.com/fossasia/pslab-python.git
+    # Move inside the pslab-python directory to make install
     - pushd pslab-python
-    # Doesn't work
-    #- sudo make install
-    # Also doesn't work. installs to /usr/... library not found
-    - sudo python3 setup.py install
-    #This had better work. explicitly adding pslab-python to the path variable
+    - python3 setup.py install
+    # Move out and make install pslab-desktop app
     - popd
-    - sudo make clean
+    - sudo env "PATH=$PATH" make clean
     - make all
-    - sudo make install
+    - sudo env "PATH=$PATH" make install
 
 # command to run tests
 script: nosetests

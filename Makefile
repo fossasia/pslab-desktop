@@ -33,18 +33,18 @@ showOldUIFiles:
 
 clean:
 	# Remove build resources from repo directory
-	rm -rf PSL_Apps.egg-info build
-	if $(CUSTOM); then rm -rf /usr/share/pslab/; fi
-	find . -name "*~" -o -name "*.pyc" -o -name "__pycache__" | xargs rm -rf
-	if $(CUSTOM); then make uninstall_custom; fi
+	@rm -rf PSL_Apps.egg-info build
+	@if $(CUSTOM); then rm -rf /usr/share/pslab/; fi
+	@find . -name "*~" -o -name "*.pyc" -o -name "__pycache__" | xargs rm -rf
+	@if $(CUSTOM); then make uninstall_custom; fi
 
 uninstall_custom:
 	# Remove PSLab UI python package
-	if [ ${INSTALL_PATH_LEN} -gt 2 ]; then sudo rm -rf $(INSTALL_PATH)/PSL_* ; fi
+	@if [ ${INSTALL_PATH_LEN} -gt 2 ]; then sudo rm -rf $(INSTALL_PATH)/PSL_* ; fi
 	# Remove PSLab UI resources
-	sudo rm -rf $(DESTDIR)/usr/share/pslab/PSL_Resources
+	@sudo rm -rf $(DESTDIR)/usr/share/pslab/PSL_Resources
 	# Remove the executable script
-	sudo rm -f /usr/local/bin/Experiments
+	@sudo rm -f /usr/local/bin/Experiments
 
 install:
 	# Install PSLab UI resources to a local directory
