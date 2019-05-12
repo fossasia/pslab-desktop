@@ -56,7 +56,7 @@ class Oscilloscope extends Component {
   componentDidMount() {
     ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
       this.setState({
-        data: args,
+        ...args,
       });
     });
   }

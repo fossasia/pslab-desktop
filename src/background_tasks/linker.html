@@ -28,7 +28,10 @@
 				switch (parsedJSON['type']) {
 					case 'START_OSC':
 						parsedOutput = oscilloscopeDataProcessor(parsedJSON);
-						ipcRenderer.send('TO_RENDERER_DATA', parsedOutput);
+						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
+						break;
+					case 'GET_CONFIG_PWR_SRC':
+						ipcRenderer.send('TO_RENDERER_DATA', parsedJSON);
 						break;
 					case 'DEVICE_CONNECTION_STATUS':
 						ipcRenderer.send('TO_RENDERER_STATUS', parsedJSON);
