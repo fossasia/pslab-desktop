@@ -437,7 +437,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
                 self.hexid = hex(self.I.device_id() & 0xFFFF)
                 self.setWindowTitle(self.I.generic_name + ' : ' + self.hexid)
                 self.updateSplash(20, 'Finished Reconnecting...');
-                self.displayDialog('Reconnected :' + self.I.H.version_string.decode("utf-8"))
+                self.displayDialog('Reconnected :' + self.I.H.version_string)
                 # self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
                 self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)

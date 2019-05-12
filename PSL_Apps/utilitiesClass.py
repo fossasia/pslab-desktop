@@ -1422,7 +1422,7 @@ class utilitiesClass():
         tmpfunc = functools.partial(I.DAC.__setRawVoltage__, 'PV1')
         a1 = {'TITLE': 'PV1', 'MIN': 0, 'MAX': 4095, 'FUNC': tmpfunc, 'UNITS': 'V',
               'TOOLTIP': 'Programmable Voltage Source 1'}
-        if link: a['LINK'] = link
+        if link: a1['LINK'] = link
         return self.dialIcon(**a1)
 
     def addPV2(self, I, link=None):
@@ -1537,7 +1537,7 @@ class utilitiesClass():
                     writer.writerow(rowdata)
 
     def saveDataWindow(self, curveList, plot=None):
-        from utilityApps import plotSaveWindow
+        from PSL_Apps.utilityApps import plotSaveWindow
         info = plotSaveWindow.AppWindow(self, curveList, plot)
         info.show()
 

@@ -4,9 +4,9 @@ DESTDIR =
 # fakeroot, the directory .. is supposed to be the root directory of the package FOSSASIA PSLab
 CUSTOM = $(shell cd ..; if [ -x /usr/bin/dh_testroot -a -x /usr/bin/dh_testdir ] && dh_testroot && dh_testdir; then echo false; else echo true; fi)
 
-# Find installation path
+# Find library installation path
 INSTALL_PATH = $(patsubst Location:,,$(shell pip show PSL_Apps | grep Location))
-INSTALL_PATH_LEN = $(shell echo $(DESTDIR) | wc -c)
+INSTALL_PATH_LEN = $(shell echo $(INSTALL_PATH) | wc -c)
 
 # Finds every UI file in the repository
 UI_SOURCES = $(shell find . -name "*.ui")
@@ -44,11 +44,15 @@ uninstall_custom:
 	# Remove PSLab UI resources
 	sudo rm -rf $(DESTDIR)/usr/share/pslab/PSL_Resources
 	# Remove the executable script
-	sudo rm -f /usr/bin/Experiments
+	sudo rm -f /usr/local/bin/Experiments
 
 install:
 	# Install PSLab UI resources to a local directory
 	mkdir -p $(DESTDIR)/usr/share/pslab/PSL_Resources
 	cp -r PSL_Resources/* $(DESTDIR)/usr/share/pslab/PSL_Resources/
 	# create distributions for current python distribution
-	python3 setup.py install --install-layout=deb --root=$(DESTDIR)/ --prefix=/usr
+	python3 setup.py install
+
+cleanUIFiles:
+	@find . -name "auto_*" | xargs rm -rf
+	@echo Removed auto-generated UI .py files

@@ -23,7 +23,7 @@ from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints
 from PyQt5 import QtCore, QtGui
 
-from PSL_Apps.templates.widgets.clicking import Ui_Form as Ui_Clicking
+from PSL_Apps.templates.widgets.auto_clicking import Ui_Form as Ui_Clicking
 from PSL_Apps.utilitiesClass import utilitiesClass
 from .templates import auto_sensorTemplate as sensorTemplate
 

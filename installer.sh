@@ -23,6 +23,7 @@ echo -e "${YELLOW}Setting up PyQt5 is complete!${NOCOLOR}"
 # Install Numpy
 pip3 install numpy
 echo -e "${YELLOW}Setting up Numpy is complete!${NOCOLOR}"
+# Install Serial libraries
 pip3 install pyserial
 echo -e "${YELLOW}Setting up PySerial is complete!${NOCOLOR}"
 # Install Dev Tools

@@ -1,6 +1,7 @@
 language: python
 cache: pip
 dist: trusty
+sudo: true
 
 python:
   - "3.5"
@@ -23,15 +24,12 @@ install:
     # Doesn't work
     #- sudo make install
     # Also doesn't work. installs to /usr/... library not found
-    - sudo python setup.py install
+    - sudo python3 setup.py install
     #This had better work. explicitly adding pslab-python to the path variable
-
-    - if [[ $TRAVIS_PYTHON_VERSION == 3.5 ]]; then cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python3.5.6/lib/python3.5/site-packages/; fi
     - popd
-    - make
+    - sudo make clean
+    - make all
+    - sudo make install
 
 # command to run tests
 script: nosetests
-
-notifications:
-  slack: fossasia:bqOzo4C9y6oI6dTF8kO8zdxp
