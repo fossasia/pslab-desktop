@@ -139,12 +139,12 @@ class AppWindow(QtGui.QMainWindow, sensorTemplate.Ui_MainWindow, utilitiesClass)
         for i in bridge.params:
             if bridge.params[i] is None:  # A function with no arguments.
                 sub_menu.addAction(str(i), getattr(bridge, i))
-            elif type(bridge.params[i]) == list:  # Function with pre-defined arguments
+            elif isinstance(bridge.params[i], list):  # Function with pre-defined arguments
                 mini = sub_menu.addMenu(i)
                 for a in bridge.params[i]:
                     Callback = functools.partial(getattr(bridge, i), a)
                     mini.addAction(str(a), Callback)
-            elif type(bridge.params[i]) == dict:  # Function with user defined variable input
+            elif isinstance(bridge.params[i], dict):  # Function with user defined variable input
                 mini = sub_menu.addMenu(i)
                 options = bridge.params[i]
 

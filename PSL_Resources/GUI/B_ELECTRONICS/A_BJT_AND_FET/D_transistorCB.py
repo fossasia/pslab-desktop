@@ -1,7 +1,7 @@
 #!/usr/bin/python
 '''
 Study NJFET
-Saturation currents, and their dependence on gate voltage 
+Saturation currents, and their dependence on gate voltage
 can be easily visualized.
 
 '''

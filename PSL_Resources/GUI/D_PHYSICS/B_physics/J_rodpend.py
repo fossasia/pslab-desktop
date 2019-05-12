@@ -30,7 +30,7 @@ params = {
 }
 
 
-class AppWindow(QtGui.QMainWindow, ui_rodpendulum.Ui_MainWindow, utilitiesClass):
+class AppWindow(QtGui.QMainWindow, auto_rodpendulum.Ui_MainWindow, utilitiesClass):
     def __init__(self, parent=None, **kwargs):
         super(AppWindow, self).__init__(parent)
         self.setupUi(self)

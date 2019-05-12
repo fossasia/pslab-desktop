@@ -114,7 +114,7 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow, utilitiesCl
         self.timer.timeout.connect(self.update)
         self.timer.start(100)
 
-    def updateViews(self):
+    def updateViews(self, plot):
         self.plot2.setGeometry(self.plot.getViewBox().sceneBoundingRect())
         self.plot2.linkedViewChanged(self.plot.plotItem.vb, self.plot2.XAxis)
 
@@ -190,7 +190,6 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow, utilitiesCl
         self.info.show()
 
     def plotData(self):
-        n = 0
         self.timer.stop()
         self.I.fetch_LA_channels()
         self.timer.start(100)
@@ -215,14 +214,14 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow, utilitiesCl
             self.maxT = self.I.dchans[0].maxT * 1e-6
 
         if self.I.dchans[0].plot_length == 1:  # No level changes were detected
-            x = self.I.dchans[0].xaxis[0] * 1e-6;
+            x = self.I.dchans[0].xaxis[0] * 1e-6
             y = self.I.dchans[0].yaxis[0] + 2
             self.curve1.setData([x, x + self.maxT], [y, y])
         if (self.active_dchannels > 1):
             self.curve2.setData(self.I.dchans[1].get_xaxis() * 1e-6, self.I.dchans[1].get_yaxis() + 4)
             if self.maxT < self.I.dchans[1].maxT * 1e-6: self.maxT = self.I.dchans[1].maxT * 1e-6
             if self.I.dchans[1].plot_length == 1:  # No level changes were detected
-                x = self.I.dchans[1].xaxis[0] * 1e-6;
+                x = self.I.dchans[1].xaxis[0] * 1e-6
                 y = self.I.dchans[1].yaxis[0] + 4
                 self.curve2.setData([x, x + self.maxT], [y, y])
         else:
@@ -232,7 +231,7 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow, utilitiesCl
             self.curve3.setData(self.I.dchans[2].get_xaxis() * 1e-6, self.I.dchans[2].get_yaxis() + 6)
             if self.maxT < self.I.dchans[2].maxT * 1e-6: self.maxT = self.I.dchans[2].maxT * 1e-6
             if self.I.dchans[2].plot_length == 1:  # No level changes were detected
-                x = self.I.dchans[2].xaxis[0] * 1e-6;
+                x = self.I.dchans[2].xaxis[0] * 1e-6
                 y = self.I.dchans[2].yaxis[0] + 6
                 self.curve3.setData([x, x + self.dtime * 1e6], [y, y])
         else:

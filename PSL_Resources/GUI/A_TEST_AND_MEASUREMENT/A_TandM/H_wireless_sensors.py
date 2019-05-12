@@ -7,17 +7,18 @@ on the various nodes.
 '''
 from __future__ import print_function
 
-from PSL_Apps.utilitiesClass import utilitiesClass
-from PSL_Apps.templates.widgets.auto_nodeList import Ui_Form as nodeWidget
+import functools
+import sys
+import time
+
+import numpy as np
 from PSL.SENSORS.supported import supported
 from PSL.sensorlist import sensors as sensorHints
-import pyqtgraph as pg
-import numpy as np
-from PyQt5 import QtCore, QtGui
+from PSL_Apps.templates.widgets.auto_nodeList import Ui_Form as nodeWidget
+from PyQt5 import QtGui
 
+from PSL_Apps.utilitiesClass import utilitiesClass
 from .templates import auto_wirelessTemplate as wirelessTemplate
-
-import time, sys, functools
 
 params = {
     'image': 'ico_sensor_w.png',
@@ -251,7 +252,7 @@ class AppWindow(QtGui.QMainWindow, wirelessTemplate.Ui_MainWindow, utilitiesClas
         self.refreshTimer.stop()
         print('bye')
 
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         print('CYA')
         self.I.NRF.stop_token_manager()
         self.I.restoreStandalone()

@@ -10,13 +10,14 @@
 """
 
 from __future__ import print_function
-from PSL_Apps.utilitiesClass import utilitiesClass
+
+import sys
+import time
+
+from PyQt5 import QtGui, QtCore
 
 from PSL_Apps.templates import auto_template_graph_nofft as template_graph_nofft
-
-import numpy as np
-from PyQt5 import QtGui, QtCore
-import sys, time
+from PSL_Apps.utilitiesClass import utilitiesClass
 
 params = {
     'image': 'ampmod.png',

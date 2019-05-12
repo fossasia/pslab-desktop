@@ -166,7 +166,7 @@ class AppWindow(QtGui.QMainWindow, ampMod.Ui_MainWindow, utilitiesClass):
             self.vLine.setPos(self.mousePoint.x())
             self.hLine.setPos(self.mousePoint.y())
 
-    def updateViews(self, *args):
+    def updateViews(self, plot):
         self.plot2.setGeometry(self.plot.getViewBox().sceneBoundingRect())
         self.plot2.linkedViewChanged(self.plot.plotItem.vb, self.plot2.XAxis)
 
@@ -285,7 +285,7 @@ class AppWindow(QtGui.QMainWindow, ampMod.Ui_MainWindow, utilitiesClass):
             self.fps = self.fps * (1 - s) + (1.0 / dt) * s
 
         if self.mousePoint:
-            1.e6 / self.timebase / 2
+            #1.e6 / self.timebase / 2
 
             index = int(self.mousePoint.x() * 1e6 / self.I.timebase)
             maxIndex = self.I.samples

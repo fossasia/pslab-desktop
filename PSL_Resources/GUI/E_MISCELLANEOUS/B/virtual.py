@@ -19,18 +19,18 @@ import sys, json, string
 import numpy as np
 
 json.JSONEncoder.FLOAT_REPR = lambda f: ("%.2f" % f)
-import httplib, urllib
+import http.client as httplib, urllib
 
 
 class NumpyEncoder(json.JSONEncoder):  # Answered by SO user http://stackoverflow.com/users/3768982/tlausch
-    def default(self, obj):
+    def default(self, o):
         """If input object is an ndarray it will be converted into a dict
         holding dtype, shape and the data, base64 encoded.
         """
-        if isinstance(obj, np.ndarray):
-            return list(obj)
+        if isinstance(o, np.ndarray):
+            return list(o)
         # Let the base class default method raise the TypeError
-        return obj  # json.JSONEncoder(self, obj)
+        return o  # json.JSONEncoder(self, o)
 
 
 params = {
@@ -149,8 +149,8 @@ class AppWindow(QtGui.QMainWindow, remote.Ui_MainWindow):
                     self.pubnub.publish(channel=self.I.hexid,
                                         message='R' + jsonres)  # R stands for response . Q for Query
                     self.resSlot.emit('%s %s %s %d %s... %s' % (
-                    method.__name__, str(total_args), str(type(jsonres)), len(jsonres), str(jsonres[:20]),
-                    self.I.hexid + 'response'), 'out')
+                        method.__name__, str(total_args), str(type(jsonres)), len(jsonres), str(jsonres[:20]),
+                        self.I.hexid + 'response'), 'out')
             elif msg_type == 'R':
                 self.resSlot.emit(str(message), 'reply')
 

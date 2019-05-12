@@ -165,7 +165,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow, utilitiesClass):
             self.vLine.setPos(self.mousePoint.x())
             self.hLine.setPos(self.mousePoint.y())
 
-    def updateViews(self, *args):
+    def updateViews(self, plot):
         self.plot2.setGeometry(self.plot.getViewBox().sceneBoundingRect())
         self.plot2.linkedViewChanged(self.plot.plotItem.vb, self.plot2.XAxis)
 
@@ -238,8 +238,8 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow, utilitiesClass):
                                          resolution=10, prescaler=self.prescalerValue)
                 self.I.capture_traces(self.active_channels, self.samples, self.timebase, self.chan1remap, self.ch123sa,
                                       trigger=self.triggerBox.isChecked())
-        except:
-            print('communication error')
+        except Exception as e:
+            print(e)
             self.close()
 
         self.timer.singleShot(self.samples * self.I.timebase * 1e-3 + 10 + self.prescalerValue * 20, self.update)
@@ -255,8 +255,8 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow, utilitiesClass):
                     self.timer.singleShot(100, self.start_capture)
                     return
             for a in range(self.channels_in_buffer): self.I.__fetch_channel__(a + 1)
-        except:
-            print('communication error')
+        except Exception as e:
+            print(e)
             self.close()
 
         self.curve1.clear()
@@ -303,9 +303,9 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow, utilitiesClass):
         pos = 0
 
         if self.Liss_show.isChecked():
-            chans = ['CH1', 'CH2', 'CH3', 'CH4']
-            lissx = self.Liss_x.currentText()
-            lissy = self.Liss_y.currentText()
+            #282chans = ['CH1', 'CH2', 'CH3', 'CH4']
+            #282lissx = self.Liss_x.currentText()
+            #282lissy = self.Liss_y.currentText()
             self.liss_x = self.Liss_x.currentIndex()
             self.liss_y = self.Liss_y.currentIndex()
             la = self.I.achans[self.liss_x].get_yaxis()
@@ -374,7 +374,7 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow, utilitiesClass):
                 ph = fitres[3]
 
                 frequency = freq / 1e6
-                period = 1. / frequency / 1e6
+                #282period = 1. / frequency / 1e6
                 # Collapse waveforms on top of each other.
                 '''
                 if(self.collapseButton.isChecked()):
@@ -413,14 +413,13 @@ class AppWindow(QtGui.QMainWindow, analogScope.Ui_MainWindow, utilitiesClass):
                 offset = fitres[4]
 
                 frequency = freq / 1e6
-                period = 1. / freq / 1e6
+                #282period = 1. / freq / 1e6
                 '''
                 if(self.collapseButton.isChecked()):
                     self.collapseButton.setChecked(False)
                     self.collapse_win = pg.GraphicsWindow(title="Collapsing plot")
                     xNew=[]
                     yNew=[]
-                
                     for a in range(len(xReal)):
                         x=(xReal[a]%(period*2))*1e-6
                         xNew.append(x)
