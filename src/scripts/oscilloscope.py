@@ -6,9 +6,34 @@ import numpy as np
 
 
 class Oscilloscope:
-    def __init__(self, I, time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4):
+    def __init__(self, I):
         self.device = I
         self.isReading = False
+        self.number_of_samples = 1000
+        self.delay = 100
+        self.time_gap = 10
+        self.ch1 = True
+        self.ch2 = False
+        self.ch3 = False
+        self.ch4 = False
+        self.ch1_map = 'CH1'
+        self.ch2_map = 'CH2'
+        self.ch3_map = 'CH3'
+        self.number_of_channels = self.ch1 + self.ch2 + self.ch3 + self.ch4
+        self.is_mic_active = False
+        self.trigger_voltage = 0
+        self.trigger_channel = 'CH1'
+        self.is_trigger_active = False
+        self.is_fourier_transform_active = False
+        self.transform_type = 'Sine'
+        self.transform_channel1 = 'CH1'
+        self.transform_channel2 = 'CH2'
+        self.is_xy_plot_active = False
+        self.plot_channel1 = 'CH1'
+        self.plot_channel2 = 'CH2'
+        # initialized values here including trigger values
+
+    def set_config(self, time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active):
         self.time_gap = time_gap
         self.number_of_samples = number_of_samples
         self.delay = delay
@@ -17,63 +42,69 @@ class Oscilloscope:
         self.ch3 = ch3
         self.ch4 = ch4
         self.number_of_channels = ch1 + ch2 + ch3 + ch4
+        self.is_trigger_active = is_trigger_active
+        self.trigger_channel = trigger_channel
+        self.trigger_voltage = trigger_voltage
+        self.device.configure_trigger(0, self.trigger_channel, self.trigger_voltage)
+
+    def get_config(self):
+        output = {'type': 'GET_CONFIG_OSC',
+                  'timeBase': self.time_gap,
+                  'ch1': self.ch1,
+                  'ch2': self.ch2,
+                  'ch3': self.ch3,
+                  'ch4': self.ch4,
+                  'ch1Map': self.ch1_map,
+                  'ch2Map': self.ch2_map,
+                  'ch3Map': self.ch3_map,
+                  'mapToMic': self.is_mic_active,
+                  'triggerVoltage': self.trigger_voltage,
+                  'triggerVoltageChannel': self.trigger_channel,
+                  'isTriggerActive': self.is_trigger_active,
+                  'isFourierTransformActive': self.is_fourier_transform_active,
+                  'transformType': self.transform_type,
+                  'transformChannel1': self.transform_channel1,
+                  'transformChannel2': self.transform_channel2,
+                  'isXYPlotActive': self.is_xy_plot_active,
+                  'plotChannel1': self.plot_channel1,
+                  'plotChannel2': self.plot_channel2,
+                  }
+        print(json.dumps(output))
+        sys.stdout.flush()
 
     def readData(self):
-        # call appropriate function depending
-        if(self.number_of_channels == 1):
-            # call one channel
-            return threading.Thread(
-                target=self.get_one_channel_data,
-                name='osc_1')
-        elif(self.number_of_channels == 2):
-            # call two channels
-            return threading.Thread(
-                target=self.get_two_channel_data,
-                name='osc_2')
-        else:
-            # call four channel
-            return threading.Thread(
-                target=self.get_four_channel_data,
-                name='osc_4')
+        return threading.Thread(
+            target=self.capture_loop,
+            name='osc')
 
-    def get_one_channel_data(self):
-        active_channel = None
-        if self.ch1:
-            active_channel = 'ch1'
-        elif self.ch2:
-            active_channel = 'ch2'
-        elif self.ch3:
-            active_channel = 'ch3'
-        else:
-            active_channel = 'ch4'
-
+    def capture_loop(self):
         self.isReading = True
         while self.isReading:
-            x, y = self.device.capture1(
-                active_channel.upper(), self.number_of_samples, self.time_gap)
+            self.device.capture_traces(
+                self.number_of_channels, self.number_of_samples, self.time_gap, trigger=self.is_trigger_active)
+            time.sleep(1e-3 * self.delay * self.number_of_channels)
+            keys = ['timeGap']
+            vector = ()
+            x = None
+            if self.ch1:
+                x, y1 = self.device.fetch_trace(1)
+                keys.append('ch1')
+                vector = vector + (y1, )
+            if self.ch2:
+                x, y2 = self.device.fetch_trace(2)
+                keys.append('ch2')
+                vector = vector + (y2, )
+            if self.ch3:
+                x, y3 = self.device.fetch_trace(3)
+                keys.append('ch3')
+                vector = vector + (y3, )
+            if self.ch4:
+                x, y4 = self.device.fetch_trace(4)
+                keys.append('ch4')
+                vector = vector + (y4, )
+            vector = (x, ) + vector
             output = {'type': 'START_OSC', 'data': np.stack(
-                (x, y)).T.tolist(), 'keys': ['timeGap', active_channel],
-                'numberOfChannels': 2}
+                vector).T.tolist(), 'keys': keys,
+                'numberOfChannels': self.number_of_channels}
             print(json.dumps(output))
             sys.stdout.flush()
-            time.sleep(0.001 * self.delay)
-
-    def get_two_channel_data(self):
-        self.isReading = True
-        while self.isReading:
-            x, y1, y2 = self.device.capture2(
-                self.number_of_samples, self.time_gap)
-            output = {'type': 'START_OSC', 'data': np.stack(
-                (x, y1, y2)).T.tolist(), 'keys': ['timeGap', 'ch1', 'ch2'],
-                'numberOfChannels': 2}
-            print(json.dumps(output))
-            sys.stdout.flush()
-            time.sleep(0.001 * self.delay)
-
-    def get_four_channel_data(self):
-        while self.isReading:
-            x, y1, y2 = self.device.capture2(
-                self.number_of_samples, self.time_gap)
-            # print(y.tolist())
-            sys.stdout.flush()
-            time.sleep(0.001 * self.delay)

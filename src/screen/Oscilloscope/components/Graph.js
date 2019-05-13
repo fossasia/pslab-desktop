@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { withTheme } from 'styled-components';
 
-const Graph = ({ data, activeChannels,theme }) => {
+const Graph = ({ data, activeChannels, theme }) => {
   return (
     <ResponsiveContainer>
       <LineChart

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import debounce from 'lodash/debounce';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
 import ActionButtons from './components/ActionButtons';
@@ -39,8 +40,8 @@ class Oscilloscope extends Component {
         ch3: 'Inbuilt',
       },
       mapToMic: false,
-      triggerVoltage: 5,
-      timeBase: 100,
+      triggerVoltage: 0,
+      timeBase: 10,
       triggerVoltageChannel: 'CH1',
       isTriggerActive: false,
       isFourierTransformActive: false,
@@ -54,11 +55,53 @@ class Oscilloscope extends Component {
   }
 
   componentDidMount() {
+    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+      const { isConnected } = args;
+      isConnected && this.getConfigFromDevice();
+    });
     ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
       this.setState({
         ...args,
       });
     });
+    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
+      const {
+        ch1,
+        ch2,
+        ch3,
+        ch4,
+        ch1Map,
+        ch2Map,
+        ch3Map,
+        mapToMic,
+        triggerVoltage,
+        triggerVoltageChannel,
+        isTriggerActive,
+        isFourierTransformActive,
+        transformType,
+        transformChannel1,
+        transformChannel2,
+        isXYPlotActive,
+        plotChannel1,
+        plotChannel2,
+      } = args;
+      this.setState({
+        activeChannels: { ch1, ch2, ch3, ch4 },
+        channelMaps: { ch1: ch1Map, ch2: ch2Map, ch3: ch3Map },
+        mapToMic,
+        triggerVoltage,
+        triggerVoltageChannel,
+        isTriggerActive,
+        isFourierTransformActive,
+        transformType,
+        transformChannel1,
+        transformChannel2,
+        isXYPlotActive,
+        plotChannel1,
+        plotChannel2,
+      });
+    });
+    this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
@@ -68,10 +111,44 @@ class Oscilloscope extends Component {
         command: 'STOP_OSC',
       });
     ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
   }
 
+  getConfigFromDevice = debounce(() => {
+    const { isConnected } = this.props;
+    isConnected &&
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'GET_CONFIG_OSC',
+      });
+  }, 500);
+
+  sendConfigToDevice = debounce(() => {
+    const { isConnected } = this.props;
+    const {
+      activeChannels,
+      timeBase,
+      triggerVoltage,
+      triggerVoltageChannel,
+      isTriggerActive,
+    } = this.state;
+    isConnected &&
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'SET_CONFIG_OSC',
+        timeGap: timeBase,
+        numberOfSamples: 1000,
+        delay: 80,
+        ch1: activeChannels.ch1,
+        ch2: activeChannels.ch2,
+        ch3: activeChannels.ch3,
+        ch4: activeChannels.ch4,
+        triggerVoltage,
+        isTriggerActive,
+        triggerVoltageChannel,
+      });
+  }, 500);
+
   onToggleRead = event => {
-    const { isReading, activeChannels } = this.state;
+    const { isReading } = this.state;
     this.setState(prevState => ({
       isReading: !prevState.isReading,
     }));
@@ -82,24 +159,22 @@ class Oscilloscope extends Component {
     } else {
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'START_OSC',
-        timeGap: 10,
-        numberOfSamples: 1000,
-        delay: 30,
-        ch1: activeChannels.ch1,
-        ch2: activeChannels.ch2,
-        ch3: activeChannels.ch3,
-        ch4: activeChannels.ch4,
       });
     }
   };
 
   onToggleChannel = channelName => event => {
-    this.setState(prevState => ({
-      activeChannels: {
-        ...prevState.activeChannels,
-        [channelName]: !prevState.activeChannels[channelName],
+    this.setState(
+      prevState => ({
+        activeChannels: {
+          ...prevState.activeChannels,
+          [channelName]: !prevState.activeChannels[channelName],
+        },
+      }),
+      () => {
+        this.sendConfigToDevice();
       },
-    }));
+    );
   };
 
   onChangeChannelRange = channelName => event => {
@@ -121,25 +196,45 @@ class Oscilloscope extends Component {
   };
 
   onToggleCheckBox = type => event => {
-    this.setState(prevState => ({
-      [type]: !prevState[type],
-    }));
+    this.setState(
+      prevState => ({
+        [type]: !prevState[type],
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   onChangeTriggerVoltage = (event, value) => {
-    this.setState(prevState => ({
-      triggerVoltage: value,
-    }));
+    this.setState(
+      prevState => ({
+        triggerVoltage: value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
   onChangeTriggerChannel = event => {
-    this.setState(prevState => ({
-      triggerVoltageChannel: event.target.value,
-    }));
+    this.setState(
+      prevState => ({
+        triggerVoltageChannel: event.target.value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
   onChangeTimeBase = (event, value) => {
-    this.setState(prevState => ({
-      timeBase: value,
-    }));
+    this.setState(
+      prevState => ({
+        timeBase: value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   onChangeTransformType = event => {
