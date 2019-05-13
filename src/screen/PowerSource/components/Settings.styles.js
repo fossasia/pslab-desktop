@@ -29,13 +29,22 @@ export const DisplayContainer = styled.div`
   flex-direction: column;
 `;
 
-export const SliderContainer = styled.div`
+export const CircularInputContainer = styled.div`
   display: flex;
-  margin: 8px 0px 16px 32px;
+  margin: 16px 0px 24px 24px;
 `;
 
 export const InstrumentContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin: 16px;
+`;
+
+export const ValueWrapper = styled.div`
+  min-width: 24em;
+  display: flex;
+  flex-direction: column;
+  margin: 16px 16px 16px 16px;
+  align-items: center;
+  justify-content: center;
 `;

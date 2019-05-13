@@ -6,6 +6,7 @@ import Home from './screen/Home';
 import Oscilloscope from './screen/Oscilloscope';
 import LogicAnalyser from './screen/LogicAnalyser';
 import PowerSource from './screen/PowerSource';
+import Multimeter from './screen/Multimeter';
 import Settings from './screen/Settings';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
@@ -54,7 +55,6 @@ class App extends Component {
 
   componentDidMount() {
     ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
-      console.log(args);
       const { isConnected, message, deviceName, portName } = args;
       this.state.isConnected !== isConnected &&
         this.setState({
@@ -83,7 +83,7 @@ class App extends Component {
     });
 
     ipcRenderer.on('DEBUG', (event, args) => {
-      console.log(args);
+      // console.log(args);
     });
 
     loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
@@ -120,6 +120,7 @@ class App extends Component {
                     <PowerSource {...props} isConnected={isConnected} />
                   )}
                 />
+                <Route path="/multimeter" component={Multimeter} />
                 <Route path="/settings" component={Settings} />
               </Switch>
             </Appshell>
