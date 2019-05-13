@@ -37,5 +37,5 @@ export const SliderContainer = styled.div`
 export const InstrumentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 8px;
+  margin: 16px;
 `;

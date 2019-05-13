@@ -4,14 +4,14 @@ export const ThickBar = styled.div`
   position: absolute;
   right: 0;
   top: 4em;
-  height: calc((100% - 4em) * 0.25);
+  height: calc((100% - 4em) * 0.2);
   width: calc(100% - 3.5em);
   background: ${props => props.theme.gradient};
   z-index: 0;
 `;
 
 export const LayoutWrapper = styled.div`
-  align-self: flex-end;
+  align-self: center;
   margin: 0px 16px 0px 0px;
   transform: translateY(-5%);
 `;
