@@ -4,7 +4,7 @@ export const ThickBar = styled.div`
   position: absolute;
   right: 0;
   top: 4em;
-  height: calc((100% - 4em) * 0.25);
+  height: calc((100% - 4em) * 0.2);
   width: calc(100% - 3.5em);
   background: ${props => props.theme.gradient};
   z-index: 0;
@@ -19,7 +19,7 @@ export const LayoutContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  height: 25%;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -28,7 +28,7 @@ export const ButtonContainer = styled.div`
 export const ButtonWrapper = styled.div``;
 
 export const SettingsContainer = styled.div`
-  width: 30em;
+  width: 28%;
   display: flex;
   flex-direction: column;
 `;

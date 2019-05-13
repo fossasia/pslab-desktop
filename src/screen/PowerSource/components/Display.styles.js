@@ -10,5 +10,6 @@ export const ValueContainer = styled.div`
 `;
 
 export const ValueWrapper = styled.div`
-  font-size: 6em;
+  font-size: 8em;
+  color: ${props => props.theme.text.secondary};
 `;
