@@ -4,39 +4,44 @@ Output Peripheral control for FOSSASIA PSLab - version 1.0.0.
 '''
 
 from __future__ import print_function
+
 import os
+
 os.environ['QT_API'] = 'pyqt'
-import sip
+import PyQt5.sip as sip
+
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
-
-from PyQt5 import QtCore, QtGui
-from .templates import ui_loadSineTable as loadSineTable
-import sys,os,string,functools,time
+from PyQt5 import QtGui
+from .templates import auto_loadSineTable as loadSineTable
+import sys
 import numpy as np
 
 
 class myTable(QtGui.QTableWidget):
-    def __init__(self,parent=None):
-        QtGui.QTableWidget.__init__(self,parent)
+    def __init__(self, parent=None):
+        QtGui.QTableWidget.__init__(self, parent)
         # initially construct the visible table
         self.setRowCount(512)
         self.setColumnCount(2)
         # set the shortcut ctrl+v for paste
-        QtGui.QShortcut(QtGui.QKeySequence('Ctrl+v'),self).activated.connect(self._handlePaste)
+        QtGui.QShortcut(QtGui.QKeySequence('Ctrl+v'), self).activated.connect(self._handlePaste)
 
     # paste the value  
     def _handlePaste(self):
         txt = QtGui.QApplication.instance().clipboard().text()
-        row = 0; col = 0;
+        row = 0;
+        col = 0;
         for a in txt.split('\n'):
             for b in a.split('\t'):
                 item = QtGui.QTableWidgetItem()
                 item.setText(b)
                 self.setItem(row, col, item)
-                col+= 1
-            row += 1; col = 0
+                col += 1
+            row += 1;
+            col = 0
+
 
 class AppWindow(QtGui.QMainWindow, loadSineTable.Ui_MainWindow):
     def __init__(self, parent=None, **kwargs):
@@ -44,10 +49,10 @@ class AppWindow(QtGui.QMainWindow, loadSineTable.Ui_MainWindow):
         self.setupUi(self)
         self.I = kwargs.get('I', None)
 
-        self.setWindowTitle('Load arbitrary waveforms : '+ self.I.H.version_string.decode("utf-8"))
+        self.setWindowTitle('Load arbitrary waveforms : ' + self.I.H.version_string.decode("utf-8"))
         self.table = myTable()
         self.tableLayout.addWidget(self.table)
-	
+
     # generic reset function for reset1 and reset2
     def reset(self, num):
         self.I.load_equation('W' + str(num), 'sine')
@@ -59,14 +64,14 @@ class AppWindow(QtGui.QMainWindow, loadSineTable.Ui_MainWindow):
                 self.table.setItem(a, num - 1, item)
             item.setText('%.5f' % y1[a])
         QtGui.QMessageBox.about(self, 'Sine Wave', 'Table Contents set to sine')
-        
+
     def reset1(self):
         self.reset(1)
 
     def reset2(self):
         self.reset(2)
 
-   # generic setTria func
+    # generic setTria func
     def setTria(self, num):
         function = lambda x: abs(x % 4 - 2) - 1
         span = np.linspace(-1, 3, 512)
@@ -79,13 +84,12 @@ class AppWindow(QtGui.QMainWindow, loadSineTable.Ui_MainWindow):
         self.loadSine(num, 'tria')
         QtGui.QMessageBox.about(self, 'Triangular Wave', 'Table Contents set to Triangular')
 
-        
     def setTria1(self):
         self.setTria(1)
 
     def setTria2(self):
         self.setTria(2)
-    
+
     # generic loadSine class for 1 and 2
     def loadSine(self, num, mode='arbit'):
         tbl = []
@@ -116,6 +120,7 @@ class AppWindow(QtGui.QMainWindow, loadSineTable.Ui_MainWindow):
 
 if __name__ == "__main__":
     from PSL import sciencelab
+
     app = QtGui.QApplication(sys.argv)
     myapp = AppWindow(I=sciencelab.connect())
     myapp.show()

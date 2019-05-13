@@ -55,6 +55,7 @@ To install PSLab on Debian based Gnu/Linux system, the following dependencies mu
 * Python 3.5
 * PyQt5
 * PyQt5-dev-tools         &nbsp;   **Contains pyuic5 which compiles xml layout files into python template files**
+* PyQt5-sip               &nbsp;   **Binding libraries**
 * NumPy, Scipy            &nbsp;   **Analytical tools and array manipulations**
 * PyQtgraph               &nbsp;   **Primary Plotting library**
 * Pyopengl and Qt-opengl  &nbsp;   **For 3D graphics support in pyqtgraph**

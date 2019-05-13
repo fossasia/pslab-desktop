@@ -1,25 +1,27 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-#from distutils.core import setup
-from setuptools import setup, find_packages
+
+from setuptools import setup
 from setuptools.command.install import install
-import os,shutil
-from distutils.util import execute
-from distutils.cmd import Command
-from subprocess import call
+
 
 class CustomInstall(install):
     def run(self):
         install.run(self)
 
+
 setup(name='PSL_Apps',
-	version='1.0.0',
-  	description='GUIs for Experiments with PSLab. Requires PSL',
-  	author='Jithin B.P. and Praveen Patil',
-	install_requires = ['numpy>=1.8.1','pyqtgraph>=0.9.10'], #PSL>=
-	packages=['PSL_Apps','PSL_Apps.templates','PSL_Apps.utilityApps','PSL_Apps.utilityApps.templates','PSL_Apps.stylesheets','PSL_Apps.templates.widgets'],
-	scripts=["PSL_Apps/bin/"+a for a in os.listdir("PSL_Apps/bin/")],
-	package_data={'': ['*.css','*.png','*.gif','*.html','*.css','*.js','*.png','*.jpg','*.jpeg','*.htm','99-pslab.rules']},
-	cmdclass={'install': CustomInstall},
-)
+      version='1.1.0',
+      description='GUI for Pocket Science Lab. Requires PSLab Python library',
+      author='FOSSASIA PSLab Developers',
+      author_email='pslab-fossasia@googlegroups.com',
+      url='https://pslab.io/',
+      install_requires=['numpy>=1.16.3', 'pyqtgraph>=0.10.0', 'setuptools>=35.0.2', 'PyQt5-sip>=4.19.17',
+                        'PyQt5>=5.12.2', 'PyQtWebEngine>=5.12.1', 'pyserial >= 3.4'],
+      packages=['PSL_Apps', 'PSL_Apps.templates', 'PSL_Apps.utilityApps', 'PSL_Apps.utilityApps.templates',
+                'PSL_Apps.stylesheets', 'PSL_Apps.templates.widgets'],
+      scripts=["PSL_Apps/bin/Experiments"],
+      package_data={'': ['*.css', '*.png', '*.gif', '*.html', '*.css', '*.js', '*.png', '*.jpg', '*.jpeg', '*.htm',
+                         '99-pslab.rules']},
+      cmdclass={'install': CustomInstall})
