@@ -96,14 +96,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QWebView" name="logs">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>150</height>
-           </size>
-          </property>
-         </widget>
+         <widget class="QWebEngineView" name="logs" native="true"/>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
@@ -138,7 +131,7 @@
              <x>0</x>
              <y>0</y>
              <width>776</width>
-             <height>122</height>
+             <height>169</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="nodeArea">
@@ -188,7 +181,7 @@
              <x>0</x>
              <y>0</y>
              <width>776</width>
-             <height>247</height>
+             <height>340</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -314,9 +307,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QWebView</class>
+   <class>QWebEngineView</class>
    <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
+   <header>qwebengineview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
