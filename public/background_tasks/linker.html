@@ -3,10 +3,11 @@
 	const { ipcRenderer } = require('electron');
 	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
-	const { oscilloscopeDataProcessor } = require('../util/preProcessor.js');
+	const { oscilloscopeDataProcessor } = require('../utils/preProcessor.js');
 	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
-		/* -------------------- Blocking code here ----------------------- */
 
+		/* -------------------- Blocking code here ----------------------- */
+		ipcRenderer.send('DEBUG', 'script started');
 		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
 			pythonPath: 'python3',
 		});

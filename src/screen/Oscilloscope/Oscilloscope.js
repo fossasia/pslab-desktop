@@ -41,7 +41,7 @@ class Oscilloscope extends Component {
       },
       mapToMic: false,
       triggerVoltage: 0,
-      timeBase: 10,
+      timeBase: 40,
       triggerVoltageChannel: 'CH1',
       isTriggerActive: false,
       isFourierTransformActive: false,
@@ -84,6 +84,7 @@ class Oscilloscope extends Component {
         isXYPlotActive,
         plotChannel1,
         plotChannel2,
+        timeBase,
       } = args;
       this.setState({
         activeChannels: { ch1, ch2, ch3, ch4 },
@@ -99,6 +100,7 @@ class Oscilloscope extends Component {
         isXYPlotActive,
         plotChannel1,
         plotChannel2,
+        timeBase,
       });
     });
     this.getConfigFromDevice();
@@ -136,7 +138,6 @@ class Oscilloscope extends Component {
         command: 'SET_CONFIG_OSC',
         timeGap: timeBase,
         numberOfSamples: 1000,
-        delay: 80,
         ch1: activeChannels.ch1,
         ch2: activeChannels.ch2,
         ch3: activeChannels.ch3,

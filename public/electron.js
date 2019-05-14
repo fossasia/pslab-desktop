@@ -47,7 +47,7 @@ app.on('activate', () => {
 /* ----------------------------------- Your code starts here ------------------------------------- */
 
 loadBalancer.register(ipcMain, {
-  linker: '/src/background_tasks/linker.html',
+  linker: '/public/background_tasks/linker.html',
 });
 
 ipcMain.on('TO_RENDERER_DATA', (event, args) => {
