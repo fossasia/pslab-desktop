@@ -5,7 +5,7 @@ DESTDIR =
 CUSTOM = $(shell cd ..; if [ -x /usr/bin/dh_testroot -a -x /usr/bin/dh_testdir ] && dh_testroot && dh_testdir; then echo false; else echo true; fi)
 
 # Find library installation path
-INSTALL_PATH = $(patsubst Location:,,$(shell pip show PSL_Apps | grep Location))
+INSTALL_PATH = $(patsubst Location:,,$(shell python3 -m pip show PSL_Apps | grep Location))
 INSTALL_PATH_LEN = $(shell echo $(INSTALL_PATH) | wc -c)
 
 # Finds every UI file in the repository
