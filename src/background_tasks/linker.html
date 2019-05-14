@@ -23,6 +23,7 @@
 		});
 
 		pyshell.on('message', function(results) {
+			ipcRenderer.send('DEBUG', results);
 			try {
 				const parsedJSON = JSON.parse(results);
 				switch (parsedJSON['type']) {
@@ -31,7 +32,10 @@
 						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
 						break;
 					case 'GET_CONFIG_PWR_SRC':
-						ipcRenderer.send('TO_RENDERER_DATA', parsedJSON);
+						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
+						break;
+					case 'GET_CONFIG_OSC':
+						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
 						break;
 					case 'DEVICE_CONNECTION_STATUS':
 						ipcRenderer.send('TO_RENDERER_STATUS', parsedJSON);

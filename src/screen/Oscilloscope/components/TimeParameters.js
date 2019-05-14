@@ -108,17 +108,16 @@ class TimeParameters extends Component {
           <Slider
             classes={{ container: classes.slider }}
             disabled={!isTriggerActive}
-            step={1}
+            step={0.5}
             value={triggerVoltage}
-            min={-8}
-            max={8}
+            min={-16.5}
+            max={16.5}
             onChange={onChangeTriggerVoltage}
           />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
           <span style={{ marginRight: 16 }}>TimeBase</span>
           <Slider
-            disabled={!isTriggerActive}
             classes={{ container: classes.slider }}
             step={1}
             value={timeBase}

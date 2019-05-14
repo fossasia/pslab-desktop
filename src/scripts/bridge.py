@@ -3,20 +3,21 @@ import threading
 import json
 from oscilloscope import Oscilloscope
 from device_detection import Device_detection
+from power_source import Power_source
 
 
 def main():
-    I = None
-    oscilloscope = None
-    oscilloscope_data_read_thread = None
-    device_detection = None
-    device_detection_thread = None
-
-    # connection and connection check loop initialization
     device_detection = Device_detection()
     device_detection_thread = device_detection.async_connect()
-    device_detection_thread.start()
     I = device_detection.device
+
+    # connection and connection check loop initialization
+    device_detection_thread.start()
+
+    # instrument cluster initialization
+    oscilloscope = Oscilloscope(I)
+    oscilloscope_data_read_thread = None
+    power_source = Power_source(I)
 
     while(True):
         in_stream_data = input()
@@ -29,16 +30,6 @@ def main():
             I.set_sine1(1000)
             I.set_sine2(500)
 
-            time_gap = parsed_stream_data['timeGap']
-            number_of_samples = parsed_stream_data['numberOfSamples']
-            delay = parsed_stream_data['delay']
-            ch1 = parsed_stream_data['ch1']
-            ch2 = parsed_stream_data['ch2']
-            ch3 = parsed_stream_data['ch3']
-            ch4 = parsed_stream_data['ch4']
-
-            oscilloscope = Oscilloscope(
-                I, time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4)
             oscilloscope_data_read_thread = oscilloscope.readData()
             oscilloscope_data_read_thread.start()
 
@@ -46,8 +37,34 @@ def main():
             oscilloscope.isReading = False
             oscilloscope_data_read_thread.join()
 
-        if command == "CONFIG_OSC":
-            pass
+        if command == "SET_CONFIG_OSC":
+            time_gap = parsed_stream_data['timeGap']
+            number_of_samples = parsed_stream_data['numberOfSamples']
+            delay = parsed_stream_data['delay']
+            ch1 = parsed_stream_data['ch1']
+            ch2 = parsed_stream_data['ch2']
+            ch3 = parsed_stream_data['ch3']
+            ch4 = parsed_stream_data['ch4']
+            # ch1_map = parsed_stream_data['ch1Map']
+            # ch2_map = parsed_stream_data['ch2Map']
+            # ch3_map = parsed_stream_data['ch3Map']
+            # is_mic_active = parsed_stream_data['mapToMic']
+            trigger_voltage = parsed_stream_data['triggerVoltage']
+            trigger_channel = parsed_stream_data['triggerVoltageChannel']
+            is_trigger_active = parsed_stream_data['isTriggerActive']
+            # is_fourier_transform_active = parsed_stream_data['isFourierTransformActive']
+            # transform_type = parsed_stream_data['transformType']
+            # transform_channel1 = parsed_stream_data['transformChannel1']
+            # transform_channel2 = parsed_stream_data['transformChannel2']
+            # is_xy_plot_active = parsed_stream_data['isXYPlotActive']
+            # plot_channel1 = parsed_stream_data['plotChannel1']
+            # plot_channel2 = parsed_stream_data['plotChannel2']
+
+            oscilloscope.set_config(
+                time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active)
+
+        if command == 'GET_CONFIG_OSC':
+            oscilloscope.get_config()
 
         # -------------------------- Power Source block ---------------------------------
         if command == 'SET_CONFIG_PWR_SRC':
@@ -55,23 +72,10 @@ def main():
             pv1_value = parsed_stream_data['pv1']
             pv2_value = parsed_stream_data['pv2']
             pv3_value = parsed_stream_data['pv3']
-            I.set_pcs(pcs_value)
-            I.set_pv1(pv1_value)
-            I.set_pv2(pv2_value)
-            I.set_pv3(pv3_value)
+            power_source.set_config(pcs_value, pv1_value, pv2_value, pv3_value)
 
         if command == 'GET_CONFIG_PWR_SRC':
-            pcs_value = I.get_pcs()
-            pv1_value = I.get_pv1()
-            pv2_value = I.get_pv2()
-            pv3_value = I.get_pv3()
-            output = {'type': 'GET_CONFIG_PWR_SRC',
-                      'pcs': pcs_value,
-                      'pv1': pv1_value,
-                      'pv2': pv2_value,
-                      'pv3': pv3_value}
-            print(json.dumps(output))
-            sys.stdout.flush()
+            power_source.get_config()
 
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':

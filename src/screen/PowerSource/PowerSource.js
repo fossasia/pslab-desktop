@@ -19,7 +19,11 @@ class PowerSouce extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
+    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+      const { isConnected } = args;
+      isConnected && this.getConfigFromDevice();
+    });
+    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
       const { pv1, pv2, pv3, pcs } = args;
       this.setState({
         pv1: roundOff(pv1),
@@ -28,22 +32,29 @@ class PowerSouce extends Component {
         pcs: roundOff(pcs),
       });
     });
-    loadBalancer.send(ipcRenderer, 'linker', {
-      command: 'GET_CONFIG_PWR_SRC',
-    });
+    this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
   }
 
-  sendConfigToDevice = values =>
-    debounce(() => {
+  getConfigFromDevice = debounce(() => {
+    const { isConnected } = this.props;
+    isConnected &&
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'GET_CONFIG_PWR_SRC',
+      });
+  }, 500);
+
+  sendConfigToDevice = debounce(() => {
+    const { isConnected } = this.props;
+    isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_PWR_SRC',
-        ...values,
+        ...this.state,
       });
-    }, 500);
+  }, 500);
 
   onChangeSlider = pinType => (event, value) => {
     this.setState(
@@ -51,9 +62,7 @@ class PowerSouce extends Component {
         [pinType]: roundOff(value),
       },
       () => {
-        this.sendConfigToDevice({
-          ...this.state,
-        })();
+        this.sendConfigToDevice();
       },
     );
   };
@@ -64,9 +73,7 @@ class PowerSouce extends Component {
         [pinType]: roundOff(this.state[pinType] + (isPositive ? 0.01 : -0.01)),
       },
       () => {
-        this.sendConfigToDevice({
-          ...this.state,
-        })();
+        this.sendConfigToDevice();
       },
     );
   };

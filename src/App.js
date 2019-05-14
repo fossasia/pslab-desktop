@@ -54,6 +54,7 @@ class App extends Component {
 
   componentDidMount() {
     ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+      console.log(args);
       const { isConnected, message, deviceName, portName } = args;
       this.state.isConnected !== isConnected &&
         this.setState({
@@ -81,6 +82,10 @@ class App extends Component {
       }
     });
 
+    ipcRenderer.on('DEBUG', (event, args) => {
+      console.log(args);
+    });
+
     loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
   }
 
@@ -105,16 +110,16 @@ class App extends Component {
                 <Route
                   path="/oscilloscope"
                   render={props => (
-                    <Oscilloscope
-                      {...props}
-                      isAuthed={true}
-                      isConnected={isConnected}
-                    />
+                    <Oscilloscope {...props} isConnected={isConnected} />
                   )}
                 />
-
                 <Route path="/logicanalyser" component={LogicAnalyser} />
-                <Route path="/powersource" component={PowerSource} />
+                <Route
+                  path="/powersource"
+                  render={props => (
+                    <PowerSource {...props} isConnected={isConnected} />
+                  )}
+                />
                 <Route path="/settings" component={Settings} />
               </Switch>
             </Appshell>

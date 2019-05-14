@@ -54,6 +54,10 @@ ipcMain.on('TO_RENDERER_DATA', (event, args) => {
   mainWindow.webContents.send('TO_RENDERER_DATA', args);
 });
 
+ipcMain.on('TO_RENDERER_CONFIG', (event, args) => {
+  mainWindow.webContents.send('TO_RENDERER_CONFIG', args);
+});
+
 ipcMain.on('TO_RENDERER_STATUS', (event, args) => {
   mainWindow.webContents.send('TO_RENDERER_STATUS', args);
 });
