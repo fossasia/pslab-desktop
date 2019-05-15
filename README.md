@@ -21,6 +21,8 @@ Please join us on the following channels:
 * [Pocket Science Channel](https://gitter.im/fossasia/pslab)
 * [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
+***
+
 # How to contribute
 In order to contribute, we would recommend you to first read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) as stated by FOSSASIA.
 
@@ -53,3 +55,18 @@ npm start
 ```
 And wait for the electron shell to open. 
 Happy coding!  :fire:
+  
+*** 
+		  
+# Deploying for production
+Currently the build pipeline spits a debian file that can be installed on any debian based distro
+
+## Build Step for Linux ( Debian bases OS ) :beginner:
+While in the project root  
+```bash
+npm run build
+```  
+This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installer. The *debian* file thus produced can be installed from the command line using 
+```bash
+sudo dpkg -i <deb-file-name>
+```
