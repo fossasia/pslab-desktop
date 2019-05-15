@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SimplePanelLayout from '../../components/SimplePanelLayout';
 import Settings from './components/Settings';
-import roundOff from '../../util/arithmetics';
+import roundOff from '../../utils/arithmetics';
 import debounce from 'lodash/debounce';
 const electron = window.require('electron');
 const { ipcRenderer } = electron;

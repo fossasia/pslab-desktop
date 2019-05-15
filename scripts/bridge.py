@@ -38,9 +38,13 @@ def main():
             oscilloscope_data_read_thread.join()
 
         if command == "SET_CONFIG_OSC":
+            old_read_state = oscilloscope.isReading
+            oscilloscope.isReading = False
+            if old_read_state:
+                oscilloscope_data_read_thread.join()
+
             time_gap = parsed_stream_data['timeGap']
             number_of_samples = parsed_stream_data['numberOfSamples']
-            delay = parsed_stream_data['delay']
             ch1 = parsed_stream_data['ch1']
             ch2 = parsed_stream_data['ch2']
             ch3 = parsed_stream_data['ch3']
@@ -61,7 +65,11 @@ def main():
             # plot_channel2 = parsed_stream_data['plotChannel2']
 
             oscilloscope.set_config(
-                time_gap, number_of_samples, delay, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active)
+                time_gap, number_of_samples, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active)
+
+            if old_read_state:
+                oscilloscope_data_read_thread = oscilloscope.readData()
+                oscilloscope_data_read_thread.start()
 
         if command == 'GET_CONFIG_OSC':
             oscilloscope.get_config()
