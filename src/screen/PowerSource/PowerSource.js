@@ -56,7 +56,7 @@ class PowerSouce extends Component {
       });
   }, 500);
 
-  onChangeSlider = pinType => (event, value) => {
+  onChangeSlider = pinType => value => {
     this.setState(
       {
         [pinType]: roundOff(value),

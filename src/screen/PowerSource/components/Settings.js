@@ -2,17 +2,18 @@ import React from 'react';
 import { Card, Button, Typography, Divider } from '@material-ui/core';
 import PlusIcon from '@material-ui/icons/Add';
 import MinusIcon from '@material-ui/icons/Remove';
-import Slider from '@material-ui/lab/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import {
   CardContainer,
   ButtonContainer,
   DisplayContainer,
-  SliderContainer,
+  CircularInputContainer,
   InstrumentContainer,
   CardColumnWrapper,
+  ValueWrapper,
 } from './Settings.styles';
-import Display from './Display';
+import Display from '../../../components/Display/';
+import CustomCircularInput from '../../../components/CustomCircularInput';
 
 const styles = theme => ({
   button: {
@@ -27,23 +28,30 @@ const Settings = props => {
     <CardContainer>
       <CardColumnWrapper>
         <Card>
-          <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
+          <Typography
+            style={{ margin: '8px 0px 8px 24px' }}
+            component="h4"
+            variant="h4"
+          >
             PV1
           </Typography>
           <Divider />
           <InstrumentContainer>
-            <SliderContainer>
-              <Slider
-                vertical
-                step={0.01}
+            <CircularInputContainer>
+              <CustomCircularInput
+                steps={0.01}
+                setValue={onChangeSlider('pv1')}
                 value={pv1}
+                radius={50}
                 min={-5}
                 max={5}
-                onChange={onChangeSlider('pv1')}
+                step={0.01}
               />
-            </SliderContainer>
+            </CircularInputContainer>
             <DisplayContainer>
-              <Display value={pv1} unit="V" />
+              <ValueWrapper>
+                <Display fontSize={6} value={pv1} unit="V" />
+              </ValueWrapper>
               <ButtonContainer>
                 <Button
                   disabled={pv1 === -5}
@@ -70,23 +78,30 @@ const Settings = props => {
           </InstrumentContainer>
         </Card>
         <Card>
-          <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
+          <Typography
+            style={{ margin: '8px 0px 8px 24px' }}
+            component="h4"
+            variant="h4"
+          >
             PV2
           </Typography>
           <Divider />
           <InstrumentContainer>
-            <SliderContainer>
-              <Slider
-                vertical
-                step={0.01}
+            <CircularInputContainer>
+              <CustomCircularInput
+                steps={0.01}
+                setValue={onChangeSlider('pv2')}
                 value={pv2}
+                radius={50}
                 min={-3.3}
                 max={3.3}
-                onChange={onChangeSlider('pv2')}
+                step={0.01}
               />
-            </SliderContainer>
+            </CircularInputContainer>
             <DisplayContainer>
-              <Display value={pv2} unit="V" />
+              <ValueWrapper>
+                <Display fontSize={6} value={pv2} unit="V" />
+              </ValueWrapper>
               <ButtonContainer>
                 <Button
                   disabled={pv2 === -3.3}
@@ -115,23 +130,30 @@ const Settings = props => {
       </CardColumnWrapper>
       <CardColumnWrapper>
         <Card>
-          <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
+          <Typography
+            style={{ margin: '8px 0px 8px 24px' }}
+            component="h4"
+            variant="h4"
+          >
             PV3
           </Typography>
           <Divider />
           <InstrumentContainer>
-            <SliderContainer>
-              <Slider
-                vertical
-                step={0.01}
+            <CircularInputContainer>
+              <CustomCircularInput
+                steps={0.01}
+                setValue={onChangeSlider('pv3')}
                 value={pv3}
+                radius={50}
                 min={0}
                 max={3.3}
-                onChange={onChangeSlider('pv3')}
+                step={0.01}
               />
-            </SliderContainer>
+            </CircularInputContainer>
             <DisplayContainer>
-              <Display value={pv3} unit="V" />
+              <ValueWrapper>
+                <Display fontSize={6} value={pv3} unit="V" />
+              </ValueWrapper>
               <ButtonContainer>
                 <Button
                   disabled={pv3 === 0}
@@ -158,23 +180,30 @@ const Settings = props => {
           </InstrumentContainer>
         </Card>
         <Card title="PCS">
-          <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
+          <Typography
+            style={{ margin: '8px 0px 8px 24px' }}
+            component="h4"
+            variant="h4"
+          >
             PCS
           </Typography>
           <Divider />
           <InstrumentContainer>
-            <SliderContainer>
-              <Slider
-                vertical
-                step={0.01}
+            <CircularInputContainer>
+              <CustomCircularInput
+                steps={0.01}
+                setValue={onChangeSlider('pcs')}
                 value={pcs}
+                radius={50}
                 min={0}
                 max={3.3}
-                onChange={onChangeSlider('pcs')}
+                step={0.01}
               />
-            </SliderContainer>
+            </CircularInputContainer>
             <DisplayContainer>
-              <Display value={pcs} unit="mA" />
+              <ValueWrapper>
+                <Display fontSize={6} value={pcs} unit="mA" />
+              </ValueWrapper>
               <ButtonContainer>
                 <Button
                   disabled={pcs === 0}

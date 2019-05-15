@@ -8,6 +8,7 @@ import OscilloscopeIcon from '@material-ui/icons/ViewComfy';
 import LogicAnalyserIcon from '@material-ui/icons/InsertChart';
 import PowerSourceIcon from '@material-ui/icons/FlashOn';
 import WaveGeneratorIcon from '@material-ui/icons/GraphicEq';
+import MultimeterIcon from '@material-ui/icons/DeveloperBoard';
 import SettingIcon from '@material-ui/icons/Settings';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
@@ -52,6 +53,11 @@ const topNavigationItems = [
     name: 'Wave Generator',
     redirectPath: '/wavegenerator',
     icon: <WaveGeneratorIcon style={{ fontSize: '2.2em' }} />,
+  },
+  {
+    name: 'Multimeter',
+    redirectPath: '/multimeter',
+    icon: <MultimeterIcon style={{ fontSize: '2.2em' }} />,
   },
 ];
 
