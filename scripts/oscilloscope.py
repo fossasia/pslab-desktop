@@ -9,7 +9,6 @@ class Oscilloscope:
     def __init__(self, I):
         self.device = I
         self.isReading = False
-
         self.number_of_samples = 1000
         self.time_gap = 40
         self.delay = self.calculate_delay(
@@ -22,7 +21,6 @@ class Oscilloscope:
         self.ch2_map = 'CH2'
         self.ch3_map = 'Inbuilt'
         self.number_of_channels = self.ch1 + self.ch2 + self.ch3 + self.ch4
-        self.is_mic_active = False
         self.is_mic_active = False
         self.trigger_voltage = 0
         self.trigger_channel = 'CH1'

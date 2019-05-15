@@ -87,6 +87,7 @@
     "appId": "123xyz",
     "productName": "PSLab Desktop",
     "copyright": "Copyright © 2019 FOSSASIA",
+    "asar": false,
     "linux": {
       "target": [
         "deb"
@@ -95,7 +96,10 @@
     },
     "files": [
       "build/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "utils/**/*",
+      "scripts/**/*",
+      "background_tasks/**/*"
     ],
     "directories": {
       "buildResources": "assets"
