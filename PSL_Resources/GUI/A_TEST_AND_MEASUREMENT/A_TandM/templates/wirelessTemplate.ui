@@ -66,7 +66,7 @@
        <property name="class" stdset="0">
         <string>PeripheralCollection</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,1,1,2">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,2">
         <property name="spacing">
          <number>6</number>
         </property>
@@ -94,9 +94,6 @@
            <bool>true</bool>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="QWebEngineView" name="logs" native="true"/>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
@@ -130,8 +127,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>776</width>
-             <height>169</height>
+             <width>246</width>
+             <height>174</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="nodeArea">
@@ -180,8 +177,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>776</width>
-             <height>340</height>
+             <width>246</width>
+             <height>351</height>
             </rect>
            </property>
            <property name="styleSheet">
@@ -305,14 +302,6 @@
    </layout>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebEngineView</class>
-   <extends>QWidget</extends>
-   <header>qwebengineview.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
