@@ -441,7 +441,7 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
                 # self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
                 self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)
-                self.setWindowTitle('PSLab : ' + self.I.H.version_string.decode("utf-8"))
+                self.setWindowTitle('PSLab : ' + self.I.H.version_string)
 
         self.splash.close()
         return

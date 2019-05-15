@@ -29,7 +29,7 @@ As the first step open up the console. Keyboard shortcut <kbd>Ctrl</kbd>+<kbd>Al
 Type the following command to download the `installer.sh` script.
 
 ```
-wget https://raw.github.com/fossasia/pslab-desktop-apps/development/installer.sh
+wget https://raw.github.com/fossasia/pslab-desktop/development/installer.sh
 ``` 
 
 Once the download is complete, make the file an executable using the following command.
@@ -41,7 +41,7 @@ chmod +x installer.sh
 You will be prompted to enter your password to proceed. Once it is complete, run the intaller by the following command;
 
 ```
-sudo ./installer.sh
+./installer.sh
 ```
 
 This will install the PSLab desktop application along with the libraries in the `/opt/` directory. Installation will complete with a dialog box asking if you want to open up the PSLab desktop application. Select `Yes` and the application will open. If you want to just exit, select `No`. 

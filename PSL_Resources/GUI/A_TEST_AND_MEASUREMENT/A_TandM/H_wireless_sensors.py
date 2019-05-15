@@ -187,7 +187,7 @@ class AppWindow(QtGui.QMainWindow, wirelessTemplate.Ui_MainWindow, utilitiesClas
         T += '''
 		</tbody></table>
 		'''
-        self.logs.setHtml(T)
+        #self.logs.setHtml(T)
 
     def reloadNodeList(self):
         lst = self.I.NRF.get_nodelist()
