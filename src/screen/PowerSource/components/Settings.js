@@ -39,10 +39,9 @@ const Settings = props => {
           <InstrumentContainer>
             <CircularInputContainer>
               <CustomCircularInput
-                steps={0.01}
                 setValue={onChangeSlider('pv1')}
                 value={pv1}
-                radius={50}
+                radius={86}
                 min={-5}
                 max={5}
                 step={0.01}
@@ -89,10 +88,9 @@ const Settings = props => {
           <InstrumentContainer>
             <CircularInputContainer>
               <CustomCircularInput
-                steps={0.01}
                 setValue={onChangeSlider('pv2')}
                 value={pv2}
-                radius={50}
+                radius={86}
                 min={-3.3}
                 max={3.3}
                 step={0.01}
@@ -141,10 +139,9 @@ const Settings = props => {
           <InstrumentContainer>
             <CircularInputContainer>
               <CustomCircularInput
-                steps={0.01}
                 setValue={onChangeSlider('pv3')}
                 value={pv3}
-                radius={50}
+                radius={86}
                 min={0}
                 max={3.3}
                 step={0.01}
@@ -191,10 +188,9 @@ const Settings = props => {
           <InstrumentContainer>
             <CircularInputContainer>
               <CustomCircularInput
-                steps={0.01}
                 setValue={onChangeSlider('pcs')}
                 value={pcs}
-                radius={50}
+                radius={86}
                 min={0}
                 max={3.3}
                 step={0.01}

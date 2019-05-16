@@ -1,115 +1,179 @@
 import React from 'react';
-import { Card, Button, Typography, Divider } from '@material-ui/core';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+import { Card } from '@material-ui/core';
 import {
   InstrumentContainer,
-  SwitchContainer,
-  SwitchWrapper,
   DisplayContainer,
   DisplayWrapper,
+  TextIcon,
+  ImageIcon,
 } from './InstrumentCluster.styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { IconButton } from '@material-ui/core';
+import ResistorIcon from '../../../resources/resistor.svg';
+import CapacitorIcon from '../../../resources/capacitor.svg';
+import Dial from './Dial';
 import Display from '../../../components/Display';
+import ActionButtons from './ActionButtons';
+import { withStyles } from '@material-ui/core/styles';
 
-const InstrumentCluster = props => (
-  <InstrumentContainer>
-    <SwitchContainer>
-      <Card>
-        <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
-          Measure
-        </Typography>
-        <Divider />
-        <SwitchWrapper>
-          <FormControl
-            component="fieldset"
-            // className={classes.formControl}
-          >
-            <RadioGroup
-              aria-label="Gender"
-              name="gender1"
-              // className={classes.group}
-              value={'x'}
-              onChange={() => {}}
-            >
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="Resistance"
-              />
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="Capacitence"
-              />
-            </RadioGroup>
-          </FormControl>
-        </SwitchWrapper>
-      </Card>
-      <Card>
-        <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
-          Voltage
-        </Typography>
-        <Divider />
-        <SwitchWrapper>
-          <FormControl
-            component="fieldset"
-            // className={classes.formControl}
-          >
-            <RadioGroup
-              aria-label="Gender"
-              name="gender1"
-              // className={classes.group}
-              value={'x'}
-              onChange={() => {}}
-            >
-              <FormControlLabel value="male" control={<Radio />} label="ID1" />
-              <FormControlLabel value="male" control={<Radio />} label="ID2" />
-              <FormControlLabel value="male" control={<Radio />} label="ID3" />
-              <FormControlLabel value="male" control={<Radio />} label="ID4" />
-            </RadioGroup>
-          </FormControl>
-        </SwitchWrapper>
-      </Card>
-    </SwitchContainer>
-    <DisplayContainer>
-      <Card>
-        <DisplayWrapper>
-          {' '}
-          <Display value={20} unit={'V'} />
-        </DisplayWrapper>
-      </Card>
-    </DisplayContainer>
-    <SwitchContainer>
-      <Card>
-        <Typography style={{ padding: '0.6rem' }} component="h4" variant="h4">
-          Voltage
-        </Typography>
-        <Divider />
-        <SwitchWrapper>
-          <FormControl
-            component="fieldset"
-            // className={classes.formControl}
-          >
-            <RadioGroup
-              aria-label="Gender"
-              name="gender1"
-              // className={classes.group}
-              value={'x'}
-              onChange={() => {}}
-            >
-              <FormControlLabel value="male" control={<Radio />} label="CH1" />
-              <FormControlLabel value="male" control={<Radio />} label="CH2" />
-              <FormControlLabel value="male" control={<Radio />} label="CH3" />
-              <FormControlLabel value="male" control={<Radio />} label="CAP" />
-              <FormControlLabel value="male" control={<Radio />} label="AN8" />
-            </RadioGroup>
-          </FormControl>
-        </SwitchWrapper>
-      </Card>
-    </SwitchContainer>
-  </InstrumentContainer>
-);
+const styles = () => ({
+  cardMargin: {
+    margin: '0px 16px 0px 0px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+});
 
-export default InstrumentCluster;
+const InstrumentCluster = ({
+  activeOption,
+  onClickButton,
+  onChangeDial,
+  dialValue,
+  data,
+  unit,
+  classes,
+}) => {
+  const options = [
+    {
+      icon: (
+        <IconButton onClick={onClickButton('CH1', 'V', 0)} size="medium">
+          <TextIcon active={activeOption === 'CH1'}>CH1</TextIcon>
+        </IconButton>
+      ),
+      name: 'CH1',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-90deg) translate(160px) rotate(90deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('CH2', 'V', 327)} size="medium">
+          <TextIcon active={activeOption === 'CH2'}>CH2</TextIcon>
+        </IconButton>
+      ),
+      name: 'CH2',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-122.72deg) translate(160px) rotate(122.72deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('CH3', 'V', 294)} size="medium">
+          <TextIcon active={activeOption === 'CH3'}>CH3</TextIcon>
+        </IconButton>
+      ),
+      name: 'CH3',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-155.44deg) translate(160px) rotate(155.44deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('CAP', 'V', 262)} size="medium">
+          <TextIcon active={activeOption === 'CAP'}>CAP</TextIcon>
+        </IconButton>
+      ),
+      name: 'CAP',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-188.16deg) translate(160px) rotate(188.16deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('AN8', 'V', 229)} size="medium">
+          <TextIcon active={activeOption === 'AN8'}>AN8</TextIcon>
+        </IconButton>
+      ),
+      name: 'AN8',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-220.88deg) translate(160px) rotate(220.88deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('ID1', 'Hz', 196)} size="medium">
+          <TextIcon active={activeOption === 'ID1'}>ID1</TextIcon>
+        </IconButton>
+      ),
+      name: 'ID1',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-253.6deg) translate(160px) rotate(253.6deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('ID2', 'Hz', 164)} size="medium">
+          <TextIcon active={activeOption === 'ID2'}>ID2</TextIcon>
+        </IconButton>
+      ),
+      name: 'ID2',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-286.32deg) translate(160px) rotate(286.32deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('ID3', 'Hz', 131)} size="medium">
+          <TextIcon active={activeOption === 'ID3'}>ID3</TextIcon>
+        </IconButton>
+      ),
+      name: 'ID3',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-319.04deg) translate(160px) rotate(319.04deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('ID4', 'Hz', 98)} size="medium">
+          <TextIcon active={activeOption === 'ID4'}>ID4</TextIcon>
+        </IconButton>
+      ),
+      name: 'ID4',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-351.76deg) translate(160px) rotate(351.76deg)',
+    },
+    {
+      icon: (
+        <IconButton onClick={onClickButton('RESISTOR', 'Ω', 65)} size="medium">
+          <ImageIcon
+            active={activeOption === 'RESISTOR'}
+            alt="RESISTOR"
+            src={ResistorIcon}
+          />
+        </IconButton>
+      ),
+      name: 'RESISTOR',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-24.48deg) translate(160px) rotate(24.48deg)',
+    },
+    {
+      icon: (
+        <IconButton
+          onClick={onClickButton('CAPACITOR', 'pF', 33)}
+          size="medium"
+        >
+          <ImageIcon
+            active={activeOption === 'CAPACITOR'}
+            alt="CAPACITOR"
+            src={CapacitorIcon}
+          />
+        </IconButton>
+      ),
+      name: 'CAPACITOR',
+      transform:
+        'translateX(-50%) translateY(-50%) rotate(-57.2deg) translate(160px) rotate(57.2deg)',
+    },
+  ];
+
+  return (
+    <InstrumentContainer>
+      <Card className={classes.cardMargin}>
+        <Dial options={options} value={dialValue} onChangeDial={onChangeDial} />
+        <ActionButtons />
+      </Card>
+      <DisplayContainer>
+        <Card>
+          <LinearProgress />
+          <DisplayWrapper>
+            <Display fontSize={'10'} value={data} unit={unit} />
+          </DisplayWrapper>
+        </Card>
+      </DisplayContainer>
+    </InstrumentContainer>
+  );
+};
+
+export default withStyles(styles)(InstrumentCluster);
