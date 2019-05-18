@@ -13,82 +13,110 @@ class Multimeter extends Component {
       isReading: false,
       data: 0,
       unit: 'V',
-      activeOption: 'CH1',
+      activeCatagory: 'VOLTAGE',
+      activeSubType: 'CH1',
+      parameter: null,
       dialValue: 0,
     };
   }
 
-  onChangeDial = value => {
-    const dialValue = Math.round(value);
-    let activeOption = null;
-    console.log(dialValue);
-    switch (dialValue) {
-      case 0:
-        activeOption = 'CH1';
-        break;
-      case 360:
-        activeOption = 'CH1';
-        break;
-      case 33:
-        activeOption = 'CAPACITOR';
-        break;
-      case 65:
-        activeOption = 'RESISTOR';
-        break;
-      case 98:
-        activeOption = 'ID4';
-        break;
-      case 131:
-        activeOption = 'ID3';
-        break;
-      case 164:
-        activeOption = 'ID2';
-        break;
-      case 196:
-        activeOption = 'ID1';
-        break;
-      case 229:
-        activeOption = 'AN8';
-        break;
-      case 262:
-        activeOption = 'CAP';
-        break;
-      case 294:
-        activeOption = 'CH3';
-        break;
-      case 327:
-        activeOption = 'CH2';
-        break;
-      default:
-        break;
-    }
-    this.setState({
-      dialValue,
-      activeOption,
+  componentDidMount() {
+    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+      const { isConnected } = args;
+      isConnected && this.getConfigFromDevice();
     });
+    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
+      this.setState({
+        ...args,
+      });
+    });
+    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
+      const { activeCatagory, activeSubType, parameter } = args;
+      this.setState({
+        activeCatagory,
+        activeSubType,
+        parameter,
+      });
+    });
+    this.getConfigFromDevice();
+  }
+
+  componentWillUnmount() {
+    const { isReading } = this.state;
+    isReading &&
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'STOP_MUL_MET',
+      });
+    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
+  }
+
+  getConfigFromDevice = debounce(() => {
+    const { isConnected } = this.props;
+    isConnected &&
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'GET_CONFIG_MUL_MET',
+      });
+  }, 500);
+
+  sendConfigToDevice = debounce(() => {
+    const { isConnected } = this.props;
+    const { activeCatagory, activeSubType, parameter } = this.state;
+    isConnected &&
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'SET_CONFIG_MUL_MET',
+        activeCatagory,
+        activeSubType,
+        parameter,
+      });
+  }, 500);
+
+  onToggleRead = event => {
+    const { isReading } = this.state;
+    this.setState(prevState => ({
+      isReading: !prevState.isReading,
+    }));
+    if (isReading) {
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'STOP_MUL_MET',
+      });
+    } else {
+      loadBalancer.send(ipcRenderer, 'linker', {
+        command: 'START_MUL_MET',
+      });
+    }
   };
 
   onClickButton = (optionName, unit, dialValue) => () => {
-    this.setState({
-      activeOption: optionName,
-      unit,
-      dialValue,
-    });
+    this.setState(
+      {
+        activeSubType: optionName,
+        unit,
+        dialValue,
+        data: 0,
+      },
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   render() {
-    const { activeOption, data, unit, dialValue } = this.state;
-
+    const { activeSubType, data, unit, dialValue, isReading } = this.state;
+    const { isConnected } = this.props;
     return (
       <SimplePanelLayout
         panel={
           <InstrumentCluster
-            activeOption={activeOption}
+            activeSubType={activeSubType}
             onClickButton={this.onClickButton}
             onChangeDial={this.onChangeDial}
+            onToggleRead={this.onToggleRead}
+            isReading={isReading}
             data={data}
             unit={unit}
             dialValue={dialValue}
+            isConnected={isConnected}
           />
         }
       />
