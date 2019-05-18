@@ -9,10 +9,12 @@ class Device_detection:
     def __init__(self):
         self.device = None
         self.connected = False
+        self.device_detection_thread = None
         pass
 
     def disconnect(self):
         self.connected = False
+        self.device_detection_thread.join()
 
     def async_connect(self):
         # First connection attempt
@@ -39,9 +41,10 @@ class Device_detection:
         print(json.dumps(output))
         sys.stdout.flush()
 
-        return threading.Thread(
+        self.device_detection_thread = threading.Thread(
             target=self.check_connection,
             name='conn_check')
+        self.device_detection_thread.start()
 
     def check_connection(self):
         while self.connected:

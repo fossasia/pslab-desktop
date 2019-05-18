@@ -8,15 +8,11 @@ from power_source import Power_source
 
 def main():
     device_detection = Device_detection()
-    device_detection_thread = device_detection.async_connect()
+    device_detection.async_connect()
     I = device_detection.device
-
-    # connection and connection check loop initialization
-    device_detection_thread.start()
 
     # instrument cluster initialization
     oscilloscope = Oscilloscope(I)
-    oscilloscope_data_read_thread = None
     power_source = Power_source(I)
 
     while(True):
@@ -30,18 +26,15 @@ def main():
             I.set_sine1(1000)
             I.set_sine2(500)
 
-            oscilloscope_data_read_thread = oscilloscope.readData()
-            oscilloscope_data_read_thread.start()
+            oscilloscope.start_read()
 
         if command == "STOP_OSC":
-            oscilloscope.isReading = False
-            oscilloscope_data_read_thread.join()
+            oscilloscope.stop_read()
 
         if command == "SET_CONFIG_OSC":
-            old_read_state = oscilloscope.isReading
-            oscilloscope.isReading = False
-            if old_read_state:
-                oscilloscope_data_read_thread.join()
+            old_read_state = oscilloscope.is_reading
+            if oscilloscope.is_reading:
+                oscilloscope.stop_read()
 
             time_gap = parsed_stream_data['timeGap']
             number_of_samples = parsed_stream_data['numberOfSamples']
@@ -68,8 +61,7 @@ def main():
                 time_gap, number_of_samples, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active)
 
             if old_read_state:
-                oscilloscope_data_read_thread = oscilloscope.readData()
-                oscilloscope_data_read_thread.start()
+                oscilloscope.start_read()
 
         if command == 'GET_CONFIG_OSC':
             oscilloscope.get_config()

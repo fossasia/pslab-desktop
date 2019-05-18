@@ -7,8 +7,9 @@ import numpy as np
 
 class Oscilloscope:
     def __init__(self, I):
+        self.oscilloscope_data_read_thread = None
         self.device = I
-        self.isReading = False
+        self.is_reading = False
         self.number_of_samples = 1000
         self.time_gap = 40
         self.delay = self.calculate_delay(
@@ -82,14 +83,19 @@ class Oscilloscope:
         print(json.dumps(output))
         sys.stdout.flush()
 
-    def readData(self):
-        return threading.Thread(
+    def start_read(self):
+        self.oscilloscope_data_read_thread = threading.Thread(
             target=self.capture_loop,
             name='osc')
+        self.oscilloscope_data_read_thread.start()
+
+    def stop_read(self):
+        self.is_reading = False
+        self.oscilloscope_data_read_thread.join()
 
     def capture_loop(self):
-        self.isReading = True
-        while self.isReading:
+        self.is_reading = True
+        while self.is_reading:
             self.device.capture_traces(
                 self.number_of_channels, self.number_of_samples, self.time_gap, trigger=self.is_trigger_active)
             time.sleep(self.delay)
