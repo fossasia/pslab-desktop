@@ -25,7 +25,7 @@ import {
   TitleContainer,
   AppBar,
 } from './Appshell.styles';
-import AppIcon from '../../resources/app_icon.svg';
+import AppIcon from '../../resources/app_icon.js';
 
 const styles = theme => ({
   iconButton: {
@@ -72,14 +72,7 @@ const Appshell = ({
     <AppshellContainer>
       <NavigationContainer>
         <AppIconWrapper>
-          <img
-            style={{
-              height: '3em',
-              width: 'auto',
-            }}
-            alt="App Icon"
-            src={AppIcon}
-          />
+          <AppIcon width={'3em'} height={'auto'} color={''} />
         </AppIconWrapper>
         <TopNavigationWrapper>
           {topNavigationItems.map((item, index) => {
