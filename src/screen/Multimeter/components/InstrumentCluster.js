@@ -9,12 +9,12 @@ import {
 } from './InstrumentCluster.styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { IconButton } from '@material-ui/core';
-import ResistorIcon from '../../../resources/resistor.svg';
-import CapacitorIcon from '../../../resources/capacitor.svg';
+import ResistorIcon from '../../../resources/ResistorIcon.js';
+import CapacitorIcon from '../../../resources/CapacitorIcon.js';
 import Dial from './Dial';
 import Display from '../../../components/Display';
 import ActionButtons from './ActionButtons';
-import { withStyles } from '@material-ui/core/styles';
+import { withTheme, withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
   cardMargin: {
@@ -32,6 +32,7 @@ const InstrumentCluster = ({
   dialValue,
   data,
   unit,
+  theme,
   classes,
 }) => {
   const options = [
@@ -128,10 +129,13 @@ const InstrumentCluster = ({
     {
       icon: (
         <IconButton onClick={onClickButton('RESISTOR', 'Ω', 65)} size="medium">
-          <ImageIcon
-            active={activeOption === 'RESISTOR'}
-            alt="RESISTOR"
-            src={ResistorIcon}
+          <ResistorIcon
+            color={
+              activeOption === 'RESISTOR'
+                ? theme.pallet.secondary.dark
+                : theme.pallet.text.hint
+            }
+            size="1.5em"
           />
         </IconButton>
       ),
@@ -145,10 +149,13 @@ const InstrumentCluster = ({
           onClick={onClickButton('CAPACITOR', 'pF', 33)}
           size="medium"
         >
-          <ImageIcon
-            active={activeOption === 'CAPACITOR'}
-            alt="CAPACITOR"
-            src={CapacitorIcon}
+          <CapacitorIcon
+            color={
+              activeOption === 'CAPACITOR'
+                ? theme.pallet.secondary.dark
+                : theme.pallet.text.hint
+            }
+            size={'1.5em'}
           />
         </IconButton>
       ),
@@ -176,4 +183,4 @@ const InstrumentCluster = ({
   );
 };
 
-export default withStyles(styles)(InstrumentCluster);
+export default withTheme()(withStyles(styles)(InstrumentCluster));
