@@ -27,10 +27,3 @@ export const TextIcon = styled.div`
   color: ${props =>
     props.active ? props.theme.secondary.dark : props.theme.text.hint};
 `;
-
-export const ImageIcon = styled.img`
-  height: 34px;
-  width: auto;
-  color: ${props =>
-    props.active ? props.theme.secondary.dark : props.theme.text.hint};
-`;

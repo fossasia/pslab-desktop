@@ -83,7 +83,7 @@ class App extends Component {
     });
 
     ipcRenderer.on('DEBUG', (event, args) => {
-      // console.log(args);
+      console.log(args);
     });
 
     loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
@@ -120,7 +120,12 @@ class App extends Component {
                     <PowerSource {...props} isConnected={isConnected} />
                   )}
                 />
-                <Route path="/multimeter" component={Multimeter} />
+                <Route
+                  path="/multimeter"
+                  render={props => (
+                    <Multimeter {...props} isConnected={isConnected} />
+                  )}
+                />
                 <Route path="/settings" component={Settings} />
               </Switch>
             </Appshell>

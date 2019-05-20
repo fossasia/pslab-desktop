@@ -9,7 +9,6 @@ import { Spring } from 'react-spring/renderprops';
 import { withTheme } from 'styled-components';
 
 const CustomCircularInput = ({
-  steps,
   setValue,
   value,
   min = 0,

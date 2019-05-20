@@ -4,6 +4,7 @@ import json
 from oscilloscope import Oscilloscope
 from device_detection import Device_detection
 from power_source import Power_source
+from multimeter import Multimeter
 
 
 def main():
@@ -14,6 +15,7 @@ def main():
     # instrument cluster initialization
     oscilloscope = Oscilloscope(I)
     power_source = Power_source(I)
+    multimeter = Multimeter(I)
 
     while(True):
         in_stream_data = input()
@@ -65,6 +67,31 @@ def main():
 
         if command == 'GET_CONFIG_OSC':
             oscilloscope.get_config()
+
+        # --------------------------- Multimeter block ---------------------------------
+        if command == 'START_MUL_MET':
+            multimeter.start_read()
+
+        if command == 'STOP_MUL_MET':
+            multimeter.stop_read()
+
+        if command == 'SET_CONFIG_MUL_MET':
+            old_read_state = multimeter.is_reading
+            if multimeter.is_reading:
+                multimeter.stop_read()
+
+            active_catagory = parsed_stream_data['activeCatagory']
+            active_subtype = parsed_stream_data['activeSubType']
+            parameter = None
+            if active_catagory == 'PULSE':
+                parameter = parsed_stream_data['parameter']
+            multimeter.set_config(active_catagory, active_subtype, parameter)
+
+            if old_read_state:
+                multimeter.start_read()
+
+        if command == 'GET_CONFIG_MUL_MET':
+            multimeter.get_config()
 
         # -------------------------- Power Source block ---------------------------------
         if command == 'SET_CONFIG_PWR_SRC':

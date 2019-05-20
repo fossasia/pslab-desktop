@@ -6,9 +6,7 @@
 	const { oscilloscopeDataProcessor } = require('../utils/preProcessor.js');
 	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
 		/* -------------------- Blocking code here ----------------------- */
-
-		ipcRenderer.send('DEBUG', 'background running running');
-
+		
 		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
 			pythonPath: 'python3',
 		});
@@ -33,10 +31,16 @@
 						parsedOutput = oscilloscopeDataProcessor(parsedJSON);
 						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
 						break;
+					case 'START_MUL_MET':
+						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedJSON.data});
+						break;
 					case 'GET_CONFIG_PWR_SRC':
 						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
 						break;
 					case 'GET_CONFIG_OSC':
+						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
+						break;
+					case 'GET_CONFIG_MUL_MET':
 						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
 						break;
 					case 'DEVICE_CONNECTION_STATUS':

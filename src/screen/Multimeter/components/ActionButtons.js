@@ -12,7 +12,7 @@ const styles = () => ({
   },
 });
 
-const ActionButtons = ({ classes }) => {
+const ActionButtons = ({ isReading, onToggleRead, isConnected, classes }) => {
   return (
     <ActionButtonContainer>
       <Button
@@ -20,14 +20,14 @@ const ActionButtons = ({ classes }) => {
         variant="contained"
         size="large"
         color="default"
-        // disabled={!isConnected}
-        // onClick={onToggleRead}
+        disabled={!isConnected}
+        onClick={onToggleRead}
       >
-        {/* {isReading ? ( */}
-        {/* <StopIcon style={{ fontSize: 20 }} /> */}
-        {/* ) : ( */}
-        <ReadIcon style={{ fontSize: 20 }} />
-        {/* )} */}
+        {isReading ? (
+          <StopIcon style={{ fontSize: 20 }} />
+        ) : (
+          <ReadIcon style={{ fontSize: 20 }} />
+        )}
       </Button>
       <Button
         className={classes.buttonMargin}
