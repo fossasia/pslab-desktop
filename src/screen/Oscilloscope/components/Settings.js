@@ -13,11 +13,12 @@ const Settings = ({
   onToggleChannel,
   onChangeChannelRange,
   onChangeChannelMap,
-  onToggleTrigger,
   onChangeTriggerVoltage,
   onChangeTriggerChannel,
-  onChangeTimeBase,
+  onChangeTimeBaseIndex,
   triggerVoltage,
+  timeBaseListLength,
+  timeBaseIndex,
   timeBase,
   triggerVoltageChannel,
   isTriggerActive,
@@ -31,14 +32,14 @@ const Settings = ({
   plotChannel1,
   plotChannel2,
   onChangePlotChannel,
-  mapToMic,
+  isMicActive,
   onToggleCheckBox,
 }) => (
   <SettingsContainer>
     <Scrollbars autoHide autoHideTimeout={1000}>
       <ChannelParameters
         onToggleCheckBox={onToggleCheckBox}
-        mapToMic={mapToMic}
+        isMicActive={isMicActive}
         activeChannels={activeChannels}
         channelRanges={channelRanges}
         channelMaps={channelMaps}
@@ -49,8 +50,10 @@ const Settings = ({
       <TimeParameters
         onChangeTriggerVoltage={onChangeTriggerVoltage}
         onChangeTriggerChannel={onChangeTriggerChannel}
-        onChangeTimeBase={onChangeTimeBase}
+        onChangeTimeBaseIndex={onChangeTimeBaseIndex}
         triggerVoltage={triggerVoltage}
+        timeBaseListLength={timeBaseListLength}
+        timeBaseIndex={timeBaseIndex}
         timeBase={timeBase}
         triggerVoltageChannel={triggerVoltageChannel}
         isTriggerActive={isTriggerActive}

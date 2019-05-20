@@ -11,18 +11,17 @@ class Oscilloscope:
         self.device = I
         self.is_reading = False
         self.number_of_samples = 1000
-        self.time_gap = 40
-        self.delay = self.calculate_delay(
-            self.time_gap, self.number_of_samples)
+        self.time_base = 5
+        self.delay, self.time_gap = self.calculate_delay_time_gap(
+            self.time_base, self.number_of_samples)
         self.ch1 = True
         self.ch2 = False
         self.ch3 = False
         self.ch4 = False
         self.ch1_map = 'CH1'
         self.ch2_map = 'CH2'
-        self.ch3_map = 'Inbuilt'
+        self.ch4_map = 'Inbuilt'
         self.number_of_channels = self.ch1 + self.ch2 + self.ch3 + self.ch4
-        self.is_mic_active = False
         self.trigger_voltage = 0
         self.trigger_channel = 'CH1'
         self.is_trigger_active = False
@@ -35,18 +34,19 @@ class Oscilloscope:
         self.plot_channel2 = 'CH2'
         # initialized values here including trigger values
 
-    def calculate_delay(self, time_gap, number_of_samples):
+    def calculate_delay_time_gap(self, time_base, number_of_samples):
+        time_gap = (time_base * 10 * 1e3) / number_of_samples
         delay = time_gap * number_of_samples * 1e-6
         if delay < 0.075:
-            return 0.075
+            return (0.075, time_gap)
         else:
-            return delay
+            return (delay, time_gap)
 
-    def set_config(self, time_gap, number_of_samples, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active):
-        self.time_gap = time_gap
+    def set_config(self, time_base, number_of_samples, ch1, ch2, ch3, ch4, trigger_channel, trigger_voltage, is_trigger_active):
+        self.time_base = time_base
         self.number_of_samples = number_of_samples
-        self.delay = self.calculate_delay(
-            self.time_gap, self.number_of_samples)
+        self.delay, self.time_gap = self.calculate_delay_time_gap(
+            self.time_base, self.number_of_samples)
         self.ch1 = ch1
         self.ch2 = ch2
         self.ch3 = ch3
@@ -60,15 +60,14 @@ class Oscilloscope:
 
     def get_config(self):
         output = {'type': 'GET_CONFIG_OSC',
-                  'timeBase': self.time_gap,
+                  'timeBase': self.time_base,
                   'ch1': self.ch1,
                   'ch2': self.ch2,
                   'ch3': self.ch3,
-                  'ch4': self.ch4,
+                  'isMicActive': self.ch4,
                   'ch1Map': self.ch1_map,
                   'ch2Map': self.ch2_map,
-                  'ch3Map': self.ch3_map,
-                  'mapToMic': self.is_mic_active,
+                  'ch4Map': self.ch4_map,
                   'triggerVoltage': self.trigger_voltage,
                   'triggerVoltageChannel': self.trigger_channel,
                   'isTriggerActive': self.is_trigger_active,
@@ -118,6 +117,7 @@ class Oscilloscope:
                 x, y4 = self.device.fetch_trace(4)
                 keys.append('ch4')
                 vector = vector + (y4, )
+            x = x * 1e-3
             vector = (x, ) + vector
             output = {'type': 'START_OSC', 'data': np.stack(
                 vector).T.tolist(), 'keys': keys,
