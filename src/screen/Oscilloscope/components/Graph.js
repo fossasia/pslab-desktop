@@ -11,7 +11,21 @@ import {
 } from 'recharts';
 import { withTheme } from 'styled-components';
 
-const Graph = ({ data, activeChannels, theme }) => {
+const Graph = ({
+  data,
+  isMicActive,
+  activeChannels,
+  timeBase,
+  channelRanges,
+  theme,
+}) => {
+  // console.log(data, isMicActive, activeChannels);
+
+  const yDomain = Math.max(
+    parseInt(channelRanges.ch1, 10),
+    parseInt(channelRanges.ch2, 10),
+  );
+
   return (
     <ResponsiveContainer>
       <LineChart
@@ -24,8 +38,13 @@ const Graph = ({ data, activeChannels, theme }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="timeGap" type="number" />
-        <YAxis yAxisId="left" />
+        <XAxis
+          dataKey="timeGap"
+          type="number"
+          tickCount={11}
+          domain={[0, 10 * timeBase]}
+        />
+        <YAxis yAxisId="left" domain={[-1 * yDomain, yDomain]} />
         <YAxis yAxisId="right" orientation="right" />
         <Tooltip />
         <Legend align="right" iconType="triangle" />
@@ -59,7 +78,7 @@ const Graph = ({ data, activeChannels, theme }) => {
             activeDot={{ r: 4 }}
           />
         )}
-        {activeChannels.ch4 && (
+        {isMicActive && (
           <Line
             yAxisId="left"
             type="monotone"

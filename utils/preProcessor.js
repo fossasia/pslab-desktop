@@ -30,6 +30,18 @@ exports.oscilloscopeDataProcessor = parsedJSON => {
         ];
       }
       break;
+    case 3:
+      for (let index = 0; index < numberOfDataPoints; index += 1) {
+        parsedOutput = [
+          ...parsedOutput,
+          {
+            [keys[0]]: data[index][0],
+            [keys[1]]: data[index][1],
+            [keys[2]]: data[index][2],
+          },
+        ];
+      }
+      break;
     case 4:
       for (let index = 0; index < numberOfDataPoints; index += 1) {
         parsedOutput = [

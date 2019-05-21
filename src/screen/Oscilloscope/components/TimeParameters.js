@@ -21,7 +21,7 @@ const styles = () => ({
     margin: '0px 16px 0px 0px',
   },
   slider: {
-    margin: '0px 16px 0px 0px',
+    margin: '0px 8px 0px 0px',
   },
 });
 
@@ -44,8 +44,10 @@ class TimeParameters extends Component {
       onToggleCheckBox,
       onChangeTriggerVoltage,
       onChangeTriggerChannel,
-      onChangeTimeBase,
+      onChangeTimeBaseIndex,
       triggerVoltage,
+      timeBaseListLength,
+      timeBaseIndex,
       timeBase,
       triggerVoltageChannel,
       isTriggerActive,
@@ -105,6 +107,11 @@ class TimeParameters extends Component {
               })}
             </Select>
           </FormControl>
+        </OptionsRowWrapper>
+        <OptionsRowWrapper>
+          <span style={{ margin: '0px 16px 0px 0px', width: '100px' }}>
+            Voltage
+          </span>
           <Slider
             classes={{ container: classes.slider }}
             disabled={!isTriggerActive}
@@ -114,17 +121,25 @@ class TimeParameters extends Component {
             max={16.5}
             onChange={onChangeTriggerVoltage}
           />
+          <span style={{ margin: '0px 12px 0px 8px', width: '120px' }}>
+            {`${triggerVoltage} V`}
+          </span>
         </OptionsRowWrapper>
         <OptionsRowWrapper>
-          <span style={{ marginRight: 16 }}>TimeBase</span>
+          <span style={{ margin: '0px 16px 0px 0px', width: '100px' }}>
+            TimeBase
+          </span>
           <Slider
             classes={{ container: classes.slider }}
             step={1}
-            value={timeBase}
-            min={10}
-            max={800}
-            onChange={onChangeTimeBase}
+            value={timeBaseIndex}
+            min={0}
+            max={timeBaseListLength - 1}
+            onChange={onChangeTimeBaseIndex}
           />
+          <span
+            style={{ margin: '0px 12px 0px 8px', width: '120px' }}
+          >{`${timeBase} mS / div`}</span>
         </OptionsRowWrapper>
       </SettingsWrapper>
     );

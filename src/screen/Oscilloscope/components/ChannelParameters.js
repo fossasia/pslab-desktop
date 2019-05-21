@@ -83,7 +83,7 @@ class ChannelParameters extends Component {
       onToggleChannel,
       onChangeChannelRange,
       onChangeChannelMap,
-      mapToMic,
+      isMicActive,
       onToggleCheckBox,
       classes,
     } = this.props;
@@ -271,11 +271,13 @@ class ChannelParameters extends Component {
             }
             label="CH3"
           />
+        </OptionsRowWrapper>
+        <OptionsRowWrapper>
           <FormControlLabel
             control={
               <Checkbox
-                checked={mapToMic}
-                onChange={onToggleCheckBox('mapToMic')}
+                checked={isMicActive}
+                onChange={onToggleCheckBox('isMicActive')}
               />
             }
             label="Mic"
@@ -284,7 +286,7 @@ class ChannelParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
-            disabled={!mapToMic}
+            disabled={!isMicActive}
           >
             <InputLabel
               ref={ref => {
@@ -295,8 +297,8 @@ class ChannelParameters extends Component {
               Mic Type
             </InputLabel>
             <Select
-              value={channelMaps.ch3}
-              onChange={onChangeChannelMap('ch3')}
+              value={channelMaps.ch4}
+              onChange={onChangeChannelMap('ch4')}
               input={
                 <OutlinedInput
                   labelWidth={MicLabelWidth}
