@@ -22,14 +22,22 @@
 			pyshell.send(JSON.stringify(args));
 		});
 
+		pyshell.on('stderr', function (stderr) {
+			ipcRenderer.send('DEBUG', stderr);
+		});
+
 		pyshell.on('message', function(results) {
-			ipcRenderer.send('DEBUG', results);
 			try {
 				const parsedJSON = JSON.parse(results);
 				switch (parsedJSON['type']) {
-					case 'START_OSC':
-						parsedOutput = oscilloscopeDataProcessor(parsedJSON);
-						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
+					case 'START_OSC':	
+						if(parsedJSON.isFFT){
+							ipcRenderer.send('DEBUG', parsedJSON);
+						}
+						else{
+							parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+							ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
+						}	
 						break;
 					case 'START_MUL_MET':
 						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedJSON.data});

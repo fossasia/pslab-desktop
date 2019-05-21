@@ -39,9 +39,9 @@ class AnalysisParameters extends Component {
   render() {
     const {
       isXYPlotActive,
-      onToggleCheckBox,
       plotChannel1,
       plotChannel2,
+      onToggleCheckBox,
       onChangePlotChannel,
       classes,
     } = this.props;
