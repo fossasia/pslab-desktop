@@ -6,6 +6,7 @@ import Home from './screen/Home';
 import Oscilloscope from './screen/Oscilloscope';
 import LogicAnalyser from './screen/LogicAnalyser';
 import PowerSource from './screen/PowerSource';
+import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
 import Settings from './screen/Settings';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -118,6 +119,12 @@ class App extends Component {
                   path="/powersource"
                   render={props => (
                     <PowerSource {...props} isConnected={isConnected} />
+                  )}
+                />
+                <Route
+                  path="/wavegenerator"
+                  render={props => (
+                    <WaveGenerator {...props} isConnected={isConnected} />
                   )}
                 />
                 <Route

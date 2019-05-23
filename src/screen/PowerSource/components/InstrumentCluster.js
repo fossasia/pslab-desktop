@@ -11,8 +11,8 @@ import {
   InstrumentContainer,
   CardColumnWrapper,
   ValueWrapper,
-} from './Settings.styles';
-import Display from '../../../components/Display/';
+} from './InstrumentCluster.styles';
+import Display from '../../../components/Display';
 import CustomCircularInput from '../../../components/CustomCircularInput';
 
 const styles = theme => ({

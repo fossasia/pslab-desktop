@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SimplePanelLayout from '../../components/SimplePanelLayout';
-import Settings from './components/Settings';
+import InstrumentCluster from './components/InstrumentCluster';
 import roundOff from '../../utils/arithmetics';
 import debounce from 'lodash/debounce';
 const electron = window.require('electron');
@@ -84,7 +84,7 @@ class PowerSouce extends Component {
     return (
       <SimplePanelLayout
         panel={
-          <Settings
+          <InstrumentCluster
             pv1={pv1}
             pv2={pv2}
             pv3={pv3}

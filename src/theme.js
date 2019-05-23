@@ -45,6 +45,12 @@ const theme = createMuiTheme({
     ch2Color: '#03a9f4',
     ch3Color: '#4caf50',
     micColor: '#5e35b1',
+    s1Color: '#ff9800',
+    s2Color: '#03a9f4',
+    sqr1Color: '#4caf50',
+    sqr2Color: '#5e35b1',
+    sqr3Color: '#ff9800',
+    sqr4Color: '#03a9f4',
   },
 });
 
