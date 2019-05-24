@@ -18,7 +18,7 @@ export const DialContainer = styled.div`
 `;
 
 export const DialWrapper = styled.div`
-  z-index: 9999;
+  z-index: 999;
 `;
 
 export const IconWrapper = styled.div`
