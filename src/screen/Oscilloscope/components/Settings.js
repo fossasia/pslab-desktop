@@ -7,39 +7,36 @@ import AnalysisParameters from './AnalysisParameters';
 import PlotParameters from './PlotParameters';
 
 const Settings = ({
-  activeChannels,
-  channelRanges,
-  channelMaps,
-  onToggleChannel,
-  onChangeChannelRange,
-  onChangeChannelMap,
-  onChangeTriggerVoltage,
-  onChangeTriggerChannel,
-  onChangeTimeBaseIndex,
-  triggerVoltage,
-  timeBaseListLength,
   timeBaseIndex,
   timeBase,
-  triggerVoltageChannel,
+  activeChannels,
+  channelRanges,
   isTriggerActive,
+  channelMaps,
+  triggerVoltage,
+  triggerChannel,
   isFourierTransformActive,
   transformType,
   transformChannel1,
   transformChannel2,
-  onChangeTransformType,
-  onChangeTransformChannel,
   isXYPlotActive,
   plotChannel1,
   plotChannel2,
-  onChangePlotChannel,
-  isMicActive,
+  onToggleChannel,
+  onChangeChannelRange,
+  onChangeChannelMap,
   onToggleCheckBox,
+  onChangeTriggerVoltage,
+  onChangeTriggerChannel,
+  onChangeTimeBaseIndex,
+  timeBaseListLength,
+  onChangeTransformType,
+  onChangeTransformChannel,
+  onChangePlotChannel,
 }) => (
   <SettingsContainer>
     <Scrollbars autoHide autoHideTimeout={1000}>
       <ChannelParameters
-        onToggleCheckBox={onToggleCheckBox}
-        isMicActive={isMicActive}
         activeChannels={activeChannels}
         channelRanges={channelRanges}
         channelMaps={channelMaps}
@@ -48,16 +45,16 @@ const Settings = ({
         onChangeChannelMap={onChangeChannelMap}
       />
       <TimeParameters
-        onChangeTriggerVoltage={onChangeTriggerVoltage}
-        onChangeTriggerChannel={onChangeTriggerChannel}
-        onChangeTimeBaseIndex={onChangeTimeBaseIndex}
         triggerVoltage={triggerVoltage}
         timeBaseListLength={timeBaseListLength}
         timeBaseIndex={timeBaseIndex}
         timeBase={timeBase}
-        triggerVoltageChannel={triggerVoltageChannel}
+        triggerChannel={triggerChannel}
         isTriggerActive={isTriggerActive}
         onToggleCheckBox={onToggleCheckBox}
+        onChangeTriggerVoltage={onChangeTriggerVoltage}
+        onChangeTriggerChannel={onChangeTriggerChannel}
+        onChangeTimeBaseIndex={onChangeTimeBaseIndex}
       />
       <AnalysisParameters
         isFourierTransformActive={isFourierTransformActive}
@@ -70,9 +67,9 @@ const Settings = ({
       />
       <PlotParameters
         isXYPlotActive={isXYPlotActive}
-        onToggleCheckBox={onToggleCheckBox}
         plotChannel1={plotChannel1}
         plotChannel2={plotChannel2}
+        onToggleCheckBox={onToggleCheckBox}
         onChangePlotChannel={onChangePlotChannel}
       />
     </Scrollbars>

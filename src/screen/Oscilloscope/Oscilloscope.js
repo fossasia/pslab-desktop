@@ -15,19 +15,12 @@ class Oscilloscope extends Component {
     this.timeBaseList = [0.5, 1, 5, 10, 20, 25, 50];
     this.state = {
       isReading: false,
-      data: [
-        {
-          ch1: 0,
-          ch2: 0,
-          ch3: 0,
-          ch4: 0,
-          timeGap: 0,
-        },
-      ],
+      timeBaseIndex: 0,
       activeChannels: {
         ch1: true,
         ch2: false,
         ch3: false,
+        mic: false,
       },
       channelRanges: {
         ch1: '8',
@@ -37,13 +30,11 @@ class Oscilloscope extends Component {
       channelMaps: {
         ch1: 'CH1',
         ch2: 'CH2',
-        ch4: 'Inbuilt',
+        mic: 'Inbuilt',
       },
-      isMicActive: false,
-      triggerVoltage: 0,
-      timeBaseIndex: 0,
-      triggerVoltageChannel: 'CH1',
       isTriggerActive: false,
+      triggerVoltage: 0,
+      triggerChannel: 'CH1',
       isFourierTransformActive: false,
       transformType: 'Sine',
       transformChannel1: 'CH1',
@@ -59,23 +50,19 @@ class Oscilloscope extends Component {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
     });
-    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
-      this.setState({
-        ...args,
-      });
-    });
     ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
       const {
+        timeBase,
         ch1,
         ch2,
         ch3,
+        mic,
         ch1Map,
         ch2Map,
-        ch4Map,
-        isMicActive,
-        triggerVoltage,
-        triggerVoltageChannel,
+        micMap,
         isTriggerActive,
+        triggerVoltage,
+        triggerChannel,
         isFourierTransformActive,
         transformType,
         transformChannel1,
@@ -83,15 +70,14 @@ class Oscilloscope extends Component {
         isXYPlotActive,
         plotChannel1,
         plotChannel2,
-        timeBase,
       } = args;
       this.setState({
-        activeChannels: { ch1, ch2, ch3 },
-        channelMaps: { ch1: ch1Map, ch2: ch2Map, ch4: ch4Map },
-        isMicActive,
-        triggerVoltage,
-        triggerVoltageChannel,
+        timeBaseIndex: this.timeBaseList.indexOf(timeBase),
+        activeChannels: { ch1, ch2, ch3, mic },
+        channelMaps: { ch1: ch1Map, ch2: ch2Map, mic: micMap },
         isTriggerActive,
+        triggerVoltage,
+        triggerChannel,
         isFourierTransformActive,
         transformType,
         transformChannel1,
@@ -99,7 +85,6 @@ class Oscilloscope extends Component {
         isXYPlotActive,
         plotChannel1,
         plotChannel2,
-        timeBaseIndex: this.timeBaseList.indexOf(timeBase),
       });
     });
     this.getConfigFromDevice();
@@ -111,7 +96,6 @@ class Oscilloscope extends Component {
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'STOP_OSC',
       });
-    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
     ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
   }
 
@@ -126,12 +110,12 @@ class Oscilloscope extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const {
-      activeChannels,
       timeBaseIndex,
-      triggerVoltage,
-      triggerVoltageChannel,
+      activeChannels,
       isTriggerActive,
-      isMicActive,
+      triggerVoltage,
+      triggerChannel,
+      isFourierTransformActive,
     } = this.state;
     isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
@@ -141,10 +125,11 @@ class Oscilloscope extends Component {
         ch1: activeChannels.ch1,
         ch2: activeChannels.ch2,
         ch3: activeChannels.ch3,
-        ch4: isMicActive,
-        triggerVoltage,
+        mic: activeChannels.mic,
         isTriggerActive,
-        triggerVoltageChannel,
+        triggerVoltage,
+        triggerChannel,
+        isFourierTransformActive,
       });
   }, 500);
 
@@ -177,7 +162,6 @@ class Oscilloscope extends Component {
       },
     );
   };
-
   onChangeChannelRange = channelName => event => {
     this.setState(prevState => ({
       channelRanges: {
@@ -186,7 +170,6 @@ class Oscilloscope extends Component {
       },
     }));
   };
-
   onChangeChannelMap = channelName => event => {
     this.setState(prevState => ({
       channelMaps: {
@@ -220,7 +203,7 @@ class Oscilloscope extends Component {
   onChangeTriggerChannel = event => {
     this.setState(
       prevState => ({
-        triggerVoltageChannel: event.target.value,
+        triggerChannel: event.target.value,
       }),
       () => {
         this.sendConfigToDevice();
@@ -257,16 +240,14 @@ class Oscilloscope extends Component {
 
   render() {
     const {
-      data,
       isReading,
+      timeBaseIndex,
       activeChannels,
       channelRanges,
       channelMaps,
-      isMicActive,
-      triggerVoltage,
-      timeBaseIndex,
-      triggerVoltageChannel,
       isTriggerActive,
+      triggerVoltage,
+      triggerChannel,
       isFourierTransformActive,
       transformType,
       transformChannel1,
@@ -280,32 +261,31 @@ class Oscilloscope extends Component {
       <GraphPanelLayout
         settings={
           <Settings
-            isMicActive={isMicActive}
-            onToggleCheckBox={this.onToggleCheckBox}
-            onToggleChannel={this.onToggleChannel}
-            onChangeChannelRange={this.onChangeChannelRange}
-            onChangeChannelMap={this.onChangeChannelMap}
-            channelRanges={channelRanges}
-            activeChannels={activeChannels}
-            channelMaps={channelMaps}
-            triggerVoltage={triggerVoltage}
-            onChangeTriggerVoltage={this.onChangeTriggerVoltage}
-            timeBaseListLength={this.timeBaseList.length}
             timeBaseIndex={timeBaseIndex}
             timeBase={this.timeBaseList[timeBaseIndex]}
-            onChangeTimeBaseIndex={this.onChangeTimeBaseIndex}
-            triggerVoltageChannel={triggerVoltageChannel}
-            onChangeTriggerChannel={this.onChangeTriggerChannel}
+            activeChannels={activeChannels}
+            channelRanges={channelRanges}
             isTriggerActive={isTriggerActive}
+            channelMaps={channelMaps}
+            triggerVoltage={triggerVoltage}
+            triggerChannel={triggerChannel}
             isFourierTransformActive={isFourierTransformActive}
             transformType={transformType}
             transformChannel1={transformChannel1}
             transformChannel2={transformChannel2}
-            onChangeTransformType={this.onChangeTransformType}
-            onChangeTransformChannel={this.onChangeTransformChannel}
             isXYPlotActive={isXYPlotActive}
             plotChannel1={plotChannel1}
             plotChannel2={plotChannel2}
+            onToggleChannel={this.onToggleChannel}
+            onChangeChannelRange={this.onChangeChannelRange}
+            onChangeChannelMap={this.onChangeChannelMap}
+            onToggleCheckBox={this.onToggleCheckBox}
+            onChangeTriggerVoltage={this.onChangeTriggerVoltage}
+            onChangeTriggerChannel={this.onChangeTriggerChannel}
+            onChangeTimeBaseIndex={this.onChangeTimeBaseIndex}
+            timeBaseListLength={this.timeBaseList.length}
+            onChangeTransformType={this.onChangeTransformType}
+            onChangeTransformChannel={this.onChangeTransformChannel}
             onChangePlotChannel={this.onChangePlotChannel}
           />
         }
@@ -318,11 +298,9 @@ class Oscilloscope extends Component {
         }
         graph={
           <Graph
-            data={data}
-            isMicActive={isMicActive}
+            channelRanges={channelRanges}
             activeChannels={activeChannels}
             timeBase={this.timeBaseList[timeBaseIndex]}
-            channelRanges={channelRanges}
           />
         }
       />

@@ -41,16 +41,16 @@ class TimeParameters extends Component {
 
   render() {
     const {
-      onToggleCheckBox,
-      onChangeTriggerVoltage,
-      onChangeTriggerChannel,
-      onChangeTimeBaseIndex,
       triggerVoltage,
       timeBaseListLength,
       timeBaseIndex,
       timeBase,
-      triggerVoltageChannel,
+      triggerChannel,
       isTriggerActive,
+      onToggleCheckBox,
+      onChangeTriggerVoltage,
+      onChangeTriggerChannel,
+      onChangeTimeBaseIndex,
       classes,
     } = this.props;
     const { triggerLabelWidth } = this.state;
@@ -86,7 +86,7 @@ class TimeParameters extends Component {
               Channel
             </InputLabel>
             <Select
-              value={triggerVoltageChannel}
+              value={triggerChannel}
               onChange={onChangeTriggerChannel}
               input={
                 <OutlinedInput
@@ -121,9 +121,9 @@ class TimeParameters extends Component {
             max={16.5}
             onChange={onChangeTriggerVoltage}
           />
-          <span style={{ margin: '0px 12px 0px 8px', width: '120px' }}>
-            {`${triggerVoltage} V`}
-          </span>
+          <span
+            style={{ margin: '0px 12px 0px 8px', width: '120px' }}
+          >{`${triggerVoltage} V`}</span>
         </OptionsRowWrapper>
         <OptionsRowWrapper>
           <span style={{ margin: '0px 16px 0px 0px', width: '100px' }}>

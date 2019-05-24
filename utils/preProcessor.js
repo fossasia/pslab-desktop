@@ -38,6 +38,7 @@ exports.oscilloscopeDataProcessor = parsedJSON => {
             [keys[0]]: data[index][0],
             [keys[1]]: data[index][1],
             [keys[2]]: data[index][2],
+            [keys[3]]: data[index][3],
           },
         ];
       }
@@ -51,6 +52,7 @@ exports.oscilloscopeDataProcessor = parsedJSON => {
             [keys[1]]: data[index][1],
             [keys[2]]: data[index][2],
             [keys[3]]: data[index][3],
+            [keys[4]]: data[index][4],
           },
         ];
       }

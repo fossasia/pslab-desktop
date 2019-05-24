@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {
-  Checkbox,
   Select,
   Typography,
   Divider,
@@ -20,7 +19,7 @@ const styles = theme => ({
   formControl: {
     margin: '0px 16px 0px 0px',
   },
-  ch1colorSwitchBase: {
+  ch1ColorSwitchBase: {
     color: theme.pallet.ch1Color,
     '&$colorChecked': {
       color: theme.pallet.ch1Color,
@@ -29,7 +28,7 @@ const styles = theme => ({
       },
     },
   },
-  ch2colorSwitchBase: {
+  ch2ColorSwitchBase: {
     color: theme.pallet.ch2Color,
     '&$colorChecked': {
       color: theme.pallet.ch2Color,
@@ -38,12 +37,21 @@ const styles = theme => ({
       },
     },
   },
-  ch3colorSwitchBase: {
+  ch3ColorSwitchBase: {
     color: theme.pallet.ch3Color,
     '&$colorChecked': {
       color: theme.pallet.ch3Color,
       '& + $colorBar': {
         backgroundColor: theme.pallet.ch3Color,
+      },
+    },
+  },
+  micColorSwitchBase: {
+    color: theme.pallet.micColor,
+    '&$colorChecked': {
+      color: theme.pallet.micColor,
+      '& + $colorBar': {
+        backgroundColor: theme.pallet.micColor,
       },
     },
   },
@@ -83,8 +91,6 @@ class ChannelParameters extends Component {
       onToggleChannel,
       onChangeChannelRange,
       onChangeChannelMap,
-      isMicActive,
-      onToggleCheckBox,
       classes,
     } = this.props;
     const { RangeLabelWidth, MapLabelWidth, MicLabelWidth } = this.state;
@@ -103,7 +109,7 @@ class ChannelParameters extends Component {
                 onChange={onToggleChannel('ch1')}
                 value={'CH1'}
                 classes={{
-                  switchBase: classes.ch1colorSwitchBase,
+                  switchBase: classes.ch1ColorSwitchBase,
                   checked: classes.colorChecked,
                   bar: classes.colorBar,
                 }}
@@ -190,7 +196,7 @@ class ChannelParameters extends Component {
                 onChange={onToggleChannel('ch2')}
                 value={'ch2'}
                 classes={{
-                  switchBase: classes.ch2colorSwitchBase,
+                  switchBase: classes.ch2ColorSwitchBase,
                   checked: classes.colorChecked,
                   bar: classes.colorBar,
                 }}
@@ -263,7 +269,7 @@ class ChannelParameters extends Component {
                 onChange={onToggleChannel('ch3')}
                 value={'ch3'}
                 classes={{
-                  switchBase: classes.ch3colorSwitchBase,
+                  switchBase: classes.ch3ColorSwitchBase,
                   checked: classes.colorChecked,
                   bar: classes.colorBar,
                 }}
@@ -275,35 +281,41 @@ class ChannelParameters extends Component {
         <OptionsRowWrapper>
           <FormControlLabel
             control={
-              <Checkbox
-                checked={isMicActive}
-                onChange={onToggleCheckBox('isMicActive')}
+              <Switch
+                checked={activeChannels.mic}
+                onChange={onToggleChannel('mic')}
+                value={'mic'}
+                classes={{
+                  switchBase: classes.micColorSwitchBase,
+                  checked: classes.colorChecked,
+                  bar: classes.colorBar,
+                }}
               />
             }
-            label="Mic"
+            label="MIC"
           />
           <FormControl
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
-            disabled={!isMicActive}
+            disabled={!activeChannels.mic}
           >
             <InputLabel
               ref={ref => {
                 this.MicRef = ref;
               }}
-              htmlFor="outlined-mic-ch3"
+              htmlFor="outlined-map-mic"
             >
               Mic Type
             </InputLabel>
             <Select
-              value={channelMaps.ch4}
-              onChange={onChangeChannelMap('ch4')}
+              value={channelMaps.mic}
+              onChange={onChangeChannelMap('mic')}
               input={
                 <OutlinedInput
                   labelWidth={MicLabelWidth}
-                  name="outlined-mic-ch3"
-                  id="outlined-mic-ch3"
+                  name="outlined-map-mic"
+                  id="outlined-map-mic"
                 />
               }
             >

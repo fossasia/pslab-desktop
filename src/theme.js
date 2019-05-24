@@ -44,6 +44,7 @@ const theme = createMuiTheme({
     ch1Color: '#ff9800',
     ch2Color: '#03a9f4',
     ch3Color: '#4caf50',
+    micColor: '#5e35b1',
   },
 });
 
