@@ -17,6 +17,8 @@ class Multimeter extends Component {
       activeSubType: 'CH1',
       parameter: null,
       dialValue: 0,
+      isPulseSection: false,
+      ispulseSectionHz: true,
     };
   }
 
@@ -86,14 +88,24 @@ class Multimeter extends Component {
       });
     }
   };
+  onTogglePulseUnit = event => {
+    let { ispulseSectionHz, unit } = this.state;
+    if (!ispulseSectionHz) unit = 'Hz';
+    else unit = 'xyz';
+    this.setState(prevState => ({
+      ispulseSectionHz: !ispulseSectionHz,
+      unit,
+    }));
+  };
 
-  onClickButton = (optionName, unit, dialValue) => () => {
+  onClickButton = (optionName, unit, dialValue, isPulseSection) => () => {
     this.setState(
       {
         activeSubType: optionName,
         unit,
         dialValue,
         data: 0,
+        isPulseSection,
       },
       () => {
         this.sendConfigToDevice();
@@ -102,7 +114,15 @@ class Multimeter extends Component {
   };
 
   render() {
-    const { activeSubType, data, unit, dialValue, isReading } = this.state;
+    const {
+      activeSubType,
+      data,
+      unit,
+      dialValue,
+      isReading,
+      isPulseSection,
+      ispulseSectionHz,
+    } = this.state;
     const { isConnected } = this.props;
     return (
       <SimplePanelLayout
@@ -112,11 +132,14 @@ class Multimeter extends Component {
             onClickButton={this.onClickButton}
             onChangeDial={this.onChangeDial}
             onToggleRead={this.onToggleRead}
+            onTogglePulseUnit={this.onTogglePulseUnit}
             isReading={isReading}
             data={data}
             unit={unit}
             dialValue={dialValue}
             isConnected={isConnected}
+            isPulseSection={isPulseSection}
+            ispulseSectionHz={ispulseSectionHz}
           />
         }
       />

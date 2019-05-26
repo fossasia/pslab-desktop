@@ -17,6 +17,13 @@ export const DisplayWrapper = styled.div`
   align-items: center;
 `;
 
+export const SwitchWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0px 16px 0px 0px;
+`;
+
 export const TextIcon = styled.div`
   font-size: 16px;
   font-weight: 900;

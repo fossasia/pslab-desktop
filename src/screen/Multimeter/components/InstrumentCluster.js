@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card } from '@material-ui/core';
+import { Switch, Card } from '@material-ui/core';
 import {
   InstrumentContainer,
   DisplayContainer,
   DisplayWrapper,
+  SwitchWrapper,
 } from './InstrumentCluster.styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Dial from './Dial';
@@ -11,13 +12,24 @@ import Display from '../../../components/Display';
 import ActionButtons from './ActionButtons';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = theme => ({
   cardMargin: {
     margin: '0px 16px 0px 0px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  switchBase: {
+    color: theme.pallet.secondary.dark,
+    '&$colorChecked': {
+      color: theme.pallet.secondary.dark,
+      '& + $colorBar': {
+        backgroundColor: theme.pallet.secondary.dark,
+      },
+    },
+  },
+  colorBar: {},
+  colorChecked: {},
 });
 
 const InstrumentCluster = ({
@@ -30,6 +42,9 @@ const InstrumentCluster = ({
   isConnected,
   isReading,
   classes,
+  isPulseSection,
+  ispulseSectionHz,
+  onTogglePulseUnit,
 }) => {
   return (
     <InstrumentContainer>
@@ -38,7 +53,23 @@ const InstrumentCluster = ({
           activeSubType={activeSubType}
           value={dialValue}
           onClickButton={onClickButton}
+          ispulseSectionHz={ispulseSectionHz}
         />
+
+        <SwitchWrapper>
+          <span>Hz</span>
+          <Switch
+            color={'default'}
+            classes={{
+              switchBase: classes.switchBase,
+              checked: classes.colorChecked,
+              bar: classes.colorBar,
+            }}
+            onChange={onTogglePulseUnit}
+            disabled={!isPulseSection}
+          />
+          <span>Count Pulse</span>
+        </SwitchWrapper>
         <ActionButtons
           isReading={isReading}
           isConnected={isConnected}

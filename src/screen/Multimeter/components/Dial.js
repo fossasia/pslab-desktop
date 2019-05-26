@@ -1,10 +1,21 @@
 import React from 'react';
 import { DialContainer, IconWrapper, DialWrapper } from './Dial.styles';
 import { withTheme } from 'styled-components';
+import { IconButton } from '@material-ui/core';
 import CustomCircularInput from '../../../components/CustomCircularInput';
-import { options, optionsOrder } from './SettingOptions';
+import {
+  options,
+  optionsOrder,
+  isPulseSectionSelected,
+} from './SettingOptions';
 
-const Dial = ({ value, onClickButton, activeSubType, theme }) => {
+const Dial = ({
+  value,
+  onClickButton,
+  activeSubType,
+  ispulseSectionHz,
+  theme,
+}) => {
   const onChangeDial = value => {
     const dialValue = Math.round(value);
     let activeSubType = null;
@@ -50,15 +61,17 @@ const Dial = ({ value, onClickButton, activeSubType, theme }) => {
     }
     onClickButton(
       activeSubType,
-      options(activeSubType, onClickButton, theme)[activeSubType].unit,
+      options(activeSubType, ispulseSectionHz, theme)[activeSubType].unit,
       dialValue,
+      isPulseSectionSelected(activeSubType),
     )();
   };
 
   return (
     <DialContainer>
       {optionsOrder.map((subType, index) => {
-        const item = options(activeSubType, onClickButton, theme)[subType];
+        const item = options(activeSubType, ispulseSectionHz, theme)[subType];
+        console.log(item);
         return (
           <IconWrapper
             key={index}
@@ -66,7 +79,17 @@ const Dial = ({ value, onClickButton, activeSubType, theme }) => {
               transform: item.transform,
             }}
           >
-            {item.icon}
+            <IconButton
+              onClick={onClickButton(
+                subType,
+                item.unit,
+                item.dialValue,
+                isPulseSectionSelected(subType),
+              )}
+              size="medium"
+            >
+              {item.icon}
+            </IconButton>
           </IconWrapper>
         );
       })}
