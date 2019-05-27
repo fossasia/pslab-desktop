@@ -42,7 +42,7 @@ const InstrumentCluster = ({
   isConnected,
   isReading,
   classes,
-  isPulseSection,
+  activeCategory,
   ispulseSectionHz,
   onTogglePulseUnit,
 }) => {
@@ -66,7 +66,7 @@ const InstrumentCluster = ({
               bar: classes.colorBar,
             }}
             onChange={onTogglePulseUnit}
-            disabled={!isPulseSection}
+            disabled={activeCategory !== 'PULSE'}
           />
           <span>Count Pulse</span>
         </SwitchWrapper>
