@@ -68,6 +68,9 @@ def main():
 
         # --------------------------- Multimeter block ---------------------------------
         if command == 'START_MUL_MET':
+            # for test
+            I.set_sine1(1000)
+            I.set_sine2(500)
             multimeter.start_read()
 
         if command == 'STOP_MUL_MET':
