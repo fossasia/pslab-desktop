@@ -5,13 +5,7 @@ import { IconButton } from '@material-ui/core';
 import CustomCircularInput from '../../../components/CustomCircularInput';
 import { options, optionsOrder } from './SettingOptions';
 
-const Dial = ({
-  value,
-  onClickButton,
-  activeSubType,
-  ispulseSectionHz,
-  theme,
-}) => {
+const Dial = ({ value, onClickButton, activeSubType, parameter, theme }) => {
   const onChangeDial = value => {
     const dialValue = Math.round(value);
     let activeSubType = null;
@@ -55,7 +49,7 @@ const Dial = ({
       default:
         break;
     }
-    const item = options(activeSubType, ispulseSectionHz, theme)[activeSubType];
+    const item = options(activeSubType, parameter, theme)[activeSubType];
     onClickButton(
       activeSubType,
       item.unit,
@@ -68,7 +62,8 @@ const Dial = ({
   return (
     <DialContainer>
       {optionsOrder.map((subType, index) => {
-        const item = options(activeSubType, ispulseSectionHz, theme)[subType];
+        const item = options(activeSubType, parameter, theme)[subType];
+        if (subType === 'ID1') console.log(item.unit, '----', item.parameter);
         return (
           <IconWrapper
             key={index}

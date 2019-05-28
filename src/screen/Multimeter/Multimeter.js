@@ -17,7 +17,6 @@ class Multimeter extends Component {
       activeSubType: 'CH1',
       parameter: null,
       dialValue: 0,
-      ispulseSectionHz: true,
     };
   }
 
@@ -88,20 +87,23 @@ class Multimeter extends Component {
     }
   };
   onTogglePulseUnit = event => {
-    let { ispulseSectionHz, unit, parameter } = this.state;
-    if (!ispulseSectionHz) {
+    let { unit, parameter } = this.state;
+    if (parameter === 'PULSE_COUNT') {
       unit = 'Hz';
       parameter = 'PULSE_FREQUENCY';
     } else {
       unit = 'xyz';
       parameter = 'PULSE_COUNT';
     }
-    this.setState(prevState => ({
-      ispulseSectionHz: !ispulseSectionHz,
-      unit,
-      parameter,
-    }));
-    this.sendConfigToDevice();
+    this.setState(
+      prevState => ({
+        unit,
+        parameter,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   onClickButton = (
@@ -134,7 +136,7 @@ class Multimeter extends Component {
       dialValue,
       isReading,
       activeCategory,
-      ispulseSectionHz,
+      parameter,
     } = this.state;
     const { isConnected } = this.props;
     return (
@@ -151,8 +153,8 @@ class Multimeter extends Component {
             unit={unit}
             dialValue={dialValue}
             isConnected={isConnected}
-            ispulseSectionHz={ispulseSectionHz}
             activeCategory={activeCategory}
+            parameter={parameter}
           />
         }
       />

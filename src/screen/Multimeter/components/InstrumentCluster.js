@@ -43,8 +43,8 @@ const InstrumentCluster = ({
   isReading,
   classes,
   activeCategory,
-  ispulseSectionHz,
   onTogglePulseUnit,
+  parameter,
 }) => {
   return (
     <InstrumentContainer>
@@ -53,23 +53,23 @@ const InstrumentCluster = ({
           activeSubType={activeSubType}
           value={dialValue}
           onClickButton={onClickButton}
-          ispulseSectionHz={ispulseSectionHz}
+          parameter={parameter}
         />
-
-        <SwitchWrapper>
-          <span>Hz</span>
-          <Switch
-            color={'default'}
-            classes={{
-              switchBase: classes.switchBase,
-              checked: classes.colorChecked,
-              bar: classes.colorBar,
-            }}
-            onChange={onTogglePulseUnit}
-            disabled={activeCategory !== 'PULSE'}
-          />
-          <span>Count Pulse</span>
-        </SwitchWrapper>
+        {activeCategory === 'PULSE' ? (
+          <SwitchWrapper>
+            <span>Hz</span>
+            <Switch
+              color={'default'}
+              classes={{
+                switchBase: classes.switchBase,
+                checked: classes.colorChecked,
+                bar: classes.colorBar,
+              }}
+              onChange={onTogglePulseUnit}
+            />
+            <span>Count Pulse</span>
+          </SwitchWrapper>
+        ) : null}
         <ActionButtons
           isReading={isReading}
           isConnected={isConnected}
