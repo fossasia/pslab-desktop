@@ -83,9 +83,9 @@ class App extends Component {
       }
     });
 
-    ipcRenderer.on('DEBUG', (event, args) => {
-      console.log(args);
-    });
+    // ipcRenderer.on('DEBUG', (event, args) => {
+    //   console.log(args);
+    // });
 
     loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
   }

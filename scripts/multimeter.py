@@ -27,6 +27,18 @@ class Multimeter:
         print(json.dumps(output))
         sys.stdout.flush()
 
+    def precision_control(self, value):
+        if value >= 1e6:
+            return (round(value / 1e6, 3), 'M')
+        if value >= 1e3:
+            return (round(value / 1e3, 3), 'k')
+        elif value <= 1e-6:
+            return (round(value / 1e-6, 3), 'μ')
+        elif value <= 1e-3:
+            return (round(value / 1e-3, 3), 'm')
+        else:
+            return (round(value, 3), None)
+
     def start_read(self):
         self.multimeter_data_read_thread = threading.Thread(
             target=self.capture_loop,
@@ -49,30 +61,37 @@ class Multimeter:
 
     def read_voltage(self, channel_name):
         voltage = self.device.get_average_voltage(channel_name)
+        voltage, prefix = self.precision_control(voltage)
         time.sleep(0.25)
-        output = {'type': 'START_MUL_MET', 'data': voltage}
+        output = {'type': 'START_MUL_MET', 'data': voltage, 'prefix': prefix}
         print(json.dumps(output))
         sys.stdout.flush()
 
     def read_pulse(self, pin_name, reading_type):
+        data = None
+        prefix = None
         if reading_type == 'PULSE_COUNT':
             self.device.countPulses(pin_name)
             time.sleep(1)
             data = self.device.readPulseCount()
         elif reading_type == 'PULSE_FREQUENCY':
             data = self.device.get_freq(pin_name)
+            data, prefix = self.precision_control(data)
             time.sleep(0.25)
-        output = {'type': 'START_MUL_MET', 'data': data}
+        output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}
         print(json.dumps(output))
         sys.stdout.flush()
 
     def read_misc(self, pin_name):
+        data = None
+        prefix = None
         if pin_name == 'RESISTOR':
             data = self.device.get_resistance()
             time.sleep(0.25)
         elif pin_name == 'CAPACITOR':
             time.sleep(1)
             pass
-        output = {'type': 'START_MUL_MET', 'data': data}
+        data, prefix = self.precision_control(data)
+        output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}
         print(json.dumps(output))
         sys.stdout.flush()

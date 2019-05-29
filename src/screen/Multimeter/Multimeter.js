@@ -11,6 +11,7 @@ class Multimeter extends Component {
     super(props);
     this.state = {
       isReading: false,
+      prefix: null,
       data: 0,
       unit: 'V',
       activeCatagory: 'VOLTAGE',
@@ -62,6 +63,7 @@ class Multimeter extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const { activeCatagory, activeSubType, parameter } = this.state;
+    console.log(activeCatagory, activeSubType, parameter);
     isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_MUL_MET',
@@ -90,6 +92,8 @@ class Multimeter extends Component {
   onClickButton = (optionName, unit, dialValue) => () => {
     this.setState(
       {
+        activeCatagory: null,
+        parameter: null,
         activeSubType: optionName,
         unit,
         dialValue,
