@@ -12,7 +12,7 @@ class Multimeter:
         self.is_reading = False
         self.active_catagory = 'VOLTAGE'
         self.active_subtype = 'CH1'
-        self.parameter = None
+        self.parameter = 'PULSE_FREQUENCY'
 
     def set_config(self, active_catagory, active_subtype, parameter):
         self.active_catagory = active_catagory

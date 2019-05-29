@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SimplePanelLayout from '../../components/SimplePanelLayout';
 import InstrumentCluster from './components/InstrumentCluster';
 import debounce from 'lodash/debounce';
+import { optionMap } from './components/SettingOptions';
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 const loadBalancer = window.require('electron-load-balancer');
@@ -16,7 +17,7 @@ class Multimeter extends Component {
       unit: 'V',
       activeCatagory: 'VOLTAGE',
       activeSubType: 'CH1',
-      parameter: null,
+      parameter: 'PULSE_FREQUENCY',
       dialValue: 0,
     };
   }
@@ -33,10 +34,17 @@ class Multimeter extends Component {
     });
     ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
       const { activeCatagory, activeSubType, parameter } = args;
+      const dialValue = optionMap[activeSubType].angle;
+      const unit =
+        activeCatagory === 'PULSE'
+          ? optionMap[activeSubType].unit[parameter]
+          : optionMap[activeSubType].unit;
       this.setState({
         activeCatagory,
         activeSubType,
         parameter,
+        dialValue,
+        unit,
       });
     });
     this.getConfigFromDevice();
@@ -89,15 +97,26 @@ class Multimeter extends Component {
     }
   };
 
-  onClickButton = (optionName, unit, dialValue) => () => {
+  onClickButton = activeSubType => () => {
+    this.changeOption(activeSubType);
+  };
+
+  changeOption = activeSubType => {
+    const { parameter } = this.state;
+    const activeCatagory = optionMap[activeSubType].catagory;
+    const dialValue = optionMap[activeSubType].angle;
+    const unit =
+      activeCatagory === 'PULSE'
+        ? optionMap[activeSubType].unit[parameter]
+        : optionMap[activeSubType].unit;
     this.setState(
       {
-        activeCatagory: null,
-        parameter: null,
-        activeSubType: optionName,
-        unit,
-        dialValue,
         data: 0,
+        activeCatagory,
+        activeSubType,
+        parameter,
+        dialValue,
+        unit,
       },
       () => {
         this.sendConfigToDevice();
@@ -114,7 +133,7 @@ class Multimeter extends Component {
           <InstrumentCluster
             activeSubType={activeSubType}
             onClickButton={this.onClickButton}
-            onChangeDial={this.onChangeDial}
+            changeOption={this.changeOption}
             onToggleRead={this.onToggleRead}
             isReading={isReading}
             data={data}

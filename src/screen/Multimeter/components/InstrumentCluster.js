@@ -23,6 +23,7 @@ const styles = () => ({
 const InstrumentCluster = ({
   activeSubType,
   onClickButton,
+  changeOption,
   onToggleRead,
   dialValue,
   data,
@@ -38,6 +39,7 @@ const InstrumentCluster = ({
           activeSubType={activeSubType}
           value={dialValue}
           onClickButton={onClickButton}
+          changeOption={changeOption}
         />
         <ActionButtons
           isReading={isReading}
