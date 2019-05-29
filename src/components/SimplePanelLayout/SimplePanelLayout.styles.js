@@ -13,7 +13,7 @@ export const ThickBar = styled.div`
 export const LayoutWrapper = styled.div`
   align-self: center;
   margin: 0px 16px 0px 0px;
-  transform: translateY(-5%);
+  z-index: 999;
 `;
 
 export const LayoutContainer = styled.div`

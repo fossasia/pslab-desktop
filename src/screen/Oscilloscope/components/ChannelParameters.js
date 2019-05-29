@@ -17,7 +17,7 @@ import { options } from './settingOptions';
 
 const styles = theme => ({
   formControl: {
-    margin: '0px 16px 0px 0px',
+    margin: '0px 0px 0px 16px',
   },
   ch1ColorSwitchBase: {
     color: theme.pallet.ch1Color,
@@ -57,12 +57,6 @@ const styles = theme => ({
   },
   colorBar: {},
   colorChecked: {},
-  ch2Switch: {
-    color: theme.ch2Color,
-  },
-  ch3Switch: {
-    color: theme.ch3Color,
-  },
 });
 
 class ChannelParameters extends Component {
@@ -117,11 +111,7 @@ class ChannelParameters extends Component {
             }
             label="CH1"
           />
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-          >
+          <FormControl variant="outlined" fullWidth={true}>
             <InputLabel
               ref={ref => {
                 this.RangeRef = ref;
@@ -204,11 +194,7 @@ class ChannelParameters extends Component {
             }
             label="CH2"
           />
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-          >
+          <FormControl variant="outlined" fullWidth={true}>
             <InputLabel htmlFor="outlined-range-ch2">Range</InputLabel>
             <Select
               value={channelRanges.ch2}
@@ -297,7 +283,6 @@ class ChannelParameters extends Component {
           <FormControl
             variant="outlined"
             fullWidth={true}
-            className={classes.formControl}
             disabled={!activeChannels.mic}
           >
             <InputLabel

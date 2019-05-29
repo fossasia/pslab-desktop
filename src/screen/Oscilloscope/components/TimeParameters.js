@@ -11,19 +11,9 @@ import {
   FormControl,
   InputLabel,
 } from '@material-ui/core';
-import Slider from '@material-ui/lab/Slider';
-import { withStyles } from '@material-ui/core/styles';
+import CustomSliderInput from '../../../components/CustomSliderInput';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
-
-const styles = () => ({
-  formControl: {
-    margin: '0px 16px 0px 0px',
-  },
-  slider: {
-    margin: '0px 8px 0px 0px',
-  },
-});
 
 class TimeParameters extends Component {
   constructor(props) {
@@ -51,7 +41,6 @@ class TimeParameters extends Component {
       onChangeTriggerVoltage,
       onChangeTriggerChannel,
       onChangeTimeBaseIndex,
-      classes,
     } = this.props;
     const { triggerLabelWidth } = this.state;
 
@@ -74,7 +63,6 @@ class TimeParameters extends Component {
           <FormControl
             variant="outlined"
             fullWidth={true}
-            className={classes.formControl}
             disabled={!isTriggerActive}
           >
             <InputLabel
@@ -109,41 +97,37 @@ class TimeParameters extends Component {
           </FormControl>
         </OptionsRowWrapper>
         <OptionsRowWrapper>
-          <span style={{ margin: '0px 16px 0px 0px', width: '100px' }}>
-            Voltage
-          </span>
-          <Slider
-            classes={{ container: classes.slider }}
-            disabled={!isTriggerActive}
-            step={0.5}
+          <CustomSliderInput
+            title="Voltage"
+            unit="V"
+            onChangeSlider={onChangeTriggerVoltage}
             value={triggerVoltage}
             min={-16.5}
             max={16.5}
-            onChange={onChangeTriggerVoltage}
+            step={0.5}
+            disabled={!isTriggerActive}
+            minTitleWidth="60px"
+            minUnitWidth="66px"
           />
-          <span
-            style={{ margin: '0px 12px 0px 8px', width: '120px' }}
-          >{`${triggerVoltage} V`}</span>
         </OptionsRowWrapper>
         <OptionsRowWrapper>
-          <span style={{ margin: '0px 16px 0px 0px', width: '100px' }}>
-            TimeBase
-          </span>
-          <Slider
-            classes={{ container: classes.slider }}
-            step={1}
+          <CustomSliderInput
+            title="TimeBase"
+            unit="ms / div"
+            onChangeSlider={onChangeTimeBaseIndex}
             value={timeBaseIndex}
             min={0}
             max={timeBaseListLength - 1}
-            onChange={onChangeTimeBaseIndex}
+            step={1}
+            disabled={!isTriggerActive}
+            minTitleWidth="60px"
+            minUnitWidth="66px"
+            display={timeBase}
           />
-          <span
-            style={{ margin: '0px 12px 0px 8px', width: '120px' }}
-          >{`${timeBase} mS / div`}</span>
         </OptionsRowWrapper>
       </SettingsWrapper>
     );
   }
 }
 
-export default withStyles(styles)(TimeParameters);
+export default TimeParameters;
