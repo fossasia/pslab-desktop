@@ -109,56 +109,56 @@ export const optionMap = {
   CH1: {
     angle: 0,
     unit: 'V',
-    catagory: 'VOLTAGE',
+    category: 'VOLTAGE',
   },
   CH2: {
     angle: 327,
     unit: 'V',
-    catagory: 'VOLTAGE',
+    category: 'VOLTAGE',
   },
   CH3: {
     angle: 294,
     unit: 'V',
-    catagory: 'VOLTAGE',
+    category: 'VOLTAGE',
   },
   CAP: {
     angle: 262,
     unit: 'V',
-    catagory: 'VOLTAGE',
+    category: 'VOLTAGE',
   },
   AN8: {
     angle: 229,
     unit: 'V',
-    catagory: 'VOLTAGE',
+    category: 'VOLTAGE',
   },
   ID1: {
     angle: 196,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
-    catagory: 'PULSE',
+    category: 'PULSE',
   },
   ID2: {
     angle: 164,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
-    catagory: 'PULSE',
+    category: 'PULSE',
   },
   ID3: {
     angle: 131,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
-    catagory: 'PULSE',
+    category: 'PULSE',
   },
   ID4: {
     angle: 98,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
-    catagory: 'PULSE',
+    category: 'PULSE',
   },
   RESISTOR: {
     angle: 65,
     unit: 'Ω',
-    catagory: 'MISC',
+    category: 'MISC',
   },
   CAPACITOR: {
     angle: 33,
     unit: 'pF',
-    catagory: 'MISC',
+    category: 'MISC',
   },
 };
