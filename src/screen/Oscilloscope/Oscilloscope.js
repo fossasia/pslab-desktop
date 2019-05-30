@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
+import FFTGraph from './components/FFTGraph';
 import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
 
@@ -180,9 +181,20 @@ class Oscilloscope extends Component {
   };
 
   onToggleCheckBox = type => event => {
+    let { isFourierTransformActive, isXYPlotActive } = this.state;
+    if (type === 'isFourierTransformActive') {
+      isFourierTransformActive = !isFourierTransformActive;
+      isXYPlotActive = false;
+    } else if (type === 'isXYPlotActive') {
+      isFourierTransformActive = false;
+      isXYPlotActive = !isXYPlotActive;
+    }
+
     this.setState(
       prevState => ({
         [type]: !prevState[type],
+        isFourierTransformActive,
+        isXYPlotActive,
       }),
       () => {
         this.sendConfigToDevice();
@@ -236,6 +248,29 @@ class Oscilloscope extends Component {
     this.setState(prevState => ({
       [channelNumber]: event.target.value,
     }));
+  };
+
+  graphRenderer = () => {
+    const {
+      timeBaseIndex,
+      activeChannels,
+      channelRanges,
+      isFourierTransformActive,
+      isXYPlotActive,
+    } = this.state;
+    if (isFourierTransformActive) {
+      return <FFTGraph activeChannels={activeChannels} />;
+    }
+    if (isXYPlotActive) {
+      // return XY plot graph
+    }
+    return (
+      <Graph
+        channelRanges={channelRanges}
+        activeChannels={activeChannels}
+        timeBase={this.timeBaseList[timeBaseIndex]}
+      />
+    );
   };
 
   render() {
@@ -296,13 +331,7 @@ class Oscilloscope extends Component {
             onToggleRead={this.onToggleRead}
           />
         }
-        graph={
-          <Graph
-            channelRanges={channelRanges}
-            activeChannels={activeChannels}
-            timeBase={this.timeBaseList[timeBaseIndex]}
-          />
-        }
+        graph={this.graphRenderer()}
       />
     );
   }
