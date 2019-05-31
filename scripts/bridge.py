@@ -6,6 +6,7 @@ from oscilloscope import Oscilloscope
 from device_detection import Device_detection
 from power_source import Power_source
 from multimeter import Multimeter
+from wave_generator import Wave_generator
 
 
 def main():
@@ -17,6 +18,7 @@ def main():
     oscilloscope = Oscilloscope(I)
     power_source = Power_source(I)
     multimeter = Multimeter(I)
+    wave_generator = Wave_generator(I)
 
     while(True):
         in_stream_data = input()
@@ -25,10 +27,6 @@ def main():
 
         # ---------------------------- Oscilloscope block ------------------------------
         if command == 'START_OSC':
-            # for test
-            I.set_sine1(1000)
-            I.set_sine2(500)
-
             oscilloscope.start_read()
 
         if command == "STOP_OSC":
@@ -59,7 +57,9 @@ def main():
             # plot_channel1 = parsed_stream_data['plotChannel1']
             # plot_channel2 = parsed_stream_data['plotChannel2']
             oscilloscope.set_config(
-                time_base, number_of_samples, ch1, ch2, ch3, mic, is_trigger_active, trigger_channel, trigger_voltage, is_fourier_transform_active)
+                time_base, number_of_samples, ch1, ch2, ch3, mic, 
+                is_trigger_active, trigger_channel, trigger_voltage, 
+                is_fourier_transform_active)
 
             if old_read_state:
                 oscilloscope.start_read()
@@ -69,9 +69,6 @@ def main():
 
         # --------------------------- Multimeter block ---------------------------------
         if command == 'START_MUL_MET':
-            # for test
-            I.set_sine1(1000)
-            I.set_sine2(500)
             multimeter.start_read()
 
         if command == 'STOP_MUL_MET':
@@ -105,6 +102,35 @@ def main():
 
         if command == 'GET_CONFIG_PWR_SRC':
             power_source.get_config()
+
+        # -------------------------- Wave Generator block ---------------------------------
+        if command == 'SET_CONFIG_WAV_GEN':
+            s1_frequency = parsed_stream_data['s1Frequency']
+            s2_frequency = parsed_stream_data['s2Frequency']
+            s2_phase = parsed_stream_data['s2Phase']
+            wave_form_s1 = parsed_stream_data['waveFormS1']
+            wave_form_s2 = parsed_stream_data['waveFormS2']
+            sqr1_frequency = parsed_stream_data['sqr1Frequency']
+            sqr1_duty_cycle = parsed_stream_data['sqr1DutyCycle']
+            sqr2_frequency = parsed_stream_data['sqr2Frequency']
+            sqr2_duty_cycle = parsed_stream_data['sqr2DutyCycle']
+            sqr2_phase = parsed_stream_data['sqr2Phase']
+            sqr3_frequency = parsed_stream_data['sqr3Frequency']
+            sqr3_duty_cycle = parsed_stream_data['sqr3DutyCycle']
+            sqr3_phase = parsed_stream_data['sqr3Phase']
+            sqr4_frequency = parsed_stream_data['sqr4Frequency']
+            sqr4_duty_cycle = parsed_stream_data['sqr4DutyCycle']
+            sqr4_phase = parsed_stream_data['sqr4Phase']
+            mode = parsed_stream_data['mode']
+            wave_generator.set_config(
+                s1_frequency, s2_frequency, s2_phase, wave_form_s1,
+                wave_form_s2, sqr1_frequency, sqr1_duty_cycle,
+                sqr2_frequency, sqr2_duty_cycle, sqr2_phase, sqr3_frequency,
+                sqr3_duty_cycle, sqr3_phase, sqr4_frequency,
+                sqr4_duty_cycle, sqr4_phase, mode)
+
+        if command == 'GET_CONFIG_WAV_GEN':
+            wave_generator.get_config()
 
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':

@@ -163,19 +163,21 @@ class SquareWaveParameters extends Component {
             minUnitWidth="40px"
           />
         </OptionsRowWrapper>
-        <OptionsRowWrapper>
-          <CustomSliderInput
-            title="Duty Cycle"
-            unit="%"
-            onChangeSlider={onChangeSlider('sqr1DutyCycle')}
-            value={sqr1DutyCycle}
-            min={0}
-            max={100}
-            step={1}
-            minTitleWidth="60px"
-            minUnitWidth="40px"
-          />
-        </OptionsRowWrapper>
+        {mode === 'pwm' && (
+          <OptionsRowWrapper>
+            <CustomSliderInput
+              title="Duty Cycle"
+              unit="%"
+              onChangeSlider={onChangeSlider('sqr1DutyCycle')}
+              value={sqr1DutyCycle}
+              min={0}
+              max={100}
+              step={1}
+              minTitleWidth="60px"
+              minUnitWidth="40px"
+            />
+          </OptionsRowWrapper>
+        )}
         {mode === 'pwm' && <Divider />}
         {mode === 'pwm' && (
           <OptionsRowWrapper>

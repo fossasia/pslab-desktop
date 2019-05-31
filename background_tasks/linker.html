@@ -29,6 +29,7 @@
 		pyshell.on('message', function(results) {
 			try {
 				const parsedJSON = JSON.parse(results);
+				ipcRenderer.send('DEBUG', parsedJSON);
 				switch (parsedJSON['type']) {
 					case 'START_OSC':	
 						if(parsedJSON.isFFT){
@@ -50,6 +51,9 @@
 						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
 						break;
 					case 'GET_CONFIG_MUL_MET':
+						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
+						break;
+					case 'GET_CONFIG_WAV_GEN':
 						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
 						break;
 					case 'DEVICE_CONNECTION_STATUS':
