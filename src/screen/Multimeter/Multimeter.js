@@ -12,8 +12,6 @@ class Multimeter extends Component {
     super(props);
     this.state = {
       isReading: false,
-      prefix: null,
-      data: 0,
       unit: 'V',
       activeCategory: 'VOLTAGE',
       activeSubType: 'CH1',
@@ -27,20 +25,15 @@ class Multimeter extends Component {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
     });
-    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
-      this.setState({
-        ...args,
-      });
-    });
     ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
-      const { activeCatagory, activeSubType, parameter } = args;
+      const { activeCategory, activeSubType, parameter } = args;
       const dialValue = optionMap[activeSubType].angle;
       const unit =
-        activeCatagory === 'PULSE'
+        activeCategory === 'PULSE'
           ? optionMap[activeSubType].unit[parameter]
           : optionMap[activeSubType].unit;
       this.setState({
-        activeCatagory,
+        activeCategory,
         activeSubType,
         parameter,
         dialValue,
@@ -56,7 +49,6 @@ class Multimeter extends Component {
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'STOP_MUL_MET',
       });
-    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
     ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
   }
 
@@ -71,7 +63,6 @@ class Multimeter extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const { activeCategory, activeSubType, parameter } = this.state;
-    console.log(activeCategory, activeSubType, parameter);
     isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_MUL_MET',

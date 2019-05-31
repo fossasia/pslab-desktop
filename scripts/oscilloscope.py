@@ -3,6 +3,9 @@ import sys
 import time
 import json
 import numpy as np
+from PSL import analyticsClass
+
+analytics = analyticsClass
 
 
 class Oscilloscope:
