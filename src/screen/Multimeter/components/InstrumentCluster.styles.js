@@ -27,3 +27,10 @@ export const TextIcon = styled.div`
   color: ${props =>
     props.active ? props.theme.secondary.dark : props.theme.text.hint};
 `;
+
+export const SwitchWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0px 16px 0px 0px;
+`;

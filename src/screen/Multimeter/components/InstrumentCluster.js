@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card } from '@material-ui/core';
+import { Switch, Card } from '@material-ui/core';
 import {
   InstrumentContainer,
   DisplayContainer,
   DisplayWrapper,
+  SwitchWrapper,
 } from './InstrumentCluster.styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Dial from './Dial';
@@ -30,7 +31,9 @@ const InstrumentCluster = ({
   unit,
   isConnected,
   isReading,
+  onTogglePulseUnit,
   classes,
+  activeCategory,
 }) => {
   return (
     <InstrumentContainer>
@@ -41,6 +44,15 @@ const InstrumentCluster = ({
           onClickButton={onClickButton}
           changeOption={changeOption}
         />
+        <SwitchWrapper>
+          <span>Hz</span>
+          <Switch
+            disabled={activeCategory !== 'PULSE'}
+            onChange={onTogglePulseUnit}
+            color="secondary"
+          />
+          <span>Count Pulse</span>
+        </SwitchWrapper>
         <ActionButtons
           isReading={isReading}
           isConnected={isConnected}

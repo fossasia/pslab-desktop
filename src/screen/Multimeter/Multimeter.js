@@ -15,7 +15,7 @@ class Multimeter extends Component {
       prefix: null,
       data: 0,
       unit: 'V',
-      activeCatagory: 'VOLTAGE',
+      activeCategory: 'VOLTAGE',
       activeSubType: 'CH1',
       parameter: 'PULSE_FREQUENCY',
       dialValue: 0,
@@ -70,12 +70,12 @@ class Multimeter extends Component {
 
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
-    const { activeCatagory, activeSubType, parameter } = this.state;
-    console.log(activeCatagory, activeSubType, parameter);
+    const { activeCategory, activeSubType, parameter } = this.state;
+    console.log(activeCategory, activeSubType, parameter);
     isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_MUL_MET',
-        activeCatagory,
+        activeCategory,
         activeSubType,
         parameter,
       });
@@ -97,22 +97,38 @@ class Multimeter extends Component {
     }
   };
 
+  onTogglePulseUnit = () => {
+    let { activeSubType, parameter } = this.state;
+    parameter =
+      parameter === 'PULSE_FREQUENCY' ? 'PULSE_COUNT' : 'PULSE_FREQUENCY';
+    const unit = optionMap[activeSubType].unit[parameter];
+    this.setState(
+      prevState => ({
+        parameter,
+        unit,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
+  };
+
   onClickButton = activeSubType => () => {
     this.changeOption(activeSubType);
   };
 
   changeOption = activeSubType => {
     const { parameter } = this.state;
-    const activeCatagory = optionMap[activeSubType].catagory;
+    const activeCategory = optionMap[activeSubType].category;
     const dialValue = optionMap[activeSubType].angle;
     const unit =
-      activeCatagory === 'PULSE'
+      activeCategory === 'PULSE'
         ? optionMap[activeSubType].unit[parameter]
         : optionMap[activeSubType].unit;
     this.setState(
       {
         data: 0,
-        activeCatagory,
+        activeCategory,
         activeSubType,
         parameter,
         dialValue,
@@ -125,7 +141,14 @@ class Multimeter extends Component {
   };
 
   render() {
-    const { activeSubType, data, unit, dialValue, isReading } = this.state;
+    const {
+      activeSubType,
+      data,
+      unit,
+      dialValue,
+      isReading,
+      activeCategory,
+    } = this.state;
     const { isConnected } = this.props;
     return (
       <SimplePanelLayout
@@ -135,11 +158,13 @@ class Multimeter extends Component {
             onClickButton={this.onClickButton}
             changeOption={this.changeOption}
             onToggleRead={this.onToggleRead}
+            onTogglePulseUnit={this.onTogglePulseUnit}
             isReading={isReading}
             data={data}
             unit={unit}
             dialValue={dialValue}
             isConnected={isConnected}
+            activeCategory={activeCategory}
           />
         }
       />
