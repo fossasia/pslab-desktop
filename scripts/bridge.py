@@ -1,4 +1,5 @@
 import sys
+import time
 import threading
 import json
 from oscilloscope import Oscilloscope
@@ -81,12 +82,12 @@ def main():
             if multimeter.is_reading:
                 multimeter.stop_read()
 
-            active_catagory = parsed_stream_data['activeCatagory']
+            active_category = parsed_stream_data['activeCategory']
             active_subtype = parsed_stream_data['activeSubType']
             parameter = None
-            if active_catagory == 'PULSE':
+            if active_category == 'PULSE':
                 parameter = parsed_stream_data['parameter']
-            multimeter.set_config(active_catagory, active_subtype, parameter)
+            multimeter.set_config(active_category, active_subtype, parameter)
 
             if old_read_state:
                 multimeter.start_read()

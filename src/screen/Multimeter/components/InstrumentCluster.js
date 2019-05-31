@@ -3,14 +3,12 @@ import { Switch, Card } from '@material-ui/core';
 import {
   InstrumentContainer,
   DisplayContainer,
-  DisplayWrapper,
   SwitchWrapper,
 } from './InstrumentCluster.styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Dial from './Dial';
-import Display from '../../../components/Display';
 import ActionButtons from './ActionButtons';
 import { withTheme, withStyles } from '@material-ui/core/styles';
+import MeasurementDisplay from './MeasurementDisplay';
 
 const styles = () => ({
   cardMargin: {
@@ -27,7 +25,6 @@ const InstrumentCluster = ({
   changeOption,
   onToggleRead,
   dialValue,
-  data,
   unit,
   isConnected,
   isReading,
@@ -37,36 +34,45 @@ const InstrumentCluster = ({
 }) => {
   return (
     <InstrumentContainer>
-      <Card className={classes.cardMargin}>
+      {/* <Card className={classes.cardMargin}>
         <Dial
           activeSubType={activeSubType}
           value={dialValue}
           onClickButton={onClickButton}
           changeOption={changeOption}
         />
-        <SwitchWrapper>
-          <span>Hz</span>
-          <Switch
-            disabled={activeCategory !== 'PULSE'}
-            onChange={onTogglePulseUnit}
-            color="secondary"
-          />
-          <span>Count Pulse</span>
-        </SwitchWrapper>
+
         <ActionButtons
           isReading={isReading}
           isConnected={isConnected}
           onToggleRead={onToggleRead}
         />
-      </Card>
+      </Card> */}
       <DisplayContainer>
-        <Card>
-          {isReading && <LinearProgress />}
-          <DisplayWrapper>
-            <Display fontSize={'10'} value={data} unit={unit} />
-          </DisplayWrapper>
+        <Card className={classes.cardMargin}>
+          <Dial
+            activeSubType={activeSubType}
+            value={dialValue}
+            onClickButton={onClickButton}
+            changeOption={changeOption}
+          />
+          <SwitchWrapper>
+            <span>Hz</span>
+            <Switch
+              disabled={activeCategory !== 'PULSE'}
+              onChange={onTogglePulseUnit}
+              color="secondary"
+            />
+            <span>Count Pulse</span>
+          </SwitchWrapper>
+          <ActionButtons
+            isReading={isReading}
+            isConnected={isConnected}
+            onToggleRead={onToggleRead}
+          />
         </Card>
       </DisplayContainer>
+      <MeasurementDisplay unit={unit} isReading={isReading} />
     </InstrumentContainer>
   );
 };

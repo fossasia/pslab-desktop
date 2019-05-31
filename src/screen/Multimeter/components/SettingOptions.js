@@ -158,7 +158,7 @@ export const optionMap = {
   },
   CAPACITOR: {
     angle: 33,
-    unit: 'pF',
+    unit: 'F',
     category: 'MISC',
   },
 };

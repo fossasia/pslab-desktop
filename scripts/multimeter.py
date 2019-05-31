@@ -10,31 +10,35 @@ class Multimeter:
         self.multimeter_data_read_thread = None
         self.device = I
         self.is_reading = False
-        self.active_catagory = 'VOLTAGE'
+        self.active_category = 'VOLTAGE'
         self.active_subtype = 'CH1'
         self.parameter = 'PULSE_FREQUENCY'
 
-    def set_config(self, active_catagory, active_subtype, parameter):
-        self.active_catagory = active_catagory
+    def set_config(self, active_category, active_subtype, parameter):
+        self.active_category = active_category
         self.active_subtype = active_subtype
         self.parameter = parameter
 
     def get_config(self):
         output = {'type': 'GET_CONFIG_MUL_MET',
-                  'activeCatagory': self.active_catagory,
+                  'activeCategory': self.active_category,
                   'activeSubType': self.active_subtype,
                   'parameter': self.parameter}
         print(json.dumps(output))
         sys.stdout.flush()
 
     def precision_control(self, value):
-        if value >= 1e6:
+        if abs(value) >= 1e6:
             return (round(value / 1e6, 3), 'M')
-        if value >= 1e3:
+        elif abs(value) >= 1e3:
             return (round(value / 1e3, 3), 'k')
-        elif value <= 1e-6:
+        elif abs(value) <= 1e-10:
+            return (0, None)
+        elif abs(value) <= 1e-9:
+            return (round(value / 1e-9, 3), 'n')
+        elif abs(value) <= 1e-6:
             return (round(value / 1e-6, 3), 'μ')
-        elif value <= 1e-3:
+        elif abs(value) <= 1e-3:
             return (round(value / 1e-3, 3), 'm')
         else:
             return (round(value, 3), None)
@@ -52,15 +56,15 @@ class Multimeter:
     def capture_loop(self):
         self.is_reading = True
         while self.is_reading:
-            if self.active_catagory == 'VOLTAGE':
+            if self.active_category == 'VOLTAGE':
                 self.read_voltage(self.active_subtype)
-            elif self.active_catagory == 'PULSE':
+            elif self.active_category == 'PULSE':
                 self.read_pulse(self.active_subtype, self.parameter)
-            elif self.active_catagory == 'MISC':
+            elif self.active_category == 'MISC':
                 self.read_misc(self.active_subtype)
 
     def read_voltage(self, channel_name):
-        voltage = self.device.get_average_voltage(channel_name)
+        voltage = self.device.get_voltage(channel_name)
         voltage, prefix = self.precision_control(voltage)
         time.sleep(0.25)
         output = {'type': 'START_MUL_MET', 'data': voltage, 'prefix': prefix}
@@ -75,7 +79,7 @@ class Multimeter:
             time.sleep(1)
             data = self.device.readPulseCount()
         elif reading_type == 'PULSE_FREQUENCY':
-            data = self.device.get_freq(pin_name)
+            data = self.device.get_freq(pin_name, timeout=0.5)
             data, prefix = self.precision_control(data)
             time.sleep(0.25)
         output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}

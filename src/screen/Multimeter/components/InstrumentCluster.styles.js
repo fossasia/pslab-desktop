@@ -5,13 +5,12 @@ export const InstrumentContainer = styled.div`
 `;
 
 export const DisplayContainer = styled.div`
-  display: flex;
   margin: 0px 16px 0px 0px;
 `;
 
 export const DisplayWrapper = styled.div`
-  width: 480px;
-  height: 480px;
+  width: 560px;
+  height: 460px;
   display: flex;
   justify-content: center;
   align-items: center;
