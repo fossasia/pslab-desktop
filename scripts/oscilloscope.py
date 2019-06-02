@@ -180,30 +180,30 @@ class Oscilloscope:
             self.device.capture_traces(
                 self.channels_to_read, self.number_of_samples, self.time_gap, trigger=self.is_trigger_active)
             time.sleep(self.delay)
-            keys = ['freq']
+            keys = ['frequency']
             vector = ()
-            freq = None
+            frequency = None
             if self.ch1:
                 x, y1 = self.device.fetch_trace(1)
-                freq, amp1 = self.fft(y1, self.time_gap * 1e-3)
+                frequency, amp1 = self.fft(y1, self.time_gap * 1e-3)
                 keys.append('ch1')
                 vector = vector + (amp1, )
             if self.ch2:
                 x, y2 = self.device.fetch_trace(2)
-                freq, amp2 = self.fft(y2, self.time_gap * 1e-3)
+                frequency, amp2 = self.fft(y2, self.time_gap * 1e-3)
                 keys.append('ch2')
                 vector = vector + (amp2, )
             if self.ch3:
                 x, y3 = self.device.fetch_trace(3)
-                freq, amp3 = self.fft(y3, self.time_gap * 1e-3)
+                frequency, amp3 = self.fft(y3, self.time_gap * 1e-3)
                 keys.append('ch3')
                 vector = vector + (amp3, )
             if self.mic:
                 x, y4 = self.device.fetch_trace(4)
-                freq, amp4 = self.fft(y4, self.time_gap * 1e-3)
+                frequency, amp4 = self.fft(y4, self.time_gap * 1e-3)
                 keys.append('mic')
                 vector = vector + (amp4, )
-            vector = (freq, ) + vector
+            vector = (frequency, ) + vector
             output = {'type': 'START_OSC', 'isFFT': True, 'data': np.stack(
                 vector).T.tolist(), 'keys': keys,
                 'numberOfChannels': self.number_of_channels}

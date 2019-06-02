@@ -32,7 +32,8 @@
 				switch (parsedJSON['type']) {
 					case 'START_OSC':	
 						if(parsedJSON.isFFT){
-							ipcRenderer.send('DEBUG', parsedJSON);
+							parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+							ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
 						}
 						else{
 							parsedOutput = oscilloscopeDataProcessor(parsedJSON);

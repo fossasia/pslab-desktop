@@ -119,7 +119,6 @@ class TimeParameters extends Component {
             min={0}
             max={timeBaseListLength - 1}
             step={1}
-            disabled={!isTriggerActive}
             minTitleWidth="60px"
             minUnitWidth="66px"
             display={timeBase}
