@@ -6,7 +6,9 @@ const loadBalancer = require('electron-load-balancer');
 
 const { app } = electron;
 const { BrowserWindow } = electron;
+const nativeImage = electron.nativeImage;
 
+const icon = nativeImage.createFromPath(path.join(__dirname,'app_icon.png'))
 let mainWindow;
 
 function createWindow() {
@@ -17,8 +19,9 @@ function createWindow() {
         protocol: 'file:',
         slashes: true,
       });
-
-  mainWindow = new BrowserWindow({ show: false });
+  mainWindow = new BrowserWindow({ show: false ,
+    icon: icon
+  });
   mainWindow.maximize();
   mainWindow.show();
 
