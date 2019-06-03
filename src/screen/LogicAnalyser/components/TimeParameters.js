@@ -46,88 +46,90 @@ class TimeParameters extends Component {
       onEdgeChange,
       classes,
     } = this.props;
-    const { idLabelWidth,triggerEdge } = this.state;
+    const { idLabelWidth, triggerEdge } = this.state;
 
     return (
-        <SettingsWrapper>
-          <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
-            Settings
-          </Typography>
-          <Divider />
-          <OptionsRowWrapper>
-            <FormControl
-              variant="outlined"
-              fullWidth={true}
-              className={classes.formControl}>
-              <InputLabel
-                ref={ref => {
-                  this.idRef = ref;
-                }}
-                htmlFor="outlined-id-channel">
-                Channel
-              </InputLabel>
-              <Select
-                value={channelID}
-                onChange={onChangeID}
-                input={
-                  <OutlinedInput
-                    labelWidth={idLabelWidth}
-                    name="id-channel"
-                    id="outlined-id-channel"
-                  />
-                } >
-                {Object.entries(options.ID).map((item, index) => {
-                  const key = item[0];
-                  const value = item[1];
-                  return (
-                    <MenuItem key={index} value={key}>
-                      {value}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </OptionsRowWrapper>
-
-          <OptionsRowWrapper>
+      <SettingsWrapper>
+        <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+          Settings
+        </Typography>
+        <Divider />
+        <OptionsRowWrapper>
           <FormControl
-              variant="outlined"
-              fullWidth={true}
-              className={classes.formControl}
+            variant="outlined"
+            fullWidth={true}
+            className={classes.formControl}
+          >
+            <InputLabel
+              ref={ref => {
+                this.idRef = ref;
+              }}
+              htmlFor="outlined-id-channel"
             >
-              <InputLabel
-                ref={ref => {
-                  this.edgeRef = ref;
-                }}
-                htmlFor="outlined-edge-channel"
-              >
-                Edge
-              </InputLabel>
-              <Select
-                value={edgeSelection}
-                onChange={onEdgeChange}
-                input={
-                  <OutlinedInput
-                    labelWidth={triggerEdge}
-                    name="edge-selection"
-                    id="outlined-edge-selection"
-                  />
-                }
-              >
-                {Object.entries(options.Edge).map((item, index) => {
-                  const key = item[0];
-                  const value = item[1];
-                  return (
-                    <MenuItem key={index} value={key}>
-                      {value}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </OptionsRowWrapper>
-        </SettingsWrapper>
-    
+              Channel
+            </InputLabel>
+            <Select
+              value={channelID}
+              onChange={onChangeID}
+              input={
+                <OutlinedInput
+                  labelWidth={idLabelWidth}
+                  name="id-channel"
+                  id="outlined-id-channel"
+                />
+              }
+            >
+              {Object.entries(options.ID).map((item, index) => {
+                const key = item[0];
+                const value = item[1];
+                return (
+                  <MenuItem key={index} value={key}>
+                    {value}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </OptionsRowWrapper>
+
+        <OptionsRowWrapper>
+          <FormControl
+            variant="outlined"
+            fullWidth={true}
+            className={classes.formControl}
+          >
+            <InputLabel
+              ref={ref => {
+                this.edgeRef = ref;
+              }}
+              htmlFor="outlined-edge-channel"
+            >
+              Edge
+            </InputLabel>
+            <Select
+              value={edgeSelection}
+              onChange={onEdgeChange}
+              input={
+                <OutlinedInput
+                  labelWidth={triggerEdge}
+                  name="edge-selection"
+                  id="outlined-edge-selection"
+                />
+              }
+            >
+              {Object.entries(options.Edge).map((item, index) => {
+                const key = item[0];
+                const value = item[1];
+                return (
+                  <MenuItem key={index} value={key}>
+                    {value}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </OptionsRowWrapper>
+      </SettingsWrapper>
     );
   }
 }

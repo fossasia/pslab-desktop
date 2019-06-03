@@ -9,7 +9,7 @@ import {
   FormControl,
   InputLabel,
 } from '@material-ui/core';
-import { withStyles,withTheme } from '@material-ui/core/styles';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
 
@@ -37,12 +37,8 @@ class ChannelParameters extends Component {
   }
 
   render() {
-    const {
-      triggerChannel,
-      onChangeTriggerChannel,
-      classes,
-    } = this.props;
-    const {triggerLabelWidth } = this.state;
+    const { triggerChannel, onChangeTriggerChannel, classes } = this.props;
+    const { triggerLabelWidth } = this.state;
 
     return (
       <SettingsWrapper>
@@ -54,7 +50,8 @@ class ChannelParameters extends Component {
           <FormControl
             variant="outlined"
             fullWidth={true}
-            className={classes.formControl}>
+            className={classes.formControl}
+          >
             <InputLabel
               ref={ref => {
                 this.triggerRef = ref;

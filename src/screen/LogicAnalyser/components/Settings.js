@@ -20,7 +20,7 @@ const Settings = ({
   onEdgeChange,
 }) => (
   <SettingsContainer>
-    <Scrollbars autoHide autoHideTimeout={1000}>  
+    <Scrollbars autoHide autoHideTimeout={1000}>
       <ChannelParameters
         activeChannels={activeChannels}
         channelRanges={channelRanges}
@@ -37,30 +37,36 @@ const Settings = ({
         onEdgeChange={onEdgeChange}
         onChangeID={onChangeID}
       />
-         <TimeParameters
+      <TimeParameters
         channelID={channelID}
         edgeSelection={edgeSelection}
         onEdgeChange={onEdgeChange}
         onChangeID={onChangeID}
         disabled={triggerChannel == options.Select.CH1}
       />
-         <TimeParameters
+      <TimeParameters
         channelID={channelID}
         edgeSelection={edgeSelection}
         onEdgeChange={onEdgeChange}
         onChangeID={onChangeID}
-        disabled={triggerChannel == options.Select.CH1 || triggerChannel == options.Select.CH2}
+        disabled={
+          triggerChannel == options.Select.CH1 ||
+          triggerChannel == options.Select.CH2
+        }
       />
-         <TimeParameters
+      <TimeParameters
         channelID={channelID}
         edgeSelection={edgeSelection}
         onEdgeChange={onEdgeChange}
         onChangeID={onChangeID}
-        disabled={triggerChannel == options.Select.CH1 || triggerChannel == options.Select.CH2 || triggerChannel == options.Select.CH3 }
+        disabled={
+          triggerChannel == options.Select.CH1 ||
+          triggerChannel == options.Select.CH2 ||
+          triggerChannel == options.Select.CH3
+        }
       />
     </Scrollbars>
   </SettingsContainer>
-  
 );
 
 export default Settings;
