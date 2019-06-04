@@ -1,85 +1,115 @@
 #!/usr/bin/python
-'''
-Lists the various available experiments and allows users to run them
-'''
+"""  ###################################################################################################################
+Entry point for PSLab python desktop application. This will connect to a PSLab device and display a list of available 
+instruments to work with. If a device is not connected, window will be reddish with instruments disabled
+"""  ###################################################################################################################
 from __future__ import print_function
 
+import functools
+import importlib
+import inspect
+import os
+import pkgutil
 import sys
 from argparse import ArgumentParser
 
-parser = ArgumentParser()
-# Add more options if you like
-parser.add_argument("-P", dest="PortName",
-                    help="If you have connected multiple devices, provide the port name . e.g /dev/ttyACM0",
-                    metavar="PORT_NAME")
-args = parser.parse_args()
+import pkg_resources
+# PSLab library imports ################################################################################################
+from PSL import sciencelab
+# PyQt5 imports ########################################################################################################
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QApplication as QApp
+from PyQt5.QtWidgets import QDesktopWidget as QDesktop
+from PyQt5.QtWidgets import QFileDialog as QFileDialog
+from PyQt5.QtWidgets import QFrame as QFrame
+from PyQt5.QtWidgets import QLabel as QLabel
+from PyQt5.QtWidgets import QMainWindow as QWindow
+from PyQt5.QtWidgets import QMessageBox as QMessage
+from PyQt5.QtWidgets import QProgressBar as QProgress
+from PyQt5.QtWidgets import QSplashScreen as QSplash
+
+from PSL_Apps.templates import auto_single_col_exp as UI
 from PSL_Apps.utilitiesClass import utilitiesClass
 
-from PyQt5 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-from PSL_Apps.templates import auto_single_col_exp as single_col_exp
-
-import os, pkgutil, importlib, functools, pkg_resources
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
+# Setting up PORT arguments ############################################################################################
+# In case if a user wants to add multiple devices, connect using a port name
+parser = ArgumentParser()
+parser.add_argument("-P", dest="PortName", help="If there are multiple devices, provide the port name; e.g /dev/ttyACM0"
+                    , metavar="PORT_NAME")
+args = parser.parse_args()
+# String parsing for UTF-8 #############################################################################################
+_fromUtf8 = lambda s: s
+TEST_MODE = False
 
 
-class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesClass):
+########################################################################################################################
+class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
+    """  ###############################################################################################################
+    Main UI class for PSLab desktop app. Starts with a splash screen trying to connect to a PSLab device and displays 
+    the results by making screen color either red or blue; values fetched from stylesheets
+    """  ###############################################################################################################
+
     def __init__(self, parent=None, **kwargs):
-        super(MyMainWindow, self).__init__(parent)
+        super(PSLabDesktop, self).__init__()
         self.eventHandler = kwargs.get('app', None)
-        self.showSplash();
-        self.updateSplash(10, 'Setting up UI...')
+        # Print where we have imported the modules from for debugging purposes
+        if TEST_MODE: self.printModuleLocations()
 
+        # Display splash screen to start configure libraries and PSLab device
+        self.showSplash()
+        self.updateSplash(10, 'Setting up UI ...')  # 10
+        # Initiate UI widgets
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('pslab_logo.png'))
         self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
         self.setStyleSheet(self.styleText)
-        self.updateSplash(10, 'Fetching libraries...')
-
-        from PSL import sciencelab
-        self.row = 0;
-        self.col = 0;
+        self.updateSplash(10, 'Fetching libraries ...')  # 20
+        # Setup settings for button layouts to lay instrument icons
+        self.row = 0
+        self.col = 0
         self.colLimit = 3
 
-        self.updateSplash(10, 'Connecting to Device...')
+        """  ###########################################################################################################
+        Starting device connection process
+        """  ###########################################################################################################
+        self.updateSplash(10, 'Searching for a PSLab Device ...')  # 30
         if args.PortName:
-            self.I = sciencelab.ScienceLab(
-                port=args.PortName)  # Not using connect method because it returns None if unconnected,
+            # Not using connect method because it returns None if not connected
+            self.I = sciencelab.ScienceLab(port=args.PortName)
         else:
-            self.I = sciencelab.ScienceLab(
-                verbose=False)  # and I need to pass the methods of interfacing to various control widgets regardless
+            # I need to pass interfacing methods to various widgets regardless
+            self.I = sciencelab.ScienceLab(verbose=False)
+
+        self.setWindowTitle('PSLab Desktop App - V2.0')
         self.hexid = ''
         try:
             if not self.I.connected:
+                # Display an error dialog with the probable cause
+                errorDialog = QMessage()
+                errorDialog.setIcon(QMessage.Warning)
+                errorDialog.setWindowTitle("Connection Error")
+                errorDialog.setText("Cannot find a PSLab device")
                 if len(self.I.H.occupiedPorts):
-                    diag = QtGui.QMessageBox.about(self, 'Error',
-                                                   'Could not find available device.\nSoftware already running for ports: %s' % list(
-                                                       self.I.H.occupiedPorts))
+                    errorDialog.setInformativeText("We have detected a PSLab device")
+                    errorDialog.setDetailedText("Software already running for ports: %s" % list(self.I.H.occupiedPorts))
                 else:
-                    diag = QtGui.QMessageBox.about(self, 'Error', 'FOSSASIA PSLab Not Connected')
-                # diag.show()
+                    errorDialog.setDetailedText("Make sure that the PSLab device is connected and status LEDs are ON")
+                errorDialog.exec_()
+                # Make the window looks reddish to indicate error
                 self.styleText = pkg_resources.resource_string('PSL_Apps',
                                                                "stylesheets/overall_disconnected.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)
-                self.setWindowTitle('Error : FOSSASIA PSLab Not Connected')
+                self.showStatusBar('Error: PSLab device not connected')
             else:
+                # Display device ID at the status bar
                 self.hexid = hex(self.I.device_id() & 0xFFFF)
-                self.setWindowTitle(self.I.generic_name + ' : ' + self.hexid)
+                self.showStatusBar(self.I.generic_name + ': ' + self.hexid)
+
         except:
-            self.updateSplash(30, 'Connection Error!')
-            # self.SCF1.setStyleSheet(_fromUtf8(styles.disconnected))
-            self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall_disconnected.css").decode(
-                "utf-8")
+            self.updateSplash(30, 'Connection Error ...')  # 60
+            self.styleText = pkg_resources.resource_string('PSL_Apps',
+                                                           "stylesheets/overall_disconnected.css").decode("utf-8")
             self.setStyleSheet(self.styleText)
 
         #################################   POPULATE ADVANCED CONTROLS TAB  ##################################
@@ -87,31 +117,36 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
         self.WidgetLayout.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         self.advancedControlsLayout.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         # Widgets related to power supplies PV1,PVS2,PV3,PCS
-        self.supplySection = self.supplyWidget(self.I);
+        self.supplySection = self.supplyWidget(self.I)
         self.advancedControlsLayout.addWidget(self.supplySection)
 
         # Widgets related to voltmeters CH1,CH2,CH3,SEN,CAP,AN8
-        self.voltSection = self.voltWidget(self.I);
+        self.voltSection = self.voltWidget(self.I)
         self.advancedControlsLayout.addWidget(self.voltSection)
 
         # Widgets related to Analog Waveform generators
-        self.sineSection = self.sineWidget(self.I);
+        self.sineSection = self.sineWidget(self.I)
         self.advancedControlsLayout.addWidget(self.sineSection)
         # Widgets related to Digital Waveform generators
-        self.pwmSection = self.pwmWidget(self.I);
+        self.pwmSection = self.pwmWidget(self.I)
         self.advancedControlsLayout.addWidget(self.pwmSection)
         self.advancedControlsLayout.addWidget(self.setStateIcon(I=self.I))
 
-        #################################   POPULATE EXPERIMENTS TAB  ########################################
+        """  ###########################################################################################################
+        Populating Icons in the "Experiments" section
+        """  ###########################################################################################################
+        # We may need to change this directory to support different OSs
         sys.path.append('/usr/share/pslab')
         self.subSectionList = []
         self.subSectionPaths = []
+        # Load sections in two milliseconds with GUI as bask package
         self.tmpTimer = QtCore.QTimer()
-        self.tmpTimer.singleShot(2, functools.partial(self.loadSectionList, 'PSL_Resources.GUI'))
+        self.tmpTimer.singleShot(2, functools.partial(self.loadSectionList,
+                                                      'PSL_Resources.GUI'))
 
         #################################   POPULATE CONTROLS TAB  ##########################################
-        row = 0;
-        col = 0;
+        row = 0
+        col = 0
         colLimit = 3
         self.funcs = []
         autogenControls = []
@@ -173,30 +208,30 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
             elif C['TYPE'] == 'pulsecounter':
                 self.WidgetLayout.addWidget(self.pulseCounterIcon(self.I), row, col)
             elif C['TYPE'] == 'separator':
-                row += 1;
+                row += 1
                 col = 0
-                line = QtGui.QFrame();
-                line.setFrameShape(QtGui.QFrame.HLine);
-                line.setFrameShadow(QtGui.QFrame.Sunken);
+                line = QFrame()
+                line.setFrameShape(QFrame.HLine)
+                line.setFrameShadow(QFrame.Sunken)
                 self.WidgetLayout.addWidget(line, row, 0, 1, colLimit)
-                row += 1;
+                row += 1
                 col = -1
             elif C['TYPE'] == 'voltWidget':
-                row += 1;
+                row += 1
                 col = 0
-                self.voltSection = self.voltWidget(self.I);
+                self.voltSection = self.voltWidget(self.I)
                 self.WidgetLayout.addWidget(self.voltSection, row, 0, 1, colLimit)
-                row += 1;
+                row += 1
                 col = -1
 
             col += 1
             if (col == colLimit):
-                col = 0;
+                col = 0
                 row += 1
 
         col += 1
         if (col == colLimit):
-            col = 0;
+            col = 0
             row += 1
 
         self.menu_entries = []
@@ -206,11 +241,66 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.locateDevices)
         self.timer.start(500)
-        self.updateSplash(30, 'Almost done...')
-        # self.splash.finish(self)
+        self.updateSplash(30, 'Almost done...')  # 90
+        """  ###########################################################################################################
+        Window placement at the center of the screen
+        """  ###########################################################################################################
+        frameDimensions = self.frameGeometry()
+        windowCenterPoint = QDesktop().availableGeometry().center()
+        frameDimensions.moveCenter(windowCenterPoint)
+        self.move(frameDimensions.topLeft())
+        # Clear running app instance as there is none running at the beginning
         self.runningApp = None
 
+    def showStatusBar(self, statusMsg):
+        self.statusLabel = QLabel()
+        self.statusLabel.setText(statusMsg)
+        self.statusBar().addWidget(self.statusLabel)
+
+    def printModuleLocations(self):
+        """  ###########################################################################################################
+        Display module directories of used packages for debugging purposes
+        """  ###########################################################################################################
+        print("Modules used in application were imported from directories::::")
+        print("ScienceLab: " + repr(inspect.getmodule(sciencelab)))
+        print("QtCore: " + repr(inspect.getmodule(QtCore)))
+        print("utilitiesClass: " + repr(inspect.getmodule(utilitiesClass)))
+        print("UI: " + repr(inspect.getmodule(UI)))
+        print("==============================================================")
+
+    def showSplash(self):
+        """  ###########################################################################################################
+        Prepare and display a splash screen until initiation is complete
+        """  ###########################################################################################################
+        splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('PSL_Apps.stylesheets', "splash.png"))
+        self.splash = QSplash(splash_pix)
+        # Create a progress bar at the bottom of Splash screen
+        self.progressBar = QProgress(self.splash)
+        self.progressBar.move(0, self.splash.height() - 20)
+        self.splashMsg = QLabel(self.splash)
+        self.splashMsg.setStyleSheet("font-weight:bold; color:white")
+        self.progressBar.resize(self.splash.width(), 20)
+        self.splashMsg.setText('Starting PSLab Desktop App ...')
+        self.splashMsg.resize(self.progressBar.width(), 20)
+        self.splashMsg.move(0, self.splash.height() - 20)
+        css = pkg_resources.resource_string('PSL_Apps', "stylesheets/splash.css").decode("utf-8")
+        if css:
+            self.splash.setStyleSheet(css)
+        self.splash.setMask(splash_pix.mask())
+        self.splash.show()
+
+    def updateSplash(self, x, txt=''):
+        """  ###########################################################################################################
+        Update the progress and text in splash window
+        """  ###########################################################################################################
+        self.progressBar.setValue(self.progressBar.value() + x)
+        if (len(txt)): self.splashMsg.setText('  ' + txt)
+        self.eventHandler.processEvents()
+        self.splash.repaint()
+
     def modifiedSqr1(self, val):
+        """  ###########################################################################################################
+        """  ###########################################################################################################
         if val < 4:
             self.I.set_state(SQR1=0)
             return 'LOW'
@@ -222,14 +312,17 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
             return v
 
     def loadList(self, basepackage):
+        """  ###########################################################################################################
+        Not in use it seems :/
+        """  ###########################################################################################################
         self.funcs = []
         baselib = importlib.import_module(basepackage)
-        apps = [name for _, name, _ in pkgutil.iter_modules([os.path.dirname(baselib.__file__)])]
-        print(apps)
+        apps = [name for _, name, _ in pkgutil.iter_modules([os.path.dirname(
+            baselib.__file__)])]
         self.colLimit = 1
         for app in apps:
             if (self.col == self.colLimit):
-                self.col = 0;
+                self.col = 0
                 self.row += 1
             fn = functools.partial(self.launchFunc, basepackage + '.' + app)
             self.funcs.append(fn)
@@ -238,18 +331,23 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
             icon.mouseHover.connect(self.setHint)
             self.col += 1
 
-        self.col = 0;
+        self.col = 0
         self.row += 1
-        line = QtGui.QFrame()
-        line.setFrameShape(QtGui.QFrame.HLine)
-        line.setFrameShadow(QtGui.QFrame.Sunken)
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
         self.ExperimentLayout.addWidget(line, self.row, 0, 1, 3)
         self.row += 1
 
     def importExperimentFolder(self):
+        """  ###########################################################################################################
+        Opens a file opener window to import Experiment folders similar to the
+        ones provided by PSLab Desktop app
+        """  ###########################################################################################################
         from os.path import expanduser
-        dirname = QtGui.QFileDialog.getExistingDirectory(self, "Load a folder containing Experiments", expanduser("./"),
-                                                         QtGui.QFileDialog.ShowDirsOnly)
+        dirname = QFileDialog.getExistingDirectory(self,
+                                                   "Load a folder containing Experiments", expanduser("./"),
+                                                   QFileDialog.ShowDirsOnly)
         if not dirname: return
         parentPath = os.path.abspath(os.path.join(dirname, os.pardir))
         sys.path.append(parentPath)
@@ -257,117 +355,178 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
         self.tmpTimer.singleShot(2, self.scrollToEnd)
 
     def scrollToEnd(self):
+        """  ###########################################################################################################
+        Go to the bottom of the Experiments section in main window
+        """  ###########################################################################################################
         scrollMax = self.ExperimentScrollArea.verticalScrollBar().maximum()
         self.ExperimentScrollArea.verticalScrollBar().setValue(scrollMax)
 
     def loadSectionList(self, basepackage):
-        # st= time.time()
+        """  ###########################################################################################################
+        Iterate through every resource folder in GUI directory to list sections
+        used in PSLab Desktop Experiments section
+        """  ###########################################################################################################
+        # baselib would be /usr/share/pslab/PSL_Resources/GUI/
         baselib = importlib.import_module(basepackage)
-        subdirs = [name for _, name, isDir in pkgutil.iter_modules([os.path.dirname(baselib.__file__)]) if
-                   isDir == True]
+        # Directories under GUI directory
+        subdirs = [name for _, name, isDir in pkgutil.iter_modules([os.path.dirname(baselib.__file__)])
+                   if isDir == True]
         for sub in subdirs:
             submodule = basepackage + '.' + sub
             sublib = importlib.import_module(submodule)
             self.subSectionList.append(sublib.__dict__.get('title', submodule.split('.')[-1][1:]))
             self.subSectionPaths.append(submodule)
-
+        # Append the main sections to combo box
         self.subSections.addItems(self.subSectionList)
 
-    # print ('section parsing time : ' ,time.time() - st,self.subSectionList)
-
-    def changeSubSection(self, ind):
-        self.loadParentModuleIcons(self.subSectionPaths[ind])
+    def changeSubSection(self, sectionIndex):
+        """  ###########################################################################################################
+        Slot assigned to combo box selecting different sections
+        """  ###########################################################################################################
+        self.loadParentModuleIcons(self.subSectionPaths[sectionIndex])
 
     def loadParentModuleIcons(self, basepackage):
+        """  ###########################################################################################################
+        Load packages in GUI folder under different categories
+        Eg: PSL_Resources.GUI.A_TEST_AND_MEASUREMENT
+        """  ###########################################################################################################
+        # Clears the frame where sub section buttons are to repopulate it
         self.clearExperimentIcons()
         self.funcs = []
-        # st= time.time()
         baselib = importlib.import_module(basepackage)
-        subdirs = [name for _, name, isDir in pkgutil.iter_modules([os.path.dirname(baselib.__file__)]) if
-                   isDir == True]
+        subdirs = [name for _, name, isDir in pkgutil.iter_modules([os.path.dirname(baselib.__file__)])
+                   if isDir == True]
         for sub in subdirs:
             submodule = basepackage + '.' + sub
             self.loadSubmoduleIcons(submodule)
 
-    # print ('parsing time : ' ,time.time() - st)
-
     def loadSubmoduleIcons(self, submodule):
+        """  ###########################################################################################################
+        Load Python scripts describing each instrument and populate buttons for
+        each of those instruments and experiments
+        Eg: PSL_Resources.GUI.A_TEST_AND_MEASUREMENT.A_TandM
+        """  ###########################################################################################################
         sublib = importlib.import_module(submodule)
-        title = QtGui.QLabel();
-        title.setText(sublib.__dict__.get('title', submodule.split('.')[-1][1:]));
+
+        # Set 'Title' extracted from __init__.py file in each module directory
+        title = QLabel()
+        title.setText(sublib.__dict__.get('title', submodule.split('.')[-1][1:]))
+        # Adds a label as a heading. Args will be [row, col, rowSpan, colSpan]
         self.ExperimentLayout.addWidget(title, self.row, 0, 1, self.colLimit)
-        self.col = 0;
+        # Increment row to move one line below
+        self.col = 0
         self.row += 1
-        line = QtGui.QFrame();
-        line.setFrameShape(QtGui.QFrame.HLine);
-        line.setFrameShadow(QtGui.QFrame.Sunken);
+        # Add a horizontal bar to separate title with the icons
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
         self.ExperimentLayout.addWidget(line, self.row, 0, 1, self.colLimit)
-        self.col = 0;
+        # Increment row to move one line below
+        self.col = 0
         self.row += 1
-        apps = [name for _, name, isDir in pkgutil.iter_modules([os.path.dirname(sublib.__file__)]) if isDir == False]
-        for app in apps:
+
+        # Iterate through every app script to generate a button with relevant
+        # functions and resources
+        appScripts = [name for _, name, isDir in pkgutil.iter_modules([os.path.dirname(sublib.__file__)])
+                      if isDir == False]
+        for app in appScripts:
+            # There will be three buttons for each row
             if (self.col == self.colLimit):
-                self.col = 0;
+                self.col = 0
                 self.row += 1
-
+            # Create a callable for each UI script and append it to a list
             appLocation = submodule + '.' + app
-            fname = app + '.' + '.html'
-
             fn = functools.partial(self.launchFunc, appLocation)
             self.funcs.append(fn)
+            # Create an experiment Icon from utilitiesClass and assign actions
+            # This 'icon' will extend a QPushButton and fn will be assigned to
+            # the connect method
             icon = self.experimentIcon(submodule, app, fn)
+            # Add the button to Experiment layout grid
             self.ExperimentLayout.addWidget(icon, self.row, self.col)
+            # Connect hintview to mouse hover event
             icon.mouseHover.connect(self.setHint)
             self.col += 1
-
-        self.col = 0;
+        # Prepare icons to fed into the next row
+        self.col = 0
         self.row += 1
 
     def clearExperimentIcons(self):
+        """  ###########################################################################################################
+        Clear the icons in frame before render new ones upon selecting an item
+        from Experiment menu
+        """  ###########################################################################################################
         while self.ExperimentLayout.count():
             item = self.ExperimentLayout.takeAt(0)
             item.widget().deleteLater()
-        self.row = 0;
-        self.col = 0;
+        self.row = 0
+        self.col = 0
+        # Reset column limit to 3
         self.colLimit = 3
 
     def setHint(self, t):
+        """  ###########################################################################################################
+        Display the content of hint value in each experiment in the hint frame
+        """  ###########################################################################################################
         self.hintText.setHtml(t)
 
     def launchFunc(self, fname):
+        """  ###########################################################################################################
+        Function opening a new Window with the respected instrument/experiment
+        """  ###########################################################################################################
         if self.I.connected:
             try:
+                # If there is an app window open, close it before opening a new
                 if self.runningApp:
                     self.runningApp.close()
                     self.killAllTimers()
             except Exception as e:
                 print(e)
-
-            FILE = importlib.import_module(fname)
-            inst = FILE.AppWindow(self, I=self.I)
-            inst.show()
-            size = inst.geometry()
-            inst.setGeometry(500, 50, size.width(), size.height())
-
-            self.runningApp = inst
+            # Open the python script containing info about the instrument
+            appScripts = importlib.import_module(fname)
+            appInstance = appScripts.AppWindow(self, I=self.I)
+            appInstance.show()
+            size = appInstance.geometry()
+            appInstance.setGeometry(500, 50, size.width(), size.height())
+            self.runningApp = appInstance
+            # Activate the help view in main window
+            # TODO: Render the help view by fetching correct resource HTML file
             self.tabWidget.setCurrentIndex(1)
-
         else:
-            QtGui.QMessageBox.about(self, 'Error', 'Hardware not detected')
+            # Display error message as no device is connected
+            errorDialog = QMessage()
+            errorDialog.setIcon(QMessage.Warning)
+            errorDialog.setWindowTitle("Connection Error")
+            errorDialog.setText("Cannot find a PSLab device")
+            errorDialog.setDetailedText("Make sure that the PSLab device is connected and status LEDs are ON")
+            errorDialog.exec_()
 
     def returnToApps(self):
+        """  ###########################################################################################################
+        Display the main view where instruments and experiments are shown
+        """  ###########################################################################################################
         self.tabWidget.setCurrentIndex(0)
 
     def launchAboutDevice(self):
-        print('about')
-        if self.I:
+        """  ###########################################################################################################
+        Display a window with details about connected devices. This will be a seperate UI file based on a table view
+        """  ###########################################################################################################
+        if self.I.connected:
             from PSL_Apps.utilityApps import deviceInfo
             info = deviceInfo.AppWindow(self, I=self.I)
             info.show()
         else:
-            print(self.setWindowTitle('PSLab Not Connected!'))
+            # Display error message as no device is connected
+            errorDialog = QMessage()
+            errorDialog.setIcon(QMessage.Warning)
+            errorDialog.setWindowTitle("Connection Error")
+            errorDialog.setText("Cannot find a PSLab device")
+            errorDialog.setDetailedText("Make sure that the PSLab device is connected and status LEDs are ON")
+            errorDialog.exec_()
 
     def locateDevices(self):
+        """  ###########################################################################################################
+        """  ###########################################################################################################
         L = self.I.H.listPorts()
         total = len(L)
         menuChanged = False
@@ -399,18 +558,19 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
                 reply = QtGui.QMessageBox.question(self, 'Connection', 'New Device Found. Connect?',
                                                    QtGui.QMessageBox.No, QtGui.QMessageBox.Yes)
                 if reply == QtGui.QMessageBox.Yes:
-                    print(reply)
                     self.selectDevice()
 
     def selectDevice(self):
+        """  ###########################################################################################################
+        """  ###########################################################################################################
         sel = self.deviceCombo.currentText()
         if (not ('ACM' in sel or 'USB' in sel)):
             self.displayDialog('No devices Found')
             return
-        self.splash.show();
+        self.splash.show()
         self.progressBar.setValue(0)
-        self.updateSplash(20, 'Reconnecting to %s' % (sel));
-        self.updateSplash(20, 'Reconnecting to %s' % (sel));
+        self.updateSplash(20, 'Reconnecting to %s' % (sel))
+        self.updateSplash(20, 'Reconnecting to %s' % (sel))
         if self.I:
             try:
                 self.I.reconnect(port=sel)
@@ -436,41 +596,20 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
             else:
                 self.hexid = hex(self.I.device_id() & 0xFFFF)
                 self.setWindowTitle(self.I.generic_name + ' : ' + self.hexid)
-                self.updateSplash(20, 'Finished Reconnecting...');
+                self.updateSplash(20, 'Finished Reconnecting...')
                 self.displayDialog('Reconnected :' + self.I.H.version_string)
                 # self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
                 self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)
-                self.setWindowTitle('PSLab : ' + self.I.H.version_string)
+                self.setWindowTitle('PSLab : ' + self.I.H.version_string.decode("utf-8"))
 
         self.splash.close()
         return
 
-    def updateSplash(self, x, txt=''):
-        self.progressBar.setValue(self.progressBar.value() + x)
-        if (len(txt)): self.splashMsg.setText('  ' + txt)
-        self.eventHandler.processEvents()
-        self.splash.repaint()
-
-    def showSplash(self):
-        splash_pix = QtGui.QPixmap(pkg_resources.resource_filename('PSL_Apps.stylesheets', "splash.png"))
-        self.splash = QtGui.QSplashScreen(splash_pix)  # QtCore.Qt.WindowStaysOnTopHint)
-        # adding progress bar
-        self.progressBar = QtGui.QProgressBar(self.splash);
-        self.progressBar.move(0, self.splash.height() - 20)
-        self.splashMsg = QtGui.QLabel(self.splash);
-        self.splashMsg.setStyleSheet("font-weight:bold;color:white")
-        self.progressBar.resize(self.splash.width(), 20)
-        self.splashMsg.setText('Loading....');
-        self.splashMsg.resize(self.progressBar.width(), 20);
-        self.splashMsg.move(0, self.splash.height() - 20)
-        css = pkg_resources.resource_string('PSL_Apps', "stylesheets/splash.css").decode("utf-8")
-        if css:
-            self.splash.setStyleSheet(css)
-        self.splash.setMask(splash_pix.mask())
-        self.splash.show()
-
     def resetDevice(self):
+        """  ###########################################################################################################
+        Disconnects and reconnects the device
+        """  ###########################################################################################################
         if self.I:
             if self.I.connected:
                 self.I.resetHardware()
@@ -478,11 +617,14 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
                 self.I.reconnect()
 
     def __del__(self):
+        """  ###########################################################################################################
+        This will be called once the app is being closed. It will close PSLab connections to clean the system
+        """  ###########################################################################################################
         try:
             self.I.H.fd.close()
         except:
             pass
-        print('bye')
+        print('Application closed ...')
 
     ############################Section for correlating control widgets#################################
 
@@ -521,7 +663,6 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
     def startRemoteServer(self):
         try:
             from PSL_Apps.utilityApps import remote
-            import inspect
 
             funcs = dir(self.I)
             self.methods = {}
@@ -545,16 +686,16 @@ class MyMainWindow(QtGui.QMainWindow, single_col_exp.Ui_MainWindow, utilitiesCla
             self.remoteThread = remote.CherryPyThread(self.remote)
             # thread.finished.connect(app.exit)
             self.remoteThread.start()
-            QtGui.QMessageBox.about(self, 'Server Ready',
-                                    '''Try accessing <span style="font-weight:bold;">localhost:8080/get_voltage('CH1')</span> from your web browser.<br> Do not access the device from multiple locations simultaneously.''')
+            QMessage.about(self, 'Server Ready',
+                           """Try accessing <span style="font-weight:bold;">localhost:8080/get_voltage('CH1')</span> from your web browser.<br> Do not access the device from multiple locations simultaneously.""")
 
         except:
-            QtGui.QMessageBox.about(self, 'Unable to Launch Server', "Is CherryPy web server installed?")
+            QMessage.about(self, 'Unable to Launch Server', "Is CherryPy web server installed?")
 
 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    myapp = MyMainWindow(app=app)
+    app = QApp(sys.argv)
+    myapp = PSLabDesktop(app=app)
     myapp.show()
     myapp.splash.finish(myapp)
     sys.exit(app.exec_())
