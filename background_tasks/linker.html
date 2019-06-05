@@ -4,26 +4,21 @@
 	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
 	const { oscilloscopeDataProcessor } = require('../utils/preProcessor.js');
+	const log = require('electron-log');
+
+	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
+			pythonPath: 'python3',
+	});
+
 	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
 		/* -------------------- Blocking code here ----------------------- */
-		
-		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
-			pythonPath: 'python3',
-		});
-
-		loadBalancer.onFinish(ipcRenderer, 'linker', () => {
-			pyshell.send(
-				JSON.stringify({
-				command: 'KILL',
-			}));
-		});
 
 		loadBalancer.on(ipcRenderer, 'linker', args => {
 			pyshell.send(JSON.stringify(args));
 		});
 
 		pyshell.on('stderr', function (stderr) {
-			ipcRenderer.send('DEBUG', stderr);
+			log.info(stderr);
 		});
 
 		pyshell.on('message', function(results) {
@@ -63,9 +58,12 @@
 						break;
 				}
 			} catch (error) {
-				console.log(error);
+				log.error(error);
 			}
 		});
 		/* --------------------------------------------------------------- */
+	},
+	() => {
+		pyshell.terminate();
 	});
 </script>

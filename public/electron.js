@@ -27,6 +27,7 @@ function createWindow() {
   process.env.DEV && mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
+    loadBalancer.stopAllBackgroundProcess();
     mainWindow = null;
   });
 }
