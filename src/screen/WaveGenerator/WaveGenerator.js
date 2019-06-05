@@ -34,8 +34,8 @@ class WaveGenerator extends Component {
       sqr4Frequency: 0,
       sqr4DutyCycle: 0,
       sqr4Phase: 0,
-      waveFormS1: 'sinusoidal',
-      waveFormS2: 'sinusoidal',
+      waveFormS1: 'sine',
+      waveFormS2: 'sine',
       mode: 'square',
     };
   }
@@ -46,8 +46,44 @@ class WaveGenerator extends Component {
       isConnected && this.getConfigFromDevice();
     });
     ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
-      const {} = args;
-      this.setState({});
+      const {
+        s1Frequency,
+        s2Frequency,
+        s2Phase,
+        waveFormS1,
+        waveFormS2,
+        sqr1Frequency,
+        sqr1DutyCycle,
+        sqr2Frequency,
+        sqr2DutyCycle,
+        sqr2Phase,
+        sqr3Frequency,
+        sqr3DutyCycle,
+        sqr3Phase,
+        sqr4Frequency,
+        sqr4DutyCycle,
+        sqr4Phase,
+        mode,
+      } = args;
+      this.setState({
+        s1Frequency,
+        s2Frequency,
+        s2Phase,
+        waveFormS1,
+        waveFormS2,
+        sqr1Frequency,
+        sqr1DutyCycle,
+        sqr2Frequency,
+        sqr2DutyCycle,
+        sqr2Phase,
+        sqr3Frequency,
+        sqr3DutyCycle,
+        sqr3Phase,
+        sqr4Frequency,
+        sqr4DutyCycle,
+        sqr4Phase,
+        mode,
+      });
     });
     this.getConfigFromDevice();
   }
@@ -60,16 +96,51 @@ class WaveGenerator extends Component {
     const { isConnected } = this.props;
     isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
-        command: 'GET_CONFIG_OSC',
+        command: 'GET_CONFIG_WAV_GEN',
       });
   }, 500);
 
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
-    const {} = this.state;
+    const {
+      s1Frequency,
+      s2Frequency,
+      s2Phase,
+      waveFormS1,
+      waveFormS2,
+      sqr1Frequency,
+      sqr1DutyCycle,
+      sqr2Frequency,
+      sqr2DutyCycle,
+      sqr2Phase,
+      sqr3Frequency,
+      sqr3DutyCycle,
+      sqr3Phase,
+      sqr4Frequency,
+      sqr4DutyCycle,
+      sqr4Phase,
+      mode,
+    } = this.state;
     isConnected &&
       loadBalancer.send(ipcRenderer, 'linker', {
-        command: 'SET_CONFIG_OSC',
+        command: 'SET_CONFIG_WAV_GEN',
+        s1Frequency,
+        s2Frequency,
+        s2Phase,
+        waveFormS1,
+        waveFormS2,
+        sqr1Frequency,
+        sqr1DutyCycle,
+        sqr2Frequency,
+        sqr2DutyCycle,
+        sqr2Phase,
+        sqr3Frequency,
+        sqr3DutyCycle,
+        sqr3Phase,
+        sqr4Frequency,
+        sqr4DutyCycle,
+        sqr4Phase,
+        mode,
       });
   }, 500);
 
@@ -83,15 +154,25 @@ class WaveGenerator extends Component {
   };
 
   onChangeWaveForm = pinName => event => {
-    this.setState(prevState => ({
-      [pinName]: event.target.value,
-    }));
+    this.setState(
+      prevState => ({
+        [pinName]: event.target.value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   onChangeMode = event => {
-    this.setState(prevState => ({
-      mode: event.target.value,
-    }));
+    this.setState(
+      prevState => ({
+        mode: event.target.value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   onChangeSlider = parameterType => (event, value) => {

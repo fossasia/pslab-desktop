@@ -1,7 +1,7 @@
 export const options = {
   WaveForm: {
-    sinusoidal: 'Sinusoidal',
-    triangular: 'Triangular',
+    sine: 'Sinusoidal',
+    tria: 'Triangular',
   },
   Mode: {
     square: 'Square',
