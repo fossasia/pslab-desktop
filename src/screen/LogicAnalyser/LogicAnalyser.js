@@ -9,7 +9,7 @@ const electron = window.require('electron');
 const { ipcRenderer } = electron;
 const loadBalancer = window.require('electron-load-balancer');
 
-class LogicAnalyser extends Component{
+class LogicAnalyser extends Component {
   constructor(props) {
     super(props);
     this.timeBaseList = [0.5, 1, 5, 10, 20, 25, 50];

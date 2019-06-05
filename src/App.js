@@ -9,6 +9,7 @@ import PowerSource from './screen/PowerSource';
 import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
 import Settings from './screen/Settings';
+import CustomDialog from './components/CustomDialog';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
@@ -29,8 +30,60 @@ class App extends Component {
         message: '',
         timeout: 4000,
       },
+      dialog: {
+        isOpen: false,
+        variant: null,
+        title: null,
+        hint: null,
+        textTitle: null,
+        onCheck: null,
+        onAccept: null,
+        onCancel: null,
+      },
     };
   }
+
+  onOpenDialog = ({
+    variant,
+    title,
+    hint,
+    textTitle,
+    onCheck,
+    onAccept,
+    onCancel,
+  }) => () => {
+    this.setState(prevState => ({
+      ...prevState,
+      dialog: {
+        ...prevState.dialog,
+        isOpen: true,
+        variant,
+        title,
+        hint,
+        onCheck,
+        textTitle,
+        onAccept,
+        onCancel,
+      },
+    }));
+  };
+
+  onCloseDialog = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      dialog: {
+        ...prevState.dialog,
+        isOpen: false,
+        variant: null,
+        title: null,
+        hint: null,
+        onCheck: null,
+        textTitle: null,
+        onAccept: null,
+        onCancel: null,
+      },
+    }));
+  };
 
   onOpenSnackBar = ({ message, timeout = 2500, variant }) => {
     this.setState(prevState => ({
@@ -82,12 +135,11 @@ class App extends Component {
         this.reconnect = false;
       }
     });
+    loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
 
     // ipcRenderer.on('DEBUG', (event, args) => {
     //   console.log(args);
     // });
-
-    loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
   }
 
   componentWillUnmount() {
@@ -96,7 +148,7 @@ class App extends Component {
   }
 
   render() {
-    const { isConnected, deviceInformation, snackbar } = this.state;
+    const { isConnected, deviceInformation, snackbar, dialog } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -118,7 +170,11 @@ class App extends Component {
                 <Route
                   path="/powersource"
                   render={props => (
-                    <PowerSource {...props} isConnected={isConnected} />
+                    <PowerSource
+                      {...props}
+                      isConnected={isConnected}
+                      onOpenDialog={this.onOpenDialog}
+                    />
                   )}
                 />
                 <Route
@@ -145,6 +201,17 @@ class App extends Component {
               }}
               autoHideDuration={snackbar.timeout}
               message={<span id="snackbar">{snackbar.message}</span>}
+            />
+            <CustomDialog
+              title={dialog.title}
+              isOpen={dialog.isOpen}
+              variant={dialog.variant}
+              hint={dialog.hint}
+              textTitle={dialog.textTitle}
+              onDialogClose={this.onCloseDialog}
+              onCheck={dialog.onCheck}
+              onAccept={dialog.onAccept}
+              onCancel={dialog.onCancel}
             />
           </HashRouter>
         </ThemeProvider>

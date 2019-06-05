@@ -47,4 +47,5 @@ export const ValueWrapper = styled.div`
   margin: 16px 16px 16px 16px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;

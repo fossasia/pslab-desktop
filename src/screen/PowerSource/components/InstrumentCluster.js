@@ -22,7 +22,20 @@ const styles = theme => ({
 });
 
 const Settings = props => {
-  const { pv1, pv2, pv3, pcs, onPressButton, onChangeSlider, classes } = props;
+  const {
+    pv1,
+    pv2,
+    pv3,
+    pcs,
+    onPressButton,
+    onChangeSlider,
+    onOpenDialog,
+    classes,
+  } = props;
+
+  const onCheck = value => {
+    return false;
+  };
 
   return (
     <CardContainer>
@@ -48,7 +61,16 @@ const Settings = props => {
               />
             </CircularInputContainer>
             <DisplayContainer>
-              <ValueWrapper>
+              <ValueWrapper
+                onClick={onOpenDialog({
+                  variant: 'simple-input',
+                  title: 'PV1',
+                  textTitle: 'Enter Voltage ( -5 to 5 )',
+                  onAccept: onChangeSlider('pv1'),
+                  onCheck,
+                  onCancel: () => {},
+                })}
+              >
                 <Display fontSize={6} value={pv1} unit="V" />
               </ValueWrapper>
               <ButtonContainer>
