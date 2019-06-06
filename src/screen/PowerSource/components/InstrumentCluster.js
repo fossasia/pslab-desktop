@@ -33,8 +33,19 @@ const Settings = props => {
     classes,
   } = props;
 
-  const onCheck = value => {
-    return false;
+  const onCheck = activeComponent => value => {
+    switch (activeComponent) {
+      case 'PV1':
+        if (value >= -5 && value <= 5) return false;
+      case 'PV2':
+        if (value >= -3.3 && value <= 3.3) return false;
+      case 'PV3':
+        if (value >= 0 && value <= 3.3) return false;
+      case 'PCS':
+        if (value >= 0 && value <= 3.3) return false;
+      default:
+        return true;
+    }
   };
 
   return (
@@ -67,7 +78,7 @@ const Settings = props => {
                   title: 'PV1',
                   textTitle: 'Enter Voltage ( -5 to 5 )',
                   onAccept: onChangeSlider('pv1'),
-                  onCheck,
+                  onCheck: onCheck('PV1'),
                   onCancel: () => {},
                 })}
               >
@@ -119,7 +130,16 @@ const Settings = props => {
               />
             </CircularInputContainer>
             <DisplayContainer>
-              <ValueWrapper>
+              <ValueWrapper
+                onClick={onOpenDialog({
+                  variant: 'simple-input',
+                  title: 'PV2',
+                  textTitle: 'Enter Voltage ( -3.3 to 3.3 )',
+                  onAccept: onChangeSlider('pv2'),
+                  onCheck: onCheck('PV2'),
+                  onCancel: () => {},
+                })}
+              >
                 <Display fontSize={6} value={pv2} unit="V" />
               </ValueWrapper>
               <ButtonContainer>
@@ -170,7 +190,16 @@ const Settings = props => {
               />
             </CircularInputContainer>
             <DisplayContainer>
-              <ValueWrapper>
+              <ValueWrapper
+                onClick={onOpenDialog({
+                  variant: 'simple-input',
+                  title: 'PV3',
+                  textTitle: 'Enter Voltage ( 0 to 3.3 )',
+                  onAccept: onChangeSlider('pv3'),
+                  onCheck: onCheck('PV3'),
+                  onCancel: () => {},
+                })}
+              >
                 <Display fontSize={6} value={pv3} unit="V" />
               </ValueWrapper>
               <ButtonContainer>
@@ -219,7 +248,16 @@ const Settings = props => {
               />
             </CircularInputContainer>
             <DisplayContainer>
-              <ValueWrapper>
+              <ValueWrapper
+                onClick={onOpenDialog({
+                  variant: 'simple-input',
+                  title: 'PCS',
+                  textTitle: 'Enter Voltage ( 0 to 3.3 )',
+                  onAccept: onChangeSlider('pcs'),
+                  onCheck: onCheck('PCS'),
+                  onCancel: () => {},
+                })}
+              >
                 <Display fontSize={6} value={pcs} unit="mA" />
               </ValueWrapper>
               <ButtonContainer>
