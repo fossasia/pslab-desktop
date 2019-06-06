@@ -108,6 +108,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+    window.onbeforeunload = event => {
+      loadBalancer.stopAllBackgroundProcess();
+    };
+
     ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
       const { isConnected, message, deviceName, portName } = args;
       this.state.isConnected !== isConnected &&
