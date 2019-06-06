@@ -69,6 +69,8 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
         self.row = 0
         self.col = 0
         self.colLimit = 3
+        self.statusLabel = QLabel()
+        self.statusBar().addWidget(self.statusLabel)
 
         """  ###########################################################################################################
         Starting device connection process
@@ -86,16 +88,14 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
         try:
             if not self.I.connected:
                 # Display an error dialog with the probable cause
-                errorDialog = QMessage()
-                errorDialog.setIcon(QMessage.Warning)
-                errorDialog.setWindowTitle("Connection Error")
-                errorDialog.setText("Cannot find a PSLab device")
                 if len(self.I.H.occupiedPorts):
-                    errorDialog.setInformativeText("We have detected a PSLab device")
-                    errorDialog.setDetailedText("Software already running for ports: %s" % list(self.I.H.occupiedPorts))
+                    self.display_dialog(QMessage.Warning, "Connection Error", "Cannot find a PSLab device", \
+                        details="Software already running for ports: %s" % list(self.I.H.occupiedPorts), information=\
+                        "We have detected a PSLab device")
                 else:
-                    errorDialog.setDetailedText("Make sure that the PSLab device is connected and status LEDs are ON")
-                errorDialog.exec_()
+                    self.display_dialog(QMessage.Warning, "Connection Error", "Cannot find a PSLab device", \
+                        details="Make sure that the PSLab device is connected and status LEDs are ON")
+                
                 # Make the window looks reddish to indicate error
                 self.styleText = pkg_resources.resource_string('PSL_Apps',
                                                                "stylesheets/overall_disconnected.css").decode("utf-8")
@@ -144,100 +144,23 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
         self.tmpTimer.singleShot(2, functools.partial(self.loadSectionList,
                                                       'PSL_Resources.GUI'))
 
-        #################################   POPULATE CONTROLS TAB  ##########################################
+        """  ###########################################################################################################
+        Populating Icons in the "Controls" section
+        """  ###########################################################################################################
         row = 0
         col = 0
         colLimit = 3
         self.funcs = []
         autogenControls = []
-        autogenControls.append(
-            {'TITLE': 'Wave 1', 'MIN': 1, 'MAX': 5000, 'FUNC': self.I.set_w1, 'TYPE': 'dial2', 'UNITS': 'Hz',
-             'TOOLTIP': 'Frequency of waveform generator #1', 'LINK': self.updateWAVE1_FREQ})
-        autogenControls.append(
-            {'TITLE': 'Wave 2', 'MIN': 1, 'MAX': 5000, 'FUNC': self.I.set_w2, 'TYPE': 'dial2', 'UNITS': 'Hz',
-             'TOOLTIP': 'Frequency of waveform generator #2', 'LINK': self.updateWAVE2_FREQ})
-        autogenControls.append(
-            {'TITLE': 'square 1', 'MIN': 0, 'MAX': 50000, 'FUNC': self.modifiedSqr1, 'TYPE': 'dial', 'UNITS': 'Hz',
-             'TOOLTIP': 'Frequency of square wave generator #1\n0 for switched off, Max for On state'})
-        tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__, 'PV1')
-        autogenControls.append({'TITLE': 'PV1', 'MIN': 0, 'MAX': 4095, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'V',
-                                'TOOLTIP': 'Programmable Voltage Source ', 'LINK': self.updatePV1_LABEL})
-        tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__, 'PV2')
-        autogenControls.append({'TITLE': 'PV2', 'MIN': 0, 'MAX': 4095, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'V',
-                                'TOOLTIP': 'Programmable Voltage Source ', 'LINK': self.updatePV2_LABEL})
-        tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__, 'PV3')
-        autogenControls.append({'TITLE': 'PV3', 'MIN': 0, 'MAX': 4095, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'V',
-                                'TOOLTIP': 'Programmable Voltage Source ', 'LINK': self.updatePV3_LABEL})
-        tmpfunc = lambda x: self.I.DAC.__setRawVoltage__('PCS', 4095 - x)
-        autogenControls.append({'TITLE': 'PCS', 'MIN': 20, 'MAX': 2000, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'A',
-                                'TOOLTIP': 'Programmable Current Source\nLoad must not exceed 1KOhm ',
-                                'LINK': self.updatePCS_LABEL})
-        # autogenControls.append({'TYPE':'voltWidget'})
-        autogenControls.append({'TYPE': 'separator'})
-        autogenControls.append({'TITLE': 'CAPACITANCE', 'FUNC': self.I.get_capacitance, 'TYPE': 'button', 'UNITS': 'F',
-                                'TOOLTIP': 'Read Capacitance connected to CAP input '})
-        autogenControls.append(
-            {'TITLE': 'RESISTANCE', 'FUNC': self.I.get_resistance, 'TYPE': 'button', 'UNITS': u"\u03A9",
-             'TOOLTIP': 'Read Resistance connected to SEN input '})
-        tmpfunc = functools.partial(self.I.get_average_voltage, samples=100)
-        autogenControls.append(
-            {'TITLE': 'VOLTMETER', 'FUNC': tmpfunc, 'TYPE': 'selectButton', 'UNITS': 'V', 'TOOLTIP': 'Voltmeter',
-             'OPTIONS': self.I.allAnalogChannels})
-        autogenControls.append(
-            {'TITLE': 'Low Frequency', 'FUNC': self.I.get_freq, 'TYPE': 'selectButton', 'UNITS': 'Hz',
-             'TOOLTIP': 'Measure Frequency. Minimum 40Hz', 'OPTIONS': self.I.allDigitalChannels})
-        autogenControls.append(
-            {'TITLE': 'High Frequency', 'FUNC': self.I.get_high_freq, 'TYPE': 'selectButton', 'UNITS': 'Hz',
-             'TOOLTIP': 'Measure Frequencies over 1MHz with 10Hz resolution', 'OPTIONS': self.I.allDigitalChannels})
-        # autogenControls.append({'TITLE':'SR-04 Distance','FUNC':self.I.estimateDistance,'TYPE':'button','UNITS':'m','TOOLTIP':'Measure Distance using an HCSR04 sensor. TRIG-SQR1  , ECHO-ID1'})
-        autogenControls.append({'TYPE': 'pulsecounter'})
-
-        for C in autogenControls:
-            if C['TYPE'] == 'dial':
-                self.funcs.append(C.get('FUNC', None))
-                self.WidgetLayout.addWidget(self.dialIcon(**C), row, col)
-            elif C['TYPE'] == 'dial2':
-                self.funcs.append(C.get('FUNC', None))
-                self.WidgetLayout.addWidget(self.dialAndDoubleSpinIcon(**C), row, col)
-            elif C['TYPE'] == 'button':
-                self.funcs.append(C.get('FUNC', None))
-                self.WidgetLayout.addWidget(self.buttonIcon(**C), row, col)
-            elif C['TYPE'] == 'selectButton':
-                self.funcs.append(C.get('FUNC', None))
-                self.WidgetLayout.addWidget(self.selectAndButtonIcon(**C), row, col)
-            elif C['TYPE'] == 'pulsecounter':
-                self.WidgetLayout.addWidget(self.pulseCounterIcon(self.I), row, col)
-            elif C['TYPE'] == 'separator':
-                row += 1
-                col = 0
-                line = QFrame()
-                line.setFrameShape(QFrame.HLine)
-                line.setFrameShadow(QFrame.Sunken)
-                self.WidgetLayout.addWidget(line, row, 0, 1, colLimit)
-                row += 1
-                col = -1
-            elif C['TYPE'] == 'voltWidget':
-                row += 1
-                col = 0
-                self.voltSection = self.voltWidget(self.I)
-                self.WidgetLayout.addWidget(self.voltSection, row, 0, 1, colLimit)
-                row += 1
-                col = -1
-
-            col += 1
-            if (col == colLimit):
-                col = 0
-                row += 1
-
-        col += 1
-        if (col == colLimit):
-            col = 0
-            row += 1
+        self.lay_control_widgets()
 
         self.menu_entries = []
         self.menu_group = None
-
-        self.shortlist = []
+        """  ###########################################################################################################
+        Timer to detect device connection
+        """  ###########################################################################################################
+        # A list of USB ports detected by ScienceLab
+        self.portList = []
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.locateDevices)
         self.timer.start(500)
@@ -252,10 +175,67 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
         # Clear running app instance as there is none running at the beginning
         self.runningApp = None
 
+    def lay_control_widgets(self):
+        """  ###########################################################################################################
+        Setup the layout for control widgets with relevant labels and parameters
+        """  ###########################################################################################################
+        params = {'TITLE': 'Wave 1', 'MIN': 1, 'MAX': 5000, 'FUNC': self.I.set_w1, 'TYPE': 'dial2', 'UNITS': 'Hz',
+        'TOOLTIP': 'Frequency of waveform generator #1', 'LINK': self.updateWAVE1_FREQ}
+        self.WidgetLayout.addWidget(self.dialAndDoubleSpinIcon(**params), 0, 0)
+        params = {'TITLE': 'Wave 2', 'MIN': 1, 'MAX': 5000, 'FUNC': self.I.set_w2, 'TYPE': 'dial2', 'UNITS': 'Hz',
+        'TOOLTIP': 'Frequency of waveform generator #2', 'LINK': self.updateWAVE2_FREQ}
+        self.WidgetLayout.addWidget(self.dialAndDoubleSpinIcon(**params), 0, 1)
+        params = {'TITLE': 'Square 1', 'MIN': 0, 'MAX': 50000, 'FUNC': self.modifiedSqr1, 'TYPE': 'dial', 'UNITS': 'Hz',
+        'TOOLTIP': 'Frequency of square wave generator #1\n0 for switched off, Max for On state'}
+        self.WidgetLayout.addWidget(self.dialIcon(**params), 0, 2)
+        ###############################################################################################################
+        fn = functools.partial(self.I.DAC.__setRawVoltage__, 'PV1')
+        params = {'TITLE': 'PV1', 'MIN': 0, 'MAX': 4095, 'FUNC': fn, 'TYPE': 'dial', 'UNITS': 'V',
+        'TOOLTIP': 'Programmable Voltage Source ', 'LINK': self.updatePV1_LABEL}
+        self.WidgetLayout.addWidget(self.dialIcon(**params), 1, 0)
+        tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__, 'PV2')
+        params = {'TITLE': 'PV2', 'MIN': 0, 'MAX': 4095, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'V',
+        'TOOLTIP': 'Programmable Voltage Source ', 'LINK': self.updatePV2_LABEL}
+        self.WidgetLayout.addWidget(self.dialIcon(**params), 1, 1)
+        tmpfunc = functools.partial(self.I.DAC.__setRawVoltage__, 'PV3')
+        params = {'TITLE': 'PV3', 'MIN': 0, 'MAX': 4095, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'V',
+        'TOOLTIP': 'Programmable Voltage Source ', 'LINK': self.updatePV3_LABEL}
+        self.WidgetLayout.addWidget(self.dialIcon(**params), 1, 2)
+        ###############################################################################################################
+        tmpfunc = lambda x: self.I.DAC.__setRawVoltage__('PCS', 4095 - x)
+        params = {'TITLE': 'PCS', 'MIN': 20, 'MAX': 2000, 'FUNC': tmpfunc, 'TYPE': 'dial', 'UNITS': 'A',
+        'TOOLTIP': 'Programmable Current Source\nLoad must not exceed 1KOhm ', 'LINK': self.updatePCS_LABEL}
+        self.WidgetLayout.addWidget(self.dialIcon(**params), 2, 1)
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        self.WidgetLayout.addWidget(line, 3, 0, 1, 3)
+        ###############################################################################################################
+        params = {'TITLE': 'CAPACITANCE', 'FUNC': self.I.get_capacitance, 'TYPE': 'button', 'UNITS': 'F',
+        'TOOLTIP': 'Read Capacitance connected to CAP input '}
+        self.WidgetLayout.addWidget(self.buttonIcon(**params), 4, 0)
+        params = {'TITLE': 'RESISTANCE', 'FUNC': self.I.get_resistance, 'TYPE': 'button', 'UNITS': u"\u03A9",
+        'TOOLTIP': 'Read Resistance connected to SEN input '}
+        self.WidgetLayout.addWidget(self.buttonIcon(**params), 4, 1)
+        tmpfunc = functools.partial(self.I.get_average_voltage, samples=100)
+        params = {'TITLE': 'VOLTMETER', 'FUNC': tmpfunc, 'TYPE': 'selectButton', 'UNITS': 'V', 'TOOLTIP': 'Voltmeter',
+        'OPTIONS': self.I.allAnalogChannels}
+        self.WidgetLayout.addWidget(self.selectAndButtonIcon(**params), 4, 2)
+        ###############################################################################################################
+        params = {'TITLE': 'Low Frequency', 'FUNC': self.I.get_freq, 'TYPE': 'selectButton', 'UNITS': 'Hz',
+        'TOOLTIP': 'Measure Frequency. Minimum 40Hz', 'OPTIONS': self.I.allDigitalChannels}
+        self.WidgetLayout.addWidget(self.selectAndButtonIcon(**params), 5, 0)
+        params = {'TITLE': 'High Frequency', 'FUNC': self.I.get_high_freq, 'TYPE': 'selectButton', 'UNITS': 'Hz',
+        'TOOLTIP': 'Measure Frequencies over 1MHz with 10Hz resolution', 'OPTIONS': self.I.allDigitalChannels}
+        self.WidgetLayout.addWidget(self.selectAndButtonIcon(**params), 5, 1)
+        self.WidgetLayout.addWidget(self.pulseCounterIcon(self.I), 5, 2)
+        ###############################################################################################################
+        
     def showStatusBar(self, statusMsg):
-        self.statusLabel = QLabel()
+        """  ###########################################################################################################
+        Display status at the bottom of the window
+        """  ###########################################################################################################
         self.statusLabel.setText(statusMsg)
-        self.statusBar().addWidget(self.statusLabel)
 
     def printModuleLocations(self):
         """  ###########################################################################################################
@@ -494,12 +474,8 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
             self.tabWidget.setCurrentIndex(1)
         else:
             # Display error message as no device is connected
-            errorDialog = QMessage()
-            errorDialog.setIcon(QMessage.Warning)
-            errorDialog.setWindowTitle("Connection Error")
-            errorDialog.setText("Cannot find a PSLab device")
-            errorDialog.setDetailedText("Make sure that the PSLab device is connected and status LEDs are ON")
-            errorDialog.exec_()
+            self.display_dialog(QMessage.Warning, "Connection Error", "Cannot find a PSLab device", "Make sure that" +
+                " the PSLab device is connected and status LEDs are ON")
 
     def returnToApps(self):
         """  ###########################################################################################################
@@ -517,28 +493,25 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
             info.show()
         else:
             # Display error message as no device is connected
-            errorDialog = QMessage()
-            errorDialog.setIcon(QMessage.Warning)
-            errorDialog.setWindowTitle("Connection Error")
-            errorDialog.setText("Cannot find a PSLab device")
-            errorDialog.setDetailedText("Make sure that the PSLab device is connected and status LEDs are ON")
-            errorDialog.exec_()
+            self.display_dialog(QMessage.Warning, "Connection Error", "Cannot find a PSLab device", "Make sure that" +
+                " the PSLab device is connected and status LEDs are ON")
 
     def locateDevices(self):
         """  ###########################################################################################################
+        This method will be called periodically to detect if a new device is connected. It will detect a new connection
+        by comparing number of USB devices connected with the locally saved device connection list
         """  ###########################################################################################################
-        L = self.I.H.listPorts()
-        total = len(L)
+        _portList = self.I.H.listPorts()
         menuChanged = False
-        if L != self.shortlist:
+        if _portList != self.portList:
             menuChanged = True
-            self.shortlist = L
-            for a in self.menu_entries:
+            self.portList = _portList
+            for _port in self.menu_entries:
                 self.deviceCombo.removeItem(0)
             self.menu_entries = []
-            for a in L:
-                self.deviceCombo.addItem(a)
-                self.menu_entries.append(a)
+            for _port in _portList:
+                self.deviceCombo.addItem(_port)
+                self.menu_entries.append(_port)
 
         # Check for, and handle disconnect event
         if menuChanged:
@@ -549,34 +522,42 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
                                                                    "stylesheets/overall_disconnected.css").decode(
                         "utf-8")
                     self.setStyleSheet(self.styleText)
-                    self.setWindowTitle('Error : PSLab Disconnected')
+                    self.showStatusBar('Error: PSLab device not connected')
                     if self.runningApp:
                         self.runningApp.close()
                     self.I.connected = False
 
             elif len(self.menu_entries):
-                reply = QtGui.QMessageBox.question(self, 'Connection', 'New Device Found. Connect?',
-                                                   QtGui.QMessageBox.No, QtGui.QMessageBox.Yes)
-                if reply == QtGui.QMessageBox.Yes:
+                if QMessage.question(self, 'Connection', 'New Device Found. Connect?', QtGui.QMessageBox.No, \
+                    QtGui.QMessageBox.Yes) == QMessage.Yes:
                     self.selectDevice()
+
+    def display_dialog(self, icon, title, message, details="", information=""):
+        dialog = QMessage()
+        dialog.setIcon(icon)
+        dialog.setWindowTitle(title)
+        dialog.setText(message)
+        if len(information) > 0: dialog.setInformativeText(information)
+        if len(details) > 0: dialog.setDetailedText(details)
+        dialog.exec_()
+        return dialog
 
     def selectDevice(self):
         """  ###########################################################################################################
         """  ###########################################################################################################
         sel = self.deviceCombo.currentText()
         if (not ('ACM' in sel or 'USB' in sel)):
-            self.displayDialog('No devices Found')
+            self.display_dialog(QMessage.Warning, 'Connection Error', 'Cannot find a PSLab device', 
+                "Make sure that the PSLab device is connected and status LEDs are ON")
             return
         self.splash.show()
         self.progressBar.setValue(0)
-        self.updateSplash(20, 'Reconnecting to %s' % (sel))
         self.updateSplash(20, 'Reconnecting to %s' % (sel))
         if self.I:
             try:
                 self.I.reconnect(port=sel)
             except Exception as e:
                 self.updateSplash(30, 'Connection Error!')
-                # self.SCF1.setStyleSheet(_fromUtf8(styles.disconnected))
                 self.styleText = pkg_resources.resource_string('PSL_Apps',
                                                                "stylesheets/overall_disconnected.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)
@@ -588,20 +569,17 @@ class PSLabDesktop(QWindow, UI.Ui_MainWindow, utilitiesClass):
                                                        self.I.H.occupiedPorts))
                 else:
                     diag = QtGui.QMessageBox.about(self, 'Error', 'Could not find available device')
-                # diag.show()
                 self.styleText = pkg_resources.resource_string('PSL_Apps',
                                                                "stylesheets/overall_disconnected.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)
-                self.setWindowTitle('Error : Not Connected')
+                self.showStatusBar(self.I.generic_name + ': ' + self.hexid)
             else:
                 self.hexid = hex(self.I.device_id() & 0xFFFF)
-                self.setWindowTitle(self.I.generic_name + ' : ' + self.hexid)
                 self.updateSplash(20, 'Finished Reconnecting...')
-                self.displayDialog('Reconnected :' + self.I.H.version_string)
-                # self.SCF1.setStyleSheet(_fromUtf8(styles.connected))
+                self.display_dialog(QMessage.Information, 'Device Found', 'Reconnected: ' + self.I.H.version_string[1:-1], '')
                 self.styleText = pkg_resources.resource_string('PSL_Apps', "stylesheets/overall.css").decode("utf-8")
                 self.setStyleSheet(self.styleText)
-                self.setWindowTitle('PSLab : ' + self.I.H.version_string.decode("utf-8"))
+                self.showStatusBar(self.I.generic_name + ': ' + self.hexid)
 
         self.splash.close()
         return

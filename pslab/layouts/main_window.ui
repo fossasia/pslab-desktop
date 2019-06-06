@@ -29,14 +29,20 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>PSLab Desktop App V2.0</string>
+   <string>PSLab Desktop App</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../resources/icons/app_logo/pslab_logo.png</normaloff>../resources/icons/app_logo/pslab_logo.png</iconset>
+   <iconset resource="../resources/resources.qrc">
+    <normaloff>:/pslab/icons/app_logo/pslab_logo.png</normaloff>:/pslab/icons/app_logo/pslab_logo.png</iconset>
   </property>
   <property name="windowOpacity">
-   <double>50.000000000000000</double>
+   <double>1.000000000000000</double>
+  </property>
+  <property name="toolTipDuration">
+   <number>-1</number>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextBesideIcon</enum>
   </property>
   <widget class="QWidget" name="app_window">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -71,8 +77,8 @@
       </property>
       <widget class="QWidget" name="tab_instruments">
        <attribute name="icon">
-        <iconset>
-         <normaloff>../resources/icons/tab_icons/instrument_tab_icon.png</normaloff>../resources/icons/tab_icons/instrument_tab_icon.png</iconset>
+        <iconset resource="../resources/resources.qrc">
+         <normaloff>:/pslab/icons/tab_icons/instrument_tab_icon.png</normaloff>:/pslab/icons/tab_icons/instrument_tab_icon.png</iconset>
        </attribute>
        <attribute name="title">
         <string extracomment="Holds multiple instruments supported by PSLab">Instruments</string>
@@ -131,8 +137,8 @@
       </widget>
       <widget class="QWidget" name="tab_guide">
        <attribute name="icon">
-        <iconset>
-         <normaloff>../resources/icons/tab_icons/guide_tab_icon.png</normaloff>../resources/icons/tab_icons/guide_tab_icon.png</iconset>
+        <iconset resource="../resources/resources.qrc">
+         <normaloff>:/pslab/icons/tab_icons/guide_tab_icon.png</normaloff>:/pslab/icons/tab_icons/guide_tab_icon.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Guide</string>
@@ -226,8 +232,8 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_sensors">
        <attribute name="icon">
-        <iconset>
-         <normaloff>../resources/icons/tab_icons/sensor_tab_icon.png</normaloff>../resources/icons/tab_icons/sensor_tab_icon.png</iconset>
+        <iconset resource="../resources/resources.qrc">
+         <normaloff>:/pslab/icons/tab_icons/sensor_tab_icon.png</normaloff>:/pslab/icons/tab_icons/sensor_tab_icon.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Sensors</string>
@@ -280,8 +286,8 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_console">
        <attribute name="icon">
-        <iconset>
-         <normaloff>../resources/icons/tab_icons/ipython_tab_icon.png</normaloff>../resources/icons/tab_icons/ipython_tab_icon.png</iconset>
+        <iconset resource="../resources/resources.qrc">
+         <normaloff>:/pslab/icons/tab_icons/ipython_tab_icon.png</normaloff>:/pslab/icons/tab_icons/ipython_tab_icon.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Console</string>
@@ -341,8 +347,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="pslab_status_bar"/>
   <action name="action_reconnect">
    <property name="icon">
-    <iconset>
-     <normaloff>../resources/icons/menu_icons/reconnect_menu_icon.png</normaloff>../resources/icons/menu_icons/reconnect_menu_icon.png</iconset>
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pslab/icons/menu_icons/reconnect_menu_icon.png</normaloff>:/pslab/icons/menu_icons/reconnect_menu_icon.png</iconset>
    </property>
    <property name="text">
     <string>Reconnect</string>
@@ -356,8 +362,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_about_device">
    <property name="icon">
-    <iconset>
-     <normaloff>../resources/icons/menu_icons/about_device_menu_icon.png</normaloff>../resources/icons/menu_icons/about_device_menu_icon.png</iconset>
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pslab/icons/menu_icons/about_device_menu_icon.png</normaloff>:/pslab/icons/menu_icons/about_device_menu_icon.png</iconset>
    </property>
    <property name="text">
     <string>About...</string>
@@ -365,8 +371,8 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_test_device">
    <property name="icon">
-    <iconset>
-     <normaloff>../resources/icons/menu_icons/test_device_menu_icon.png</normaloff>../resources/icons/menu_icons/test_device_menu_icon.png</iconset>
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pslab/icons/menu_icons/test_device_menu_icon.png</normaloff>:/pslab/icons/menu_icons/test_device_menu_icon.png</iconset>
    </property>
    <property name="text">
     <string>Test Device...</string>
@@ -383,7 +389,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_reconnect</sender>

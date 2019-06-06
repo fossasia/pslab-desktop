@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="pslab">
+    <file>icons/app_logo/pslab_logo.png</file>
+    <file>icons/menu_icons/about_device_menu_icon.png</file>
+    <file>icons/menu_icons/reconnect_menu_icon.png</file>
+    <file>icons/menu_icons/test_device_menu_icon.png</file>
+    <file>icons/tab_icons/guide_tab_icon.png</file>
+    <file>icons/tab_icons/instrument_tab_icon.png</file>
+    <file>icons/tab_icons/ipython_tab_icon.png</file>
+    <file>icons/tab_icons/sensor_tab_icon.png</file>
+    <file>splash/splash.png</file>
+  </qresource>
+</RCC>
