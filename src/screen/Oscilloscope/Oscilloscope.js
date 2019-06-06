@@ -47,11 +47,11 @@ class Oscilloscope extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
     });
-    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
+    ipcRenderer.on('OSC_CONFIG', (event, args) => {
       const {
         timeBase,
         ch1,
@@ -94,16 +94,16 @@ class Oscilloscope extends Component {
   componentWillUnmount() {
     const { isReading } = this.state;
     isReading &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_OSC',
       });
-    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
+    ipcRenderer.removeAllListeners('OSC_CONFIG');
   }
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'GET_CONFIG_OSC',
       });
   }, 500);
@@ -119,7 +119,7 @@ class Oscilloscope extends Component {
       isFourierTransformActive,
     } = this.state;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_OSC',
         timeBase: this.timeBaseList[timeBaseIndex],
         numberOfSamples: 1000,
@@ -140,11 +140,11 @@ class Oscilloscope extends Component {
       isReading: !prevState.isReading,
     }));
     if (isReading) {
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_OSC',
       });
     } else {
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'START_OSC',
       });
     }
@@ -252,6 +252,7 @@ class Oscilloscope extends Component {
 
   graphRenderer = () => {
     const {
+      isReading,
       timeBaseIndex,
       activeChannels,
       channelRanges,
@@ -259,13 +260,14 @@ class Oscilloscope extends Component {
       isXYPlotActive,
     } = this.state;
     if (isFourierTransformActive) {
-      return <FFTGraph activeChannels={activeChannels} />;
+      return <FFTGraph isReading={isReading} activeChannels={activeChannels} />;
     }
     if (isXYPlotActive) {
       // return XY plot graph
     }
     return (
       <Graph
+        isReading={isReading}
         channelRanges={channelRanges}
         activeChannels={activeChannels}
         timeBase={this.timeBaseList[timeBaseIndex]}

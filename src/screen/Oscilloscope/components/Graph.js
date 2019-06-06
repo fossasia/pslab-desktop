@@ -31,15 +31,17 @@ class Graph extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
-      this.setState({
-        oscData: args.data,
-      });
+    ipcRenderer.on('OSC_VOLTAGE_DATA', (event, args) => {
+      const { isReading } = this.props;
+      isReading &&
+        this.setState({
+          oscData: args.data,
+        });
     });
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+    ipcRenderer.removeAllListeners('OSC_VOLTAGE_DATA');
   }
 
   render() {

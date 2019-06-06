@@ -7,63 +7,63 @@
 	const log = require('electron-log');
 
 	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
-			pythonPath: 'python3',
+		pythonPath: 'python3',
 	});
 
-	loadBalancer.onInitialize(ipcRenderer, 'linker', initialValues => {
-		/* -------------------- Blocking code here ----------------------- */
+	loadBalancer.job(
+		ipcRenderer,
+		'linker',
+		() => {
+			loadBalancer.onRecieveData(ipcRenderer, 'linker', args => {
+				pyshell.send(JSON.stringify(args));
+			});
 
-		loadBalancer.on(ipcRenderer, 'linker', args => {
-			pyshell.send(JSON.stringify(args));
-		});
+			pyshell.on('stderr', function(stderr) {
+				log.info(stderr);
+			});
 
-		pyshell.on('stderr', function (stderr) {
-			log.info(stderr);
-		});
-
-		pyshell.on('message', function(results) {
-			try {
-				const parsedJSON = JSON.parse(results);
-				ipcRenderer.send('DEBUG', parsedJSON);
-				switch (parsedJSON['type']) {
-					case 'START_OSC':	
-						if(parsedJSON.isFFT){
-							parsedOutput = oscilloscopeDataProcessor(parsedJSON);
-							ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
-						}
-						else{
-							parsedOutput = oscilloscopeDataProcessor(parsedJSON);
-							ipcRenderer.send('TO_RENDERER_DATA', {data: parsedOutput});
-						}	
-						break;
-					case 'START_MUL_MET':
-						ipcRenderer.send('TO_RENDERER_DATA', {data: parsedJSON.data, prefix: parsedJSON.prefix});
-						break;
-					case 'GET_CONFIG_PWR_SRC':
-						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
-						break;
-					case 'GET_CONFIG_OSC':
-						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
-						break;
-					case 'GET_CONFIG_MUL_MET':
-						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
-						break;
-					case 'GET_CONFIG_WAV_GEN':
-						ipcRenderer.send('TO_RENDERER_CONFIG', parsedJSON);
-						break;
-					case 'DEVICE_CONNECTION_STATUS':
-						ipcRenderer.send('TO_RENDERER_STATUS', parsedJSON);
-						break;
-					default:
-						break;
+			pyshell.on('message', function(results) {
+				try {
+					const parsedJSON = JSON.parse(results);
+					ipcRenderer.send('DEBUG', parsedJSON);
+					switch (parsedJSON['type']) {
+						case 'START_OSC':
+							if (parsedJSON.isFFT) {
+								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+								ipcRenderer.send('OSC_FFT_DATA', { data: parsedOutput });
+							} else {
+								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+								ipcRenderer.send('OSC_VOLTAGE_DATA', { data: parsedOutput });
+							}
+							break;
+						case 'START_MUL_MET':
+							ipcRenderer.send('MUL_MET_DATA', { data: parsedJSON.data, prefix: parsedJSON.prefix });
+							break;
+						case 'GET_CONFIG_PWR_SRC':
+							ipcRenderer.send('PWR_SRC_CONFIG', parsedJSON);
+							break;
+						case 'GET_CONFIG_OSC':
+							ipcRenderer.send('OSC_CONFIG', parsedJSON);
+							break;
+						case 'GET_CONFIG_MUL_MET':
+							ipcRenderer.send('MUL_MET_CONFIG', parsedJSON);
+							break;
+						case 'GET_CONFIG_WAV_GEN':
+							ipcRenderer.send('WAV_GEN_CONFIG', parsedJSON);
+							break;
+						case 'DEVICE_CONNECTION_STATUS':
+							ipcRenderer.send('CONNECTION_STATUS', parsedJSON);
+							break;
+						default:
+							break;
+					}
+				} catch (error) {
+					log.error(error);
 				}
-			} catch (error) {
-				log.error(error);
-			}
-		});
-		/* --------------------------------------------------------------- */
-	},
-	() => {
-		pyshell.terminate();
-	});
+			});
+		},
+		() => {
+			pyshell.terminate();
+		},
+	);
 </script>

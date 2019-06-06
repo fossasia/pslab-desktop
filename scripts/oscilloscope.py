@@ -10,9 +10,11 @@ analytics = analyticsClass
 
 class Oscilloscope:
     def __init__(self, I):
-        self.oscilloscope_data_read_thread = None
+        self.oscilloscope_voltage_read_thread = None
+        self.oscilloscope_fft_read_thread = None
         self.device = I
-        self.is_reading = False
+        self.is_reading_voltage = False
+        self.is_reading_fft = False
 
         self.number_of_samples = 1000
         self.time_base = 0.5
@@ -40,40 +42,9 @@ class Oscilloscope:
         self.delay, self.time_gap = self.calculate_delay_time_gap(
             self.time_base, self.number_of_samples)
 
-    def calculate_delay_time_gap(self, time_base, number_of_samples):
-        time_gap = (time_base * 10 * 1e3) / number_of_samples
-        delay = time_gap * number_of_samples * 1e-6
-        if delay < 0.05:
-            if self.is_fourier_transform_active:
-                return (0.075, time_gap)
-            else:
-                return (0.05, time_gap)
-        else:
-            return (delay, time_gap)
-
-    def calculate_channels_to_read(self, ch1, ch2, ch3, mic):
-        if ch3 or mic:
-            return 4
-        elif ch2:
-            return 2
-        elif ch1:
-            return 1
-        else:
-            return 0
-
-    def fft(self, ya, si):
-        ns = len(ya)
-        if ns % 2 == 1:
-            ns -= 1
-            ya = ya[:-1]
-        v = np.array(ya)
-        tr = abs(np.fft.fft(v)) / ns
-        frq = np.fft.fftfreq(ns, si)
-        x = frq.reshape(2, ns // 2)
-        y = tr.reshape(2, ns // 2)
-        return x[0], y[0]
-
-    def set_config(self, time_base, number_of_samples, ch1, ch2, ch3, mic, is_trigger_active, trigger_channel, trigger_voltage, is_fourier_transform_active):
+    def set_config(self, time_base, number_of_samples, ch1, ch2, ch3, mic,
+                   is_trigger_active, trigger_channel, trigger_voltage,
+                   is_fourier_transform_active):
         self.time_base = time_base
         self.number_of_samples = number_of_samples
         self.ch1 = ch1
@@ -128,24 +99,30 @@ class Oscilloscope:
 
     def start_read(self):
         if self.is_fourier_transform_active:
-            self.oscilloscope_data_read_thread = threading.Thread(
+            self.oscilloscope_fft_read_thread = threading.Thread(
                 target=self.capture_loop_fft,
                 name='osc_fft')
+            self.oscilloscope_fft_read_thread.start()
         else:
-            self.oscilloscope_data_read_thread = threading.Thread(
-                target=self.capture_loop,
+            self.oscilloscope_voltage_read_thread = threading.Thread(
+                target=self.capture_loop_voltage,
                 name='osc')
-        self.oscilloscope_data_read_thread.start()
+            self.oscilloscope_voltage_read_thread.start()
 
     def stop_read(self):
-        self.is_reading = False
-        self.oscilloscope_data_read_thread.join()
+        if self.is_reading_voltage:
+            self.is_reading_voltage = False
+            self.oscilloscope_voltage_read_thread.join()
+        if self.is_reading_fft:
+            self.is_reading_fft = False
+            self.oscilloscope_fft_read_thread.join()
 
-    def capture_loop(self):
-        self.is_reading = True
-        while self.is_reading:
+    def capture_loop_voltage(self):
+        self.is_reading_voltage = True
+        while self.is_reading_voltage:
             self.device.capture_traces(
-                self.channels_to_read, self.number_of_samples, self.time_gap, trigger=self.is_trigger_active)
+                self.channels_to_read, self.number_of_samples, self.time_gap,
+                trigger=self.is_trigger_active)
             time.sleep(self.delay)
             keys = ['time']
             vector = ()
@@ -175,10 +152,11 @@ class Oscilloscope:
             sys.stdout.flush()
 
     def capture_loop_fft(self):
-        self.is_reading = True
-        while self.is_reading:
+        self.is_reading_fft = True
+        while self.is_reading_fft:
             self.device.capture_traces(
-                self.channels_to_read, self.number_of_samples, self.time_gap, trigger=self.is_trigger_active)
+                self.channels_to_read, self.number_of_samples, self.time_gap,
+                trigger=self.is_trigger_active)
             time.sleep(self.delay)
             keys = ['frequency']
             vector = ()
@@ -209,3 +187,36 @@ class Oscilloscope:
                 'numberOfChannels': self.number_of_channels}
             print(json.dumps(output))
             sys.stdout.flush()
+
+    def calculate_delay_time_gap(self, time_base, number_of_samples):
+        time_gap = (time_base * 10 * 1e3) / number_of_samples
+        delay = time_gap * number_of_samples * 1e-6
+        if delay < 0.05:
+            if self.is_fourier_transform_active:
+                return (0.075, time_gap)
+            else:
+                return (0.05, time_gap)
+        else:
+            return (delay, time_gap)
+
+    def calculate_channels_to_read(self, ch1, ch2, ch3, mic):
+        if ch3 or mic:
+            return 4
+        elif ch2:
+            return 2
+        elif ch1:
+            return 1
+        else:
+            return 0
+
+    def fft(self, ya, si):
+        ns = len(ya)
+        if ns % 2 == 1:
+            ns -= 1
+            ya = ya[:-1]
+        v = np.array(ya)
+        tr = abs(np.fft.fft(v)) / ns
+        frq = np.fft.fftfreq(ns, si)
+        x = frq.reshape(2, ns // 2)
+        y = tr.reshape(2, ns // 2)
+        return x[0], y[0]
