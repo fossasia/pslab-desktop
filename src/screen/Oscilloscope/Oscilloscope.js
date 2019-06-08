@@ -205,7 +205,7 @@ class Oscilloscope extends Component {
   onChangeTriggerVoltage = (event, value) => {
     this.setState(
       prevState => ({
-        triggerVoltage: value,
+        triggerVoltage: Number(value),
       }),
       () => {
         this.sendConfigToDevice();
