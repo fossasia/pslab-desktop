@@ -19,11 +19,11 @@ class PowerSouce extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
     });
-    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
+    ipcRenderer.on('PWR_SRC_CONFIG', (event, args) => {
       const { pv1, pv2, pv3, pcs } = args;
       this.setState({
         pv1: roundOff(pv1),
@@ -36,13 +36,13 @@ class PowerSouce extends Component {
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
+    ipcRenderer.removeAllListeners('PWR_SRC_CONFIG');
   }
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'GET_CONFIG_PWR_SRC',
       });
   }, 500);
@@ -50,7 +50,7 @@ class PowerSouce extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_PWR_SRC',
         ...this.state,
       });

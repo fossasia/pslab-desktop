@@ -41,11 +41,11 @@ class WaveGenerator extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
     });
-    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
+    ipcRenderer.on('WAV_GEN_CONFIG', (event, args) => {
       const {
         s1Frequency,
         s2Frequency,
@@ -89,13 +89,13 @@ class WaveGenerator extends Component {
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
+    ipcRenderer.removeAllListeners('WAV_GEN_CONFIG');
   }
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'GET_CONFIG_WAV_GEN',
       });
   }, 500);
@@ -122,7 +122,7 @@ class WaveGenerator extends Component {
       mode,
     } = this.state;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_WAV_GEN',
         s1Frequency,
         s2Frequency,

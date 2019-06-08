@@ -112,7 +112,7 @@ class App extends Component {
       loadBalancer.stopAllBackgroundProcess();
     };
 
-    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected, message, deviceName, portName } = args;
       this.state.isConnected !== isConnected &&
         this.setState({
@@ -126,11 +126,11 @@ class App extends Component {
         });
 
       if (!isConnected) {
-        loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+        loadBalancer.stop(ipcRenderer, 'linker');
         if (!this.reconnect) {
           this.onOpenSnackBar({ message });
           this.reconnect = setInterval(() => {
-            loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
+            loadBalancer.start(ipcRenderer, 'linker');
           }, 2500);
         }
       } else {
@@ -139,16 +139,12 @@ class App extends Component {
         this.reconnect = false;
       }
     });
-    loadBalancer.startBackgroundProcess(ipcRenderer, 'linker');
-
-    // ipcRenderer.on('DEBUG', (event, args) => {
-    //   console.log(args);
-    // });
+    loadBalancer.start(ipcRenderer, 'linker');
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_STATUS');
-    loadBalancer.stopBackgroundProcess(ipcRenderer, 'linker');
+    ipcRenderer.removeAllListeners('CONNECTION_STATUS');
+    loadBalancer.stop(ipcRenderer, 'linker');
   }
 
   render() {

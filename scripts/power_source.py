@@ -17,14 +17,10 @@ class Power_source:
         self.device.set_pv3(pv3_value)
 
     def get_config(self):
-        pcs_value = self.device.get_pcs()
-        pv1_value = self.device.get_pv1()
-        pv2_value = self.device.get_pv2()
-        pv3_value = self.device.get_pv3()
         output = {'type': 'GET_CONFIG_PWR_SRC',
-                  'pcs': pcs_value,
-                  'pv1': pv1_value,
-                  'pv2': pv2_value,
-                  'pv3': pv3_value}
+                  'pcs': self.device.get_pcs(),
+                  'pv1': self.device.get_pv1(),
+                  'pv2': self.device.get_pv2(),
+                  'pv3': self.device.get_pv3()}
         print(json.dumps(output))
         sys.stdout.flush()

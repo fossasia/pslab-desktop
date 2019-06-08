@@ -6,7 +6,7 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/lab": "^3.0.0-alpha.30",
-    "electron-load-balancer": "^1.0.9",
+    "electron-load-balancer": "^2.0.0",
     "electron-log": "^3.0.5",
     "python-shell": "^1.0.7",
     "react": "^16.8.6",

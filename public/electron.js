@@ -27,7 +27,7 @@ function createWindow() {
   process.env.DEV && mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
-    loadBalancer.stopAllBackgroundProcess();
+    loadBalancer.stopAll();
     mainWindow = null;
   });
 }
@@ -46,24 +46,40 @@ app.on('activate', () => {
   }
 });
 
-/* ----------------------------------- Your code starts here ------------------------------------- */
+/* ----------------------------------- Custom code starts here ------------------------------------- */
 
 loadBalancer.register(ipcMain, {
   linker: '/background_tasks/linker.html',
 });
 
-ipcMain.on('TO_RENDERER_DATA', (event, args) => {
-  mainWindow.webContents.send('TO_RENDERER_DATA', args);
+ipcMain.on('OSC_VOLTAGE_DATA', (event, args) => {
+  mainWindow.webContents.send('OSC_VOLTAGE_DATA', args);
 });
 
-ipcMain.on('TO_RENDERER_CONFIG', (event, args) => {
-  mainWindow.webContents.send('TO_RENDERER_CONFIG', args);
+ipcMain.on('OSC_FFT_DATA', (event, args) => {
+  mainWindow.webContents.send('OSC_FFT_DATA', args);
 });
 
-ipcMain.on('TO_RENDERER_STATUS', (event, args) => {
-  mainWindow.webContents.send('TO_RENDERER_STATUS', args);
+ipcMain.on('MUL_MET_DATA', (event, args) => {
+  mainWindow.webContents.send('MUL_MET_DATA', args);
 });
 
-ipcMain.on('DEBUG', (event, args) => {
-  mainWindow.webContents.send('DEBUG', args);
+ipcMain.on('PWR_SRC_CONFIG', (event, args) => {
+  mainWindow.webContents.send('PWR_SRC_CONFIG', args);
+});
+
+ipcMain.on('OSC_CONFIG', (event, args) => {
+  mainWindow.webContents.send('OSC_CONFIG', args);
+});
+
+ipcMain.on('MUL_MET_CONFIG', (event, args) => {
+  mainWindow.webContents.send('MUL_MET_CONFIG', args);
+});
+
+ipcMain.on('WAV_GEN_CONFIG', (event, args) => {
+  mainWindow.webContents.send('WAV_GEN_CONFIG', args);
+});
+
+ipcMain.on('CONNECTION_STATUS', (event, args) => {
+  mainWindow.webContents.send('CONNECTION_STATUS', args);
 });

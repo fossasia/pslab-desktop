@@ -70,11 +70,7 @@ class AnalysisParameters extends Component {
           />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            disabled={!isFourierTransformActive}
-          >
+          <FormControl variant="outlined" fullWidth={true}>
             <InputLabel
               ref={ref => {
                 this.analysisTypeRef = ref;
@@ -109,7 +105,6 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
-            disabled={!isFourierTransformActive}
           >
             <InputLabel
               ref={ref => {
@@ -145,7 +140,6 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
-            disabled={!isFourierTransformActive}
           >
             <InputLabel htmlFor="outlined-analysis-channel">
               Channel 2

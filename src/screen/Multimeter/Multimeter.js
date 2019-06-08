@@ -21,11 +21,11 @@ class Multimeter extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_STATUS', (event, args) => {
+    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
     });
-    ipcRenderer.on('TO_RENDERER_CONFIG', (event, args) => {
+    ipcRenderer.on('MUL_MET_CONFIG', (event, args) => {
       const { activeCategory, activeSubType, parameter } = args;
       const dialValue = optionMap[activeSubType].angle;
       const unit =
@@ -46,16 +46,16 @@ class Multimeter extends Component {
   componentWillUnmount() {
     const { isReading } = this.state;
     isReading &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_MUL_MET',
       });
-    ipcRenderer.removeAllListeners('TO_RENDERER_CONFIG');
+    ipcRenderer.removeAllListeners('MUL_MET_CONFIG');
   }
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'GET_CONFIG_MUL_MET',
       });
   }, 500);
@@ -64,7 +64,7 @@ class Multimeter extends Component {
     const { isConnected } = this.props;
     const { activeCategory, activeSubType, parameter } = this.state;
     isConnected &&
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_MUL_MET',
         activeCategory,
         activeSubType,
@@ -78,11 +78,11 @@ class Multimeter extends Component {
       isReading: !prevState.isReading,
     }));
     if (isReading) {
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_MUL_MET',
       });
     } else {
-      loadBalancer.send(ipcRenderer, 'linker', {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'START_MUL_MET',
       });
     }

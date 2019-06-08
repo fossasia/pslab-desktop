@@ -27,22 +27,6 @@ class Multimeter:
         print(json.dumps(output))
         sys.stdout.flush()
 
-    def precision_control(self, value):
-        if abs(value) >= 1e6:
-            return (round(value / 1e6, 3), 'M')
-        elif abs(value) >= 1e3:
-            return (round(value / 1e3, 3), 'k')
-        elif abs(value) <= 1e-10:
-            return (0, None)
-        elif abs(value) <= 1e-9:
-            return (round(value / 1e-9, 3), 'n')
-        elif abs(value) <= 1e-6:
-            return (round(value / 1e-6, 3), 'μ')
-        elif abs(value) <= 1e-3:
-            return (round(value / 1e-3, 3), 'm')
-        else:
-            return (round(value, 3), None)
-
     def start_read(self):
         self.multimeter_data_read_thread = threading.Thread(
             target=self.capture_loop,
@@ -99,3 +83,19 @@ class Multimeter:
         output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}
         print(json.dumps(output))
         sys.stdout.flush()
+
+    def precision_control(self, value):
+        if abs(value) >= 1e6:
+            return (round(value / 1e6, 3), 'M')
+        elif abs(value) >= 1e3:
+            return (round(value / 1e3, 3), 'k')
+        elif abs(value) <= 1e-10:
+            return (0, None)
+        elif abs(value) <= 1e-9:
+            return (round(value / 1e-9, 3), 'n')
+        elif abs(value) <= 1e-6:
+            return (round(value / 1e-6, 3), 'μ')
+        elif abs(value) <= 1e-3:
+            return (round(value / 1e-3, 3), 'm')
+        else:
+            return (round(value, 3), None)

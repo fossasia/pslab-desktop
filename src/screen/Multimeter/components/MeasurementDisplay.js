@@ -15,16 +15,17 @@ class MeasurementDisplay extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
-      console.log(args);
-      this.setState({
-        ...args,
-      });
+    ipcRenderer.on('MUL_MET_DATA', (event, args) => {
+      const { isReading } = this.props;
+      isReading &&
+        this.setState({
+          ...args,
+        });
     });
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+    ipcRenderer.removeAllListeners('MUL_MET_DATA');
   }
 
   render() {
