@@ -39,21 +39,31 @@ export const SettingsWrapper = styled.div`
 `;
 
 export const GraphContainer = styled.div`
-  flex: 1;
+  height: 80%;
   display: flex;
-  transform: translateY(-5%);
-  justify-content: flex-end;
-  align-items: center;
+  transform: ${props =>
+    props.information ? 'translateY(0%)' : 'translateY(-5%)'};
 `;
 
 export const GraphWrapper = styled.div`
-  margin: 0px 16px 0px 0px;
+  margin: 16px 16px 0px 0px;
   display: flex;
-  height: 80%;
+  height: calc(100% - 16px);
   width: 100%;
   background-color: #ffffff;
   z-index: 1;
   border: 1px solid #e8e8e8;
   color: rgba(0, 0, 0, 0.65);
   border-radius: 2px;
+`;
+
+export const InformationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: ${props => (props.information ? 'none' : 'center')};
+`;
+
+export const InformationWrapper = styled.div`
+  margin: 16px 16px 0px 0px;
 `;

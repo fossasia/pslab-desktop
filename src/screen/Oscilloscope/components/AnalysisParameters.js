@@ -42,11 +42,11 @@ class AnalysisParameters extends Component {
   render() {
     const {
       isFourierTransformActive,
-      transformType,
-      transformChannel1,
-      transformChannel2,
-      onChangeTransformType,
-      onChangeTransformChannel,
+      fitType,
+      fitChannel1,
+      fitChannel2,
+      onChangeFitType,
+      onChangeFitChannel,
       onToggleCheckBox,
       classes,
     } = this.props;
@@ -70,18 +70,22 @@ class AnalysisParameters extends Component {
           />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
-          <FormControl variant="outlined" fullWidth={true}>
+          <FormControl
+            variant="outlined"
+            fullWidth={true}
+            disabled={!isFourierTransformActive}
+          >
             <InputLabel
               ref={ref => {
                 this.analysisTypeRef = ref;
               }}
               htmlFor="outlined-analysis-type"
             >
-              Transform Type
+              Fit Type
             </InputLabel>
             <Select
-              value={transformType}
-              onChange={onChangeTransformType}
+              value={fitType}
+              onChange={onChangeFitType}
               input={
                 <OutlinedInput
                   labelWidth={analysisTypeLabelWidth}
@@ -105,6 +109,7 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isFourierTransformActive}
           >
             <InputLabel
               ref={ref => {
@@ -115,8 +120,8 @@ class AnalysisParameters extends Component {
               Channel 1
             </InputLabel>
             <Select
-              value={transformChannel1}
-              onChange={onChangeTransformChannel('transformChannel1')}
+              value={fitChannel1}
+              onChange={onChangeFitChannel('fitChannel1')}
               input={
                 <OutlinedInput
                   labelWidth={analysisChannelLabelWidth}
@@ -140,13 +145,14 @@ class AnalysisParameters extends Component {
             variant="outlined"
             fullWidth={true}
             className={classes.formControl}
+            disabled={!isFourierTransformActive}
           >
             <InputLabel htmlFor="outlined-analysis-channel">
               Channel 2
             </InputLabel>
             <Select
-              value={transformChannel2}
-              onChange={onChangeTransformChannel('transformChannel2')}
+              value={fitChannel2}
+              onChange={onChangeFitChannel('fitChannel2')}
               input={
                 <OutlinedInput
                   labelWidth={analysisChannelLabelWidth}

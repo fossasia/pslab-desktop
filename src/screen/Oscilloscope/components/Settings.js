@@ -16,9 +16,9 @@ const Settings = ({
   triggerVoltage,
   triggerChannel,
   isFourierTransformActive,
-  transformType,
-  transformChannel1,
-  transformChannel2,
+  fitType,
+  fitChannel1,
+  fitChannel2,
   isXYPlotActive,
   plotChannel1,
   plotChannel2,
@@ -30,8 +30,8 @@ const Settings = ({
   onChangeTriggerChannel,
   onChangeTimeBaseIndex,
   timeBaseListLength,
-  onChangeTransformType,
-  onChangeTransformChannel,
+  onChangeFitType,
+  onChangeFitChannel,
   onChangePlotChannel,
 }) => (
   <SettingsContainer>
@@ -58,12 +58,12 @@ const Settings = ({
       />
       <AnalysisParameters
         isFourierTransformActive={isFourierTransformActive}
-        transformType={transformType}
-        transformChannel1={transformChannel1}
-        transformChannel2={transformChannel2}
+        fitType={fitType}
+        fitChannel1={fitChannel1}
+        fitChannel2={fitChannel2}
         onToggleCheckBox={onToggleCheckBox}
-        onChangeTransformType={onChangeTransformType}
-        onChangeTransformChannel={onChangeTransformChannel}
+        onChangeFitType={onChangeFitType}
+        onChangeFitChannel={onChangeFitChannel}
       />
       <PlotParameters
         isXYPlotActive={isXYPlotActive}

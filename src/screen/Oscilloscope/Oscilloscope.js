@@ -3,8 +3,10 @@ import debounce from 'lodash/debounce';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
 import FFTGraph from './components/FFTGraph';
+import FitPanel from './components/FitPanel';
 import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
+import roundOff from '../../utils/arithmetics';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -37,9 +39,9 @@ class Oscilloscope extends Component {
       triggerVoltage: 0,
       triggerChannel: 'CH1',
       isFourierTransformActive: false,
-      transformType: 'Sine',
-      transformChannel1: 'CH1',
-      transformChannel2: 'CH2',
+      fitType: 'Sine',
+      fitChannel1: 'None',
+      fitChannel2: 'None',
       isXYPlotActive: false,
       plotChannel1: 'CH1',
       plotChannel2: 'CH2',
@@ -65,9 +67,9 @@ class Oscilloscope extends Component {
         triggerVoltage,
         triggerChannel,
         isFourierTransformActive,
-        transformType,
-        transformChannel1,
-        transformChannel2,
+        fitType,
+        fitChannel1,
+        fitChannel2,
         isXYPlotActive,
         plotChannel1,
         plotChannel2,
@@ -80,9 +82,9 @@ class Oscilloscope extends Component {
         triggerVoltage,
         triggerChannel,
         isFourierTransformActive,
-        transformType,
-        transformChannel1,
-        transformChannel2,
+        fitType,
+        fitChannel1,
+        fitChannel2,
         isXYPlotActive,
         plotChannel1,
         plotChannel2,
@@ -117,6 +119,9 @@ class Oscilloscope extends Component {
       triggerVoltage,
       triggerChannel,
       isFourierTransformActive,
+      fitType,
+      fitChannel1,
+      fitChannel2,
     } = this.state;
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
@@ -131,6 +136,9 @@ class Oscilloscope extends Component {
         triggerVoltage,
         triggerChannel,
         isFourierTransformActive,
+        fitType,
+        fitChannel1,
+        fitChannel2,
       });
   }, 500);
 
@@ -205,7 +213,7 @@ class Oscilloscope extends Component {
   onChangeTriggerVoltage = (event, value) => {
     this.setState(
       prevState => ({
-        triggerVoltage: value,
+        triggerVoltage: roundOff(value),
       }),
       () => {
         this.sendConfigToDevice();
@@ -233,15 +241,25 @@ class Oscilloscope extends Component {
     );
   };
 
-  onChangeTransformType = event => {
-    this.setState(prevState => ({
-      transformType: event.target.value,
-    }));
+  onChangeFitType = event => {
+    this.setState(
+      prevState => ({
+        fitType: event.target.value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
-  onChangeTransformChannel = channelNumber => event => {
-    this.setState(prevState => ({
-      [channelNumber]: event.target.value,
-    }));
+  onChangeFitChannel = channelNumber => event => {
+    this.setState(
+      prevState => ({
+        [channelNumber]: event.target.value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   onChangePlotChannel = channelNumber => event => {
@@ -286,9 +304,9 @@ class Oscilloscope extends Component {
       triggerVoltage,
       triggerChannel,
       isFourierTransformActive,
-      transformType,
-      transformChannel1,
-      transformChannel2,
+      fitType,
+      fitChannel1,
+      fitChannel2,
       isXYPlotActive,
       plotChannel1,
       plotChannel2,
@@ -307,9 +325,9 @@ class Oscilloscope extends Component {
             triggerVoltage={triggerVoltage}
             triggerChannel={triggerChannel}
             isFourierTransformActive={isFourierTransformActive}
-            transformType={transformType}
-            transformChannel1={transformChannel1}
-            transformChannel2={transformChannel2}
+            fitType={fitType}
+            fitChannel1={fitChannel1}
+            fitChannel2={fitChannel2}
             isXYPlotActive={isXYPlotActive}
             plotChannel1={plotChannel1}
             plotChannel2={plotChannel2}
@@ -321,8 +339,8 @@ class Oscilloscope extends Component {
             onChangeTriggerChannel={this.onChangeTriggerChannel}
             onChangeTimeBaseIndex={this.onChangeTimeBaseIndex}
             timeBaseListLength={this.timeBaseList.length}
-            onChangeTransformType={this.onChangeTransformType}
-            onChangeTransformChannel={this.onChangeTransformChannel}
+            onChangeFitType={this.onChangeFitType}
+            onChangeFitChannel={this.onChangeFitChannel}
             onChangePlotChannel={this.onChangePlotChannel}
           />
         }
@@ -334,6 +352,16 @@ class Oscilloscope extends Component {
           />
         }
         graph={this.graphRenderer()}
+        information={
+          (fitChannel1 !== 'None' || fitChannel2 !== 'None') &&
+          isFourierTransformActive && (
+            <FitPanel
+              isReading={isReading}
+              fitChannel1={fitChannel1}
+              fitChannel2={fitChannel2}
+            />
+          )
+        }
       />
     );
   }

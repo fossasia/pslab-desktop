@@ -50,16 +50,17 @@ def main():
             trigger_voltage = parsed_stream_data['triggerVoltage']
             trigger_channel = parsed_stream_data['triggerChannel']
             is_fourier_transform_active = parsed_stream_data['isFourierTransformActive']
-            # transform_type = parsed_stream_data['transformType']
-            # transform_channel1 = parsed_stream_data['transformChannel1']
-            # transform_channel2 = parsed_stream_data['transformChannel2']
+            fit_type = parsed_stream_data['fitType']
+            fit_channel1 = parsed_stream_data['fitChannel1']
+            fit_channel2 = parsed_stream_data['fitChannel2']
             # is_xy_plot_active = parsed_stream_data['isXYPlotActive']
             # plot_channel1 = parsed_stream_data['plotChannel1']
             # plot_channel2 = parsed_stream_data['plotChannel2']
             oscilloscope.set_config(
-                time_base, number_of_samples, ch1, ch2, ch3, mic, 
-                is_trigger_active, trigger_channel, trigger_voltage, 
-                is_fourier_transform_active)
+                time_base, number_of_samples, ch1, ch2, ch3, mic,
+                is_trigger_active, trigger_channel, trigger_voltage,
+                is_fourier_transform_active, fit_type, fit_channel1,
+                fit_channel2)
 
             if old_read_state:
                 oscilloscope.start_read()

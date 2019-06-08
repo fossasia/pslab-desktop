@@ -7,10 +7,12 @@ import {
   SettingsWrapper,
   GraphContainer,
   GraphWrapper,
+  InformationContainer,
+  InformationWrapper,
   ThickBar,
 } from './GraphPanelLayout.styles';
 
-const GraphPanelLayout = ({ actionButtons, settings, graph }) => {
+const GraphPanelLayout = ({ actionButtons, settings, graph, information }) => {
   return (
     <LayoutContainer>
       <ThickBar />
@@ -20,9 +22,12 @@ const GraphPanelLayout = ({ actionButtons, settings, graph }) => {
         </ButtonContainer>
         <SettingsWrapper>{settings}</SettingsWrapper>
       </SettingsContainer>
-      <GraphContainer>
-        <GraphWrapper>{graph}</GraphWrapper>
-      </GraphContainer>
+      <InformationContainer information={information}>
+        <GraphContainer information={information}>
+          <GraphWrapper>{graph}</GraphWrapper>
+        </GraphContainer>
+        <InformationWrapper>{information}</InformationWrapper>
+      </InformationContainer>
     </LayoutContainer>
   );
 };
