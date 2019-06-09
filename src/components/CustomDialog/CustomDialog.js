@@ -75,11 +75,19 @@ const CustomDialog = ({
               autoFocus
               margin="dense"
               id="name"
+              error={values.isTextError}
               label={textTitle}
               type="number"
               value={values.textValue}
               onChange={onTextFieldChange('textValue')}
               fullWidth
+              onKeyPress={ev => {
+                if (ev.key === 'Enter') {
+                  // Do code here
+                  ev.preventDefault();
+                  onHandleAccept();
+                }
+              }}
             />
           </DialogContent>
         );
