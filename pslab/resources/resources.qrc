@@ -1,5 +1,12 @@
 <RCC>
   <qresource prefix="pslab">
+    <file>icons/tile_icons/multimeter.svg</file>
+    <file>icons/tile_icons/oscilloscope.svg</file>
+    <file>icons/tile_icons/power_source.svg</file>
+    <file>icons/tile_icons/wave_generator.svg</file>
+    <file>icons/tile_icons/logic_analyzer.svg</file>
+    <file>icons/menu_icons/pin_layout_menu_icon.png</file>
+    <file>icons/menu_icons/datasheet_menu_icon.png</file>
     <file>icons/app_logo/pslab_logo.png</file>
     <file>icons/menu_icons/about_device_menu_icon.png</file>
     <file>icons/menu_icons/reconnect_menu_icon.png</file>

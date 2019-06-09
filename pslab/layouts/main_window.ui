@@ -44,15 +44,29 @@
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextBesideIcon</enum>
   </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="app_window">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="bottomMargin">
+     <number>9</number>
+    </property>
+    <item row="0" column="0">
      <widget class="QTabWidget" name="app_tabs">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::tab-bar {
+    alignment: center;
+}</string>
       </property>
       <property name="tabShape">
        <enum>QTabWidget::Rounded</enum>
@@ -92,7 +106,7 @@
           <x>-1</x>
           <y>-1</y>
           <width>441</width>
-          <height>541</height>
+          <height>533</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -110,14 +124,14 @@
            <x>0</x>
            <y>-1</y>
            <width>441</width>
-           <height>541</height>
+           <height>361</height>
           </rect>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Raised</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -128,12 +142,229 @@
             <x>0</x>
             <y>0</y>
             <width>441</width>
-            <height>541</height>
+            <height>361</height>
            </rect>
           </property>
+          <widget class="QPushButton" name="button_oscilloscope">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>421</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::WheelFocus</enum>
+           </property>
+           <property name="toolTip">
+            <string>Oscilloscope</string>
+           </property>
+           <property name="accessibleName">
+            <string/>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Oscilloscope</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+Shift+O</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="button_logic_analyzer">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>80</y>
+             <width>421</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Logic Analyzer</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+Shift+L</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="button_waveform_generator">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>220</y>
+             <width>421</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Waveform Generator</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+Shift+W</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="button_multimeter">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>150</y>
+             <width>421</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Multimeter</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+Shift+M</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="button_power_source">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>290</y>
+             <width>421</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Power Source</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+Shift+P</string>
+           </property>
+          </widget>
+          <zorder>text_instrument_details</zorder>
+          <zorder>button_oscilloscope</zorder>
+          <zorder>button_logic_analyzer</zorder>
+          <zorder>button_waveform_generator</zorder>
+          <zorder>button_multimeter</zorder>
+          <zorder>button_power_source</zorder>
          </widget>
         </widget>
+        <widget class="QTextBrowser" name="text_instrument_details">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>362</y>
+           <width>441</width>
+           <height>173</height>
+          </rect>
+         </property>
+         <property name="cursor" stdset="0">
+          <cursorShape>CrossCursor</cursorShape>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="placeholderText">
+          <string>Hover over an instrument to view more details about it...</string>
+         </property>
+        </widget>
        </widget>
+       <zorder>frame_instruments</zorder>
+       <zorder>textBrowser</zorder>
       </widget>
       <widget class="QWidget" name="tab_guide">
        <attribute name="icon">
@@ -191,7 +422,7 @@
              <x>0</x>
              <y>0</y>
              <width>441</width>
-             <height>541</height>
+             <height>533</height>
             </rect>
            </property>
            <property name="frameShape">
@@ -202,6 +433,9 @@
            </property>
            <property name="verticalScrollBarPolicy">
             <enum>Qt::ScrollBarAlwaysOn</enum>
+           </property>
+           <property name="tabChangesFocus">
+            <bool>true</bool>
            </property>
            <property name="documentTitle">
             <string/>
@@ -340,9 +574,28 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="action_pin_Layout"/>
     <addaction name="action_datasheet"/>
+    <addaction name="separator"/>
+    <addaction name="action_about_pslab"/>
+   </widget>
+   <widget class="QMenu" name="menuExperiments">
+    <property name="title">
+     <string>Experiments</string>
+    </property>
+    <widget class="QMenu" name="menuElectronics">
+     <property name="title">
+      <string>Electronics</string>
+     </property>
+     <addaction name="action_bjts_and_fets"/>
+     <addaction name="action_diodes"/>
+    </widget>
+    <addaction name="menuElectronics"/>
+    <addaction name="actionElectrical"/>
+    <addaction name="actionPhysics"/>
+    <addaction name="actionSchool"/>
    </widget>
    <addaction name="menuDevice"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuExperiments"/>
   </widget>
   <widget class="QStatusBar" name="pslab_status_bar"/>
   <action name="action_reconnect">
@@ -379,13 +632,55 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="action_pin_Layout">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pslab/icons/menu_icons/pin_layout_menu_icon.png</normaloff>:/pslab/icons/menu_icons/pin_layout_menu_icon.png</iconset>
+   </property>
    <property name="text">
     <string>Pin Layout...</string>
    </property>
   </action>
   <action name="action_datasheet">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pslab/icons/menu_icons/datasheet_menu_icon.png</normaloff>:/pslab/icons/menu_icons/datasheet_menu_icon.png</iconset>
+   </property>
    <property name="text">
     <string>Datasheet...</string>
+   </property>
+  </action>
+  <action name="action_about_pslab">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pslab/icons/app_logo/pslab_logo.png</normaloff>:/pslab/icons/app_logo/pslab_logo.png</iconset>
+   </property>
+   <property name="text">
+    <string>About PSLab...</string>
+   </property>
+  </action>
+  <action name="actionElectrical">
+   <property name="text">
+    <string>Electrical</string>
+   </property>
+  </action>
+  <action name="actionPhysics">
+   <property name="text">
+    <string>Physics</string>
+   </property>
+  </action>
+  <action name="actionSchool">
+   <property name="text">
+    <string>School Experiments</string>
+   </property>
+  </action>
+  <action name="action_bjts_and_fets">
+   <property name="text">
+    <string>BJTs and FETs</string>
+   </property>
+  </action>
+  <action name="action_diodes">
+   <property name="text">
+    <string>Diodes</string>
    </property>
   </action>
  </widget>
@@ -473,6 +768,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_about_pslab</sender>
+   <signal>triggered()</signal>
+   <receiver>pslab_main_window</receiver>
+   <slot>maction_about_pslab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>maction_reconnect_device()</slot>
@@ -480,5 +791,6 @@ p, li { white-space: pre-wrap; }
   <slot>maction_about_device()</slot>
   <slot>maction_pinlayout()</slot>
   <slot>maction_datasheet()</slot>
+  <slot>maction_about_pslab()</slot>
  </slots>
 </ui>
