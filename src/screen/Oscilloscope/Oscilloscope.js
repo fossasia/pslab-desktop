@@ -378,6 +378,7 @@ class Oscilloscope extends Component {
           isFourierTransformActive && (
             <FitPanel
               isReading={isReading}
+              fitType={fitType}
               fitChannel1={fitChannel1}
               fitChannel2={fitChannel2}
             />

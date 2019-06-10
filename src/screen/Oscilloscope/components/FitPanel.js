@@ -20,29 +20,36 @@ class FitPanel extends Component {
         frequency: '-/--',
         offset: '-/--',
         phase: '-/--',
+        dutyCycle: '-/--',
       },
       channel2: {
         amplitude: '-/--',
         frequency: '-/--',
         offset: '-/--',
         phase: '-/--',
+        dutyCycle: '-/--',
       },
     };
   }
 
   componentDidMount = () => {
     ipcRenderer.on('OSC_FIT_DATA', (event, args) => {
-      const { isReading } = this.props;
-      const { fitOutput1, fitOutput2 } = args;
-      isReading &&
-        this.setState({
-          channel1:
-            fitOutput1 !== null && fitOutput1 !== false
+      const { isReading, fitType } = this.props;
+      const {
+        fitOutput1Sine,
+        fitOutput2Sine,
+        fitOutput1Square,
+        fitOutput2Square,
+      } = args;
+      if (isReading) {
+        if (fitType === 'Sine') {
+          this.setState({
+            channel1: fitOutput1Sine
               ? {
-                  amplitude: roundOff(fitOutput1[0], 3),
-                  frequency: roundOff(fitOutput1[1], 3),
-                  offset: roundOff(fitOutput1[2], 3),
-                  phase: roundOff(fitOutput1[3], 3),
+                  amplitude: roundOff(fitOutput1Sine[0], 3),
+                  frequency: roundOff(fitOutput1Sine[1], 3),
+                  offset: roundOff(fitOutput1Sine[2], 3),
+                  phase: roundOff(fitOutput1Sine[3], 3),
                 }
               : {
                   amplitude: '--/-',
@@ -50,13 +57,12 @@ class FitPanel extends Component {
                   offset: '--/-',
                   phase: '--/-',
                 },
-          channel2:
-            fitOutput2 !== null && fitOutput2 !== false
+            channel2: fitOutput2Sine
               ? {
-                  amplitude: roundOff(fitOutput2[0], 3),
-                  frequency: roundOff(fitOutput2[1], 3),
-                  offset: roundOff(fitOutput2[2], 3),
-                  phase: roundOff(fitOutput2[3], 3),
+                  amplitude: roundOff(fitOutput2Sine[0], 3),
+                  frequency: roundOff(fitOutput2Sine[1], 3),
+                  offset: roundOff(fitOutput2Sine[2], 3),
+                  phase: roundOff(fitOutput2Sine[3], 3),
                 }
               : {
                   amplitude: '--/-',
@@ -64,7 +70,42 @@ class FitPanel extends Component {
                   offset: '--/-',
                   phase: '--/-',
                 },
-        });
+          });
+        } else {
+          this.setState({
+            channel1: fitOutput1Square
+              ? {
+                  amplitude: roundOff(fitOutput1Square[0], 3),
+                  frequency: roundOff(fitOutput1Square[1], 3),
+                  phase: roundOff(fitOutput1Square[2], 3),
+                  dutyCycle: roundOff(fitOutput1Square[3], 3),
+                  offset: roundOff(fitOutput1Square[4], 3),
+                }
+              : {
+                  amplitude: '--/-',
+                  frequency: '--/-',
+                  offset: '--/-',
+                  phase: '--/-',
+                  dutyCycle: '--/-',
+                },
+            channel2: fitOutput2Square
+              ? {
+                  amplitude: roundOff(fitOutput2Square[0], 3),
+                  frequency: roundOff(fitOutput2Square[1], 3),
+                  phase: roundOff(fitOutput2Square[2], 3),
+                  dutyCycle: roundOff(fitOutput1Square[3], 3),
+                  offset: roundOff(fitOutput2Square[4], 3),
+                }
+              : {
+                  amplitude: '--/-',
+                  frequency: '--/-',
+                  offset: '--/-',
+                  phase: '--/-',
+                  dutyCycle: '--/-',
+                },
+          });
+        }
+      }
     });
   };
 
@@ -73,7 +114,7 @@ class FitPanel extends Component {
   };
 
   render() {
-    const { fitChannel1, fitChannel2 } = this.props;
+    const { fitType, fitChannel1, fitChannel2 } = this.props;
     const { channel1, channel2 } = this.state;
     return (
       <PanelContainer>
@@ -87,24 +128,50 @@ class FitPanel extends Component {
               {fitChannel1}
             </Typography>
             <Divider />
-            <DisplayContainer>
-              <ValueWrapper>
-                <div>Amplitude</div>
-                <Display fontSize={1} value={channel1.amplitude} unit="V" />
-              </ValueWrapper>
-              <ValueWrapper>
-                <div>Frequency</div>
-                <Display fontSize={1} value={channel1.frequency} unit="Hz" />
-              </ValueWrapper>
-              <ValueWrapper>
-                <div>Offset</div>
-                <Display fontSize={1} value={channel1.offset} unit="V" />
-              </ValueWrapper>
-              <ValueWrapper>
-                <div>Phase</div>
-                <Display fontSize={1} value={channel1.phase} unit="Deg" />
-              </ValueWrapper>
-            </DisplayContainer>
+            {fitType === 'Sine' && (
+              <DisplayContainer>
+                <ValueWrapper>
+                  <div>Amplitude</div>
+                  <Display fontSize={1} value={channel1.amplitude} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Frequency</div>
+                  <Display fontSize={1} value={channel1.frequency} unit="Hz" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Offset</div>
+                  <Display fontSize={1} value={channel1.offset} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Phase</div>
+                  <Display fontSize={1} value={channel1.phase} unit="Deg" />
+                </ValueWrapper>
+              </DisplayContainer>
+            )}
+            {fitType === 'Square' && (
+              <DisplayContainer>
+                <ValueWrapper>
+                  <div>Amplitude</div>
+                  <Display fontSize={1} value={channel1.amplitude} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Frequency</div>
+                  <Display fontSize={1} value={channel1.frequency} unit="Hz" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Offset</div>
+                  <Display fontSize={1} value={channel1.offset} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Phase</div>
+                  <Display fontSize={1} value={channel1.phase} unit="Deg" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Duty Cycle</div>
+                  <Display fontSize={1} value={channel1.dutyCycle} unit="%" />
+                </ValueWrapper>
+              </DisplayContainer>
+            )}
           </Card>
         )}
         {fitChannel2 !== 'None' && (
@@ -117,24 +184,50 @@ class FitPanel extends Component {
               {fitChannel2}
             </Typography>
             <Divider />
-            <DisplayContainer>
-              <ValueWrapper>
-                <div>Amplitude</div>
-                <Display fontSize={1} value={channel2.amplitude} unit="V" />
-              </ValueWrapper>
-              <ValueWrapper>
-                <div>Frequency</div>
-                <Display fontSize={1} value={channel2.frequency} unit="Hz" />
-              </ValueWrapper>
-              <ValueWrapper>
-                <div>Offset</div>
-                <Display fontSize={1} value={channel2.offset} unit="V" />
-              </ValueWrapper>
-              <ValueWrapper>
-                <div>Phase</div>
-                <Display fontSize={1} value={channel2.phase} unit="Deg" />
-              </ValueWrapper>
-            </DisplayContainer>
+            {fitType === 'Sine' && (
+              <DisplayContainer>
+                <ValueWrapper>
+                  <div>Amplitude</div>
+                  <Display fontSize={1} value={channel2.amplitude} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Frequency</div>
+                  <Display fontSize={1} value={channel2.frequency} unit="Hz" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Offset</div>
+                  <Display fontSize={1} value={channel2.offset} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Phase</div>
+                  <Display fontSize={1} value={channel2.phase} unit="Deg" />
+                </ValueWrapper>
+              </DisplayContainer>
+            )}
+            {fitType === 'Square' && (
+              <DisplayContainer>
+                <ValueWrapper>
+                  <div>Amplitude</div>
+                  <Display fontSize={1} value={channel2.amplitude} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Frequency</div>
+                  <Display fontSize={1} value={channel2.frequency} unit="Hz" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Offset</div>
+                  <Display fontSize={1} value={channel2.offset} unit="V" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Phase</div>
+                  <Display fontSize={1} value={channel2.phase} unit="Deg" />
+                </ValueWrapper>
+                <ValueWrapper>
+                  <div>Duty Cycle</div>
+                  <Display fontSize={1} value={channel2.dutyCycle} unit="%" />
+                </ValueWrapper>
+              </DisplayContainer>
+            )}
           </Card>
         )}
       </PanelContainer>
