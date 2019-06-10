@@ -5,7 +5,7 @@ import json
 import numpy as np
 from PSL import analyticsClass
 
-analytics = analyticsClass
+analytics = analyticsClass.analyticsClass()
 
 
 class Oscilloscope:
@@ -15,6 +15,7 @@ class Oscilloscope:
         self.device = I
         self.is_reading_voltage = False
         self.is_reading_fft = False
+        # self.is_reading_fit = False
 
         self.number_of_samples = 1000
         self.time_base = 0.5
@@ -29,9 +30,9 @@ class Oscilloscope:
         self.trigger_channel = 'CH1'
         self.is_trigger_active = False
         self.is_fourier_transform_active = False
-        self.transform_type = 'Sine'
-        self.transform_channel1 = 'CH1'
-        self.transform_channel2 = 'CH2'
+        self.fit_type = 'Sine'
+        self.fit_channel1 = 'None'
+        self.fit_channel2 = 'None'
         self.is_xy_plot_active = False
         self.plot_channel1 = 'CH1'
         self.plot_channel2 = 'CH2'
@@ -44,7 +45,8 @@ class Oscilloscope:
 
     def set_config(self, time_base, number_of_samples, ch1, ch2, ch3, mic,
                    is_trigger_active, trigger_channel, trigger_voltage,
-                   is_fourier_transform_active):
+                   is_fourier_transform_active, fit_type, fit_channel1,
+                   fit_channel2):
         self.time_base = time_base
         self.number_of_samples = number_of_samples
         self.ch1 = ch1
@@ -55,6 +57,9 @@ class Oscilloscope:
         self.trigger_channel = trigger_channel
         self.trigger_voltage = trigger_voltage
         self.is_fourier_transform_active = is_fourier_transform_active
+        self.fit_type = fit_type
+        self.fit_channel1 = fit_channel1
+        self.fit_channel2 = fit_channel2
 
         self.number_of_channels = ch1 + ch2 + ch3 + mic
         self.channels_to_read = self.calculate_channels_to_read(
@@ -87,9 +92,9 @@ class Oscilloscope:
                   'triggerVoltage': self.trigger_voltage,
                   'triggerChannel': self.trigger_channel,
                   'isFourierTransformActive': self.is_fourier_transform_active,
-                  'transformType': self.transform_type,
-                  'transformChannel1': self.transform_channel1,
-                  'transformChannel2': self.transform_channel2,
+                  'fitType': self.fit_type,
+                  'fitChannel1': self.fit_channel1,
+                  'fitChannel2': self.fit_channel2,
                   'isXYPlotActive': self.is_xy_plot_active,
                   'plotChannel1': self.plot_channel1,
                   'plotChannel2': self.plot_channel2,
@@ -119,6 +124,11 @@ class Oscilloscope:
 
     def capture_loop_voltage(self):
         self.is_reading_voltage = True
+        x = None
+        y1 = None
+        y2 = None
+        y3 = None
+        y4 = None
         while self.is_reading_voltage:
             self.device.capture_traces(
                 self.channels_to_read, self.number_of_samples, self.time_gap,
@@ -126,7 +136,6 @@ class Oscilloscope:
             time.sleep(self.delay)
             keys = ['time']
             vector = ()
-            x = None
             if self.ch1:
                 x, y1 = self.device.fetch_trace(1)
                 keys.append('ch1')
@@ -143,16 +152,25 @@ class Oscilloscope:
                 x, y4 = self.device.fetch_trace(4)
                 keys.append('mic')
                 vector = vector + (y4, )
-            x = x * 1e-3
-            vector = (x, ) + vector
-            output = {'type': 'START_OSC', 'data': np.stack(
-                vector).T.tolist(), 'keys': keys,
-                'numberOfChannels': self.number_of_channels}
+            vector = (x * 1e-3, ) + vector
+            output = {
+                'type': 'START_OSC',
+                'data': np.stack(vector).T.tolist(),
+                'keys': keys,
+                'numberOfChannels': self.number_of_channels,
+            }
             print(json.dumps(output))
             sys.stdout.flush()
 
     def capture_loop_fft(self):
         self.is_reading_fft = True
+        x = None
+        y1 = None
+        y2 = None
+        y3 = None
+        y4 = None
+        fit_output1 = None
+        fit_output2 = None
         while self.is_reading_fft:
             self.device.capture_traces(
                 self.channels_to_read, self.number_of_samples, self.time_gap,
@@ -182,9 +200,39 @@ class Oscilloscope:
                 keys.append('mic')
                 vector = vector + (amp4, )
             vector = (frequency, ) + vector
-            output = {'type': 'START_OSC', 'isFFT': True, 'data': np.stack(
-                vector).T.tolist(), 'keys': keys,
-                'numberOfChannels': self.number_of_channels}
+
+            if self.fit_channel1 != 'None':
+                if self.fit_channel1 == 'CH1' and self.ch1:
+                    fit_output1 = analytics.sineFit(x, y1)
+                elif self.fit_channel1 == 'CH2' and self.ch2:
+                    fit_output1 = analytics.sineFit(x, y2)
+                elif self.fit_channel1 == 'CH3' and self.ch3:
+                    fit_output1 = analytics.sineFit(x, y3)
+                elif self.fit_channel1 == 'MIC' and self.mic:
+                    fit_output1 = analytics.sineFit(x, y4)
+                else:
+                    fit_output1 = False
+
+            if self.fit_channel2 != 'None':
+                if self.fit_channel2 == 'CH1' and self.ch1:
+                    fit_output2 = analytics.sineFit(x, y1)
+                elif self.fit_channel2 == 'CH2' and self.ch2:
+                    fit_output2 = analytics.sineFit(x, y2)
+                elif self.fit_channel2 == 'CH3' and self.ch3:
+                    fit_output2 = analytics.sineFit(x, y3)
+                elif self.fit_channel2 == 'MIC' and self.mic:
+                    fit_output2 = analytics.sineFit(x, y4)
+                else:
+                    fit_output2 = False
+
+            output = {
+                'type': 'START_OSC',
+                'isFFT': True, 'data': np.stack(vector).T.tolist(),
+                'keys': keys,
+                'numberOfChannels': self.number_of_channels,
+                'fitOutput1': fit_output1,
+                'fitOutput2': fit_output2
+            }
             print(json.dumps(output))
             sys.stdout.flush()
 

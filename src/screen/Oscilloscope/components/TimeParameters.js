@@ -104,7 +104,7 @@ class TimeParameters extends Component {
             value={triggerVoltage}
             min={-16.5}
             max={16.5}
-            step={0.5}
+            step={0.1}
             disabled={!isTriggerActive}
             minTitleWidth="60px"
             minUnitWidth="66px"

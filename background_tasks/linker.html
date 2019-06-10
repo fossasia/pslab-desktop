@@ -30,6 +30,11 @@
 						case 'START_OSC':
 							if (parsedJSON.isFFT) {
 								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+								(parsedJSON['fitOutput1'] !== null || parsedJSON['fitOutput2']) !== null &&
+									ipcRenderer.send('OSC_FIT_DATA', {
+										fitOutput1: parsedJSON['fitOutput1'],
+										fitOutput2: parsedJSON['fitOutput2'],
+									});
 								ipcRenderer.send('OSC_FFT_DATA', { data: parsedOutput });
 							} else {
 								parsedOutput = oscilloscopeDataProcessor(parsedJSON);

@@ -60,6 +60,10 @@ ipcMain.on('OSC_FFT_DATA', (event, args) => {
   mainWindow.webContents.send('OSC_FFT_DATA', args);
 });
 
+ipcMain.on('OSC_FIT_DATA', (event, args) => {
+  mainWindow.webContents.send('OSC_FIT_DATA', args);
+});
+
 ipcMain.on('MUL_MET_DATA', (event, args) => {
   mainWindow.webContents.send('MUL_MET_DATA', args);
 });
