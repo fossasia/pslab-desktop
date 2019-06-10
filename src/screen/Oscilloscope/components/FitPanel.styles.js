@@ -9,10 +9,10 @@ export const PanelContainer = styled.div`
 `;
 
 export const ValueWrapper = styled.div`
-  min-width: 6em;
+  min-width: 5.8em;
   display: flex;
   flex-direction: column;
-  margin: 16px 16px 16px 16px;
+  margin: 16px 8px;
   align-items: center;
   justify-content: center;
   cursor: pointer;

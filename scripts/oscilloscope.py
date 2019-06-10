@@ -182,8 +182,10 @@ class Oscilloscope:
         y2 = None
         y3 = None
         y4 = None
-        fit_output1 = None
-        fit_output2 = None
+        fit_output1_sine = False
+        fit_output2_sine = False
+        fit_output1_square = False
+        fit_output2_square = False
         while self.is_reading_fft:
             self.device.capture_traces(
                 self.channels_to_read, self.number_of_samples, self.time_gap,
@@ -215,28 +217,64 @@ class Oscilloscope:
             vector = (frequency, ) + vector
 
             if self.fit_channel1 != 'None':
-                if self.fit_channel1 == 'CH1' and self.ch1:
-                    fit_output1 = analytics.sineFit(x, y1)
-                elif self.fit_channel1 == 'CH2' and self.ch2:
-                    fit_output1 = analytics.sineFit(x, y2)
-                elif self.fit_channel1 == 'CH3' and self.ch3:
-                    fit_output1 = analytics.sineFit(x, y3)
-                elif self.fit_channel1 == 'MIC' and self.mic:
-                    fit_output1 = analytics.sineFit(x, y4)
-                else:
-                    fit_output1 = False
+                if self.fit_type == 'Sine':
+                    try:
+                        if self.fit_channel1 == 'CH1' and self.ch1:
+                            fit_output1_sine = analytics.sineFit(x, y1)
+                        elif self.fit_channel1 == 'CH2' and self.ch2:
+                            fit_output1_sine = analytics.sineFit(x, y2)
+                        elif self.fit_channel1 == 'CH3' and self.ch3:
+                            fit_output1_sine = analytics.sineFit(x, y3)
+                        elif self.fit_channel1 == 'MIC' and self.mic:
+                            fit_output1_sine = analytics.sineFit(x, y4)
+                        else:
+                            fit_output1_sine = False
+                    except:
+                        fit_output1_sine = False
+                elif self.fit_type == 'Square':
+                    try:
+                        if self.fit_channel1 == 'CH1' and self.ch1:
+                            fit_output1_square = analytics.squareFit(x, y1)
+                        elif self.fit_channel1 == 'CH2' and self.ch2:
+                            fit_output1_square = analytics.squareFit(x, y2)
+                        elif self.fit_channel1 == 'CH3' and self.ch3:
+                            fit_output1_square = analytics.squareFit(x, y3)
+                        elif self.fit_channel1 == 'MIC' and self.mic:
+                            fit_output1_square = analytics.squareFit(x, y4)
+                        else:
+                            fit_output1_square = False
+                    except:
+                        fit_output1_square = False
 
             if self.fit_channel2 != 'None':
-                if self.fit_channel2 == 'CH1' and self.ch1:
-                    fit_output2 = analytics.sineFit(x, y1)
-                elif self.fit_channel2 == 'CH2' and self.ch2:
-                    fit_output2 = analytics.sineFit(x, y2)
-                elif self.fit_channel2 == 'CH3' and self.ch3:
-                    fit_output2 = analytics.sineFit(x, y3)
-                elif self.fit_channel2 == 'MIC' and self.mic:
-                    fit_output2 = analytics.sineFit(x, y4)
-                else:
-                    fit_output2 = False
+                if self.fit_type == 'Sine':
+                    try:
+                        if self.fit_channel2 == 'CH1':
+                            fit_output2_sine = analytics.sineFit(x, y1)
+                        elif self.fit_channel2 == 'CH2':
+                            fit_output2_sine = analytics.sineFit(x, y2)
+                        elif self.fit_channel2 == 'CH3':
+                            fit_output2_sine = analytics.sineFit(x, y3)
+                        elif self.fit_channel2 == 'MIC':
+                            fit_output2_sine = analytics.sineFit(x, y4)
+                        else:
+                            fit_output2_sine = False
+                    except:
+                        fit_output2_sine = False
+                elif self.fit_type == 'Square':
+                    try:
+                        if self.fit_channel2 == 'CH1':
+                            fit_output2_square = analytics.squareFit(x, y1)
+                        elif self.fit_channel2 == 'CH2':
+                            fit_output2_square = analytics.squareFit(x, y2)
+                        elif self.fit_channel2 == 'CH3':
+                            fit_output2_square = analytics.squareFit(x, y3)
+                        elif self.fit_channel2 == 'MIC':
+                            fit_output2_square = analytics.squareFit(x, y4)
+                        else:
+                            fit_output2_square = False
+                    except:
+                        fit_output2_square = False
 
             output = {
                 'type': 'START_OSC',
@@ -244,8 +282,11 @@ class Oscilloscope:
                 'data': np.stack(vector).T.tolist(),
                 'keys': keys,
                 'numberOfChannels': self.number_of_channels,
-                'fitOutput1': fit_output1,
-                'fitOutput2': fit_output2
+                'fitType': self.fit_type if self.is_fourier_transform_active else None,
+                'fitOutput1Sine': fit_output1_sine,
+                'fitOutput2Sine': fit_output2_sine,
+                'fitOutput1Square': fit_output1_square,
+                'fitOutput2Square': fit_output2_square
             }
             print(json.dumps(output))
             sys.stdout.flush()

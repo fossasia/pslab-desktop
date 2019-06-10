@@ -25,15 +25,16 @@
 			pyshell.on('message', function(results) {
 				try {
 					const parsedJSON = JSON.parse(results);
-					ipcRenderer.send('DEBUG', parsedJSON);
 					switch (parsedJSON['type']) {
 						case 'START_OSC':
 							if (parsedJSON.isFFT) {
-								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);
-								(parsedJSON['fitOutput1'] !== null || parsedJSON['fitOutput2']) !== null &&
+								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+								parsedJSON['fitType'] !== null &&
 									ipcRenderer.send('OSC_FIT_DATA', {
-										fitOutput1: parsedJSON['fitOutput1'],
-										fitOutput2: parsedJSON['fitOutput2'],
+										fitOutput1Sine: parsedJSON['fitOutput1Sine'],
+										fitOutput2Sine: parsedJSON['fitOutput2Sine'],
+										fitOutput1Square: parsedJSON['fitOutput1Square'],
+										fitOutput2Square: parsedJSON['fitOutput2Square'],
 									});
 								ipcRenderer.send('OSC_FFT_DATA', { data: parsedOutput });
 							}
