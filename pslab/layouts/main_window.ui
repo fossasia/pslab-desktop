@@ -118,225 +118,13 @@
         <property name="lineWidth">
          <number>1</number>
         </property>
-        <widget class="QScrollArea" name="scroll_instruments">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>-1</y>
-           <width>441</width>
-           <height>361</height>
-          </rect>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scroll_area_instruments">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>441</width>
-            <height>361</height>
-           </rect>
-          </property>
-          <widget class="QPushButton" name="button_oscilloscope">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>10</y>
-             <width>421</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::WheelFocus</enum>
-           </property>
-           <property name="toolTip">
-            <string>Oscilloscope</string>
-           </property>
-           <property name="accessibleName">
-            <string/>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Oscilloscope</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+Shift+O</string>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="button_logic_analyzer">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>80</y>
-             <width>421</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Logic Analyzer</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+Shift+L</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="button_waveform_generator">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>220</y>
-             <width>421</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Waveform Generator</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+Shift+W</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="button_multimeter">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>150</y>
-             <width>421</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Multimeter</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+Shift+M</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="button_power_source">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>290</y>
-             <width>421</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="mouseTracking">
-            <bool>true</bool>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Power Source</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+Shift+P</string>
-           </property>
-          </widget>
-          <zorder>text_instrument_details</zorder>
-          <zorder>button_oscilloscope</zorder>
-          <zorder>button_logic_analyzer</zorder>
-          <zorder>button_waveform_generator</zorder>
-          <zorder>button_multimeter</zorder>
-          <zorder>button_power_source</zorder>
-         </widget>
-        </widget>
         <widget class="QTextBrowser" name="text_instrument_details">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>362</y>
            <width>441</width>
-           <height>173</height>
+           <height>171</height>
           </rect>
          </property>
          <property name="cursor" stdset="0">
@@ -362,9 +150,37 @@ p, li { white-space: pre-wrap; }
           <string>Hover over an instrument to view more details about it...</string>
          </property>
         </widget>
+        <widget class="QWidget" name="gridLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>441</width>
+           <height>361</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="grid_instruments" columnstretch="0">
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
+          <property name="topMargin">
+           <number>9</number>
+          </property>
+          <property name="rightMargin">
+           <number>9</number>
+          </property>
+          <property name="bottomMargin">
+           <number>9</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>10</number>
+          </property>
+         </layout>
+        </widget>
        </widget>
-       <zorder>frame_instruments</zorder>
-       <zorder>textBrowser</zorder>
       </widget>
       <widget class="QWidget" name="tab_guide">
        <attribute name="icon">
@@ -422,7 +238,7 @@ p, li { white-space: pre-wrap; }
              <x>0</x>
              <y>0</y>
              <width>441</width>
-             <height>533</height>
+             <height>534</height>
             </rect>
            </property>
            <property name="frameShape">
@@ -585,13 +401,135 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>Electronics</string>
      </property>
-     <addaction name="action_bjts_and_fets"/>
-     <addaction name="action_diodes"/>
+     <widget class="QMenu" name="menuBJTs_and_FETs">
+      <property name="title">
+       <string>Transistors</string>
+      </property>
+      <addaction name="action_nfet"/>
+      <addaction name="action_nfet_gs"/>
+      <addaction name="separator"/>
+      <addaction name="action_bjt_cb_characteristics"/>
+      <addaction name="action_bjt_ce_characteristics"/>
+      <addaction name="action_bjt_input_characteristics"/>
+      <addaction name="action_bjt_transfer_characteristics"/>
+      <addaction name="separator"/>
+      <addaction name="action_transistor_amplifier"/>
+     </widget>
+     <widget class="QMenu" name="menuDiodes">
+      <property name="title">
+       <string>Diodes</string>
+      </property>
+      <addaction name="action_diode_iv_characteristics"/>
+      <addaction name="action_zener_iv_characteristics"/>
+      <addaction name="separator"/>
+      <addaction name="action_diode_clamping"/>
+      <addaction name="action_diode_clipping"/>
+      <addaction name="separator"/>
+      <addaction name="action_halfwave_rectifier"/>
+      <addaction name="action_fullwave_rectifier"/>
+     </widget>
+     <widget class="QMenu" name="menuOpAmps">
+      <property name="title">
+       <string>OpAmps</string>
+      </property>
+      <addaction name="action_inverting_opamp"/>
+      <addaction name="action_non_inverting_opamp"/>
+      <addaction name="action_linear_ramp_generator"/>
+      <addaction name="action_precision_rectifier"/>
+      <addaction name="action_opamp_summer"/>
+     </widget>
+     <widget class="QMenu" name="menuOscillators">
+      <property name="title">
+       <string>Oscillators</string>
+      </property>
+      <addaction name="action_astable_multivibrator"/>
+      <addaction name="action_colpitts"/>
+      <addaction name="action_wien_bridge"/>
+      <addaction name="action_monostable_amplifier"/>
+      <addaction name="separator"/>
+      <addaction name="action_phase_shift_oscillator"/>
+     </widget>
+     <widget class="QMenu" name="menuCommunication">
+      <property name="title">
+       <string>Communication</string>
+      </property>
+      <addaction name="action_amplitude_modulation"/>
+     </widget>
+     <addaction name="menuBJTs_and_FETs"/>
+     <addaction name="menuDiodes"/>
+     <addaction name="menuOpAmps"/>
+     <addaction name="menuOscillators"/>
+     <addaction name="menuCommunication"/>
+    </widget>
+    <widget class="QMenu" name="menuElectrical">
+     <property name="title">
+      <string>Electrical</string>
+     </property>
+     <widget class="QMenu" name="menuFilters">
+      <property name="title">
+       <string>Filters</string>
+      </property>
+      <addaction name="action_low_pass"/>
+      <addaction name="action_high_pass"/>
+     </widget>
+     <addaction name="actionBode_Plots"/>
+     <addaction name="separator"/>
+     <addaction name="menuFilters"/>
+     <addaction name="action_transient_rlc_response"/>
+     <addaction name="action_capacitive_phase_shift"/>
+     <addaction name="action_inductive_phase_shift"/>
+     <addaction name="action_lcr_steady_state_response"/>
+     <addaction name="separator"/>
+     <addaction name="action_ohms_law"/>
+     <addaction name="action_inductive_reactance"/>
+     <addaction name="action_capacitive_reactance"/>
+    </widget>
+    <widget class="QMenu" name="menuPhysics">
+     <property name="title">
+      <string>Physics</string>
+     </property>
+     <addaction name="action_speed_of_sound"/>
+     <addaction name="action_simple_pendulum"/>
+     <addaction name="action_random_sampling"/>
+    </widget>
+    <widget class="QMenu" name="menuRobotics">
+     <property name="title">
+      <string>Robotics</string>
+     </property>
+     <addaction name="action_servo_motors"/>
+     <addaction name="action_stepper_motors"/>
+     <addaction name="separator"/>
+     <addaction name="action_sensors"/>
+    </widget>
+    <widget class="QMenu" name="menuSchool_Experiments">
+     <property name="title">
+      <string>School Experiments</string>
+     </property>
+     <addaction name="action_ac_and_dc_concepts"/>
+     <addaction name="action_ac_generation"/>
+     <addaction name="separator"/>
+     <addaction name="action_resistance_basics"/>
+     <addaction name="action_body_resistance"/>
+     <addaction name="action_water_resistance"/>
+     <addaction name="separator"/>
+     <addaction name="action_capacitance_basics"/>
+     <addaction name="action_capacitor_discharge"/>
+     <addaction name="separator"/>
+     <addaction name="action_induction_basics"/>
+     <addaction name="separator"/>
+     <addaction name="action_sound_basics"/>
+     <addaction name="action_sound_beats"/>
+     <addaction name="action_sound_buzzer"/>
+     <addaction name="separator"/>
+     <addaction name="action_lemon_cell_experiment"/>
+     <addaction name="action_light_dependant_diodes"/>
     </widget>
     <addaction name="menuElectronics"/>
-    <addaction name="actionElectrical"/>
-    <addaction name="actionPhysics"/>
-    <addaction name="actionSchool"/>
+    <addaction name="menuElectrical"/>
+    <addaction name="menuPhysics"/>
+    <addaction name="menuSchool_Experiments"/>
+    <addaction name="separator"/>
+    <addaction name="menuRobotics"/>
    </widget>
    <addaction name="menuDevice"/>
    <addaction name="menuHelp"/>
@@ -658,29 +596,269 @@ p, li { white-space: pre-wrap; }
     <string>About PSLab...</string>
    </property>
   </action>
-  <action name="actionElectrical">
+  <action name="action_nfet">
    <property name="text">
-    <string>Electrical</string>
+    <string>NFET Input Characteristics</string>
    </property>
   </action>
-  <action name="actionPhysics">
+  <action name="action_nfet_gs">
    <property name="text">
-    <string>Physics</string>
+    <string>NFET Output Characteristics</string>
    </property>
   </action>
-  <action name="actionSchool">
+  <action name="action_bjt_cb_characteristics">
    <property name="text">
-    <string>School Experiments</string>
+    <string>BJT CB Characteristics</string>
    </property>
   </action>
-  <action name="action_bjts_and_fets">
+  <action name="action_bjt_ce_characteristics">
    <property name="text">
-    <string>BJTs and FETs</string>
+    <string>BJT CE Characteristics</string>
    </property>
   </action>
-  <action name="action_diodes">
+  <action name="action_bjt_input_characteristics">
    <property name="text">
-    <string>Diodes</string>
+    <string>BJT Input Characteristics</string>
+   </property>
+  </action>
+  <action name="action_bjt_transfer_characteristics">
+   <property name="text">
+    <string>BJT Transfer Characteristics</string>
+   </property>
+  </action>
+  <action name="action_transistor_amplifier">
+   <property name="text">
+    <string>Transistor Amplifier</string>
+   </property>
+  </action>
+  <action name="action_diode_iv_characteristics">
+   <property name="text">
+    <string>Diode IV Characteristics</string>
+   </property>
+  </action>
+  <action name="action_zener_iv_characteristics">
+   <property name="text">
+    <string>Zener IV Characteristics</string>
+   </property>
+  </action>
+  <action name="action_diode_clamping">
+   <property name="text">
+    <string>Diode Clamping</string>
+   </property>
+  </action>
+  <action name="action_diode_clipping">
+   <property name="text">
+    <string>Diode Clipping</string>
+   </property>
+  </action>
+  <action name="action_halfwave_rectifier">
+   <property name="text">
+    <string>Halfwave Rectifier</string>
+   </property>
+  </action>
+  <action name="action_fullwave_rectifier">
+   <property name="text">
+    <string>Fullwave Rectifier</string>
+   </property>
+  </action>
+  <action name="action_inverting_opamp">
+   <property name="text">
+    <string>Inverting OpAmp</string>
+   </property>
+  </action>
+  <action name="action_non_inverting_opamp">
+   <property name="text">
+    <string>Non Inverting OpAmp</string>
+   </property>
+  </action>
+  <action name="action_linear_ramp_generator">
+   <property name="text">
+    <string>Linear Ramp Generator</string>
+   </property>
+  </action>
+  <action name="action_precision_rectifier">
+   <property name="text">
+    <string>Precision Rectifier</string>
+   </property>
+  </action>
+  <action name="action_opamp_summer">
+   <property name="text">
+    <string>OpAmp Summer</string>
+   </property>
+  </action>
+  <action name="action_astable_multivibrator">
+   <property name="text">
+    <string>Astable Multivibrator</string>
+   </property>
+  </action>
+  <action name="action_colpitts">
+   <property name="text">
+    <string>Colpitts Oscillator</string>
+   </property>
+  </action>
+  <action name="action_wien_bridge">
+   <property name="text">
+    <string>Wien Bridge</string>
+   </property>
+  </action>
+  <action name="action_monostable_amplifier">
+   <property name="text">
+    <string>Monostable Multivibrator</string>
+   </property>
+  </action>
+  <action name="action_phase_shift_oscillator">
+   <property name="text">
+    <string>Phase Shift Oscillator</string>
+   </property>
+  </action>
+  <action name="action_amplitude_modulation">
+   <property name="text">
+    <string>Amplitude Modulation</string>
+   </property>
+  </action>
+  <action name="actionBode_Plots">
+   <property name="text">
+    <string>Bode Plots</string>
+   </property>
+  </action>
+  <action name="action_low_pass">
+   <property name="text">
+    <string>Low Pass</string>
+   </property>
+  </action>
+  <action name="action_high_pass">
+   <property name="text">
+    <string>High Pass</string>
+   </property>
+  </action>
+  <action name="action_transient_rlc_response">
+   <property name="text">
+    <string>Transient RLC Response</string>
+   </property>
+  </action>
+  <action name="action_capacitive_phase_shift">
+   <property name="text">
+    <string>Capacitive Phase Shift</string>
+   </property>
+  </action>
+  <action name="action_inductive_phase_shift">
+   <property name="text">
+    <string>Inductive Phase Shift</string>
+   </property>
+  </action>
+  <action name="action_lcr_steady_state_response">
+   <property name="text">
+    <string>LCR Steady State Response</string>
+   </property>
+  </action>
+  <action name="action_ohms_law">
+   <property name="text">
+    <string>Ohm's Law</string>
+   </property>
+  </action>
+  <action name="action_capacitive_reactance">
+   <property name="text">
+    <string>Capacitive Reactance</string>
+   </property>
+  </action>
+  <action name="action_inductive_reactance">
+   <property name="text">
+    <string>Inductive Reactance</string>
+   </property>
+  </action>
+  <action name="action_speed_of_sound">
+   <property name="text">
+    <string>Speed of Sound</string>
+   </property>
+  </action>
+  <action name="action_simple_pendulum">
+   <property name="text">
+    <string>Simple Pendulum</string>
+   </property>
+  </action>
+  <action name="action_random_sampling">
+   <property name="text">
+    <string>Random Sampling</string>
+   </property>
+  </action>
+  <action name="action_servo_motors">
+   <property name="text">
+    <string>Servo Motors</string>
+   </property>
+  </action>
+  <action name="action_stepper_motors">
+   <property name="text">
+    <string>Stepper Motors</string>
+   </property>
+  </action>
+  <action name="action_ac_and_dc_concepts">
+   <property name="text">
+    <string>AC and DC Concepts</string>
+   </property>
+  </action>
+  <action name="action_lemon_cell_experiment">
+   <property name="text">
+    <string>Lemon Cell Experiment</string>
+   </property>
+  </action>
+  <action name="action_ac_generation">
+   <property name="text">
+    <string>AC Generation</string>
+   </property>
+  </action>
+  <action name="action_resistance_basics">
+   <property name="text">
+    <string>Resistance Basics</string>
+   </property>
+  </action>
+  <action name="action_body_resistance">
+   <property name="text">
+    <string>Body Resistance</string>
+   </property>
+  </action>
+  <action name="action_induction_basics">
+   <property name="text">
+    <string>Induction Basics</string>
+   </property>
+  </action>
+  <action name="action_water_resistance">
+   <property name="text">
+    <string>Water Resistance</string>
+   </property>
+  </action>
+  <action name="action_sound_basics">
+   <property name="text">
+    <string>Sound Basics</string>
+   </property>
+  </action>
+  <action name="action_sound_buzzer">
+   <property name="text">
+    <string>Sound Buzzer</string>
+   </property>
+  </action>
+  <action name="action_sound_beats">
+   <property name="text">
+    <string>Sound Beats</string>
+   </property>
+  </action>
+  <action name="action_capacitance_basics">
+   <property name="text">
+    <string>Capacitance Basics</string>
+   </property>
+  </action>
+  <action name="action_capacitor_discharge">
+   <property name="text">
+    <string>Capacitor Discharge</string>
+   </property>
+  </action>
+  <action name="action_light_dependant_diodes">
+   <property name="text">
+    <string>Light Dependant Diodes</string>
+   </property>
+  </action>
+  <action name="action_sensors">
+   <property name="text">
+    <string>Sensors...</string>
    </property>
   </action>
  </widget>
@@ -784,6 +962,54 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_sensors</sender>
+   <signal>triggered()</signal>
+   <receiver>pslab_main_window</receiver>
+   <slot>maction_experiments()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_ac_and_dc_concepts</sender>
+   <signal>triggered()</signal>
+   <receiver>pslab_main_window</receiver>
+   <slot>maction_experiments()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_ac_generation</sender>
+   <signal>triggered()</signal>
+   <receiver>pslab_main_window</receiver>
+   <slot>maction_experiments()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>maction_reconnect_device()</slot>
@@ -792,5 +1018,7 @@ p, li { white-space: pre-wrap; }
   <slot>maction_pinlayout()</slot>
   <slot>maction_datasheet()</slot>
   <slot>maction_about_pslab()</slot>
+  <slot>baction_open_instrument()</slot>
+  <slot>maction_experiments()</slot>
  </slots>
 </ui>
