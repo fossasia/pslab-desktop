@@ -80,7 +80,6 @@ class PowerSouce extends Component {
 
   render() {
     const { pv1, pv2, pv3, pcs } = this.state;
-    const { onOpenDialog } = this.props;
 
     return (
       <SimplePanelLayout
@@ -92,7 +91,6 @@ class PowerSouce extends Component {
             pcs={pcs}
             onPressButton={this.onPressButton}
             onChangeSlider={this.onChangeSlider}
-            onOpenDialog={onOpenDialog}
           />
         }
       />
