@@ -13,7 +13,12 @@ import {
 } from '@material-ui/core';
 import CustomSliderInput from '../../../components/CustomSliderInput';
 import { withStyles, withTheme } from '@material-ui/core/styles';
-import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
+import {
+  SettingsWrapper,
+  OptionsRowWrapper,
+  TitleWrapper,
+  Spacer,
+} from './Settings.styles';
 import { options } from './settingOptions';
 
 const styles = theme => ({
@@ -70,17 +75,17 @@ class SineWaveParameters extends Component {
 
     return (
       <SettingsWrapper>
-        <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
-          Wave Form
-        </Typography>
-        <Divider />
-        <OptionsRowWrapper>
+        <TitleWrapper>
+          <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+            Wave Form
+          </Typography>
+          <Spacer />
           <FormControlLabel
             control={
               <Switch
-                checked={activePreview.s1}
-                onChange={onTogglePreview('s1')}
-                value={'S1'}
+                checked={activePreview.wave}
+                onChange={onTogglePreview('wave')}
+                value={'wave'}
                 classes={{
                   switchBase: classes.s1colorSwitchBase,
                   checked: classes.colorChecked,
@@ -88,8 +93,15 @@ class SineWaveParameters extends Component {
                 }}
               />
             }
-            label="S1"
           />
+        </TitleWrapper>
+        <Divider />
+        <OptionsRowWrapper>
+          <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+            S1 pin
+          </Typography>
+        </OptionsRowWrapper>
+        <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
             <InputLabel
               ref={ref => {
@@ -102,6 +114,7 @@ class SineWaveParameters extends Component {
             <Select
               value={waveFormS1}
               onChange={onChangeWaveForm('waveFormS1')}
+              disabled={!activePreview.wave}
               input={
                 <OutlinedInput
                   labelWidth={WaveFormLabelWidth}
@@ -133,30 +146,22 @@ class SineWaveParameters extends Component {
             step={1}
             minTitleWidth="60px"
             minUnitWidth="40px"
+            disabled={!activePreview.wave}
           />
         </OptionsRowWrapper>
         <Divider />
         <OptionsRowWrapper>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={activePreview.s2}
-                onChange={onTogglePreview('s2')}
-                value={'S2'}
-                classes={{
-                  switchBase: classes.s2colorSwitchBase,
-                  checked: classes.colorChecked,
-                  bar: classes.colorBar,
-                }}
-              />
-            }
-            label="S2"
-          />
+          <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+            S2 pin
+          </Typography>
+        </OptionsRowWrapper>
+        <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
             <InputLabel htmlFor="outlined-waveform-s2">Wave Type</InputLabel>
             <Select
               value={waveFormS2}
               onChange={onChangeWaveForm('waveFormS2')}
+              disabled={!activePreview.wave}
               input={
                 <OutlinedInput
                   labelWidth={WaveFormLabelWidth}
@@ -188,6 +193,7 @@ class SineWaveParameters extends Component {
             step={1}
             minTitleWidth="60px"
             minUnitWidth="40px"
+            disabled={!activePreview.wave}
           />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
@@ -201,6 +207,7 @@ class SineWaveParameters extends Component {
             step={1}
             minTitleWidth="60px"
             minUnitWidth="40px"
+            disabled={!activePreview.wave}
           />
         </OptionsRowWrapper>
       </SettingsWrapper>

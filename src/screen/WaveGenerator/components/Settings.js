@@ -9,23 +9,18 @@ const Settings = ({
   s1Frequency,
   s2Frequency,
   s2Phase,
-  sqr1Frequency,
+  pwmFrequency,
   sqr1DutyCycle,
-  sqr2Frequency,
   sqr2DutyCycle,
   sqr2Phase,
-  sqr3Frequency,
   sqr3DutyCycle,
   sqr3Phase,
-  sqr4Frequency,
   sqr4DutyCycle,
   sqr4Phase,
   waveFormS1,
   waveFormS2,
-  mode,
   onTogglePreview,
   onChangeWaveForm,
-  onChangeMode,
   onChangeSlider,
 }) => (
   <SettingsContainer>
@@ -43,20 +38,15 @@ const Settings = ({
       />
       <SquareWaveParameters
         activePreview={activePreview}
-        mode={mode}
-        sqr1Frequency={sqr1Frequency}
+        pwmFrequency={pwmFrequency}
         sqr1DutyCycle={sqr1DutyCycle}
-        sqr2Frequency={sqr2Frequency}
         sqr2DutyCycle={sqr2DutyCycle}
         sqr2Phase={sqr2Phase}
-        sqr3Frequency={sqr3Frequency}
         sqr3DutyCycle={sqr3DutyCycle}
         sqr3Phase={sqr3Phase}
-        sqr4Frequency={sqr4Frequency}
         sqr4DutyCycle={sqr4DutyCycle}
         sqr4Phase={sqr4Phase}
         onTogglePreview={onTogglePreview}
-        onChangeMode={onChangeMode}
         onChangeSlider={onChangeSlider}
       />
     </Scrollbars>

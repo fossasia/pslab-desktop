@@ -20,3 +20,11 @@ export const OptionsRowWrapper = styled.div`
   margin: 16px 16px 16px 16px;
   min-width: 80%;
 `;
+
+export const TitleWrapper = styled.div`
+  display: flex;
+`;
+
+export const Spacer = styled.div`
+  flex: 1;
+`;
