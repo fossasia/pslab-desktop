@@ -3,8 +3,4 @@ export const options = {
     sine: 'Sinusoidal',
     tria: 'Triangular',
   },
-  Mode: {
-    square: 'Square',
-    pwm: 'PWM',
-  },
 };

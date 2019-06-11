@@ -14,30 +14,22 @@ class WaveGenerator extends Component {
     super(props);
     this.state = {
       activePreview: {
-        s1: true,
-        s2: true,
-        sqr1: true,
-        sqr2: true,
-        sqr3: true,
-        sqr4: true,
+        wave: true,
+        digital: false,
       },
       s1Frequency: 10,
       s2Frequency: 10,
       s2Phase: 0,
-      sqr1Frequency: 0,
+      pwmFrequency: 0,
       sqr1DutyCycle: 0,
-      sqr2Frequency: 0,
       sqr2DutyCycle: 0,
       sqr2Phase: 0,
-      sqr3Frequency: 0,
       sqr3DutyCycle: 0,
       sqr3Phase: 0,
-      sqr4Frequency: 0,
       sqr4DutyCycle: 0,
       sqr4Phase: 0,
       waveFormS1: 'sine',
       waveFormS2: 'sine',
-      mode: 'square',
     };
   }
 
@@ -48,42 +40,40 @@ class WaveGenerator extends Component {
     });
     ipcRenderer.on('WAV_GEN_CONFIG', (event, args) => {
       const {
+        wave,
+        digital,
         s1Frequency,
         s2Frequency,
         s2Phase,
         waveFormS1,
         waveFormS2,
-        sqr1Frequency,
+        pwmFrequency,
         sqr1DutyCycle,
-        sqr2Frequency,
         sqr2DutyCycle,
         sqr2Phase,
-        sqr3Frequency,
         sqr3DutyCycle,
         sqr3Phase,
-        sqr4Frequency,
         sqr4DutyCycle,
         sqr4Phase,
-        mode,
       } = args;
       this.setState({
+        activePreview: {
+          wave,
+          digital,
+        },
         s1Frequency,
         s2Frequency,
         s2Phase,
         waveFormS1,
         waveFormS2,
-        sqr1Frequency,
+        pwmFrequency,
         sqr1DutyCycle,
-        sqr2Frequency,
         sqr2DutyCycle,
         sqr2Phase,
-        sqr3Frequency,
         sqr3DutyCycle,
         sqr3Phase,
-        sqr4Frequency,
         sqr4DutyCycle,
         sqr4Phase,
-        mode,
       });
     });
     this.getConfigFromDevice();
@@ -104,60 +94,58 @@ class WaveGenerator extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const {
+      activePreview,
       s1Frequency,
       s2Frequency,
       s2Phase,
       waveFormS1,
       waveFormS2,
-      sqr1Frequency,
+      pwmFrequency,
       sqr1DutyCycle,
-      sqr2Frequency,
       sqr2DutyCycle,
       sqr2Phase,
-      sqr3Frequency,
       sqr3DutyCycle,
       sqr3Phase,
-      sqr4Frequency,
       sqr4DutyCycle,
       sqr4Phase,
-      mode,
     } = this.state;
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_WAV_GEN',
+        wave: activePreview.wave,
+        digital: activePreview.digital,
         s1Frequency,
         s2Frequency,
         s2Phase,
         waveFormS1,
         waveFormS2,
-        sqr1Frequency,
+        pwmFrequency,
         sqr1DutyCycle,
-        sqr2Frequency,
         sqr2DutyCycle,
         sqr2Phase,
-        sqr3Frequency,
         sqr3DutyCycle,
         sqr3Phase,
-        sqr4Frequency,
         sqr4DutyCycle,
         sqr4Phase,
-        mode,
       });
   }, 500);
 
-  onTogglePreview = pinName => event => {
-    this.setState(prevState => ({
-      activePreview: {
-        ...prevState.activePreview,
-        [pinName]: !prevState.activePreview[pinName],
-      },
-    }));
-  };
-
-  onChangeWaveForm = pinName => event => {
+  onTogglePreview = waveType => event => {
+    let wave;
+    let digital;
+    if (waveType === 'wave') {
+      digital = false;
+    } else {
+      wave = false;
+    }
     this.setState(
       prevState => ({
-        [pinName]: event.target.value,
+        activePreview: {
+          ...prevState.activePreview,
+          wave,
+          digital,
+          [waveType]: !prevState.activePreview[waveType],
+        },
       }),
       () => {
         this.sendConfigToDevice();
@@ -165,10 +153,10 @@ class WaveGenerator extends Component {
     );
   };
 
-  onChangeMode = event => {
+  onChangeWaveForm = pinName => event => {
     this.setState(
       prevState => ({
-        mode: event.target.value,
+        [pinName]: event.target.value,
       }),
       () => {
         this.sendConfigToDevice();
@@ -193,20 +181,16 @@ class WaveGenerator extends Component {
       s1Frequency,
       s2Frequency,
       s2Phase,
-      sqr1Frequency,
+      pwmFrequency,
       sqr1DutyCycle,
-      sqr2Frequency,
       sqr2DutyCycle,
       sqr2Phase,
-      sqr3Frequency,
       sqr3DutyCycle,
       sqr3Phase,
-      sqr4Frequency,
       sqr4DutyCycle,
       sqr4Phase,
       waveFormS1,
       waveFormS2,
-      mode,
     } = this.state;
     return (
       <GraphPanelLayout
@@ -216,23 +200,18 @@ class WaveGenerator extends Component {
             s1Frequency={s1Frequency}
             s2Frequency={s2Frequency}
             s2Phase={s2Phase}
-            sqr1Frequency={sqr1Frequency}
+            pwmFrequency={pwmFrequency}
             sqr1DutyCycle={sqr1DutyCycle}
-            sqr2Frequency={sqr2Frequency}
             sqr2DutyCycle={sqr2DutyCycle}
             sqr2Phase={sqr2Phase}
-            sqr3Frequency={sqr3Frequency}
             sqr3DutyCycle={sqr3DutyCycle}
             sqr3Phase={sqr3Phase}
-            sqr4Frequency={sqr4Frequency}
             sqr4DutyCycle={sqr4DutyCycle}
             sqr4Phase={sqr4Phase}
             waveFormS1={waveFormS1}
             waveFormS2={waveFormS2}
-            mode={mode}
             onTogglePreview={this.onTogglePreview}
             onChangeWaveForm={this.onChangeWaveForm}
-            onChangeMode={this.onChangeMode}
             onChangeSlider={this.onChangeSlider}
           />
         }
