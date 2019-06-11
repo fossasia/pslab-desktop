@@ -4,6 +4,7 @@ import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
 import FFTGraph from './components/FFTGraph';
 import FitPanel from './components/FitPanel';
+import XYPlotGraph from './components/XYPlotGraph';
 import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
 import roundOff from '../../utils/arithmetics';
@@ -122,6 +123,9 @@ class Oscilloscope extends Component {
       fitType,
       fitChannel1,
       fitChannel2,
+      isXYPlotActive,
+      plotChannel1,
+      plotChannel2,
     } = this.state;
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
@@ -139,6 +143,9 @@ class Oscilloscope extends Component {
         fitType,
         fitChannel1,
         fitChannel2,
+        isXYPlotActive,
+        plotChannel1,
+        plotChannel2,
       });
   }, 500);
 
@@ -263,9 +270,14 @@ class Oscilloscope extends Component {
   };
 
   onChangePlotChannel = channelNumber => event => {
-    this.setState(prevState => ({
-      [channelNumber]: event.target.value,
-    }));
+    this.setState(
+      prevState => ({
+        [channelNumber]: event.target.value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   graphRenderer = () => {
@@ -276,12 +288,21 @@ class Oscilloscope extends Component {
       channelRanges,
       isFourierTransformActive,
       isXYPlotActive,
+      plotChannel1,
+      plotChannel2,
     } = this.state;
     if (isFourierTransformActive) {
       return <FFTGraph isReading={isReading} activeChannels={activeChannels} />;
     }
     if (isXYPlotActive) {
-      // return XY plot graph
+      return (
+        <XYPlotGraph
+          isReading={isReading}
+          activeChannels={activeChannels}
+          plotChannel1={plotChannel1}
+          plotChannel2={plotChannel2}
+        />
+      );
     }
     return (
       <Graph

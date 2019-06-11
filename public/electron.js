@@ -56,6 +56,10 @@ ipcMain.on('OSC_VOLTAGE_DATA', (event, args) => {
   mainWindow.webContents.send('OSC_VOLTAGE_DATA', args);
 });
 
+ipcMain.on('OSC_XY_PLOT_DATA', (event, args) => {
+  mainWindow.webContents.send('OSC_XY_PLOT_DATA', args);
+});
+
 ipcMain.on('OSC_FFT_DATA', (event, args) => {
   mainWindow.webContents.send('OSC_FFT_DATA', args);
 });

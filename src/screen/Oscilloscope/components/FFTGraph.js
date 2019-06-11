@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
 } from 'recharts';
 import { withTheme } from 'styled-components';
 
@@ -60,8 +61,10 @@ class Graph extends Component {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="frequency" type="number" tickCount={11} />
-          <YAxis yAxisId="left" allowDataOverflow={true} />
+          <XAxis dataKey="frequency" type="number" tickCount={11}>
+            <Label value="Hz" position="bottom" />
+          </XAxis>
+          <YAxis yAxisId="left" allowDataOverflow={true} label="V" />
           <YAxis yAxisId="right" orientation="right" allowDataOverflow={true} />
           <Tooltip />
           <Legend align="right" iconType="triangle" />

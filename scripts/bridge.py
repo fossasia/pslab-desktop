@@ -53,14 +53,14 @@ def main():
             fit_type = parsed_stream_data['fitType']
             fit_channel1 = parsed_stream_data['fitChannel1']
             fit_channel2 = parsed_stream_data['fitChannel2']
-            # is_xy_plot_active = parsed_stream_data['isXYPlotActive']
-            # plot_channel1 = parsed_stream_data['plotChannel1']
-            # plot_channel2 = parsed_stream_data['plotChannel2']
+            is_xy_plot_active = parsed_stream_data['isXYPlotActive']
+            plot_channel1 = parsed_stream_data['plotChannel1']
+            plot_channel2 = parsed_stream_data['plotChannel2']
             oscilloscope.set_config(
                 time_base, number_of_samples, ch1, ch2, ch3, mic,
                 is_trigger_active, trigger_channel, trigger_voltage,
                 is_fourier_transform_active, fit_type, fit_channel1,
-                fit_channel2)
+                fit_channel2, is_xy_plot_active, plot_channel1, plot_channel2)
 
             if old_read_state:
                 oscilloscope.start_read()

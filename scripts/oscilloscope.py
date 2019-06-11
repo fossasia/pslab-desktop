@@ -12,10 +12,11 @@ class Oscilloscope:
     def __init__(self, I):
         self.oscilloscope_voltage_read_thread = None
         self.oscilloscope_fft_read_thread = None
+        self.oscilloscope_xy_plot_read_thread = None
         self.device = I
         self.is_reading_voltage = False
         self.is_reading_fft = False
-        # self.is_reading_fit = False
+        self.is_reading_xy_plot = False
 
         self.number_of_samples = 1000
         self.time_base = 0.5
@@ -46,7 +47,8 @@ class Oscilloscope:
     def set_config(self, time_base, number_of_samples, ch1, ch2, ch3, mic,
                    is_trigger_active, trigger_channel, trigger_voltage,
                    is_fourier_transform_active, fit_type, fit_channel1,
-                   fit_channel2):
+                   fit_channel2, is_xy_plot_active, plot_channel1,
+                   plot_channel2):
         self.time_base = time_base
         self.number_of_samples = number_of_samples
         self.ch1 = ch1
@@ -60,6 +62,9 @@ class Oscilloscope:
         self.fit_type = fit_type
         self.fit_channel1 = fit_channel1
         self.fit_channel2 = fit_channel2
+        self.is_xy_plot_active = is_xy_plot_active
+        self.plot_channel1 = plot_channel1
+        self.plot_channel2 = plot_channel2
 
         self.number_of_channels = ch1 + ch2 + ch3 + mic
         self.channels_to_read = self.calculate_channels_to_read(
@@ -108,10 +113,15 @@ class Oscilloscope:
                 target=self.capture_loop_fft,
                 name='osc_fft')
             self.oscilloscope_fft_read_thread.start()
+        elif self.is_xy_plot_active:
+            self.oscilloscope_xy_plot_read_thread = threading.Thread(
+                target=self.capture_loop_xy_plot,
+                name='osc_xy_plot')
+            self.oscilloscope_xy_plot_read_thread.start()
         else:
             self.oscilloscope_voltage_read_thread = threading.Thread(
                 target=self.capture_loop_voltage,
-                name='osc')
+                name='osc_voltage')
             self.oscilloscope_voltage_read_thread.start()
 
     def stop_read(self):
@@ -121,6 +131,9 @@ class Oscilloscope:
         if self.is_reading_fft:
             self.is_reading_fft = False
             self.oscilloscope_fft_read_thread.join()
+        if self.is_xy_plot_active:
+            self.is_reading_xy_plot = False
+            self.oscilloscope_xy_plot_read_thread.join()
 
     def capture_loop_voltage(self):
         self.is_reading_voltage = True
@@ -227,11 +240,59 @@ class Oscilloscope:
 
             output = {
                 'type': 'START_OSC',
-                'isFFT': True, 'data': np.stack(vector).T.tolist(),
+                'isFFT': True,
+                'data': np.stack(vector).T.tolist(),
                 'keys': keys,
                 'numberOfChannels': self.number_of_channels,
                 'fitOutput1': fit_output1,
                 'fitOutput2': fit_output2
+            }
+            print(json.dumps(output))
+            sys.stdout.flush()
+
+    def capture_loop_xy_plot(self):
+        self.is_reading_xy_plot = True
+        y1 = None
+        y2 = None
+        y3 = None
+        y4 = None
+        while self.is_reading_xy_plot:
+            self.device.capture_traces(
+                self.channels_to_read, self.number_of_samples, self.time_gap,
+                trigger=self.is_trigger_active)
+            time.sleep(self.delay)
+            vector = ()
+            if self.ch1 and self.plot_channel1 == 'CH1':
+                x, y1 = self.device.fetch_trace(1)
+                vector = vector + (y1, )
+            if self.ch2 and self.plot_channel1 == 'CH2':
+                x, y2 = self.device.fetch_trace(2)
+                vector = vector + (y2, )
+            if self.ch3 and self.plot_channel1 == 'CH3':
+                x, y3 = self.device.fetch_trace(3)
+                vector = vector + (y3, )
+            if self.mic and self.plot_channel1 == 'MIC':
+                x, y4 = self.device.fetch_trace(4)
+                vector = vector + (y4, )
+
+            if self.ch1 and self.plot_channel2 == 'CH1':
+                x, y1 = self.device.fetch_trace(1)
+                vector = vector + (y1, )
+            if self.ch2 and self.plot_channel2 == 'CH2':
+                x, y2 = self.device.fetch_trace(2)
+                vector = vector + (y2, )
+            if self.ch3 and self.plot_channel2 == 'CH3':
+                x, y3 = self.device.fetch_trace(3)
+                vector = vector + (y3, )
+            if self.mic and self.plot_channel2 == 'MIC':
+                x, y4 = self.device.fetch_trace(4)
+                vector = vector + (y4, )
+
+            output = {
+                'type': 'START_OSC',
+                'isXYPlot': True,
+                'data': np.stack(vector).T.tolist(),
+                'keys': ['plotChannel1', 'plotChannel2'],
             }
             print(json.dumps(output))
             sys.stdout.flush()
@@ -242,6 +303,8 @@ class Oscilloscope:
         if delay < 0.05:
             if self.is_fourier_transform_active:
                 return (0.075, time_gap)
+            elif self.is_xy_plot_active:
+                return (0.15, time_gap)
             else:
                 return (0.05, time_gap)
         else:
