@@ -3,7 +3,7 @@
 	const { ipcRenderer } = require('electron');
 	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
-	const { oscilloscopeDataProcessor } = require('../utils/preProcessor.js');
+	const { oscilloscopeXYProcessor, oscilloscopeVoltageProcessor } = require('../utils/preProcessor.js');
 	const log = require('electron-log');
 
 	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
@@ -29,15 +29,20 @@
 					switch (parsedJSON['type']) {
 						case 'START_OSC':
 							if (parsedJSON.isFFT) {
-								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);
 								(parsedJSON['fitOutput1'] !== null || parsedJSON['fitOutput2']) !== null &&
 									ipcRenderer.send('OSC_FIT_DATA', {
 										fitOutput1: parsedJSON['fitOutput1'],
 										fitOutput2: parsedJSON['fitOutput2'],
 									});
 								ipcRenderer.send('OSC_FFT_DATA', { data: parsedOutput });
-							} else {
-								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+							}
+							else if( parsedJSON.isXYPlot ){
+								parsedOutput = oscilloscopeXYProcessor(parsedJSON);
+								ipcRenderer.send('OSC_XY_PLOT_DATA', { data: parsedOutput });
+							}
+							else {
+								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);
 								ipcRenderer.send('OSC_VOLTAGE_DATA', { data: parsedOutput });
 							}
 							break;
