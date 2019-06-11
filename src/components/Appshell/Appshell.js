@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 import { IconButton } from '@material-ui/core';
 import ConnectedIcon from '@material-ui/icons/Usb';
@@ -61,13 +62,7 @@ const topNavigationItems = [
   },
 ];
 
-const Appshell = ({
-  isConnected,
-  deviceInformation,
-  children,
-  location,
-  classes,
-}) => {
+const Appshell = ({ device, children, location, classes }) => {
   return (
     <AppshellContainer>
       <NavigationContainer>
@@ -110,15 +105,13 @@ const Appshell = ({
           <ButtonContainer>
             <Tooltip
               title={
-                deviceInformation
-                  ? `Device name: ${deviceInformation.deviceName} Port: ${
-                      deviceInformation.portName
-                    }`
+                device.deviceInformation
+                  ? `Device name: ${device.deviceInformation.deviceName} Port: ${device.deviceInformation.portName}`
                   : 'No device connected'
               }
             >
               <IconButton className={classes.iconButton} size="medium">
-                {isConnected ? (
+                {device.isConnected ? (
                   <ConnectedIcon style={{ fontSize: 24 }} />
                 ) : (
                   <DisconnectedIcon style={{ fontSize: 24 }} />
@@ -133,4 +126,15 @@ const Appshell = ({
   );
 };
 
-export default withRouter(withTheme()(withStyles(styles)(Appshell)));
+const mapStateToProps = state => state.app;
+
+export default withRouter(
+  withTheme()(
+    withStyles(styles)(
+      connect(
+        mapStateToProps,
+        null,
+      )(Appshell),
+    ),
+  ),
+);

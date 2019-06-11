@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Card, Button, Typography, Divider } from '@material-ui/core';
 import PlusIcon from '@material-ui/icons/Add';
 import MinusIcon from '@material-ui/icons/Remove';
@@ -14,6 +16,7 @@ import {
 } from './InstrumentCluster.styles';
 import Display from '../../../components/Display';
 import CustomCircularInput from '../../../components/CustomCircularInput';
+import { openDialog } from '../../../redux/actions/app';
 
 const styles = theme => ({
   button: {
@@ -29,20 +32,20 @@ const Settings = props => {
     pcs,
     onPressButton,
     onChangeSlider,
-    onOpenDialog,
+    openDialog,
     classes,
   } = props;
 
   const onCheck = activeComponent => value => {
     switch (activeComponent) {
       case 'PV1':
-        if (value >= -5 && value <= 5) return false;
+        return !(value >= -5 && value <= 5);
       case 'PV2':
-        if (value >= -3.3 && value <= 3.3) return false;
+        return !(value >= -3.3 && value <= 3.3);
       case 'PV3':
-        if (value >= 0 && value <= 3.3) return false;
+        return !(value >= 0 && value <= 3.3);
       case 'PCS':
-        if (value >= 0 && value <= 3.3) return false;
+        return !(value >= 0 && value <= 3.3);
       default:
         return true;
     }
@@ -73,14 +76,16 @@ const Settings = props => {
             </CircularInputContainer>
             <DisplayContainer>
               <ValueWrapper
-                onClick={onOpenDialog({
-                  variant: 'simple-input',
-                  title: 'PV1',
-                  textTitle: 'Enter Voltage ( -5 to 5 )',
-                  onAccept: onChangeSlider('pv1'),
-                  onCheck: onCheck('PV1'),
-                  onCancel: () => {},
-                })}
+                onClick={() => {
+                  openDialog({
+                    variant: 'simple-input',
+                    title: 'PV1',
+                    textTitle: 'Enter Voltage ( -5 to 5 )',
+                    onAccept: onChangeSlider('pv1'),
+                    onCheck: onCheck('PV1'),
+                    onCancel: () => {},
+                  });
+                }}
               >
                 <Display fontSize={6} value={pv1} unit="V" />
               </ValueWrapper>
@@ -131,14 +136,16 @@ const Settings = props => {
             </CircularInputContainer>
             <DisplayContainer>
               <ValueWrapper
-                onClick={onOpenDialog({
-                  variant: 'simple-input',
-                  title: 'PV2',
-                  textTitle: 'Enter Voltage ( -3.3 to 3.3 )',
-                  onAccept: onChangeSlider('pv2'),
-                  onCheck: onCheck('PV2'),
-                  onCancel: () => {},
-                })}
+                onClick={() => {
+                  openDialog({
+                    variant: 'simple-input',
+                    title: 'PV2',
+                    textTitle: 'Enter Voltage ( -3.3 to 3.3 )',
+                    onAccept: onChangeSlider('pv2'),
+                    onCheck: onCheck('PV2'),
+                    onCancel: () => {},
+                  });
+                }}
               >
                 <Display fontSize={6} value={pv2} unit="V" />
               </ValueWrapper>
@@ -191,14 +198,16 @@ const Settings = props => {
             </CircularInputContainer>
             <DisplayContainer>
               <ValueWrapper
-                onClick={onOpenDialog({
-                  variant: 'simple-input',
-                  title: 'PV3',
-                  textTitle: 'Enter Voltage ( 0 to 3.3 )',
-                  onAccept: onChangeSlider('pv3'),
-                  onCheck: onCheck('PV3'),
-                  onCancel: () => {},
-                })}
+                onClick={() => {
+                  openDialog({
+                    variant: 'simple-input',
+                    title: 'PV3',
+                    textTitle: 'Enter Voltage ( 0 to 3.3 )',
+                    onAccept: onChangeSlider('pv3'),
+                    onCheck: onCheck('PV3'),
+                    onCancel: () => {},
+                  });
+                }}
               >
                 <Display fontSize={6} value={pv3} unit="V" />
               </ValueWrapper>
@@ -249,14 +258,16 @@ const Settings = props => {
             </CircularInputContainer>
             <DisplayContainer>
               <ValueWrapper
-                onClick={onOpenDialog({
-                  variant: 'simple-input',
-                  title: 'PCS',
-                  textTitle: 'Enter Voltage ( 0 to 3.3 )',
-                  onAccept: onChangeSlider('pcs'),
-                  onCheck: onCheck('PCS'),
-                  onCancel: () => {},
-                })}
+                onClick={() => {
+                  openDialog({
+                    variant: 'simple-input',
+                    title: 'PCS',
+                    textTitle: 'Enter Current ( 0 to 3.3 )',
+                    onAccept: onChangeSlider('pcs'),
+                    onCheck: onCheck('PCS'),
+                    onCancel: () => {},
+                  });
+                }}
               >
                 <Display fontSize={6} value={pcs} unit="mA" />
               </ValueWrapper>
@@ -290,4 +301,18 @@ const Settings = props => {
   );
 };
 
-export default withStyles(styles)(Settings);
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      openDialog,
+    },
+    dispatch,
+  ),
+});
+
+export default withStyles(styles)(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(Settings),
+);
