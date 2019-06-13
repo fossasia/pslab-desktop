@@ -16,11 +16,12 @@ from PyQt5.QtWidgets import QSplashScreen as QSplash
 # PSLab library imports ########################################################
 # from PSL import sciencelab as PSLab
 # UI imports ###################################################################
-from .layouts import main_window
-from .instruments import multimeter
-from .tools.buttons import hover_button
-from .resources.styles import splash_style
-from .resources.styles import app_style
+from layouts import main_window
+from instruments import multimeter
+from instruments import powersource
+from tools.buttons import hover_button
+from resources.styles import splash_style
+from resources.styles import app_style
 
 # Setting up PORT arguments ####################################################
 # In case if a user wants to add multiple devices, connect using a port name
@@ -127,12 +128,12 @@ class PSLabDesktopApp(QWindow, main_window.Ui_pslab_main_window):
             self.show_statusbar(buttonName + ' was pressed')
         elif (buttonName == "Multimeter"):
             multimeter.Instrument(self).show()
-            self.show_statusbar(buttonName + ' was pressed')
             self.app_tabs.setCurrentIndex(1)
         elif (buttonName == "Waveform Generator"):
             self.show_statusbar(buttonName + ' was pressed')
         elif (buttonName == "Power Source"):
-            self.show_statusbar(buttonName + ' was pressed')
+            powersource.Instrument(self).show()
+            self.app_tabs.setCurrentIndex(1)
 
     def maction_reconnect_device(self):
         pass
@@ -215,3 +216,7 @@ def start_pslab_app():
     myapp.show()
     myapp.splash.finish(myapp)
     app.exec_()
+
+
+if __name__ == '__main__':
+    start_pslab_app()

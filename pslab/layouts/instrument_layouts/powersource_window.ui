@@ -29,7 +29,7 @@
    <string>PSLab Power Source</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="frame_pv1">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -44,7 +44,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_pv1">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -74,7 +74,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+    <widget class="QDoubleSpinBox" name="spinner_pv1">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -110,7 +110,7 @@
       <double>0.010000000000000</double>
      </property>
     </widget>
-    <widget class="QSlider" name="verticalSlider">
+    <widget class="QSlider" name="slider_pv1">
      <property name="geometry">
       <rect>
        <x>170</x>
@@ -138,7 +138,7 @@
       <number>14</number>
      </property>
     </widget>
-    <widget class="QDial" name="dial">
+    <widget class="QDial" name="dial_pv1">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -167,7 +167,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_2">
+   <widget class="QFrame" name="frame_pv2">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -182,7 +182,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="label_pv2">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -212,7 +212,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+    <widget class="QDoubleSpinBox" name="spinner_pv2">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -248,7 +248,7 @@
       <double>0.010000000000000</double>
      </property>
     </widget>
-    <widget class="QSlider" name="verticalSlider_2">
+    <widget class="QSlider" name="slider_pv2">
      <property name="geometry">
       <rect>
        <x>170</x>
@@ -276,7 +276,7 @@
       <number>14</number>
      </property>
     </widget>
-    <widget class="QDial" name="dial_2">
+    <widget class="QDial" name="dial_pv2">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -305,7 +305,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_3">
+   <widget class="QFrame" name="frame_pcs">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -320,7 +320,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="label_pcs">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -350,7 +350,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+    <widget class="QDoubleSpinBox" name="spinner_pcs">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -389,7 +389,7 @@
       <double>1.000000000000000</double>
      </property>
     </widget>
-    <widget class="QSlider" name="verticalSlider_3">
+    <widget class="QSlider" name="slider_pcs">
      <property name="geometry">
       <rect>
        <x>170</x>
@@ -417,7 +417,7 @@
       <number>1</number>
      </property>
     </widget>
-    <widget class="QDial" name="dial_3">
+    <widget class="QDial" name="dial_pcs">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -446,7 +446,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_4">
+   <widget class="QFrame" name="frame_pv3">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -464,7 +464,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="label_pv3">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -494,7 +494,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+    <widget class="QDoubleSpinBox" name="spinner_pv3">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -530,7 +530,7 @@
       <double>0.010000000000000</double>
      </property>
     </widget>
-    <widget class="QSlider" name="verticalSlider_4">
+    <widget class="QSlider" name="slider_pv3">
      <property name="geometry">
       <rect>
        <x>170</x>
@@ -555,7 +555,7 @@
       <number>14</number>
      </property>
     </widget>
-    <widget class="QDial" name="dial_4">
+    <widget class="QDial" name="dial_pv3">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -588,5 +588,268 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>dial_pv1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_dial_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>453</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_pv2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_dial_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_pcs</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_dial_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>346</x>
+     <y>389</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>453</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_pv3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_dial_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>132</x>
+     <y>404</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>351</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_pv1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_slider_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>202</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>451</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_pv2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_slider_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>424</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_pcs</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_slider_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>420</x>
+     <y>385</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>374</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_pv3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_slider_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>439</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>411</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pv1</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>451</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pv2</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>346</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pcs</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>513</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>451</x>
+     <y>535</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pv3</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>468</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pv1</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>450</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pv2</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>302</x>
+     <y>248</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pcs</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>305</x>
+     <y>513</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>450</x>
+     <y>505</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinner_pv3</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>powersource_window</receiver>
+   <slot>power_spinner_changed(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>530</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>432</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>power_dial_changed(int)</slot>
+  <slot>power_slider_changed(int)</slot>
+  <slot>power_spinner_changed(double)</slot>
+  <slot>power_spinner_changed(QString)</slot>
+ </slots>
 </ui>

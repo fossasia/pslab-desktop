@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QMessageBox as QMessage
 from PyQt5.QtWidgets import QProgressBar as QProgress
 from PyQt5.QtWidgets import QSplashScreen as QSplash
 
-from ..layouts.instrument_layouts import multimeter_window
+from layouts.instrument_layouts import multimeter_window
 
 
 class Instrument(QWindow, multimeter_window.Ui_multimeter_window):
@@ -28,32 +28,32 @@ class Instrument(QWindow, multimeter_window.Ui_multimeter_window):
         frameDimensions.moveCenter(windowCenterPoint)
         self.move(frameDimensions.topLeft())
 
-    def update_refrest_rate(self, int):
-        self.update_interval = round((1 / 50) * (int + 1), 2)
+    def update_refrest_rate(self, value):
+        self.update_interval = round((1 / 50) * (value + 1), 2)
         self.label_update_interval.setText(
             'Every ' +
             str("{0:.2f}".format(self.update_interval)) + '\nseconds')
 
-    def read_knob(self, int):
-        if (int == 1):
+    def read_knob(self, value):
+        if (value == 1):
             self.measure_voltage("CH1")
-        elif (int == 2):
+        elif (value == 2):
             self.measure_voltage("CH2")
-        elif (int == 3):
+        elif (value == 3):
             self.measure_voltage("CH3")
-        elif (int == 4):
+        elif (value == 4):
             self.measure_voltage("VOL")
-        elif (int == 5):
+        elif (value == 5):
             self.measure_resistance()
-        elif (int == 6):
+        elif (value == 6):
             self.measure_capacitance()
-        elif (int == 7):
+        elif (value == 7):
             self.count_pulses("LA1")
-        elif (int == 8):
+        elif (value == 8):
             self.count_pulses("LA2")
-        elif (int == 9):
+        elif (value == 9):
             self.count_pulses("LA3")
-        elif (int == 10):
+        elif (value == 10):
             self.count_pulses("LA4")
         else:
             self.label_unit_display.setText("")

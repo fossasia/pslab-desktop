@@ -504,4 +504,4 @@ class Ui_pslab_main_window(object):
         self.action_sensors.setText(_translate("pslab_main_window", "Sensors..."))
 
 
-import resources_rc
+from layouts import resources_rc
