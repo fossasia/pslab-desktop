@@ -1,8 +1,17 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const {
+  default: installExtension,
+  REDUX_DEVTOOLS,
+  REACT_DEVELOPER_TOOLS,
+} = require('electron-devtools-installer');
 const { ipcMain } = require('electron');
 const loadBalancer = require('electron-load-balancer');
+
+process.env.DEV &&
+  installExtension(REDUX_DEVTOOLS) &&
+  installExtension(REACT_DEVELOPER_TOOLS);
 
 const { app } = electron;
 const { BrowserWindow } = electron;

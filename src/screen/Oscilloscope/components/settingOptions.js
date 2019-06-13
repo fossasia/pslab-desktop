@@ -18,10 +18,6 @@ export const options = {
     SEN: 'SEN',
     AN8: 'AN8',
   },
-  Mic: {
-    Microphone: 'Microphone',
-    Inbuilt: 'In-Built Mic',
-  },
   Select: {
     CH1: 'CH1',
     CH2: 'CH2',
@@ -40,3 +36,5 @@ export const options = {
     Square: 'Square Fit',
   },
 };
+
+export const timeBaseList = [0.5, 1, 5, 10, 20, 25, 50];

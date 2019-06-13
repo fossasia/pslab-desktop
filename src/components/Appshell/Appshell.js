@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Tooltip from '@material-ui/core/Tooltip';
-import { IconButton } from '@material-ui/core';
+import { Link, withRouter } from 'react-router-dom';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import ConnectedIcon from '@material-ui/icons/Usb';
 import DisconnectedIcon from '@material-ui/icons/Warning';
 import OscilloscopeIcon from '@material-ui/icons/ViewComfy';
@@ -11,7 +11,6 @@ import PowerSourceIcon from '@material-ui/icons/FlashOn';
 import WaveGeneratorIcon from '@material-ui/icons/GraphicEq';
 import MultimeterIcon from '@material-ui/icons/DeveloperBoard';
 import SettingIcon from '@material-ui/icons/Settings';
-import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
   AppshellContainer,
   ChildrenContainer,
@@ -62,7 +61,7 @@ const topNavigationItems = [
   },
 ];
 
-const Appshell = ({ device, children, location, classes }) => {
+const Appshell = ({ children, location, device, classes }) => {
   return (
     <AppshellContainer>
       <NavigationContainer>

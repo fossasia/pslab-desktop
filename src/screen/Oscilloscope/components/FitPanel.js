@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Card, Typography, Divider } from '@material-ui/core';
 import {
   PanelContainer,
@@ -7,34 +8,29 @@ import {
 } from './FitPanel.styles';
 import Display from '../../../components/Display';
 import roundOff from '../../../utils/arithmetics';
-
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
-class FitPanel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      channel1: {
-        amplitude: '-/--',
-        frequency: '-/--',
-        offset: '-/--',
-        phase: '-/--',
-        dutyCycle: '-/--',
-      },
-      channel2: {
-        amplitude: '-/--',
-        frequency: '-/--',
-        offset: '-/--',
-        phase: '-/--',
-        dutyCycle: '-/--',
-      },
-    };
-  }
+const FitPanel = ({ isReading, fitType, fitChannel1, fitChannel2 }) => {
+  const [fitData, setFitData] = useState({
+    channel1: {
+      amplitude: '-/--',
+      frequency: '-/--',
+      offset: '-/--',
+      phase: '-/--',
+      dutyCycle: '-/--',
+    },
+    channel2: {
+      amplitude: '-/--',
+      frequency: '-/--',
+      offset: '-/--',
+      phase: '-/--',
+      dutyCycle: '-/--',
+    },
+  });
 
-  componentDidMount = () => {
+  useEffect(() => {
     ipcRenderer.on('OSC_FIT_DATA', (event, args) => {
-      const { isReading, fitType } = this.props;
       const {
         fitOutput1Sine,
         fitOutput2Sine,
@@ -43,7 +39,7 @@ class FitPanel extends Component {
       } = args;
       if (isReading) {
         if (fitType === 'Sine') {
-          this.setState({
+          setFitData({
             channel1: fitOutput1Sine
               ? {
                   amplitude: roundOff(fitOutput1Sine[0], 3),
@@ -72,7 +68,7 @@ class FitPanel extends Component {
                 },
           });
         } else {
-          this.setState({
+          setFitData({
             channel1: fitOutput1Square
               ? {
                   amplitude: roundOff(fitOutput1Square[0], 3),
@@ -107,132 +103,133 @@ class FitPanel extends Component {
         }
       }
     });
+    return () => {
+      ipcRenderer.removeAllListeners('OSC_FIT_DATA');
+    };
+  }, [isReading]);
+
+  const { channel1, channel2 } = fitData;
+  return (
+    <PanelContainer>
+      {fitChannel1 !== 'None' && (
+        <Card>
+          <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+            {fitChannel1}
+          </Typography>
+          <Divider />
+          {fitType === 'Sine' && (
+            <DisplayContainer>
+              <ValueWrapper>
+                <div>Amplitude</div>
+                <Display fontSize={1} value={channel1.amplitude} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Frequency</div>
+                <Display fontSize={1} value={channel1.frequency} unit="Hz" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Offset</div>
+                <Display fontSize={1} value={channel1.offset} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Phase</div>
+                <Display fontSize={1} value={channel1.phase} unit="Deg" />
+              </ValueWrapper>
+            </DisplayContainer>
+          )}
+          {fitType === 'Square' && (
+            <DisplayContainer>
+              <ValueWrapper>
+                <div>Amplitude</div>
+                <Display fontSize={1} value={channel1.amplitude} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Frequency</div>
+                <Display fontSize={1} value={channel1.frequency} unit="Hz" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Offset</div>
+                <Display fontSize={1} value={channel1.offset} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Phase</div>
+                <Display fontSize={1} value={channel1.phase} unit="Deg" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Duty Cycle</div>
+                <Display fontSize={1} value={channel1.dutyCycle} unit="%" />
+              </ValueWrapper>
+            </DisplayContainer>
+          )}
+        </Card>
+      )}
+      {fitChannel2 !== 'None' && (
+        <Card>
+          <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+            {fitChannel2}
+          </Typography>
+          <Divider />
+          {fitType === 'Sine' && (
+            <DisplayContainer>
+              <ValueWrapper>
+                <div>Amplitude</div>
+                <Display fontSize={1} value={channel2.amplitude} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Frequency</div>
+                <Display fontSize={1} value={channel2.frequency} unit="Hz" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Offset</div>
+                <Display fontSize={1} value={channel2.offset} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Phase</div>
+                <Display fontSize={1} value={channel2.phase} unit="Deg" />
+              </ValueWrapper>
+            </DisplayContainer>
+          )}
+          {fitType === 'Square' && (
+            <DisplayContainer>
+              <ValueWrapper>
+                <div>Amplitude</div>
+                <Display fontSize={1} value={channel2.amplitude} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Frequency</div>
+                <Display fontSize={1} value={channel2.frequency} unit="Hz" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Offset</div>
+                <Display fontSize={1} value={channel2.offset} unit="V" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Phase</div>
+                <Display fontSize={1} value={channel2.phase} unit="Deg" />
+              </ValueWrapper>
+              <ValueWrapper>
+                <div>Duty Cycle</div>
+                <Display fontSize={1} value={channel2.dutyCycle} unit="%" />
+              </ValueWrapper>
+            </DisplayContainer>
+          )}
+        </Card>
+      )}
+    </PanelContainer>
+  );
+};
+
+const mapStateToProps = state => {
+  const { isReading, fitType, fitChannel1, fitChannel2 } = state.oscilloscope;
+  return {
+    isReading,
+    fitType,
+    fitChannel1,
+    fitChannel2,
   };
+};
 
-  componentWillUnmount = () => {
-    ipcRenderer.removeAllListeners('OSC_FIT_DATA');
-  };
-
-  render() {
-    const { fitType, fitChannel1, fitChannel2 } = this.props;
-    const { channel1, channel2 } = this.state;
-    return (
-      <PanelContainer>
-        {fitChannel1 !== 'None' && (
-          <Card>
-            <Typography
-              style={{ padding: '0.6rem' }}
-              component="h6"
-              variant="h6"
-            >
-              {fitChannel1}
-            </Typography>
-            <Divider />
-            {fitType === 'Sine' && (
-              <DisplayContainer>
-                <ValueWrapper>
-                  <div>Amplitude</div>
-                  <Display fontSize={1} value={channel1.amplitude} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Frequency</div>
-                  <Display fontSize={1} value={channel1.frequency} unit="Hz" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Offset</div>
-                  <Display fontSize={1} value={channel1.offset} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Phase</div>
-                  <Display fontSize={1} value={channel1.phase} unit="Deg" />
-                </ValueWrapper>
-              </DisplayContainer>
-            )}
-            {fitType === 'Square' && (
-              <DisplayContainer>
-                <ValueWrapper>
-                  <div>Amplitude</div>
-                  <Display fontSize={1} value={channel1.amplitude} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Frequency</div>
-                  <Display fontSize={1} value={channel1.frequency} unit="Hz" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Offset</div>
-                  <Display fontSize={1} value={channel1.offset} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Phase</div>
-                  <Display fontSize={1} value={channel1.phase} unit="Deg" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Duty Cycle</div>
-                  <Display fontSize={1} value={channel1.dutyCycle} unit="%" />
-                </ValueWrapper>
-              </DisplayContainer>
-            )}
-          </Card>
-        )}
-        {fitChannel2 !== 'None' && (
-          <Card>
-            <Typography
-              style={{ padding: '0.6rem' }}
-              component="h6"
-              variant="h6"
-            >
-              {fitChannel2}
-            </Typography>
-            <Divider />
-            {fitType === 'Sine' && (
-              <DisplayContainer>
-                <ValueWrapper>
-                  <div>Amplitude</div>
-                  <Display fontSize={1} value={channel2.amplitude} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Frequency</div>
-                  <Display fontSize={1} value={channel2.frequency} unit="Hz" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Offset</div>
-                  <Display fontSize={1} value={channel2.offset} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Phase</div>
-                  <Display fontSize={1} value={channel2.phase} unit="Deg" />
-                </ValueWrapper>
-              </DisplayContainer>
-            )}
-            {fitType === 'Square' && (
-              <DisplayContainer>
-                <ValueWrapper>
-                  <div>Amplitude</div>
-                  <Display fontSize={1} value={channel2.amplitude} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Frequency</div>
-                  <Display fontSize={1} value={channel2.frequency} unit="Hz" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Offset</div>
-                  <Display fontSize={1} value={channel2.offset} unit="V" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Phase</div>
-                  <Display fontSize={1} value={channel2.phase} unit="Deg" />
-                </ValueWrapper>
-                <ValueWrapper>
-                  <div>Duty Cycle</div>
-                  <Display fontSize={1} value={channel2.dutyCycle} unit="%" />
-                </ValueWrapper>
-              </DisplayContainer>
-            )}
-          </Card>
-        )}
-      </PanelContainer>
-    );
-  }
-}
-
-export default FitPanel;
+export default connect(
+  mapStateToProps,
+  null,
+)(FitPanel);

@@ -38,14 +38,12 @@ def main():
                 oscilloscope.stop_read()
 
             time_base = parsed_stream_data['timeBase']
-            number_of_samples = parsed_stream_data['numberOfSamples']
             ch1 = parsed_stream_data['ch1']
             ch2 = parsed_stream_data['ch2']
             ch3 = parsed_stream_data['ch3']
             mic = parsed_stream_data['mic']
             # ch1_map = parsed_stream_data['ch1Map']
             # ch2_map = parsed_stream_data['ch2Map']
-            # ch3_map = parsed_stream_data['ch3Map']
             is_trigger_active = parsed_stream_data['isTriggerActive']
             trigger_voltage = parsed_stream_data['triggerVoltage']
             trigger_channel = parsed_stream_data['triggerChannel']
@@ -57,7 +55,7 @@ def main():
             plot_channel1 = parsed_stream_data['plotChannel1']
             plot_channel2 = parsed_stream_data['plotChannel2']
             oscilloscope.set_config(
-                time_base, number_of_samples, ch1, ch2, ch3, mic,
+                time_base, ch1, ch2, ch3, mic,
                 is_trigger_active, trigger_channel, trigger_voltage,
                 is_fourier_transform_active, fit_type, fit_channel1,
                 fit_channel2, is_xy_plot_active, plot_channel1, plot_channel2)

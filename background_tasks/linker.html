@@ -28,8 +28,8 @@
 					switch (parsedJSON['type']) {
 						case 'START_OSC':
 							if (parsedJSON.isFFT) {
-								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
-								parsedJSON['fitType'] !== null &&
+								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);
+								parsedJSON['fitType'] &&
 									ipcRenderer.send('OSC_FIT_DATA', {
 										fitOutput1Sine: parsedJSON['fitOutput1Sine'],
 										fitOutput2Sine: parsedJSON['fitOutput2Sine'],
@@ -40,7 +40,7 @@
 							}
 							else if( parsedJSON.isXYPlot ){
 								parsedOutput = oscilloscopeXYProcessor(parsedJSON);
-								ipcRenderer.send('OSC_XY_PLOT_DATA', { data: parsedOutput });
+								parsedOutput && ipcRenderer.send('OSC_XY_PLOT_DATA', { data: parsedOutput });
 							}
 							else {
 								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);

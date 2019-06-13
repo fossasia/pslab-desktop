@@ -6,72 +6,13 @@ import TimeParameters from './TimeParameters';
 import AnalysisParameters from './AnalysisParameters';
 import PlotParameters from './PlotParameters';
 
-const Settings = ({
-  timeBaseIndex,
-  timeBase,
-  activeChannels,
-  channelRanges,
-  isTriggerActive,
-  channelMaps,
-  triggerVoltage,
-  triggerChannel,
-  isFourierTransformActive,
-  fitType,
-  fitChannel1,
-  fitChannel2,
-  isXYPlotActive,
-  plotChannel1,
-  plotChannel2,
-  onToggleChannel,
-  onChangeChannelRange,
-  onChangeChannelMap,
-  onToggleCheckBox,
-  onChangeTriggerVoltage,
-  onChangeTriggerChannel,
-  onChangeTimeBaseIndex,
-  timeBaseListLength,
-  onChangeFitType,
-  onChangeFitChannel,
-  onChangePlotChannel,
-}) => (
+const Settings = () => (
   <SettingsContainer>
     <Scrollbars autoHide autoHideTimeout={1000}>
-      <ChannelParameters
-        activeChannels={activeChannels}
-        channelRanges={channelRanges}
-        channelMaps={channelMaps}
-        onToggleChannel={onToggleChannel}
-        onChangeChannelRange={onChangeChannelRange}
-        onChangeChannelMap={onChangeChannelMap}
-      />
-      <TimeParameters
-        triggerVoltage={triggerVoltage}
-        timeBaseListLength={timeBaseListLength}
-        timeBaseIndex={timeBaseIndex}
-        timeBase={timeBase}
-        triggerChannel={triggerChannel}
-        isTriggerActive={isTriggerActive}
-        onToggleCheckBox={onToggleCheckBox}
-        onChangeTriggerVoltage={onChangeTriggerVoltage}
-        onChangeTriggerChannel={onChangeTriggerChannel}
-        onChangeTimeBaseIndex={onChangeTimeBaseIndex}
-      />
-      <AnalysisParameters
-        isFourierTransformActive={isFourierTransformActive}
-        fitType={fitType}
-        fitChannel1={fitChannel1}
-        fitChannel2={fitChannel2}
-        onToggleCheckBox={onToggleCheckBox}
-        onChangeFitType={onChangeFitType}
-        onChangeFitChannel={onChangeFitChannel}
-      />
-      <PlotParameters
-        isXYPlotActive={isXYPlotActive}
-        plotChannel1={plotChannel1}
-        plotChannel2={plotChannel2}
-        onToggleCheckBox={onToggleCheckBox}
-        onChangePlotChannel={onChangePlotChannel}
-      />
+      <ChannelParameters />
+      <TimeParameters />
+      <AnalysisParameters />
+      <PlotParameters />
     </Scrollbars>
   </SettingsContainer>
 );

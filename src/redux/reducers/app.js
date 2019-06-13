@@ -1,8 +1,8 @@
 import {
-  OPEN_SNACKBAR,
-  CLOSE_SNACKBAR,
   DEVICE_CONNECTED,
   DEVICE_DISCONNECTED,
+  OPEN_SNACKBAR,
+  CLOSE_SNACKBAR,
   OPEN_DIALOG,
   CLOSE_DIALOG,
 } from '../actionTypes/app';
@@ -31,25 +31,6 @@ const initialState = {
 
 export const appReducer = (prevState = initialState, action) => {
   switch (action.type) {
-    case OPEN_SNACKBAR: {
-      const { message, timeout } = action.payload;
-      return {
-        ...prevState,
-        snackbar: {
-          isOpen: true,
-          message,
-          timeout,
-        },
-      };
-    }
-    case CLOSE_SNACKBAR: {
-      return {
-        ...prevState,
-        snackbar: {
-          ...initialState.snackbar,
-        },
-      };
-    }
     case DEVICE_CONNECTED: {
       const { deviceInformation } = action.payload;
       return {
@@ -68,6 +49,25 @@ export const appReducer = (prevState = initialState, action) => {
         ...prevState,
         device: {
           ...initialState.device,
+        },
+      };
+    }
+    case OPEN_SNACKBAR: {
+      const { message, timeout } = action.payload;
+      return {
+        ...prevState,
+        snackbar: {
+          isOpen: true,
+          message,
+          timeout,
+        },
+      };
+    }
+    case CLOSE_SNACKBAR: {
+      return {
+        ...prevState,
+        snackbar: {
+          ...initialState.snackbar,
         },
       };
     }
@@ -104,6 +104,6 @@ export const appReducer = (prevState = initialState, action) => {
       };
     }
     default:
-      return initialState;
+      return prevState;
   }
 };

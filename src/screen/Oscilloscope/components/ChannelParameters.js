@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   Select,
   Typography,
@@ -14,6 +16,11 @@ import {
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
+import {
+  toggleChannel,
+  changeChannelRange,
+  changeChannelMap,
+} from '../../../redux/actions/oscilloscope';
 
 const styles = theme => ({
   formControl: {
@@ -59,266 +66,273 @@ const styles = theme => ({
   colorChecked: {},
 });
 
-class ChannelParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      RangeLabelWidth: 0,
-      MapLabelWidth: 0,
-      MicLabelWidth: 0,
-    };
-  }
+const ChannelParameters = ({
+  activeChannels,
+  channelRanges,
+  channelMaps,
+  toggleChannel,
+  changeChannelRange,
+  changeChannelMap,
+  classes,
+}) => {
+  let ref = {
+    range: useRef(),
+    map: useRef(),
+  };
 
-  componentDidMount() {
-    this.setState({
-      RangeLabelWidth: ReactDOM.findDOMNode(this.RangeRef).offsetWidth,
-      MapLabelWidth: ReactDOM.findDOMNode(this.MapRef).offsetWidth,
-      MicLabelWidth: ReactDOM.findDOMNode(this.MicRef).offsetWidth,
+  const [width, setWidth] = useState({
+    range: 0,
+    map: 0,
+  });
+
+  useEffect(() => {
+    setWidth({
+      range: ReactDOM.findDOMNode(ref.range).offsetWidth,
+      map: ReactDOM.findDOMNode(ref.map).offsetWidth,
     });
-  }
+  }, []);
 
-  render() {
-    const {
-      activeChannels,
-      channelRanges,
-      channelMaps,
-      onToggleChannel,
-      onChangeChannelRange,
-      onChangeChannelMap,
-      classes,
-    } = this.props;
-    const { RangeLabelWidth, MapLabelWidth, MicLabelWidth } = this.state;
+  return (
+    <SettingsWrapper>
+      <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
+        Channel Parameters
+      </Typography>
+      <Divider />
+      <OptionsRowWrapper>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={activeChannels.ch1}
+              onChange={() => toggleChannel({ channelName: 'ch1' })}
+              value={'CH1'}
+              classes={{
+                switchBase: classes.ch1ColorSwitchBase,
+                checked: classes.colorChecked,
+                bar: classes.colorBar,
+              }}
+            />
+          }
+          label="CH1"
+        />
+        <FormControl variant="outlined" fullWidth={true}>
+          <InputLabel
+            ref={DOMref => {
+              ref.range = DOMref;
+            }}
+            htmlFor="outlined-range-ch1"
+          >
+            Range
+          </InputLabel>
+          <Select
+            value={channelRanges.ch1}
+            onChange={event =>
+              changeChannelRange({
+                channelName: 'ch1',
+                value: event.target.value,
+              })
+            }
+            input={
+              <OutlinedInput
+                labelWidth={width.range}
+                name="outlined-range-ch1"
+                id="outlined-range-ch1"
+              />
+            }
+          >
+            {Object.entries(options.Range1).map((item, index) => {
+              const key = item[0];
+              const value = item[1];
+              return (
+                <MenuItem key={index} value={key}>
+                  {value}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <FormControl
+          variant="outlined"
+          fullWidth={true}
+          className={classes.formControl}
+        >
+          <InputLabel
+            ref={DOMref => {
+              ref.map = DOMref;
+            }}
+            htmlFor="outlined-map-ch1"
+          >
+            Mapped To
+          </InputLabel>
+          <Select
+            value={channelMaps.ch1}
+            onChange={event =>
+              changeChannelMap({
+                channelName: 'ch1',
+                value: event.target.value,
+              })
+            }
+            input={
+              <OutlinedInput
+                labelWidth={width.map}
+                name="outlined-map-ch1"
+                id="outlined-map-ch1"
+              />
+            }
+          >
+            {Object.entries(options.Map1).map((item, index) => {
+              const key = item[0];
+              const value = item[1];
+              return (
+                <MenuItem key={index} value={key}>
+                  {value}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </OptionsRowWrapper>
+      <OptionsRowWrapper>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={activeChannels.ch2}
+              onChange={() => toggleChannel({ channelName: 'ch2' })}
+              value={'ch2'}
+              classes={{
+                switchBase: classes.ch2ColorSwitchBase,
+                checked: classes.colorChecked,
+                bar: classes.colorBar,
+              }}
+            />
+          }
+          label="CH2"
+        />
+        <FormControl variant="outlined" fullWidth={true}>
+          <InputLabel htmlFor="outlined-range-ch2">Range</InputLabel>
+          <Select
+            value={channelRanges.ch2}
+            onChange={event =>
+              changeChannelRange({
+                channelName: 'ch2',
+                value: event.target.value,
+              })
+            }
+            input={
+              <OutlinedInput
+                labelWidth={width.range}
+                name="outlined-range-ch2"
+                id="outlined-range-ch2"
+              />
+            }
+          >
+            {Object.entries(options.Range1).map((item, index) => {
+              const key = item[0];
+              const value = item[1];
+              return (
+                <MenuItem key={index} value={key}>
+                  {value}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <FormControl
+          variant="outlined"
+          fullWidth={true}
+          className={classes.formControl}
+        >
+          <InputLabel htmlFor="outlined-map-ch2">Mapped To</InputLabel>
+          <Select
+            value={channelMaps.ch2}
+            onChange={event => {
+              changeChannelMap({
+                channelName: 'ch2',
+                value: event.target.value,
+              });
+            }}
+            input={
+              <OutlinedInput
+                labelWidth={width.map}
+                name="outlined-map-ch2"
+                id="outlined-map-ch2"
+              />
+            }
+          >
+            {Object.entries(options.Map1).map((item, index) => {
+              const key = item[0];
+              const value = item[1];
+              return (
+                <MenuItem key={index} value={key}>
+                  {value}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </OptionsRowWrapper>
+      <OptionsRowWrapper>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={activeChannels.ch3}
+              onChange={() => toggleChannel({ channelName: 'ch3' })}
+              value={'ch3'}
+              classes={{
+                switchBase: classes.ch3ColorSwitchBase,
+                checked: classes.colorChecked,
+                bar: classes.colorBar,
+              }}
+            />
+          }
+          label="CH3"
+        />
+      </OptionsRowWrapper>
+      <OptionsRowWrapper>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={activeChannels.mic}
+              onChange={() => toggleChannel({ channelName: 'mic' })}
+              value={'mic'}
+              classes={{
+                switchBase: classes.micColorSwitchBase,
+                checked: classes.colorChecked,
+                bar: classes.colorBar,
+              }}
+            />
+          }
+          label="MIC"
+        />
+      </OptionsRowWrapper>
+    </SettingsWrapper>
+  );
+};
 
-    return (
-      <SettingsWrapper>
-        <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
-          Channel Parameters
-        </Typography>
-        <Divider />
-        <OptionsRowWrapper>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={activeChannels.ch1}
-                onChange={onToggleChannel('ch1')}
-                value={'CH1'}
-                classes={{
-                  switchBase: classes.ch1ColorSwitchBase,
-                  checked: classes.colorChecked,
-                  bar: classes.colorBar,
-                }}
-              />
-            }
-            label="CH1"
-          />
-          <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel
-              ref={ref => {
-                this.RangeRef = ref;
-              }}
-              htmlFor="outlined-range-ch1"
-            >
-              Range
-            </InputLabel>
-            <Select
-              value={channelRanges.ch1}
-              onChange={onChangeChannelRange('ch1')}
-              input={
-                <OutlinedInput
-                  labelWidth={RangeLabelWidth}
-                  name="outlined-range-ch1"
-                  id="outlined-range-ch1"
-                />
-              }
-            >
-              {Object.entries(options.Range1).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-          >
-            <InputLabel
-              ref={ref => {
-                this.MapRef = ref;
-              }}
-              htmlFor="outlined-map-ch1"
-            >
-              Mapped To
-            </InputLabel>
-            <Select
-              value={channelMaps.ch1}
-              onChange={onChangeChannelMap('ch1')}
-              input={
-                <OutlinedInput
-                  labelWidth={MapLabelWidth}
-                  name="outlined-map-ch1"
-                  id="outlined-map-ch1"
-                />
-              }
-            >
-              {Object.entries(options.Map1).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </OptionsRowWrapper>
-        <OptionsRowWrapper>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={activeChannels.ch2}
-                onChange={onToggleChannel('ch2')}
-                value={'ch2'}
-                classes={{
-                  switchBase: classes.ch2ColorSwitchBase,
-                  checked: classes.colorChecked,
-                  bar: classes.colorBar,
-                }}
-              />
-            }
-            label="CH2"
-          />
-          <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel htmlFor="outlined-range-ch2">Range</InputLabel>
-            <Select
-              value={channelRanges.ch2}
-              onChange={onChangeChannelRange('ch2')}
-              input={
-                <OutlinedInput
-                  labelWidth={RangeLabelWidth}
-                  name="outlined-range-ch2"
-                  id="outlined-range-ch2"
-                />
-              }
-            >
-              {Object.entries(options.Range1).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-          >
-            <InputLabel htmlFor="outlined-map-ch2">Mapped To</InputLabel>
-            <Select
-              value={channelMaps.ch2}
-              onChange={onChangeChannelMap('ch2')}
-              input={
-                <OutlinedInput
-                  labelWidth={MapLabelWidth}
-                  name="outlined-map-ch2"
-                  id="outlined-map-ch2"
-                />
-              }
-            >
-              {Object.entries(options.Map1).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </OptionsRowWrapper>
-        <OptionsRowWrapper>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={activeChannels.ch3}
-                onChange={onToggleChannel('ch3')}
-                value={'ch3'}
-                classes={{
-                  switchBase: classes.ch3ColorSwitchBase,
-                  checked: classes.colorChecked,
-                  bar: classes.colorBar,
-                }}
-              />
-            }
-            label="CH3"
-          />
-        </OptionsRowWrapper>
-        <OptionsRowWrapper>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={activeChannels.mic}
-                onChange={onToggleChannel('mic')}
-                value={'mic'}
-                classes={{
-                  switchBase: classes.micColorSwitchBase,
-                  checked: classes.colorChecked,
-                  bar: classes.colorBar,
-                }}
-              />
-            }
-            label="MIC"
-          />
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            disabled={!activeChannels.mic}
-          >
-            <InputLabel
-              ref={ref => {
-                this.MicRef = ref;
-              }}
-              htmlFor="outlined-map-mic"
-            >
-              Mic Type
-            </InputLabel>
-            <Select
-              value={channelMaps.mic}
-              onChange={onChangeChannelMap('mic')}
-              input={
-                <OutlinedInput
-                  labelWidth={MicLabelWidth}
-                  name="outlined-map-mic"
-                  id="outlined-map-mic"
-                />
-              }
-            >
-              {Object.entries(options.Mic).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </OptionsRowWrapper>
-      </SettingsWrapper>
-    );
-  }
-}
+const mapStateToProps = state => {
+  const { activeChannels, channelRanges, channelMaps } = state.oscilloscope;
+  return {
+    activeChannels,
+    channelRanges,
+    channelMaps,
+  };
+};
 
-export default withTheme()(withStyles(styles)(ChannelParameters));
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      toggleChannel,
+      changeChannelRange,
+      changeChannelMap,
+    },
+    dispatch,
+  ),
+});
+
+export default withTheme()(
+  withStyles(styles)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(ChannelParameters),
+  ),
+);

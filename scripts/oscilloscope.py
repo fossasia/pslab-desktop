@@ -26,7 +26,6 @@ class Oscilloscope:
         self.mic = False
         self.ch1_map = 'CH1'
         self.ch2_map = 'CH2'
-        self.mic_map = 'Inbuilt'
         self.trigger_voltage = 0
         self.trigger_channel = 'CH1'
         self.is_trigger_active = False
@@ -44,13 +43,12 @@ class Oscilloscope:
         self.delay, self.time_gap = self.calculate_delay_time_gap(
             self.time_base, self.number_of_samples)
 
-    def set_config(self, time_base, number_of_samples, ch1, ch2, ch3, mic,
+    def set_config(self, time_base, ch1, ch2, ch3, mic,
                    is_trigger_active, trigger_channel, trigger_voltage,
                    is_fourier_transform_active, fit_type, fit_channel1,
                    fit_channel2, is_xy_plot_active, plot_channel1,
                    plot_channel2):
         self.time_base = time_base
-        self.number_of_samples = number_of_samples
         self.ch1 = ch1
         self.ch2 = ch2
         self.ch3 = ch3
@@ -92,7 +90,6 @@ class Oscilloscope:
                   'mic': self.mic,
                   'ch1Map': self.ch1_map,
                   'ch2Map': self.ch2_map,
-                  'micMap': self.mic_map,
                   'isTriggerActive': self.is_trigger_active,
                   'triggerVoltage': self.trigger_voltage,
                   'triggerChannel': self.trigger_channel,
@@ -282,7 +279,7 @@ class Oscilloscope:
                 'data': np.stack(vector).T.tolist(),
                 'keys': keys,
                 'numberOfChannels': self.number_of_channels,
-                'fitType': self.fit_type if self.is_fourier_transform_active else None,
+                'fitType': self.fit_type if self.is_fourier_transform_active else False,
                 'fitOutput1Sine': fit_output1_sine,
                 'fitOutput2Sine': fit_output2_sine,
                 'fitOutput1Square': fit_output1_square,
