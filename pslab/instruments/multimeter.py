@@ -25,6 +25,8 @@ class Instrument(QWindow, multimeter_window.Ui_multimeter_window):
         """
         frameDimensions = self.frameGeometry()
         windowCenterPoint = QDesktop().availableGeometry().center()
+        windowCenterPoint.setX(windowCenterPoint.x() +
+                               frameDimensions.width() + 9)
         frameDimensions.moveCenter(windowCenterPoint)
         self.move(frameDimensions.topLeft())
 

@@ -209,6 +209,13 @@ class PSLabDesktopApp(QWindow, main_window.Ui_pslab_main_window):
         dialog.exec_()
         return dialog
 
+    def __del__(self):
+        """  ##################################################################
+        This will be called once the app is being closed. It will close PSLab 
+        connections to clean the system
+        """
+        self.timer.stop()
+
 
 def start_pslab_app():
     app = QApp(sys.argv)
