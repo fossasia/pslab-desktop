@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
@@ -389,4 +390,11 @@ class Oscilloscope extends Component {
   }
 }
 
-export default Oscilloscope;
+const mapStateToProps = state => ({
+  isConnected: state.app.device.isConnected,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(Oscilloscope);
