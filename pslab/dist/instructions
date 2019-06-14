@@ -1,0 +1,7 @@
+To split big file into two;
+$ split --bytes=40M PSLab PSLab.part
+
+To combine back to file;
+$ cat PSLab.parta* > PSLab
+
+And the from properties, allow execute it as a program
