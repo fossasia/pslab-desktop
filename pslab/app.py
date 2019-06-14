@@ -214,7 +214,7 @@ class PSLabDesktopApp(QWindow, main_window.Ui_pslab_main_window):
         This will be called once the app is being closed. It will close PSLab 
         connections to clean the system
         """
-        self.timer.stop()
+        pass
 
 
 def start_pslab_app():

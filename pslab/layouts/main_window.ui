@@ -68,6 +68,9 @@
     alignment: center;
 }</string>
       </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
       <property name="tabShape">
        <enum>QTabWidget::Rounded</enum>
       </property>
@@ -303,34 +306,16 @@ p, li { white-space: pre-wrap; }
         <property name="frameShadow">
          <enum>QFrame::Plain</enum>
         </property>
-        <widget class="QScrollArea" name="scroll_sensors">
+        <widget class="QWidget" name="gridLayoutWidget_3">
          <property name="geometry">
           <rect>
            <x>-1</x>
            <y>-1</y>
            <width>441</width>
-           <height>541</height>
+           <height>531</height>
           </rect>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scroll_area_sensors">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>441</width>
-            <height>541</height>
-           </rect>
-          </property>
-         </widget>
+         <layout class="QGridLayout" name="grid_sensors"/>
         </widget>
        </widget>
       </widget>
@@ -342,22 +327,6 @@ p, li { white-space: pre-wrap; }
        <attribute name="title">
         <string>Console</string>
        </attribute>
-       <widget class="QFrame" name="frame_console">
-        <property name="geometry">
-         <rect>
-          <x>-1</x>
-          <y>-1</y>
-          <width>441</width>
-          <height>541</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -369,7 +338,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>460</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDevice">
