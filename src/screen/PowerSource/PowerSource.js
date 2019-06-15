@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import SimplePanelLayout from '../../components/SimplePanelLayout';
 import InstrumentCluster from './components/InstrumentCluster';
 import roundOff from '../../utils/arithmetics';
@@ -98,4 +99,11 @@ class PowerSouce extends Component {
   }
 }
 
-export default PowerSouce;
+const mapStateToProps = state => ({
+  isConnected: state.app.device.isConnected,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(PowerSouce);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import SimplePanelLayout from '../../components/SimplePanelLayout';
 import InstrumentCluster from './components/InstrumentCluster';
 import debounce from 'lodash/debounce';
@@ -163,4 +164,11 @@ class Multimeter extends Component {
   }
 }
 
-export default Multimeter;
+const mapStateToProps = state => ({
+  isConnected: state.app.device.isConnected,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(Multimeter);

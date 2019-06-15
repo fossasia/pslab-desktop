@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
@@ -241,4 +242,11 @@ class WaveGenerator extends Component {
   }
 }
 
-export default WaveGenerator;
+const mapStateToProps = state => ({
+  isConnected: state.app.device.isConnected,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(WaveGenerator);
