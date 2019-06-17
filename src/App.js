@@ -35,17 +35,22 @@ class App extends Component {
 
   componentDidMount() {
     const { openSnackbar, deviceConnected, deviceDisconnected } = this.props;
+    this.deviceStatus = false;
 
     ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected, message, deviceName, portName } = args;
-      isConnected
-        ? deviceConnected({
-            deviceInformation: {
-              deviceName,
-              portName,
-            },
-          })
-        : deviceDisconnected();
+
+      if (this.deviceStatus !== isConnected) {
+        isConnected
+          ? deviceConnected({
+              deviceInformation: {
+                deviceName,
+                portName,
+              },
+            })
+          : deviceDisconnected();
+        this.deviceStatus = isConnected;
+      }
 
       if (!isConnected) {
         loadBalancer.stop(ipcRenderer, 'linker');
