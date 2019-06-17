@@ -28,7 +28,7 @@
 					switch (parsedJSON['type']) {
 						case 'START_OSC':
 							if (parsedJSON.isFFT) {
-								parsedOutput = oscilloscopeDataProcessor(parsedJSON);
+								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);
 								parsedJSON['fitType'] !== null &&
 									ipcRenderer.send('OSC_FIT_DATA', {
 										fitOutput1Sine: parsedJSON['fitOutput1Sine'],
