@@ -2,68 +2,57 @@ import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { SettingsContainer } from './Settings.styles';
 import ChannelParameters from './ChannelParameters';
-import TimeParameters from './TimeParameters';
-import { options } from './settingOptions';
+import AnalysisParameters from './AnalysisParameters';
 
 const Settings = ({
-  activeChannels,
-  channelRanges,
-  channelMaps,
-  triggerChannel,
-  onToggleChannel,
-  onChangeChannelRange,
-  onChangeChannelMap,
-  onChangeTriggerChannel,
-  onChangeID,
-  channelID,
-  edgeSelection,
-  onEdgeChange,
+  numberOfChannels,
+  channel1Map,
+  channel2Map,
+  trigger1Type,
+  trigger2Type,
+  trigger3Type,
+  trigger4Type,
+  timeMeasureChannel1,
+  timeMeasureChannel2,
+  timeMeasuretrigger1Type,
+  timeMeasuretrigger2Type,
+  timeMeasureWrite1,
+  timeMeasureWrite2,
+  timeout,
+  changeNumberOfChannels,
+  changeChannelMap,
+  changeTriggerType,
+  changeTimeMeasureChannel,
+  changeTimeMeasureTriggerType,
+  changeTimeMeasureWrite,
+  changeTimeout,
 }) => (
   <SettingsContainer>
     <Scrollbars autoHide autoHideTimeout={1000}>
       <ChannelParameters
-        activeChannels={activeChannels}
-        channelRanges={channelRanges}
-        channelMaps={channelMaps}
-        triggerChannel={triggerChannel}
-        onToggleChannel={onToggleChannel}
-        onChangeChannelRange={onChangeChannelRange}
-        onChangeChannelMap={onChangeChannelMap}
-        onChangeTriggerChannel={onChangeTriggerChannel}
+        numberOfChannels={numberOfChannels}
+        channel1Map={channel1Map}
+        channel2Map={channel2Map}
+        trigger1Type={trigger1Type}
+        trigger2Type={trigger2Type}
+        trigger3Type={trigger3Type}
+        trigger4Type={trigger4Type}
+        changeNumberOfChannels={changeNumberOfChannels}
+        changeChannelMap={changeChannelMap}
+        changeTriggerType={changeTriggerType}
       />
-      <TimeParameters
-        channelID={channelID}
-        edgeSelection={edgeSelection}
-        onEdgeChange={onEdgeChange}
-        onChangeID={onChangeID}
-      />
-      <TimeParameters
-        channelID={channelID}
-        edgeSelection={edgeSelection}
-        onEdgeChange={onEdgeChange}
-        onChangeID={onChangeID}
-        disabled={triggerChannel == options.Select.CH1}
-      />
-      <TimeParameters
-        channelID={channelID}
-        edgeSelection={edgeSelection}
-        onEdgeChange={onEdgeChange}
-        onChangeID={onChangeID}
-        disabled={
-          triggerChannel == options.Select.CH1 ||
-          triggerChannel == options.Select.CH2
-        }
-      />
-      <TimeParameters
-        channelID={channelID}
-        edgeSelection={edgeSelection}
-        onEdgeChange={onEdgeChange}
-        onChangeID={onChangeID}
-        disabled={
-          triggerChannel == options.Select.CH1 ||
-          triggerChannel == options.Select.CH2 ||
-          triggerChannel == options.Select.CH3
-        }
+      <AnalysisParameters
+        timeMeasureChannel1={timeMeasureChannel1}
+        timeMeasureChannel2={timeMeasureChannel2}
+        timeMeasuretrigger1Type={timeMeasuretrigger1Type}
+        timeMeasuretrigger2Type={timeMeasuretrigger2Type}
+        timeMeasureWrite1={timeMeasureWrite1}
+        timeMeasureWrite2={timeMeasureWrite2}
+        timeout={timeout}
+        changeTimeMeasureChannel={changeTimeMeasureChannel}
+        changeTimeMeasureTriggerType={changeTimeMeasureTriggerType}
+        changeTimeMeasureWrite={changeTimeMeasureWrite}
+        changeTimeout={changeTimeout}
       />
     </Scrollbars>
   </SettingsContainer>

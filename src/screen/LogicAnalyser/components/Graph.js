@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
 } from 'recharts';
 import { withTheme } from 'styled-components';
 
@@ -31,15 +32,17 @@ class Graph extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('TO_RENDERER_DATA', (event, args) => {
-      this.setState({
-        oscData: args.data,
-      });
+    ipcRenderer.on('OSC_VOLTAGE_DATA', (event, args) => {
+      const { isReading } = this.props;
+      isReading &&
+        this.setState({
+          oscData: args.data,
+        });
     });
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('TO_RENDERER_DATA');
+    ipcRenderer.removeAllListeners('OSC_VOLTAGE_DATA');
   }
 
   render() {
@@ -63,7 +66,9 @@ class Graph extends Component {
             type="number"
             tickCount={11}
             domain={[0, 10 * timeBase]}
-          />
+          >
+            <Label value="mSec" position="bottom" />
+          </XAxis>
           <YAxis
             yAxisId="left"
             domain={[
@@ -71,6 +76,7 @@ class Graph extends Component {
               parseInt(channelRanges.ch1, 10),
             ]}
             allowDataOverflow={true}
+            label="V"
           />
           <YAxis
             yAxisId="right"

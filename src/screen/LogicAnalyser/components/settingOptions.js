@@ -1,21 +1,35 @@
 export const options = {
-  Select: {
-    CH1: 'CH1',
-    CH2: 'CH2',
-    CH3: 'CH3',
-    CH4: 'CH4',
+  NumberOfChannels: {
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
   },
-  Edge: {
-    EVERY: 'EVERY EDGE',
-    EVERY_FALL: 'EVERY FALLING EDGE',
-    EVERY_RISE: 'EVERY RISING EDGE',
-    EVERY_FOURTH: 'EVERY FOURTH RISING EDGE',
-    DISABLED: 'DISABLED',
+  ChannelMap: {
+    ID1: 'LA1',
+    ID2: 'LA2',
+    ID3: 'LA3',
+    ID4: 'LA4',
+    SEN: 'SEN',
+    EXT: 'EXT',
+    CNTR: 'CNTR',
   },
-  ID: {
-    ID1: 'ID1',
-    ID2: 'ID2',
-    ID3: 'ID3',
-    ID4: 'ID4',
+  ChannelTrigger: {
+    0: 'Disabled',
+    1: 'Every Edge',
+    2: 'Falling Edge',
+    3: 'Rising Edge',
+    4: 'Every 4 Rising Edge',
+  },
+  TimeMeasureTrigger: {
+    1: 'Rising Edge',
+    2: 'Falling Edge',
+    3: 'Every 4 Rising Edges',
+  },
+  Write: {
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
   },
 };

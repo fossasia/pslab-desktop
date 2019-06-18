@@ -17,6 +17,6 @@ export const SettingsWrapper = styled(Card)`
 export const OptionsRowWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin: 16px 0px 16px 16px;
+  margin: 16px 16px 16px 16px;
   min-width: 80%;
 `;

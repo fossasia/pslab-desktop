@@ -9,16 +9,13 @@ import {
   FormControl,
   InputLabel,
 } from '@material-ui/core';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
 
-const styles = () => ({
+const styles = theme => ({
   formControl: {
-    margin: '0px 16px 0px 0px',
-  },
-  slider: {
-    margin: '0px 8px 0px 0px',
+    margin: '0px 0px 0px 16px',
   },
 });
 
@@ -26,52 +23,69 @@ class ChannelParameters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      triggerLabelWidth: 0,
+      numberOfChannelLabelWidth: 0,
+      MapLabelWidth: 0,
+      TriggerLabelWidth: 0,
     };
   }
 
   componentDidMount() {
     this.setState({
-      triggerLabelWidth: ReactDOM.findDOMNode(this.triggerRef).offsetWidth,
+      numberOfChannelLabelWidth: ReactDOM.findDOMNode(this.numberOfChannelRef)
+        .offsetWidth,
+      MapLabelWidth: ReactDOM.findDOMNode(this.MapRef).offsetWidth,
+      TriggerLabelWidth: ReactDOM.findDOMNode(this.TriggerRef).offsetWidth,
     });
   }
 
   render() {
-    const { triggerChannel, onChangeTriggerChannel, classes } = this.props;
-    const { triggerLabelWidth } = this.state;
+    const {
+      numberOfChannels,
+      channel1Map,
+      channel2Map,
+      trigger1Type,
+      trigger2Type,
+      trigger3Type,
+      trigger4Type,
+      changeNumberOfChannels,
+      changeChannelMap,
+      changeTriggerType,
+      classes,
+    } = this.props;
+    const {
+      numberOfChannelLabelWidth,
+      MapLabelWidth,
+      TriggerLabelWidth,
+    } = this.state;
 
     return (
       <SettingsWrapper>
         <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
-          Channel Selection
+          Channel Parameters
         </Typography>
         <Divider />
         <OptionsRowWrapper>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-          >
+          <FormControl variant="outlined" fullWidth={true}>
             <InputLabel
               ref={ref => {
-                this.triggerRef = ref;
+                this.numberOfChannelRef = ref;
               }}
-              htmlFor="outlined-trigger-channel"
+              htmlFor="outlined-number-of-channels"
             >
-              Channel
+              Number of Channels
             </InputLabel>
             <Select
-              value={triggerChannel}
-              onChange={onChangeTriggerChannel}
+              value={numberOfChannels}
+              onChange={changeNumberOfChannels}
               input={
                 <OutlinedInput
-                  labelWidth={triggerLabelWidth}
-                  name="trigger-channel"
-                  id="outlined-trigger-channel"
+                  labelWidth={numberOfChannelLabelWidth}
+                  name="outlined-number-of-channels"
+                  id="outlined-number-of-channels"
                 />
               }
             >
-              {Object.entries(options.Select).map((item, index) => {
+              {Object.entries(options.NumberOfChannels).map((item, index) => {
                 const key = item[0];
                 const value = item[1];
                 return (
@@ -83,9 +97,228 @@ class ChannelParameters extends Component {
             </Select>
           </FormControl>
         </OptionsRowWrapper>
+        <Divider />
+        <OptionsRowWrapper>
+          <Typography component="h6" variant="subheading">
+            LA1
+          </Typography>
+          {numberOfChannels <= 2 && (
+            <FormControl
+              className={classes.formControl}
+              variant="outlined"
+              fullWidth={true}
+            >
+              <InputLabel
+                ref={ref => {
+                  this.MapRef = ref;
+                }}
+                htmlFor="outlined-map-la1"
+              >
+                Mapped to
+              </InputLabel>
+              <Select
+                value={channel1Map}
+                onChange={changeChannelMap('channel1Map')}
+                input={
+                  <OutlinedInput
+                    labelWidth={MapLabelWidth}
+                    name="outlined-map-la1"
+                    id="outlined-map-la1"
+                  />
+                }
+              >
+                {Object.entries(options.ChannelMap).map((item, index) => {
+                  const key = item[0];
+                  const value = item[1];
+                  return (
+                    <MenuItem key={index} value={key}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          )}
+          <FormControl
+            variant="outlined"
+            fullWidth={true}
+            className={classes.formControl}
+          >
+            <InputLabel
+              ref={ref => {
+                this.TriggerRef = ref;
+              }}
+              htmlFor="outlined-trigger-la1"
+            >
+              Trigger Type
+            </InputLabel>
+            <Select
+              value={trigger1Type}
+              onChange={changeTriggerType('trigger1Type')}
+              input={
+                <OutlinedInput
+                  labelWidth={TriggerLabelWidth}
+                  name="outlined-trigger-la1"
+                  id="outlined-trigger-la1"
+                />
+              }
+            >
+              {Object.entries(options.ChannelTrigger).map((item, index) => {
+                const key = item[0];
+                const value = item[1];
+                return (
+                  <MenuItem key={index} value={key}>
+                    {value}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </OptionsRowWrapper>
+        {numberOfChannels > 1 && (
+          <OptionsRowWrapper>
+            <Typography component="h6" variant="subheading">
+              LA2
+            </Typography>
+            {numberOfChannels <= 2 && (
+              <FormControl
+                className={classes.formControl}
+                variant="outlined"
+                fullWidth={true}
+              >
+                <InputLabel htmlFor="outlined-map-la2">Mapped to</InputLabel>
+                <Select
+                  value={channel2Map}
+                  onChange={changeChannelMap('channel2Map')}
+                  input={
+                    <OutlinedInput
+                      labelWidth={MapLabelWidth}
+                      name="outlined-map-la2"
+                      id="outlined-map-la2"
+                    />
+                  }
+                >
+                  {Object.entries(options.ChannelMap).map((item, index) => {
+                    const key = item[0];
+                    const value = item[1];
+                    return (
+                      <MenuItem key={index} value={key}>
+                        {value}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            )}
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+            >
+              <InputLabel htmlFor="outlined-trigger-la2">
+                Trigger Type
+              </InputLabel>
+              <Select
+                value={trigger2Type}
+                onChange={changeTriggerType('trigger2Type')}
+                input={
+                  <OutlinedInput
+                    labelWidth={TriggerLabelWidth}
+                    name="outlined-trigger-la2"
+                    id="outlined-trigger-la2"
+                  />
+                }
+              >
+                {Object.entries(options.ChannelTrigger).map((item, index) => {
+                  const key = item[0];
+                  const value = item[1];
+                  return (
+                    <MenuItem key={index} value={key}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </OptionsRowWrapper>
+        )}
+        {numberOfChannels > 2 && (
+          <OptionsRowWrapper>
+            <Typography component="h6" variant="subheading">
+              LA3
+            </Typography>
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+            >
+              <InputLabel htmlFor="outlined-trigger-la3">
+                Trigger Type
+              </InputLabel>
+              <Select
+                value={trigger3Type}
+                onChange={changeTriggerType('trigger3Type')}
+                input={
+                  <OutlinedInput
+                    labelWidth={TriggerLabelWidth}
+                    name="outlined-trigger-la3"
+                    id="outlined-trigger-la3"
+                  />
+                }
+              >
+                {Object.entries(options.ChannelTrigger).map((item, index) => {
+                  const key = item[0];
+                  const value = item[1];
+                  return (
+                    <MenuItem key={index} value={key}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </OptionsRowWrapper>
+        )}
+        {numberOfChannels > 3 && (
+          <OptionsRowWrapper>
+            <Typography component="h6" variant="subheading">
+              LA4
+            </Typography>
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+            >
+              <InputLabel htmlFor="outlined-trigger-la4">
+                Trigger Type
+              </InputLabel>
+              <Select
+                value={trigger4Type}
+                onChange={changeTriggerType('trigger4Type')}
+                input={
+                  <OutlinedInput
+                    labelWidth={TriggerLabelWidth}
+                    name="outlined-trigger-la4"
+                    id="outlined-trigger-la4"
+                  />
+                }
+              >
+                {Object.entries(options.ChannelTrigger).map((item, index) => {
+                  const key = item[0];
+                  const value = item[1];
+                  return (
+                    <MenuItem key={index} value={key}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </OptionsRowWrapper>
+        )}
       </SettingsWrapper>
     );
   }
 }
 
-export default withTheme()(withStyles(styles)(ChannelParameters));
+export default withStyles(styles)(ChannelParameters);
