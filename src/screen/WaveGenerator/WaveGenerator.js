@@ -13,10 +13,8 @@ class WaveGenerator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePreview: {
-        wave: true,
-        digital: false,
-      },
+      wave: true,
+      digital: false,
       s1Frequency: 10,
       s2Frequency: 10,
       s2Phase: 0,
@@ -57,10 +55,8 @@ class WaveGenerator extends Component {
         sqr4Phase,
       } = args;
       this.setState({
-        activePreview: {
-          wave,
-          digital,
-        },
+        wave,
+        digital,
         s1Frequency,
         s2Frequency,
         s2Phase,
@@ -94,7 +90,8 @@ class WaveGenerator extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const {
-      activePreview,
+      wave,
+      digital,
       s1Frequency,
       s2Frequency,
       s2Phase,
@@ -112,40 +109,15 @@ class WaveGenerator extends Component {
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_WAV_GEN',
-        wave: activePreview.wave,
-        digital: activePreview.digital,
-        s1Frequency,
-        s2Frequency,
-        s2Phase,
-        waveFormS1,
-        waveFormS2,
-        pwmFrequency,
-        sqr1DutyCycle,
-        sqr2DutyCycle,
-        sqr2Phase,
-        sqr3DutyCycle,
-        sqr3Phase,
-        sqr4DutyCycle,
-        sqr4Phase,
+        ...this.state
       });
   }, 500);
 
-  onTogglePreview = waveType => event => {
-    let wave;
-    let digital;
-    if (waveType === 'wave') {
-      digital = false;
-    } else {
-      wave = false;
-    }
+  onTogglePreview = event => {
     this.setState(
       prevState => ({
-        activePreview: {
-          ...prevState.activePreview,
-          wave,
-          digital,
-          [waveType]: !prevState.activePreview[waveType],
-        },
+        wave: !prevState.wave,
+        digital: !prevState.digital,
       }),
       () => {
         this.sendConfigToDevice();
@@ -177,7 +149,8 @@ class WaveGenerator extends Component {
 
   render() {
     const {
-      activePreview,
+      wave,
+      digital,
       s1Frequency,
       s2Frequency,
       s2Phase,
@@ -196,7 +169,8 @@ class WaveGenerator extends Component {
       <GraphPanelLayout
         settings={
           <Settings
-            activePreview={activePreview}
+            wave={wave}
+            digital={digital}
             s1Frequency={s1Frequency}
             s2Frequency={s2Frequency}
             s2Phase={s2Phase}
@@ -215,7 +189,7 @@ class WaveGenerator extends Component {
             onChangeSlider={this.onChangeSlider}
           />
         }
-        graph={<Graph activePreview={activePreview} />}
+        graph={<Graph wave={wave} digital={digital} />}
       />
     );
   }

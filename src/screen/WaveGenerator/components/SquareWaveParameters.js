@@ -56,7 +56,7 @@ const styles = theme => ({
 });
 
 const SquareWaveParameters = ({
-  activePreview,
+  digital,
   pwmFrequency,
   sqr1DutyCycle,
   sqr2DutyCycle,
@@ -78,8 +78,8 @@ const SquareWaveParameters = ({
       <FormControlLabel
         control={
           <Switch
-            checked={activePreview.digital}
-            onChange={onTogglePreview('digital')}
+            checked={digital}
+            onChange={onTogglePreview}
             value={'digital'}
             classes={{
               switchBase: classes.sqr1colorSwitchBase,
@@ -107,11 +107,10 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <Divider />
-    <OptionsRowWrapper></OptionsRowWrapper>
     <OptionsRowWrapper>
       <CustomSliderInput
         title="Duty Cycle"
@@ -123,7 +122,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <Divider />
@@ -143,7 +142,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <OptionsRowWrapper>
@@ -157,7 +156,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <Divider />
@@ -177,7 +176,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <OptionsRowWrapper>
@@ -191,7 +190,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <Divider />
@@ -211,7 +210,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
     <OptionsRowWrapper>
@@ -225,7 +224,7 @@ const SquareWaveParameters = ({
         step={1}
         minTitleWidth="60px"
         minUnitWidth="40px"
-        disabled={!activePreview.digital}
+        disabled={!digital}
       />
     </OptionsRowWrapper>
   </SettingsWrapper>

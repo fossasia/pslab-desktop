@@ -5,7 +5,8 @@ import SineWaveParameters from './SineWaveParameters';
 import SquareWaveParameters from './SquareWaveParameters';
 
 const Settings = ({
-  activePreview,
+  wave,
+  digital,
   s1Frequency,
   s2Frequency,
   s2Phase,
@@ -26,7 +27,7 @@ const Settings = ({
   <SettingsContainer>
     <Scrollbars autoHide autoHideTimeout={1000}>
       <SineWaveParameters
-        activePreview={activePreview}
+        wave={wave}
         s1Frequency={s1Frequency}
         s2Frequency={s2Frequency}
         s2Phase={s2Phase}
@@ -37,7 +38,7 @@ const Settings = ({
         onChangeSlider={onChangeSlider}
       />
       <SquareWaveParameters
-        activePreview={activePreview}
+        digital={digital}
         pwmFrequency={pwmFrequency}
         sqr1DutyCycle={sqr1DutyCycle}
         sqr2DutyCycle={sqr2DutyCycle}
