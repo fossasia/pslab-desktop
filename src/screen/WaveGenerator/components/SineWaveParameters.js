@@ -60,7 +60,7 @@ class SineWaveParameters extends Component {
 
   render() {
     const {
-      activePreview,
+      wave,
       s1Frequency,
       s2Frequency,
       s2Phase,
@@ -83,8 +83,8 @@ class SineWaveParameters extends Component {
           <FormControlLabel
             control={
               <Switch
-                checked={activePreview.wave}
-                onChange={onTogglePreview('wave')}
+                checked={wave}
+                onChange={onTogglePreview}
                 value={'wave'}
                 classes={{
                   switchBase: classes.s1colorSwitchBase,
@@ -114,7 +114,7 @@ class SineWaveParameters extends Component {
             <Select
               value={waveFormS1}
               onChange={onChangeWaveForm('waveFormS1')}
-              disabled={!activePreview.wave}
+              disabled={!wave}
               input={
                 <OutlinedInput
                   labelWidth={WaveFormLabelWidth}
@@ -146,7 +146,7 @@ class SineWaveParameters extends Component {
             step={1}
             minTitleWidth="60px"
             minUnitWidth="40px"
-            disabled={!activePreview.wave}
+            disabled={!wave}
           />
         </OptionsRowWrapper>
         <Divider />
@@ -161,7 +161,7 @@ class SineWaveParameters extends Component {
             <Select
               value={waveFormS2}
               onChange={onChangeWaveForm('waveFormS2')}
-              disabled={!activePreview.wave}
+              disabled={!wave}
               input={
                 <OutlinedInput
                   labelWidth={WaveFormLabelWidth}
@@ -193,7 +193,7 @@ class SineWaveParameters extends Component {
             step={1}
             minTitleWidth="60px"
             minUnitWidth="40px"
-            disabled={!activePreview.wave}
+            disabled={!wave}
           />
         </OptionsRowWrapper>
         <OptionsRowWrapper>
@@ -207,7 +207,7 @@ class SineWaveParameters extends Component {
             step={1}
             minTitleWidth="60px"
             minUnitWidth="40px"
-            disabled={!activePreview.wave}
+            disabled={!wave}
           />
         </OptionsRowWrapper>
       </SettingsWrapper>
