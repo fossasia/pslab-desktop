@@ -1,17 +1,20 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Tooltip from '@material-ui/core/Tooltip';
-import { IconButton } from '@material-ui/core';
-import ConnectedIcon from '@material-ui/icons/Usb';
-import DisconnectedIcon from '@material-ui/icons/Warning';
-import OscilloscopeIcon from '@material-ui/icons/ViewComfy';
-import LogicAnalyserIcon from '@material-ui/icons/InsertChart';
-import PowerSourceIcon from '@material-ui/icons/FlashOn';
-import WaveGeneratorIcon from '@material-ui/icons/GraphicEq';
-import MultimeterIcon from '@material-ui/icons/DeveloperBoard';
-import SettingIcon from '@material-ui/icons/Settings';
+import { Link, withRouter } from 'react-router-dom';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { withStyles, withTheme } from '@material-ui/core/styles';
+import {
+  Usb as ConnectedIcon,
+  Warning as DisconnectedIcon,
+  ViewComfy as OscilloscopeIcon,
+  InsertChart as LogicAnalyserIcon,
+  FlashOn as PowerSourceIcon,
+  GraphicEq as WaveGeneratorIcon,
+  DeveloperBoard as MultimeterIcon,
+  Settings as SettingIcon,
+  Refresh as ResetIcon,
+} from '@material-ui/icons';
+import AppIcon from '../../resources/app_icon.svg';
 import {
   AppshellContainer,
   ChildrenContainer,
@@ -26,7 +29,6 @@ import {
   TitleContainer,
   AppBar,
 } from './Appshell.styles';
-import AppIcon from '../../resources/app_icon.svg';
 
 const styles = theme => ({
   iconButton: {
@@ -62,7 +64,7 @@ const topNavigationItems = [
   },
 ];
 
-const Appshell = ({ device, children, location, classes }) => {
+const Appshell = ({ device, reset, children, location, classes }) => {
   return (
     <AppshellContainer>
       <NavigationContainer>
@@ -103,6 +105,16 @@ const Appshell = ({ device, children, location, classes }) => {
           <TitleContainer />
           <Spacer />
           <ButtonContainer>
+            <Tooltip title="Reset">
+              <IconButton
+                disabled={!device.isConnected}
+                onClick={reset}
+                className={classes.iconButton}
+                size="medium"
+              >
+                <ResetIcon style={{ fontSize: 24 }} />
+              </IconButton>
+            </Tooltip>
             <Tooltip
               title={
                 device.deviceInformation

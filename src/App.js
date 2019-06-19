@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Snackbar from '@material-ui/core/Snackbar';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Snackbar } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from 'styled-components';
 import Appshell from './components/Appshell';
 import Home from './screen/Home';
 import Oscilloscope from './screen/Oscilloscope';
@@ -12,8 +14,6 @@ import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
 import Settings from './screen/Settings';
 import CustomDialog from './components/CustomDialog';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import {
   openSnackbar,
@@ -22,21 +22,19 @@ import {
   deviceDisconnected,
   closeDialog,
 } from './redux/actions/app';
-
 const electron = window.require('electron');
-
 const { ipcRenderer } = electron;
 const loadBalancer = window.require('electron-load-balancer');
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.deviceStatus = false;
+    this.reconnect = false;
   }
 
   componentDidMount() {
-    const { openSnackbar, deviceConnected, deviceDisconnected } = this.props;
-    this.deviceStatus = false;
-
+    const { deviceConnected, deviceDisconnected } = this.props;
     ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected, message, deviceName, portName } = args;
 
@@ -52,19 +50,7 @@ class App extends Component {
         this.deviceStatus = isConnected;
       }
 
-      if (!isConnected) {
-        loadBalancer.stop(ipcRenderer, 'linker');
-        if (!this.reconnect) {
-          openSnackbar({ message });
-          this.reconnect = setInterval(() => {
-            loadBalancer.start(ipcRenderer, 'linker');
-          }, 2500);
-        }
-      } else {
-        openSnackbar({ message });
-        clearInterval(this.reconnect);
-        this.reconnect = false;
-      }
+      this.startReconectLoop(isConnected, message);
     });
     loadBalancer.start(ipcRenderer, 'linker');
   }
@@ -74,6 +60,32 @@ class App extends Component {
     loadBalancer.stop(ipcRenderer, 'linker');
   }
 
+  startReconectLoop = (isConnected, message) => {
+    const { openSnackbar } = this.props;
+    if (!isConnected) {
+      loadBalancer.stop(ipcRenderer, 'linker');
+      if (!this.reconnect) {
+        openSnackbar({ message });
+        this.reconnect = setInterval(() => {
+          loadBalancer.start(ipcRenderer, 'linker');
+        }, 2500);
+      }
+    } else {
+      openSnackbar({ message });
+      clearInterval(this.reconnect);
+      this.reconnect = false;
+    }
+  };
+
+  reset = () => {
+    const { deviceDisconnected } = this.props;
+    if (this.deviceStatus) {
+      this.deviceStatus = false;
+      deviceDisconnected();
+      this.startReconectLoop(false, 'Device reset');
+    }
+  };
+
   render() {
     const { closeSnackbar, snackbar, dialog, closeDialog } = this.props;
 
@@ -81,7 +93,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme.pallet}>
           <HashRouter>
-            <Appshell>
+            <Appshell reset={this.reset}>
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route
