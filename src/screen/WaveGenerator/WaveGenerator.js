@@ -89,27 +89,10 @@ class WaveGenerator extends Component {
 
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
-    const {
-      wave,
-      digital,
-      s1Frequency,
-      s2Frequency,
-      s2Phase,
-      waveFormS1,
-      waveFormS2,
-      pwmFrequency,
-      sqr1DutyCycle,
-      sqr2DutyCycle,
-      sqr2Phase,
-      sqr3DutyCycle,
-      sqr3Phase,
-      sqr4DutyCycle,
-      sqr4Phase,
-    } = this.state;
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_WAV_GEN',
-        ...this.state
+        ...this.state,
       });
   }, 500);
 

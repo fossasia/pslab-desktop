@@ -121,8 +121,6 @@ def main():
             sqr3_phase = parsed_stream_data['sqr3Phase']
             sqr4_duty_cycle = parsed_stream_data['sqr4DutyCycle']
             sqr4_phase = parsed_stream_data['sqr4Phase']
-            print('device setting triggered')
-            sys.stdout.flush()
             wave_generator.set_config(
                 wave, digital,
                 s1_frequency, s2_frequency, s2_phase, wave_form_s1,
