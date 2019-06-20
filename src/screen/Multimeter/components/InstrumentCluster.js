@@ -12,7 +12,6 @@ import MeasurementDisplay from './MeasurementDisplay';
 
 const styles = () => ({
   cardMargin: {
-    margin: '0px 16px 0px 0px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -34,20 +33,7 @@ const InstrumentCluster = ({
 }) => {
   return (
     <InstrumentContainer>
-      {/* <Card className={classes.cardMargin}>
-        <Dial
-          activeSubType={activeSubType}
-          value={dialValue}
-          onClickButton={onClickButton}
-          changeOption={changeOption}
-        />
-
-        <ActionButtons
-          isReading={isReading}
-          isConnected={isConnected}
-          onToggleRead={onToggleRead}
-        />
-      </Card> */}
+      <MeasurementDisplay unit={unit} isReading={isReading} />
       <DisplayContainer>
         <Card className={classes.cardMargin}>
           <Dial
@@ -72,7 +58,6 @@ const InstrumentCluster = ({
           />
         </Card>
       </DisplayContainer>
-      <MeasurementDisplay unit={unit} isReading={isReading} />
     </InstrumentContainer>
   );
 };
