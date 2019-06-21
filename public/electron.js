@@ -4,16 +4,16 @@ const url = require('url');
 const { ipcMain } = require('electron');
 const loadBalancer = require('electron-load-balancer');
 
-if (process.env.DEV) {
-  const {
-    default: installExtension,
-    REDUX_DEVTOOLS,
-    REACT_DEVELOPER_TOOLS,
-  } = require('electron-devtools-installer');
+// if (process.env.DEV) {
+//   const {
+//     default: installExtension,
+//     REDUX_DEVTOOLS,
+//     REACT_DEVELOPER_TOOLS,
+//   } = require('electron-devtools-installer');
 
-  installExtension(REDUX_DEVTOOLS);
-  installExtension(REACT_DEVELOPER_TOOLS);
-}
+//   installExtension(REDUX_DEVTOOLS);
+//   installExtension(REACT_DEVELOPER_TOOLS);
+// }
 
 const { app } = electron;
 const { BrowserWindow } = electron;

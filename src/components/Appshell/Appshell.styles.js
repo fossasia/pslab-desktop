@@ -23,7 +23,9 @@ export const AppBar = styled.div`
   width: 100%;
   height: 4em;
   display: flex;
-  background: ${props => props.theme.gradient};
+  background: ${props => props.theme.primary.main};
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
 export const TitleContainer = styled.div``;
@@ -54,12 +56,12 @@ export const NavigationTab = styled.div`
   cursor: pointer;
   background-color: ${props => props.theme.navigationBackground};
   color: ${props => props =>
-    props.selected ? props.theme.primary.dark : props.theme.common.white};
+    props.selected ? props.theme.primary.main : props.theme.common.white};
   transition: all 0.5s ease;
 
   &:hover {
-    background-color: ${props => fade(props.theme.secondary.main, 0.1)};
-    color: ${props => fade(props.theme.secondary.main, 0.5)};
+    background-color: ${props => fade(props.theme.primary.main, 0.1)};
+    color: ${props => fade(props.theme.primary.main, 0.5)};
   }
 `;
 

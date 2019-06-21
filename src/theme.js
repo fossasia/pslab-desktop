@@ -11,15 +11,15 @@ const theme = createMuiTheme({
       default: 'rgba(181, 181, 181, 0.2)',
     },
     primary: {
-      light: 'rgba(142, 155, 224, 1)',
-      main: 'rgba(107, 2, 246, 1)',
-      dark: '#303f9f',
-      contrastText: 'rgba(255, 255, 255, 1)',
+      light: '#ff6659',
+      main: '#d32f2f',
+      dark: '#9a0007',
+      contrastText: '#fff',
     },
     secondary: {
-      light: 'rgba(220, 90, 50, 1)',
-      main: 'rgba(255, 5, 5, 1)',
-      dark: 'rgba(196, 74, 103, 1)',
+      light: '#757de8',
+      main: '#3f51b5',
+      dark: '#002984',
       contrastText: '#fff',
     },
     error: {
@@ -37,8 +37,8 @@ const theme = createMuiTheme({
     linkColor: '#1890ff',
     headingColor: 'rgba(0, 0, 0, .85)',
     disabledColor: 'rgba(0, 0, 0, .25)',
-    gradient:
-      'rgb(220, 90, 50) linear-gradient(-90deg, rgb(220, 90, 50), rgb(196, 74, 103)) repeat scroll 0% 0%',
+    gradient1:
+      'linear-gradient(90deg, rgba(207,72,139,1) 5%, rgba(101,101,163,1) 48%, rgba(79,77,175,1) 100%)',
     iconBackground: '#ffffff',
     navigationBackground: '#bdbdbd',
     ch1Color: '#ff9800',
