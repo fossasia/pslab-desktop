@@ -10,7 +10,7 @@ const SimplePanelLayout = props => {
 
   return (
     <LayoutContainer>
-      <ThickBar />
+      {/* <ThickBar /> */}
       <LayoutWrapper>{panel}</LayoutWrapper>
     </LayoutContainer>
   );

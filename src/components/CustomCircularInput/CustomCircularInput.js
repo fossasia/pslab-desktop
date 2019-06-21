@@ -5,6 +5,7 @@ import {
   CircularProgress,
   CircularThumb,
 } from 'react-circular-input';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Spring } from 'react-spring/renderprops';
 import { withTheme } from 'styled-components';
 
@@ -39,11 +40,14 @@ const CustomCircularInput = ({
           value={rangedValue(props.value)}
           onChange={value => setValue(stepValue(value))}
         >
-          <CircularTrack strokeWidth={5} stroke={theme.primary.light} />
+          <CircularTrack
+            strokeWidth={5}
+            stroke={fade(theme.primary.light, 0.5)}
+          />
           {!selector && (
-            <CircularProgress strokeWidth={15} stroke={theme.secondary.dark} />
+            <CircularProgress strokeWidth={15} stroke={theme.primary.main} />
           )}
-          {selector && <CircularThumb r={12} fill={theme.secondary.dark} />}
+          {selector && <CircularThumb r={12} fill={theme.primary.dark} />}
         </CircularInput>
       )}
     </Spring>

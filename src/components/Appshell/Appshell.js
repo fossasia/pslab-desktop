@@ -6,14 +6,16 @@ import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
   Usb as ConnectedIcon,
   Warning as DisconnectedIcon,
-  ViewComfy as OscilloscopeIcon,
-  InsertChart as LogicAnalyserIcon,
-  FlashOn as PowerSourceIcon,
-  GraphicEq as WaveGeneratorIcon,
-  DeveloperBoard as MultimeterIcon,
   Settings as SettingIcon,
   Refresh as ResetIcon,
 } from '@material-ui/icons';
+import {
+  OscilloscopeIcon,
+  LogicAnalyserIcon,
+  WaveGeneratorIcon,
+  PowerSourceIcon,
+  MultimeterIcon,
+} from '../../components/Icons/PSLabIcons';
 import AppIcon from '../../resources/app_icon.svg';
 import {
   AppshellContainer,
@@ -40,27 +42,27 @@ const topNavigationItems = [
   {
     name: 'Oscilloscope',
     redirectPath: '/oscilloscope',
-    icon: <OscilloscopeIcon style={{ fontSize: '2.2em' }} />,
+    icon: <OscilloscopeIcon size={'2em'} />,
   },
   {
     name: 'Logica Analyser',
     redirectPath: '/logicanalyser',
-    icon: <LogicAnalyserIcon style={{ fontSize: '2.2em' }} />,
+    icon: <LogicAnalyserIcon size={'2em'} />,
   },
   {
     name: 'Power Source',
     redirectPath: '/powersource',
-    icon: <PowerSourceIcon style={{ fontSize: '2.2em' }} />,
+    icon: <PowerSourceIcon size={'2em'} />,
   },
   {
     name: 'Wave Generator',
     redirectPath: '/wavegenerator',
-    icon: <WaveGeneratorIcon style={{ fontSize: '2.2em' }} />,
+    icon: <WaveGeneratorIcon size={'2em'} />,
   },
   {
     name: 'Multimeter',
     redirectPath: '/multimeter',
-    icon: <MultimeterIcon style={{ fontSize: '2.2em' }} />,
+    icon: <MultimeterIcon size={'2em'} />,
   },
 ];
 
@@ -68,16 +70,18 @@ const Appshell = ({ device, reset, children, location, classes }) => {
   return (
     <AppshellContainer>
       <NavigationContainer>
-        <AppIconWrapper>
-          <img
-            style={{
-              height: '3em',
-              width: 'auto',
-            }}
-            alt="App Icon"
-            src={AppIcon}
-          />
-        </AppIconWrapper>
+        <Link to="/">
+          <AppIconWrapper>
+            <img
+              style={{
+                height: '3em',
+                width: 'auto',
+              }}
+              alt="App Icon"
+              src={AppIcon}
+            />
+          </AppIconWrapper>
+        </Link>
         <TopNavigationWrapper>
           {topNavigationItems.map((item, index) => {
             return (

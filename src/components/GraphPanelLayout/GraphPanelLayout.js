@@ -12,7 +12,7 @@ import {
 const GraphPanelLayout = ({ actionButtons, settings, graph, information }) => {
   return (
     <LayoutContainer>
-      <ThickBar />
+      {/* <ThickBar /> */}
       <InformationContainer information={information}>
         <GraphContainer information={information}>{graph}</GraphContainer>
         {information}

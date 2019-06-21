@@ -6,7 +6,7 @@ export const ThickBar = styled.div`
   top: 4em;
   height: calc((100% - 4em) * 0.2);
   width: calc(100% - 3.5em);
-  background: ${props => props.theme.gradient};
+  background: ${props => props.theme.gradient1};
   z-index: 0;
 `;
 
