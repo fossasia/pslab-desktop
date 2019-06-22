@@ -1,14 +1,11 @@
 import React from 'react';
 import {
   LayoutContainer,
-  ButtonContainer,
   ButtonWrapper,
   SettingsContainer,
   SettingsWrapper,
   GraphContainer,
-  GraphWrapper,
   InformationContainer,
-  InformationWrapper,
   ThickBar,
 } from './GraphPanelLayout.styles';
 
@@ -16,18 +13,14 @@ const GraphPanelLayout = ({ actionButtons, settings, graph, information }) => {
   return (
     <LayoutContainer>
       <ThickBar />
+      <InformationContainer information={information}>
+        <GraphContainer information={information}>{graph}</GraphContainer>
+        {information}
+      </InformationContainer>
       <SettingsContainer>
-        <ButtonContainer>
-          <ButtonWrapper>{actionButtons}</ButtonWrapper>
-        </ButtonContainer>
+        <ButtonWrapper>{actionButtons}</ButtonWrapper>
         <SettingsWrapper>{settings}</SettingsWrapper>
       </SettingsContainer>
-      <InformationContainer information={information}>
-        <GraphContainer information={information}>
-          <GraphWrapper>{graph}</GraphWrapper>
-        </GraphContainer>
-        <InformationWrapper>{information}</InformationWrapper>
-      </InformationContainer>
     </LayoutContainer>
   );
 };

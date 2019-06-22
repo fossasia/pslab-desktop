@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const PanelContainer = styled.div`
   display: flex;
+  margin: 16px 0px 0px 16px;
+  width: calc(100% - 16px);
 
   & > * + * {
     margin: 0px 0px 0px 16px;
