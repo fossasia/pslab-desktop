@@ -109,6 +109,12 @@ class Multimeter extends Component {
     this.changeOption(activeSubType);
   };
 
+  changeDialValue = dialValue => {
+    this.setState({
+      dialValue,
+    });
+  };
+
   changeOption = activeSubType => {
     const { parameter } = this.state;
     const activeCategory = optionMap[activeSubType].category;
@@ -149,6 +155,7 @@ class Multimeter extends Component {
             activeSubType={activeSubType}
             onClickButton={this.onClickButton}
             changeOption={this.changeOption}
+            changeDialValue={this.changeDialValue}
             onToggleRead={this.onToggleRead}
             onTogglePulseUnit={this.onTogglePulseUnit}
             isReading={isReading}

@@ -21,6 +21,7 @@ const styles = () => ({
 const InstrumentCluster = ({
   activeSubType,
   onClickButton,
+  changeDialValue,
   changeOption,
   onToggleRead,
   dialValue,
@@ -40,6 +41,7 @@ const InstrumentCluster = ({
             activeSubType={activeSubType}
             value={dialValue}
             onClickButton={onClickButton}
+            changeDialValue={changeDialValue}
             changeOption={changeOption}
           />
           <SwitchWrapper>
