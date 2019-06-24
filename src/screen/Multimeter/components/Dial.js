@@ -2,14 +2,25 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import { DialContainer, IconWrapper, DialWrapper } from './Dial.styles';
 import { withTheme } from 'styled-components';
-import CustomCircularInput from '../../../components/CustomCircularInput';
+import CustomKnob from '../../../components/CustomKnob';
 import { iconMap, optionsOrder, angleMap } from './SettingOptions';
 
-const Dial = ({ value, onClickButton, changeOption, activeSubType, theme }) => {
+const Dial = ({
+  value,
+  onClickButton,
+  changeDialValue,
+  changeOption,
+  activeSubType,
+  theme,
+}) => {
   const onChangeDial = value => {
     const dialValue = Math.round(value);
     const activeSubType = angleMap[dialValue];
-    changeOption(activeSubType);
+    if (activeSubType) {
+      changeOption(activeSubType);
+    } else {
+      changeDialValue(dialValue);
+    }
   };
 
   const itemList = iconMap(activeSubType, theme);
@@ -32,15 +43,13 @@ const Dial = ({ value, onClickButton, changeOption, activeSubType, theme }) => {
         );
       })}
       <DialWrapper>
-        <CustomCircularInput
-          steps={0.01}
-          setValue={onChangeDial}
+        <CustomKnob
+          onChangeDial={onChangeDial}
           value={value}
-          radius={120}
+          radius={20}
           min={0}
           max={360}
           step={32.7}
-          selector={true}
         />
       </DialWrapper>
     </DialContainer>
