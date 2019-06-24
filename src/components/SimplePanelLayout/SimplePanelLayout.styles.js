@@ -12,7 +12,6 @@ export const ThickBar = styled.div`
 
 export const LayoutWrapper = styled.div`
   align-self: center;
-  margin: 0px 16px 0px 0px;
   z-index: 999;
 `;
 

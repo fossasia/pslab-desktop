@@ -3,13 +3,15 @@ import styled from 'styled-components';
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
+
+  & > * + * {
+    margin: 0px 0px 0px 32px;
+  }
 `;
 
 export const CardColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  margin: 0px 0px 0px 32px;
 
   & > * + * {
     margin: 32px 0px 0px 0px;

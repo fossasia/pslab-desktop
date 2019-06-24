@@ -2,18 +2,18 @@ import styled from 'styled-components';
 
 export const InstrumentContainer = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 export const DisplayContainer = styled.div`
-  margin: 0px 16px 0px 0px;
+  margin: 0px 0px 8px 0px;
 `;
 
 export const DisplayWrapper = styled.div`
-  width: 560px;
-  height: 460px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  padding: 0px 16px 0px 0px;
 `;
 
 export const TextIcon = styled.div`
