@@ -37,3 +37,12 @@ export const ProgressWrapper = styled.div`
   width: 100%;
   height: 4px;
 `;
+
+export const FixedWrapper = styled.div`
+  display: flex;
+`;
+
+export const ScrollWrapper = styled.div`
+  display: flex;
+  flex: 1;
+`;

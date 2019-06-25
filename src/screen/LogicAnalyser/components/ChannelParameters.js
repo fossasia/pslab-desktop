@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {
   Select,
   Typography,
-  Divider,
   MenuItem,
   OutlinedInput,
   FormControl,
@@ -23,7 +22,6 @@ class ChannelParameters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfChannelLabelWidth: 0,
       MapLabelWidth: 0,
       TriggerLabelWidth: 0,
     };
@@ -31,8 +29,6 @@ class ChannelParameters extends Component {
 
   componentDidMount() {
     this.setState({
-      numberOfChannelLabelWidth: ReactDOM.findDOMNode(this.numberOfChannelRef)
-        .offsetWidth,
       MapLabelWidth: ReactDOM.findDOMNode(this.MapRef).offsetWidth,
       TriggerLabelWidth: ReactDOM.findDOMNode(this.TriggerRef).offsetWidth,
     });
@@ -47,57 +43,17 @@ class ChannelParameters extends Component {
       trigger2Type,
       trigger3Type,
       trigger4Type,
-      changeNumberOfChannels,
       changeChannelMap,
       changeTriggerType,
       classes,
     } = this.props;
-    const {
-      numberOfChannelLabelWidth,
-      MapLabelWidth,
-      TriggerLabelWidth,
-    } = this.state;
+    const { MapLabelWidth, TriggerLabelWidth } = this.state;
 
     return (
       <SettingsWrapper>
         <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
           Channel Parameters
         </Typography>
-        <Divider />
-        <OptionsRowWrapper>
-          <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel
-              ref={ref => {
-                this.numberOfChannelRef = ref;
-              }}
-              htmlFor="outlined-number-of-channels"
-            >
-              Number of Channels
-            </InputLabel>
-            <Select
-              value={numberOfChannels}
-              onChange={changeNumberOfChannels}
-              input={
-                <OutlinedInput
-                  labelWidth={numberOfChannelLabelWidth}
-                  name="outlined-number-of-channels"
-                  id="outlined-number-of-channels"
-                />
-              }
-            >
-              {Object.entries(options.NumberOfChannels).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </OptionsRowWrapper>
-        <Divider />
         <OptionsRowWrapper>
           <Typography component="h6" variant="subheading">
             LA1
