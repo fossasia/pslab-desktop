@@ -1,6 +1,11 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { SettingsContainer } from './Settings.styles';
+import {
+  SettingsContainer,
+  FixedWrapper,
+  ScrollWrapper,
+} from './Settings.styles';
+import NumberParameter from './NumberParameter';
 import ChannelParameters from './ChannelParameters';
 import AnalysisParameters from './AnalysisParameters';
 
@@ -28,33 +33,40 @@ const Settings = ({
   changeTimeout,
 }) => (
   <SettingsContainer>
-    <Scrollbars autoHide autoHideTimeout={1000}>
-      <ChannelParameters
+    <FixedWrapper>
+      <NumberParameter
         numberOfChannels={numberOfChannels}
-        channel1Map={channel1Map}
-        channel2Map={channel2Map}
-        trigger1Type={trigger1Type}
-        trigger2Type={trigger2Type}
-        trigger3Type={trigger3Type}
-        trigger4Type={trigger4Type}
         changeNumberOfChannels={changeNumberOfChannels}
-        changeChannelMap={changeChannelMap}
-        changeTriggerType={changeTriggerType}
       />
-      <AnalysisParameters
-        timeMeasureChannel1={timeMeasureChannel1}
-        timeMeasureChannel2={timeMeasureChannel2}
-        timeMeasuretrigger1Type={timeMeasuretrigger1Type}
-        timeMeasuretrigger2Type={timeMeasuretrigger2Type}
-        timeMeasureWrite1={timeMeasureWrite1}
-        timeMeasureWrite2={timeMeasureWrite2}
-        timeout={timeout}
-        changeTimeMeasureChannel={changeTimeMeasureChannel}
-        changeTimeMeasureTriggerType={changeTimeMeasureTriggerType}
-        changeTimeMeasureWrite={changeTimeMeasureWrite}
-        changeTimeout={changeTimeout}
-      />
-    </Scrollbars>
+    </FixedWrapper>
+    <ScrollWrapper>
+      <Scrollbars autoHide autoHideTimeout={1000}>
+        <ChannelParameters
+          numberOfChannels={numberOfChannels}
+          channel1Map={channel1Map}
+          channel2Map={channel2Map}
+          trigger1Type={trigger1Type}
+          trigger2Type={trigger2Type}
+          trigger3Type={trigger3Type}
+          trigger4Type={trigger4Type}
+          changeChannelMap={changeChannelMap}
+          changeTriggerType={changeTriggerType}
+        />
+        <AnalysisParameters
+          timeMeasureChannel1={timeMeasureChannel1}
+          timeMeasureChannel2={timeMeasureChannel2}
+          timeMeasuretrigger1Type={timeMeasuretrigger1Type}
+          timeMeasuretrigger2Type={timeMeasuretrigger2Type}
+          timeMeasureWrite1={timeMeasureWrite1}
+          timeMeasureWrite2={timeMeasureWrite2}
+          timeout={timeout}
+          changeTimeMeasureChannel={changeTimeMeasureChannel}
+          changeTimeMeasureTriggerType={changeTimeMeasureTriggerType}
+          changeTimeMeasureWrite={changeTimeMeasureWrite}
+          changeTimeout={changeTimeout}
+        />
+      </Scrollbars>
+    </ScrollWrapper>
   </SettingsContainer>
 );
 
