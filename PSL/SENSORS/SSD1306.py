@@ -1,0 +1,500 @@
+'''
+Adapted into Python from Adafruit's oled.cpp
+Original license text:
+
+Software License Agreement (BSD License)
+
+Copyright (c) 2012, Adafruit Industries
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holders nor the
+names of its contributors may be used to endorse or promote products
+derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+'''
+from __future__ import print_function
+from numpy import int16
+import time
+
+
+def connect(route, **args):
+    return SSD1306(route, **args)
+
+
+class SSD1306():
+    ADDRESS = 0x3C
+
+    # --------------Parameters--------------------
+    # This must be defined in order to let GUIs automatically create menus
+    # for changing various options of this sensor
+    # It's a dictionary of the string representations of functions matched with an array
+    # of options that each one can accept
+    params = {'load': ['logo'],
+              'scroll': ['left', 'right', 'topright', 'topleft', 'bottomleft', 'bottomright', 'stop']
+              }
+
+    NUMPLOTS = 0
+    PLOTNAMES = ['']
+    name = 'OLED Display'
+    _width = 128
+    WIDTH = 128
+    _height = 64
+    HEIGHT = 64
+
+    rotation = 0
+    cursor_y = 0
+    cursor_x = 0
+    textsize = 1
+    textcolor = 1
+    textbgcolor = 0
+    wrap = True
+
+    SSD1306_128_64 = 1
+    SSD1306_128_32 = 2
+    SSD1306_96_16 = 3
+
+    #    -----------------------------------------------------------------------*/
+    DISPLAY_TYPE = SSD1306_96_16
+    ##   self.SSD1306_128_32
+    # /*=========================================================================*/
+
+    SSD1306_LCDWIDTH = 128
+    SSD1306_LCDHEIGHT = 64
+
+    SSD1306_SETCONTRAST = 0x81
+    SSD1306_DISPLAYALLON_RESUME = 0xA4
+    SSD1306_DISPLAYALLON = 0xA5
+    SSD1306_NORMALDISPLAY = 0xA6
+    SSD1306_INVERTDISPLAY = 0xA7
+    SSD1306_DISPLAYOFF = 0xAE
+    SSD1306_DISPLAYON = 0xAF
+
+    SSD1306_SETDISPLAYOFFSET = 0xD3
+    SSD1306_SETCOMPINS = 0xDA
+
+    SSD1306_SETVCOMDETECT = 0xDB
+
+    SSD1306_SETDISPLAYCLOCKDIV = 0xD5
+    SSD1306_SETPRECHARGE = 0xD9
+
+    SSD1306_SETMULTIPLEX = 0xA8
+
+    SSD1306_SETLOWCOLUMN = 0x00
+    SSD1306_SETHIGHCOLUMN = 0x10
+
+    SSD1306_SETSTARTLINE = 0x40
+
+    SSD1306_MEMORYMODE = 0x20
+
+    SSD1306_COMSCANINC = 0xC0
+    SSD1306_COMSCANDEC = 0xC8
+
+    SSD1306_SEGREMAP = 0xA0
+
+    SSD1306_CHARGEPUMP = 0x8D
+
+    SSD1306_EXTERNALVCC = 0x1
+    SSD1306_SWITCHCAPVCC = 0x2
+
+    logobuff = [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 127, 127, 63, 63, 159, 159,
+                223, 223, 207, 207, 207, 239, 239, 47, 47, 39, 39, 7, 7, 67, 67, 83, 131, 135, 7, 7, 15, 15, 31, 191,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 63, 31, 15, 199, 99, 17, 25, 12, 4, 2, 3, 7, 63, 255, 255, 255, 255, 255,
+                255, 255, 255, 254, 252, 240, 224, 224, 224, 192, 192, 128, 128, 128, 128, 129, 128, 0, 0, 0, 0, 0, 3,
+                3, 7, 31, 127, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 127, 15,
+                3, 192, 120, 134, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 254, 254, 252, 252,
+                249, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 143, 0, 0, 124, 199, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 128, 240, 252, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 240, 128, 0, 7, 56, 96, 128, 0, 0, 0,
+                0, 0, 0, 0, 12, 63, 255, 127, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 31, 7, 227, 243, 249, 249, 249,
+                249, 249, 249, 243, 255, 255, 199, 131, 49, 57, 57, 57, 121, 115, 255, 255, 255, 255, 15, 15, 159, 207,
+                207, 207, 143, 31, 63, 255, 255, 159, 207, 207, 207, 143, 31, 63, 255, 255, 255, 15, 15, 159, 207, 207,
+                207, 255, 255, 0, 0, 255, 127, 63, 159, 207, 239, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 248, 240, 224, 129, 2, 4, 8, 16, 32, 96, 64, 128,
+                128, 135, 30, 115, 207, 159, 255, 255, 255, 255, 127, 63, 31, 31, 31, 31, 31, 31, 31, 7, 7, 7, 127, 127,
+                127, 127, 127, 127, 255, 255, 255, 255, 252, 240, 227, 231, 207, 207, 207, 207, 207, 207, 231, 255, 255,
+                231, 207, 207, 207, 207, 207, 198, 224, 240, 255, 255, 255, 0, 0, 231, 207, 207, 207, 199, 224, 240,
+                255, 225, 193, 204, 204, 204, 228, 192, 192, 255, 255, 255, 192, 192, 255, 255, 255, 255, 255, 255, 192,
+                192, 252, 248, 243, 231, 207, 223, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 252, 248, 248, 240, 240, 224,
+                225, 225, 193, 193, 195, 195, 195, 195, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 62, 62, 62, 62, 62,
+                255, 243, 3, 3, 51, 51, 51, 19, 135, 239, 255, 255, 63, 63, 159, 159, 159, 159, 63, 127, 255, 255, 255,
+                63, 31, 159, 159, 159, 31, 252, 252, 255, 63, 63, 159, 159, 159, 159, 63, 127, 255, 255, 255, 223, 159,
+                159, 159, 31, 127, 255, 255, 255, 255, 223, 31, 31, 191, 159, 159, 159, 255, 255, 127, 63, 159, 159,
+                159, 159, 31, 31, 255, 255, 247, 3, 7, 159, 159, 159, 31, 127, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+                255, 254, 252, 252, 252, 252, 252, 252, 252, 252, 224, 224, 224, 255, 255, 255, 255, 255, 255, 255, 243,
+                240, 240, 247, 255, 254, 252, 248, 243, 255, 255, 248, 248, 242, 242, 242, 242, 242, 250, 255, 255, 255,
+                241, 242, 242, 242, 242, 248, 253, 255, 255, 248, 248, 242, 242, 242, 242, 242, 250, 255, 255, 249, 240,
+                242, 242, 242, 240, 240, 255, 255, 255, 255, 243, 240, 240, 243, 243, 255, 255, 255, 255, 252, 248, 243,
+                243, 243, 243, 243, 255, 255, 255, 247, 240, 240, 247, 255, 247, 240, 240, 247, 255]
+    font = [0x00, 0x00, 0x00, 0x00, 0x00, 0x3E, 0x5B, 0x4F, 0x5B, 0x3E, 0x3E, 0x6B, 0x4F, 0x6B, 0x3E,
+            0x1C, 0x3E, 0x7C, 0x3E, 0x1C, 0x18, 0x3C, 0x7E, 0x3C, 0x18, 0x1C, 0x57, 0x7D, 0x57, 0x1C,
+            0x1C, 0x5E, 0x7F, 0x5E, 0x1C, 0x00, 0x18, 0x3C, 0x18, 0x00, 0xFF, 0xE7, 0xC3, 0xE7, 0xFF,
+            0x00, 0x18, 0x24, 0x18, 0x00, 0xFF, 0xE7, 0xDB, 0xE7, 0xFF, 0x30, 0x48, 0x3A, 0x06, 0x0E,
+            0x26, 0x29, 0x79, 0x29, 0x26, 0x40, 0x7F, 0x05, 0x05, 0x07, 0x40, 0x7F, 0x05, 0x25, 0x3F,
+            0x5A, 0x3C, 0xE7, 0x3C, 0x5A, 0x7F, 0x3E, 0x1C, 0x1C, 0x08, 0x08, 0x1C, 0x1C, 0x3E, 0x7F,
+            0x14, 0x22, 0x7F, 0x22, 0x14, 0x5F, 0x5F, 0x00, 0x5F, 0x5F, 0x06, 0x09, 0x7F, 0x01, 0x7F,
+            0x00, 0x66, 0x89, 0x95, 0x6A, 0x60, 0x60, 0x60, 0x60, 0x60, 0x94, 0xA2, 0xFF, 0xA2, 0x94,
+            0x08, 0x04, 0x7E, 0x04, 0x08, 0x10, 0x20, 0x7E, 0x20, 0x10, 0x08, 0x08, 0x2A, 0x1C, 0x08,
+            0x08, 0x1C, 0x2A, 0x08, 0x08, 0x1E, 0x10, 0x10, 0x10, 0x10, 0x0C, 0x1E, 0x0C, 0x1E, 0x0C,
+            0x30, 0x38, 0x3E, 0x38, 0x30, 0x06, 0x0E, 0x3E, 0x0E, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x5F, 0x00, 0x00, 0x00, 0x07, 0x00, 0x07, 0x00, 0x14, 0x7F, 0x14, 0x7F, 0x14,
+            0x24, 0x2A, 0x7F, 0x2A, 0x12, 0x23, 0x13, 0x08, 0x64, 0x62, 0x36, 0x49, 0x56, 0x20, 0x50,
+            0x00, 0x08, 0x07, 0x03, 0x00, 0x00, 0x1C, 0x22, 0x41, 0x00, 0x00, 0x41, 0x22, 0x1C, 0x00,
+            0x2A, 0x1C, 0x7F, 0x1C, 0x2A, 0x08, 0x08, 0x3E, 0x08, 0x08, 0x00, 0x80, 0x70, 0x30, 0x00,
+            0x08, 0x08, 0x08, 0x08, 0x08, 0x00, 0x00, 0x60, 0x60, 0x00, 0x20, 0x10, 0x08, 0x04, 0x02,
+            0x3E, 0x51, 0x49, 0x45, 0x3E, 0x00, 0x42, 0x7F, 0x40, 0x00, 0x72, 0x49, 0x49, 0x49, 0x46,
+            0x21, 0x41, 0x49, 0x4D, 0x33, 0x18, 0x14, 0x12, 0x7F, 0x10, 0x27, 0x45, 0x45, 0x45, 0x39,
+            0x3C, 0x4A, 0x49, 0x49, 0x31, 0x41, 0x21, 0x11, 0x09, 0x07, 0x36, 0x49, 0x49, 0x49, 0x36,
+            0x46, 0x49, 0x49, 0x29, 0x1E, 0x00, 0x00, 0x14, 0x00, 0x00, 0x00, 0x40, 0x34, 0x00, 0x00,
+            0x00, 0x08, 0x14, 0x22, 0x41, 0x14, 0x14, 0x14, 0x14, 0x14, 0x00, 0x41, 0x22, 0x14, 0x08,
+            0x02, 0x01, 0x59, 0x09, 0x06, 0x3E, 0x41, 0x5D, 0x59, 0x4E, 0x7C, 0x12, 0x11, 0x12, 0x7C,
+            0x7F, 0x49, 0x49, 0x49, 0x36, 0x3E, 0x41, 0x41, 0x41, 0x22, 0x7F, 0x41, 0x41, 0x41, 0x3E,
+            0x7F, 0x49, 0x49, 0x49, 0x41, 0x7F, 0x09, 0x09, 0x09, 0x01, 0x3E, 0x41, 0x41, 0x51, 0x73,
+            0x7F, 0x08, 0x08, 0x08, 0x7F, 0x00, 0x41, 0x7F, 0x41, 0x00, 0x20, 0x40, 0x41, 0x3F, 0x01,
+            0x7F, 0x08, 0x14, 0x22, 0x41, 0x7F, 0x40, 0x40, 0x40, 0x40, 0x7F, 0x02, 0x1C, 0x02, 0x7F,
+            0x7F, 0x04, 0x08, 0x10, 0x7F, 0x3E, 0x41, 0x41, 0x41, 0x3E, 0x7F, 0x09, 0x09, 0x09, 0x06,
+            0x3E, 0x41, 0x51, 0x21, 0x5E, 0x7F, 0x09, 0x19, 0x29, 0x46, 0x26, 0x49, 0x49, 0x49, 0x32,
+            0x03, 0x01, 0x7F, 0x01, 0x03, 0x3F, 0x40, 0x40, 0x40, 0x3F, 0x1F, 0x20, 0x40, 0x20, 0x1F,
+            0x3F, 0x40, 0x38, 0x40, 0x3F, 0x63, 0x14, 0x08, 0x14, 0x63, 0x03, 0x04, 0x78, 0x04, 0x03,
+            0x61, 0x59, 0x49, 0x4D, 0x43, 0x00, 0x7F, 0x41, 0x41, 0x41, 0x02, 0x04, 0x08, 0x10, 0x20,
+            0x00, 0x41, 0x41, 0x41, 0x7F, 0x04, 0x02, 0x01, 0x02, 0x04, 0x40, 0x40, 0x40, 0x40, 0x40,
+            0x00, 0x03, 0x07, 0x08, 0x00, 0x20, 0x54, 0x54, 0x78, 0x40, 0x7F, 0x28, 0x44, 0x44, 0x38,
+            0x38, 0x44, 0x44, 0x44, 0x28, 0x38, 0x44, 0x44, 0x28, 0x7F, 0x38, 0x54, 0x54, 0x54, 0x18,
+            0x00, 0x08, 0x7E, 0x09, 0x02, 0x18, 0xA4, 0xA4, 0x9C, 0x78, 0x7F, 0x08, 0x04, 0x04, 0x78,
+            0x00, 0x44, 0x7D, 0x40, 0x00, 0x20, 0x40, 0x40, 0x3D, 0x00, 0x7F, 0x10, 0x28, 0x44, 0x00,
+            0x00, 0x41, 0x7F, 0x40, 0x00, 0x7C, 0x04, 0x78, 0x04, 0x78, 0x7C, 0x08, 0x04, 0x04, 0x78,
+            0x38, 0x44, 0x44, 0x44, 0x38, 0xFC, 0x18, 0x24, 0x24, 0x18, 0x18, 0x24, 0x24, 0x18, 0xFC,
+            0x7C, 0x08, 0x04, 0x04, 0x08, 0x48, 0x54, 0x54, 0x54, 0x24, 0x04, 0x04, 0x3F, 0x44, 0x24,
+            0x3C, 0x40, 0x40, 0x20, 0x7C, 0x1C, 0x20, 0x40, 0x20, 0x1C, 0x3C, 0x40, 0x30, 0x40, 0x3C,
+            0x44, 0x28, 0x10, 0x28, 0x44, 0x4C, 0x90, 0x90, 0x90, 0x7C, 0x44, 0x64, 0x54, 0x4C, 0x44,
+            0x00, 0x08, 0x36, 0x41, 0x00, 0x00, 0x00, 0x77, 0x00, 0x00, 0x00, 0x41, 0x36, 0x08, 0x00,
+            0x02, 0x01, 0x02, 0x04, 0x02, 0x3C, 0x26, 0x23, 0x26, 0x3C, 0x1E, 0xA1, 0xA1, 0x61, 0x12,
+            0x3A, 0x40, 0x40, 0x20, 0x7A, 0x38, 0x54, 0x54, 0x55, 0x59, 0x21, 0x55, 0x55, 0x79, 0x41,
+            0x21, 0x54, 0x54, 0x78, 0x41, 0x21, 0x55, 0x54, 0x78, 0x40, 0x20, 0x54, 0x55, 0x79, 0x40,
+            0x0C, 0x1E, 0x52, 0x72, 0x12, 0x39, 0x55, 0x55, 0x55, 0x59, 0x39, 0x54, 0x54, 0x54, 0x59,
+            0x39, 0x55, 0x54, 0x54, 0x58, 0x00, 0x00, 0x45, 0x7C, 0x41, 0x00, 0x02, 0x45, 0x7D, 0x42,
+            0x00, 0x01, 0x45, 0x7C, 0x40, 0xF0, 0x29, 0x24, 0x29, 0xF0, 0xF0, 0x28, 0x25, 0x28, 0xF0,
+            0x7C, 0x54, 0x55, 0x45, 0x00, 0x20, 0x54, 0x54, 0x7C, 0x54, 0x7C, 0x0A, 0x09, 0x7F, 0x49,
+            0x32, 0x49, 0x49, 0x49, 0x32, 0x32, 0x48, 0x48, 0x48, 0x32, 0x32, 0x4A, 0x48, 0x48, 0x30,
+            0x3A, 0x41, 0x41, 0x21, 0x7A, 0x3A, 0x42, 0x40, 0x20, 0x78, 0x00, 0x9D, 0xA0, 0xA0, 0x7D,
+            0x39, 0x44, 0x44, 0x44, 0x39, 0x3D, 0x40, 0x40, 0x40, 0x3D, 0x3C, 0x24, 0xFF, 0x24, 0x24,
+            0x48, 0x7E, 0x49, 0x43, 0x66, 0x2B, 0x2F, 0xFC, 0x2F, 0x2B, 0xFF, 0x09, 0x29, 0xF6, 0x20,
+            0xC0, 0x88, 0x7E, 0x09, 0x03, 0x20, 0x54, 0x54, 0x79, 0x41, 0x00, 0x00, 0x44, 0x7D, 0x41,
+            0x30, 0x48, 0x48, 0x4A, 0x32, 0x38, 0x40, 0x40, 0x22, 0x7A, 0x00, 0x7A, 0x0A, 0x0A, 0x72,
+            0x7D, 0x0D, 0x19, 0x31, 0x7D, 0x26, 0x29, 0x29, 0x2F, 0x28, 0x26, 0x29, 0x29, 0x29, 0x26,
+            0x30, 0x48, 0x4D, 0x40, 0x20, 0x38, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x38,
+            0x2F, 0x10, 0xC8, 0xAC, 0xBA, 0x2F, 0x10, 0x28, 0x34, 0xFA, 0x00, 0x00, 0x7B, 0x00, 0x00,
+            0x08, 0x14, 0x2A, 0x14, 0x22, 0x22, 0x14, 0x2A, 0x14, 0x08, 0xAA, 0x00, 0x55, 0x00, 0xAA,
+            0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x10, 0x10, 0x10, 0xFF, 0x00,
+            0x14, 0x14, 0x14, 0xFF, 0x00, 0x10, 0x10, 0xFF, 0x00, 0xFF, 0x10, 0x10, 0xF0, 0x10, 0xF0,
+            0x14, 0x14, 0x14, 0xFC, 0x00, 0x14, 0x14, 0xF7, 0x00, 0xFF, 0x00, 0x00, 0xFF, 0x00, 0xFF,
+            0x14, 0x14, 0xF4, 0x04, 0xFC, 0x14, 0x14, 0x17, 0x10, 0x1F, 0x10, 0x10, 0x1F, 0x10, 0x1F,
+            0x14, 0x14, 0x14, 0x1F, 0x00, 0x10, 0x10, 0x10, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x10,
+            0x10, 0x10, 0x10, 0x1F, 0x10, 0x10, 0x10, 0x10, 0xF0, 0x10, 0x00, 0x00, 0x00, 0xFF, 0x10,
+            0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0xFF, 0x10, 0x00, 0x00, 0x00, 0xFF, 0x14,
+            0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x1F, 0x10, 0x17, 0x00, 0x00, 0xFC, 0x04, 0xF4,
+            0x14, 0x14, 0x17, 0x10, 0x17, 0x14, 0x14, 0xF4, 0x04, 0xF4, 0x00, 0x00, 0xFF, 0x00, 0xF7,
+            0x14, 0x14, 0x14, 0x14, 0x14, 0x14, 0x14, 0xF7, 0x00, 0xF7, 0x14, 0x14, 0x14, 0x17, 0x14,
+            0x10, 0x10, 0x1F, 0x10, 0x1F, 0x14, 0x14, 0x14, 0xF4, 0x14, 0x10, 0x10, 0xF0, 0x10, 0xF0,
+            0x00, 0x00, 0x1F, 0x10, 0x1F, 0x00, 0x00, 0x00, 0x1F, 0x14, 0x00, 0x00, 0x00, 0xFC, 0x14,
+            0x00, 0x00, 0xF0, 0x10, 0xF0, 0x10, 0x10, 0xFF, 0x10, 0xFF, 0x14, 0x14, 0x14, 0xFF, 0x14,
+            0x10, 0x10, 0x10, 0x1F, 0x00, 0x00, 0x00, 0x00, 0xF0, 0x10, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+            0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF,
+            0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x38, 0x44, 0x44, 0x38, 0x44, 0x7C, 0x2A, 0x2A, 0x3E, 0x14,
+            0x7E, 0x02, 0x02, 0x06, 0x06, 0x02, 0x7E, 0x02, 0x7E, 0x02, 0x63, 0x55, 0x49, 0x41, 0x63,
+            0x38, 0x44, 0x44, 0x3C, 0x04, 0x40, 0x7E, 0x20, 0x1E, 0x20, 0x06, 0x02, 0x7E, 0x02, 0x02,
+            0x99, 0xA5, 0xE7, 0xA5, 0x99, 0x1C, 0x2A, 0x49, 0x2A, 0x1C, 0x4C, 0x72, 0x01, 0x72, 0x4C,
+            0x30, 0x4A, 0x4D, 0x4D, 0x30, 0x30, 0x48, 0x78, 0x48, 0x30, 0xBC, 0x62, 0x5A, 0x46, 0x3D,
+            0x3E, 0x49, 0x49, 0x49, 0x00, 0x7E, 0x01, 0x01, 0x01, 0x7E, 0x2A, 0x2A, 0x2A, 0x2A, 0x2A,
+            0x44, 0x44, 0x5F, 0x44, 0x44, 0x40, 0x51, 0x4A, 0x44, 0x40, 0x40, 0x44, 0x4A, 0x51, 0x40,
+            0x00, 0x00, 0xFF, 0x01, 0x03, 0xE0, 0x80, 0xFF, 0x00, 0x00, 0x08, 0x08, 0x6B, 0x6B, 0x08,
+            0x36, 0x12, 0x36, 0x24, 0x36, 0x06, 0x0F, 0x09, 0x0F, 0x06, 0x00, 0x00, 0x18, 0x18, 0x00,
+            0x00, 0x00, 0x10, 0x10, 0x00, 0x30, 0x40, 0xFF, 0x01, 0x01, 0x00, 0x1F, 0x01, 0x01, 0x1E,
+            0x00, 0x19, 0x1D, 0x17, 0x12, 0x00, 0x3C, 0x3C, 0x3C, 0x3C, 0x00, 0x00, 0x00, 0x00, 0x00]  # ascii fonts
+
+    def __init__(self, I2C, **args):
+        self.buff = [0 for a in range(1024)]
+        self.ADDRESS = args.get('address', self.ADDRESS)
+        self.I2C = I2C
+        self.SSD1306_command(self.SSD1306_DISPLAYOFF)  # 0xAE
+        self.SSD1306_command(self.SSD1306_SETDISPLAYCLOCKDIV)  # 0xD5
+        self.SSD1306_command(0x80)  # the suggested ratio 0x80
+        self.SSD1306_command(self.SSD1306_SETMULTIPLEX)  # 0xA8
+        self.SSD1306_command(0x3F)
+        self.SSD1306_command(self.SSD1306_SETDISPLAYOFFSET)  # 0xD3
+        self.SSD1306_command(0x0)  # no offset
+        self.SSD1306_command(self.SSD1306_SETSTARTLINE | 0x0)  # line #0
+        self.SSD1306_command(self.SSD1306_CHARGEPUMP)  # 0x8D
+        self.SSD1306_command(0x14)  # vccstate = self.SSD1306_SWITCHCAPVCC
+        self.SSD1306_command(self.SSD1306_MEMORYMODE)  # 0x20
+        self.SSD1306_command(0x00)  # 0x0 act like ks0108
+        self.SSD1306_command(self.SSD1306_SEGREMAP | 0x1)
+        self.SSD1306_command(self.SSD1306_COMSCANDEC)
+        self.SSD1306_command(self.SSD1306_SETCOMPINS)  # 0xDA
+        self.SSD1306_command(0x12)
+        self.SSD1306_command(self.SSD1306_SETCONTRAST)  # 0x81
+        self.SSD1306_command(0xFF)  # vccstate = self.SSD1306_SWITCHCAPVCC
+        self.SSD1306_command(self.SSD1306_SETPRECHARGE)  # 0xd9
+        self.SSD1306_command(0xF1)  # vccstate = self.SSD1306_SWITCHCAPVCC
+        self.SSD1306_command(self.SSD1306_SETVCOMDETECT)  # 0xDB
+        self.SSD1306_command(0x40)
+        self.SSD1306_command(self.SSD1306_DISPLAYALLON_RESUME)  # 0xA4
+        self.SSD1306_command(self.SSD1306_NORMALDISPLAY)  # 0xA6
+        self.SSD1306_command(self.SSD1306_DISPLAYON)  # --turn on oled panel
+
+    def load(self, arg):
+        self.scroll('stop')
+        if arg == 'logo':
+            self.clearDisplay()
+            for a in range(1024):
+                self.buff[a] = self.logobuff[a]
+            self.displayOLED()
+
+    def SSD1306_command(self, cmd):
+        self.I2C.writeBulk(self.ADDRESS, [0x00, cmd])
+
+    def SSD1306_data(self, data):
+        self.I2C.writeBulk(self.ADDRESS, [0x40, data])
+
+    def clearDisplay(self):
+        self.setCursor(0, 0)
+        for a in range(self.SSD1306_LCDWIDTH * self.SSD1306_LCDHEIGHT / 8):
+            self.buff[a] = 0
+
+    def displayOLED(self):
+        self.SSD1306_command(self.SSD1306_SETLOWCOLUMN | 0x0)  # low col = 0
+        self.SSD1306_command(self.SSD1306_SETHIGHCOLUMN | 0x0)  # hi col = 0
+        self.SSD1306_command(self.SSD1306_SETSTARTLINE | 0x0)  # line #0
+        a = 0
+        while (a < self.SSD1306_LCDWIDTH * self.SSD1306_LCDHEIGHT / 8):
+            self.I2C.writeBulk(self.ADDRESS, [0x40] + self.buff[a:a + 16])
+            a += 16
+
+    def setContrast(self, i):
+        self.SSD1306_command(self.SSD1306_SETCONTRAST)
+        self.SSD1306_command(i)
+
+    def drawPixel(self, x, y, color):
+        if (color == 1):
+            self.buff[x + (y / 8) * self.SSD1306_LCDWIDTH] |= (1 << (y % 8))
+        else:
+            self.buff[x + (y / 8) * self.SSD1306_LCDWIDTH] &= ~(1 << (y % 8))
+
+    def drawCircle(self, x0, y0, r, color):
+        f = 1 - r
+        ddF_x = 1
+        ddF_y = -2 * r
+        x = 0
+        y = r
+        self.drawPixel(x0, y0 + r, color)
+        self.drawPixel(x0, y0 - r, color)
+        self.drawPixel(x0 + r, y0, color)
+        self.drawPixel(x0 - r, y0, color)
+        while (x < y):
+            if (f >= 0):
+                y -= 1
+                ddF_y += 2
+                f += ddF_y
+            x += 1
+            ddF_x += 2
+            f += ddF_x
+            self.drawPixel(x0 + x, y0 + y, color)
+            self.drawPixel(x0 - x, y0 + y, color)
+            self.drawPixel(x0 + x, y0 - y, color)
+            self.drawPixel(x0 - x, y0 - y, color)
+            self.drawPixel(x0 + y, y0 + x, color)
+            self.drawPixel(x0 - y, y0 + x, color)
+            self.drawPixel(x0 + y, y0 - x, color)
+            self.drawPixel(x0 - y, y0 - x, color)
+
+    def drawLine(self, x0, y0, x1, y1, color):
+        steep = abs(y1 - y0) > abs(x1 - x0)
+        if (steep):
+            tmp = y0
+            y0 = x0
+            x0 = tmp
+            tmp = y1
+            y1 = x1
+            x1 = tmp
+        if (x0 > x1):
+            tmp = x1
+            x1 = x0
+            x0 = tmp
+            tmp = y1
+            y1 = y0
+            y0 = tmp
+
+        dx = x1 - x0
+        dy = abs(y1 - y0)
+        err = dx / 2
+
+        if (y0 < y1):
+            ystep = 1
+        else:
+            ystep = -1
+
+        while (x0 <= x1):
+            if (steep):
+                self.drawPixel(y0, x0, color)
+            else:
+                self.drawPixel(x0, y0, color)
+            err -= dy
+            if (err < 0):
+                y0 += ystep
+                err += dx
+            x0 += 1
+
+    def drawRect(self, x, y, w, h, color):
+        self.drawFastHLine(x, y, w, color)
+        self.drawFastHLine(x, y + h - 1, w, color)
+        self.drawFastVLine(x, y, h, color)
+        self.drawFastVLine(x + w - 1, y, h, color)
+
+    def drawFastVLine(self, x, y, h, color):
+        self.drawLine(x, y, x, y + h - 1, color)
+
+    def drawFastHLine(self, x, y, w, color):
+        self.drawLine(x, y, x + w - 1, y, color)
+
+    def fillRect(self, x, y, w, h, color):
+        for i in range(x, x + w):
+            self.drawFastVLine(i, y, h, color)
+
+    def writeString(self, s):
+        for a in s: self.writeChar(ord(a))
+
+    def writeChar(self, c):
+        if (c == '\n'):
+            self.cursor_y += self.textsize * 8
+            self.cursor_x = 0
+        elif (c == '\r'):
+            pass
+        else:
+            self.drawChar(self.cursor_x, self.cursor_y, c, self.textcolor, self.textbgcolor, self.textsize)
+            self.cursor_x += self.textsize * 6
+            if (self.wrap and (self.cursor_x > (self._width - self.textsize * 6))):
+                self.cursor_y += self.textsize * 8
+                self.cursor_x = 0
+
+    def drawChar(self, x, y, c, color, bg, size):
+        if ((x >= self._width) or (y >= self._height) or ((x + 5 * size - 1) < 0) or ((y + 8 * size - 1) < 0)):
+            return
+        for i in range(6):
+            if (i == 5):
+                line = 0x0
+            else:
+                line = self.font[c * 5 + i]
+            for j in range(8):
+                if (line & 0x1):
+                    if (size == 1):
+                        self.drawPixel(x + i, y + j, color)
+                    else:
+                        self.fillRect(x + (i * size), y + (j * size), size, size, color)
+                elif (bg != color):
+                    if (size == 1):
+                        self.drawPixel(x + i, y + j, bg)
+                    else:
+                        self.fillRect(x + i * size, y + j * size, size, size, bg)
+                line >>= 1
+
+    def setCursor(self, x, y):
+        self.cursor_x = x
+        self.cursor_y = y
+
+    def setTextSize(self, s):
+        self.textsize = s if (s > 0) else 1
+
+    def setTextColor(self, c, b):
+        self.textcolor = c
+        self.textbgcolor = b
+
+    def setTextWrap(self, w):
+        self.wrap = w
+
+    def scroll(self, arg):
+        if arg == 'left':
+            self.SSD1306_command(0x27)  # up-0x29 ,2A left-0x27 right0x26
+        if arg == 'right':
+            self.SSD1306_command(0x26)  # up-0x29 ,2A left-0x27 right0x26
+        if arg in ['topright', 'bottomright']:
+            self.SSD1306_command(0x29)  # up-0x29 ,2A left-0x27 right0x26
+        if arg in ['topleft', 'bottomleft']:
+            self.SSD1306_command(0x2A)  # up-0x29 ,2A left-0x27 right0x26
+
+        if arg in ['left', 'right', 'topright', 'topleft', 'bottomleft', 'bottomright']:
+            self.SSD1306_command(0x00)  # dummy
+            self.SSD1306_command(0x0)  # start page
+            self.SSD1306_command(0x7)  # time interval 0b100 - 3 frames
+            self.SSD1306_command(0xf)  # end page
+            if arg in ['topleft', 'topright']:
+                self.SSD1306_command(0x02)  # dummy 00 . xx for horizontal scroll (speed)
+            elif arg in ['bottomleft', 'bottomright']:
+                self.SSD1306_command(0xfe)  # dummy 00 . xx for horizontal scroll (speed)
+
+            if arg in ['left', 'right']:
+                self.SSD1306_command(0x02)  # dummy 00 . xx for horizontal scroll (speed)
+                self.SSD1306_command(0xff)
+
+            self.SSD1306_command(0x2F)
+
+        if arg == 'stop':
+            self.SSD1306_command(0x2E)
+
+    def pulseIt(self):
+        for a in range(2):
+            self.SSD1306_command(0xD6)
+            self.SSD1306_command(0x01)
+            time.sleep(0.1)
+            self.SSD1306_command(0xD6)
+            self.SSD1306_command(0x00)
+            time.sleep(0.1)
+
+
+if __name__ == "__main__":
+    from PSL import sciencelab
+
+    I = sciencelab.connect()
+    O = connect(I.I2C)
+    textbgcolor = 0
+    textcolor = 1
+    O.load('logo')
+    O.scroll('topright')
+    import time
+
+    time.sleep(2.8)
+    O.scroll('stop')
