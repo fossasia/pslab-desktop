@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
-import FitPanel from './components/FitPanel';
 import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
-import roundOff from '../../utils/arithmetics';
-
-const electron = window.require('electron');
-const { ipcRenderer } = electron;
-const loadBalancer = window.require('electron-load-balancer');
 
 class LogicAnalyser extends Component {
   constructor(props) {
@@ -36,6 +30,10 @@ class LogicAnalyser extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {}
+
+  toggleRead = () => {
+    this.setState(prevState => ({ isReading: !prevState.isReading }));
+  };
 
   changeNumberOfChannels = event => {
     this.setState({
@@ -124,23 +122,12 @@ class LogicAnalyser extends Component {
           <ActionButtons
             isConnected={isConnected}
             isReading={isReading}
-            onToggleRead={this.onToggleRead}
+            toggleRead={this.toggleRead}
           />
         }
-        // graph={
-        //   <Graph isReading={isReading} numberOfChannels={numberOfChannels} />
-        // }
-        // information={
-        //   (fitChannel1 !== 'None' || fitChannel2 !== 'None') &&
-        //   isFourierTransformActive && (
-        //     <FitPanel
-        //       isReading={isReading}
-        //       fitType={fitType}
-        //       fitChannel1={fitChannel1}
-        //       fitChannel2={fitChannel2}
-        //     />
-        //   )
-        // }
+        graph={
+          <Graph isReading={isReading} numberOfChannels={numberOfChannels} />
+        }
       />
     );
   }
