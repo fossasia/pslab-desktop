@@ -12,7 +12,7 @@ const styles = () => ({
   },
 });
 
-const ActionButtons = ({ isConnected, isReading, onToggleRead, classes }) => {
+const ActionButtons = ({ isConnected, isReading, toggleRead, classes }) => {
   return (
     <ButtonWrapper>
       <Button
@@ -21,7 +21,7 @@ const ActionButtons = ({ isConnected, isReading, onToggleRead, classes }) => {
         size="large"
         color="default"
         disabled={!isConnected}
-        onClick={onToggleRead}
+        onClick={toggleRead}
       >
         {isReading ? (
           <StopIcon style={{ fontSize: 20 }} />

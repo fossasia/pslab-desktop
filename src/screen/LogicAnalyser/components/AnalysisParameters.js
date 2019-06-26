@@ -8,6 +8,11 @@ import {
   OutlinedInput,
   FormControl,
   InputLabel,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableRow,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import CustomSliderInput from '../../../components/CustomSliderInput';
@@ -242,6 +247,48 @@ class AnalysisParameters extends Component {
             minTitleWidth="48px"
             minUnitWidth="60px"
           />
+        </OptionsRowWrapper>
+        <Divider />
+        <OptionsRowWrapper>
+          <Table size="small" padding="dense">
+            <TableHead>
+              <TableRow>
+                <TableCell>Index</TableCell>
+                <TableCell align="right">Time (mSec)</TableCell>
+                <TableCell align="right">Time (mSec)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  1
+                </TableCell>
+                <TableCell align="right">--/-</TableCell>
+                <TableCell align="right">--/-</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  2
+                </TableCell>
+                <TableCell align="right">--/-</TableCell>
+                <TableCell align="right">--/-</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  3
+                </TableCell>
+                <TableCell align="right">--/-</TableCell>
+                <TableCell align="right">--/-</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  4
+                </TableCell>
+                <TableCell align="right">--/-</TableCell>
+                <TableCell align="right">--/-</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </OptionsRowWrapper>
       </SettingsWrapper>
     );

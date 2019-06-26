@@ -10,8 +10,9 @@ import {
   Legend,
   Label,
 } from 'recharts';
+import { LinearProgress } from '@material-ui/core';
 import { withTheme } from 'styled-components';
-import { GraphWrapper } from './Settings.styles';
+import { GraphWrapper,ProgressWrapper } from './Settings.styles';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -47,11 +48,12 @@ class Graph extends Component {
   }
 
   render() {
-    const { activeChannels, timeBase, channelRanges, theme } = this.props;
+    const { numberOfChannels, isReading, theme } = this.props;
     const { oscData } = this.state;
 
     return (
       <GraphWrapper>
+        <ProgressWrapper>{isReading && <LinearProgress />}</ProgressWrapper>
         <ResponsiveContainer>
           <LineChart
             data={oscData}
@@ -63,47 +65,24 @@ class Graph extends Component {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="time"
-              type="number"
-              tickCount={11}
-              domain={[0, 10 * timeBase]}
-            >
+            <XAxis dataKey="time" type="number">
               <Label value="mSec" position="bottom" />
             </XAxis>
-            <YAxis
-              yAxisId="left"
-              domain={[
-                -1 * parseInt(channelRanges.ch1, 10),
-                parseInt(channelRanges.ch1, 10),
-              ]}
-              allowDataOverflow={true}
-              label="V"
-            />
-            <YAxis
-              yAxisId="right"
-              domain={[
-                -1 * parseInt(channelRanges.ch2, 10),
-                parseInt(channelRanges.ch2, 10),
-              ]}
-              orientation="right"
-              allowDataOverflow={true}
-            />
+            <YAxis yAxisId="left" />
+            <YAxis yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend align="right" iconType="triangle" />
-            {activeChannels.ch1 && (
+            <Line
+              yAxisId="left"
+              type="monotone"
+              dataKey="ch1"
+              stroke={theme.ch1Color}
+              dot={false}
+              activeDot={{ r: 4 }}
+            />
+            {numberOfChannels > 1 && (
               <Line
                 yAxisId="left"
-                type="monotone"
-                dataKey="ch1"
-                stroke={theme.ch1Color}
-                dot={false}
-                activeDot={{ r: 4 }}
-              />
-            )}
-            {activeChannels.ch2 && (
-              <Line
-                yAxisId="right"
                 type="monotone"
                 dataKey="ch2"
                 stroke={theme.ch2Color}
@@ -111,7 +90,7 @@ class Graph extends Component {
                 activeDot={{ r: 4 }}
               />
             )}
-            {activeChannels.ch3 && (
+            {numberOfChannels > 2 && (
               <Line
                 yAxisId="left"
                 type="monotone"
@@ -121,11 +100,11 @@ class Graph extends Component {
                 activeDot={{ r: 4 }}
               />
             )}
-            {activeChannels.mic && (
+            {numberOfChannels > 3 && (
               <Line
                 yAxisId="left"
                 type="monotone"
-                dataKey="mic"
+                dataKey="ch4"
                 stroke={theme.micColor}
                 dot={false}
                 activeDot={{ r: 4 }}
