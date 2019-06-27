@@ -37,7 +37,7 @@ const Settings = props => {
   } = props;
 
   const onCheck = activeComponent => value => {
-    value=parseFloat(value);
+    value = parseFloat(value);
     switch (activeComponent) {
       case 'PV1':
         return !(value >= -5 && value <= 5);
