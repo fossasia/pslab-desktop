@@ -41,16 +41,28 @@ const CustomDialog = ({
   };
 
   const onHandleAccept = () => {
-    const isError = onCheck ? onCheck(values.textValue) : false;
-    if (isError) {
+    let textValueFloat;
+    try {
+      textValueFloat = parseFloat(values.textValue);
+    }
+    catch (err) {
       setValues({
         ...values,
         isTextError: true,
       });
-    } else {
-      onAccept(values.textValue);
-      onReset();
-      onDialogClose();
+    }
+    finally {
+      const isError = onCheck ? onCheck(textValueFloat) : false;
+      if (isError) {
+        setValues({
+          ...values,
+          isTextError: true,
+        });
+      } else {
+        onAccept(textValueFloat);
+        onReset();
+        onDialogClose();
+      }
     }
   };
 
@@ -77,7 +89,7 @@ const CustomDialog = ({
               id="name"
               error={values.isTextError}
               label={textTitle}
-              type="number"
+              type="text"
               value={values.textValue}
               onChange={onTextFieldChange('textValue')}
               fullWidth
