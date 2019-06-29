@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { IconButton, Tooltip } from '@material-ui/core';
+import {
+  IconButton,
+  Tooltip,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from '@material-ui/core';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
   Usb as ConnectedIcon,
   Warning as DisconnectedIcon,
   Settings as SettingIcon,
   Refresh as ResetIcon,
+  BugReport as BugIcon,
+  Feedback as FeedbackIcon,
+  Error as AboutUsIcon,
+  WifiTethering as LoggedDataIcon,
+  ViewComfy as InstrumentsIcon,
+  ArrowBack as BackIcon,
+  DeveloperBoard as DeviceIcon,
+  Menu as DrawerIcon,
 } from '@material-ui/icons';
 import {
   OscilloscopeIcon,
@@ -16,15 +33,11 @@ import {
   PowerSourceIcon,
   MultimeterIcon,
 } from '../../components/Icons/PSLabIcons';
-import AppIcon from '../../resources/app_icon.svg';
+import AppIcon from '../../resources/app_icon.png';
 import {
   AppshellContainer,
   ChildrenContainer,
-  NavigationContainer,
-  TopNavigationWrapper,
-  BottomNavigationWrapper,
   Spacer,
-  NavigationTab,
   AppIconWrapper,
   ChildrenWrapper,
   ButtonContainer,
@@ -35,6 +48,12 @@ import {
 const styles = theme => ({
   iconButton: {
     color: theme.pallet.common.white,
+  },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
   },
 });
 
@@ -67,45 +86,90 @@ const topNavigationItems = [
 ];
 
 const Appshell = ({ device, reset, children, location, classes }) => {
+  const [drawerOpen, toggleDrawer] = useState(false);
+
   return (
     <AppshellContainer>
-      <NavigationContainer>
-        <Link to="/">
-          <AppIconWrapper>
-            <img
-              style={{
-                height: '3em',
-                width: 'auto',
-              }}
-              alt="App Icon"
-              src={AppIcon}
-            />
-          </AppIconWrapper>
-        </Link>
-        <TopNavigationWrapper>
-          {topNavigationItems.map((item, index) => {
-            return (
-              <Link key={index} to={item.redirectPath}>
-                <NavigationTab
-                  selected={item.redirectPath === location.pathname}
-                >
-                  {item.icon}
-                </NavigationTab>
-              </Link>
-            );
-          })}
-        </TopNavigationWrapper>
-        <Spacer />
-        <BottomNavigationWrapper>
-          <Link to="/settings">
-            <NavigationTab>
-              <SettingIcon style={{ fontSize: '2.2em' }} />
-            </NavigationTab>
-          </Link>
-        </BottomNavigationWrapper>
-      </NavigationContainer>
+      <Drawer open={drawerOpen} onClose={() => toggleDrawer(!drawerOpen)}>
+        <div className={classes.list} role="presentation">
+          <img
+            src={AppIcon}
+            style={{ height: '8em', width: 'auto', margin: '32px' }}
+          />
+        </div>
+        <div
+          className={classes.list}
+          role="presentation"
+          onClick={() => toggleDrawer(!drawerOpen)}
+          onKeyDown={() => toggleDrawer(!drawerOpen)}
+        >
+          <List>
+            <Link to="/">
+              <ListItem button>
+                <ListItemIcon>
+                  <InstrumentsIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Instruments'} />
+              </ListItem>
+            </Link>
+            <ListItem button>
+              <ListItemIcon>
+                <DeviceIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Device'} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <LoggedDataIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Logged Data'} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <SettingIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Settings'} />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem button>
+              <ListItemIcon>
+                <FeedbackIcon />
+              </ListItemIcon>
+              <ListItemText primary={'FAQs'} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <AboutUsIcon />
+              </ListItemIcon>
+              <ListItemText primary={'About Us'} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <BugIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Feedback & Bugs'} />
+            </ListItem>
+          </List>
+        </div>
+      </Drawer>
       <ChildrenContainer>
         <AppBar>
+          <ButtonContainer>
+            <IconButton
+              onClick={() => toggleDrawer(true)}
+              className={classes.iconButton}
+              size="medium"
+            >
+              <DrawerIcon style={{ fontSize: 24 }} />
+            </IconButton>
+            <Link to="/">
+              <IconButton className={classes.iconButton} size="medium">
+                <BackIcon style={{ fontSize: 24 }} />
+              </IconButton>
+            </Link>
+          </ButtonContainer>
           <TitleContainer />
           <Spacer />
           <ButtonContainer>

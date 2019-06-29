@@ -77,7 +77,8 @@ class Multimeter:
             data = self.device.get_resistance()
             time.sleep(0.25)
         elif pin_name == 'CAPACITOR':
-            time.sleep(1)
+            data = self.device.get_capacitance()
+            time.sleep(1.5)
             pass
         data, prefix = self.precision_control(data)
         output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}
@@ -91,6 +92,8 @@ class Multimeter:
             return (round(value / 1e3, 3), 'k')
         elif abs(value) <= 1e-10:
             return (0, None)
+        elif abs(value) <= 1e-12:
+            return (round(value / 1e-12, 3), 'p')
         elif abs(value) <= 1e-9:
             return (round(value / 1e-9, 3), 'n')
         elif abs(value) <= 1e-6:
