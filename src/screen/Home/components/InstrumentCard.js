@@ -6,6 +6,8 @@ import {
   ContentContainer,
   Title,
   Description,
+  HorizontalBar,
+  VerticalBar,
 } from './InstrumentCard.styles';
 
 const InstrumentCard = ({ icon, title, description, redirectPath }) => {
@@ -20,6 +22,8 @@ const InstrumentCard = ({ icon, title, description, redirectPath }) => {
           <Description>{description}</Description>
         </ContentContainer>
         <ImageWrapper>{icon}</ImageWrapper>
+        <HorizontalBar />
+        <VerticalBar />
       </CustomCard>
     </Link>
   );
