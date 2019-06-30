@@ -26,6 +26,7 @@ const CustomSliderInput = ({
   disabled,
   minTitleWidth,
   minUnitWidth,
+  checkFloat,
   display,
   classes,
   openDialog,
@@ -68,8 +69,9 @@ const CustomSliderInput = ({
               onAccept: value => {
                 onChangeSlider(undefined, value);
               },
+              checkFloat: checkFloat,
               onCheck: onCheck(min, max),
-              onCancel: () => {},
+              onCancel: () => { },
             });
         }}
         style={{

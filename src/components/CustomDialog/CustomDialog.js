@@ -16,6 +16,7 @@ const CustomDialog = ({
   hint,
   textTitle,
   onDialogClose,
+  checkFloat,
   onCheck,
   onAccept,
   onCancel,
@@ -25,12 +26,27 @@ const CustomDialog = ({
     isTextError: false,
   });
 
+  function checkTextFieldChange(props) {
+    if (!checkFloat)
+      return true;
+    let regex = /^(?:\-)?[0-9]*(\.[0-9]{0,2})?$/;
+    return regex.test(props);
+  }
+  function checkHandleAccept(props) {
+    if (!checkFloat)
+      return true;
+    let regex = /^.*[0-9].*$/;
+    return regex.test(props);
+  }
+
   const onTextFieldChange = fieldName => event => {
-    setValues({
-      ...values,
-      [fieldName]: event.target.value,
-      isTextError: false,
-    });
+    if (checkTextFieldChange(event.target.value)) {
+      setValues({
+        ...values,
+        [fieldName]: event.target.value,
+        isTextError: false,
+      });
+    }
   };
 
   const onReset = () => {
@@ -41,16 +57,19 @@ const CustomDialog = ({
   };
 
   const onHandleAccept = () => {
-    const isError = onCheck ? onCheck(values.textValue) : false;
-    if (isError) {
-      setValues({
-        ...values,
-        isTextError: true,
-      });
-    } else {
-      onAccept(values.textValue);
-      onReset();
-      onDialogClose();
+    const inputText = values.textValue;
+    if (checkHandleAccept(inputText)) {
+      const isError = onCheck ? onCheck(inputText) : false;
+      if (isError) {
+        setValues({
+          ...values,
+          isTextError: true,
+        });
+      } else {
+        onAccept(inputText);
+        onReset();
+        onDialogClose();
+      }
     }
   };
 
@@ -77,7 +96,7 @@ const CustomDialog = ({
               id="name"
               error={values.isTextError}
               label={textTitle}
-              type="number"
+              type="text"
               value={values.textValue}
               onChange={onTextFieldChange('textValue')}
               fullWidth

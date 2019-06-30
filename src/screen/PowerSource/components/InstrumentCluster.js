@@ -81,9 +81,10 @@ const Settings = props => {
                     variant: 'simple-input',
                     title: 'PV1',
                     textTitle: 'Enter Voltage ( -5 to 5 )',
+                    checkFloat: true,
                     onAccept: onChangeSlider('pv1'),
                     onCheck: onCheck('PV1'),
-                    onCancel: () => {},
+                    onCancel: () => { },
                   });
                 }}
               >
@@ -142,8 +143,9 @@ const Settings = props => {
                     title: 'PV2',
                     textTitle: 'Enter Voltage ( -3.3 to 3.3 )',
                     onAccept: onChangeSlider('pv2'),
+                    checkFloat: true,
                     onCheck: onCheck('PV2'),
-                    onCancel: () => {},
+                    onCancel: () => { },
                   });
                 }}
               >
@@ -204,8 +206,9 @@ const Settings = props => {
                     title: 'PV3',
                     textTitle: 'Enter Voltage ( 0 to 3.3 )',
                     onAccept: onChangeSlider('pv3'),
+                    checkFloat: true,
                     onCheck: onCheck('PV3'),
-                    onCancel: () => {},
+                    onCancel: () => { },
                   });
                 }}
               >
@@ -264,8 +267,9 @@ const Settings = props => {
                     title: 'PCS',
                     textTitle: 'Enter Current ( 0 to 3.3 )',
                     onAccept: onChangeSlider('pcs'),
+                    checkFloat: true,
                     onCheck: onCheck('PCS'),
-                    onCancel: () => {},
+                    onCancel: () => { },
                   });
                 }}
               >
