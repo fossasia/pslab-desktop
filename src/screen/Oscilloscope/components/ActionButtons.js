@@ -1,7 +1,10 @@
 import React from 'react';
-import ReadIcon from '@material-ui/icons/PlayCircleFilled';
-import StopIcon from '@material-ui/icons/PauseCircleFilled';
-import RecordIcon from '@material-ui/icons/RadioButtonChecked';
+import {
+  Pause as StopReadIcon,
+  PlayCircleFilled as ReadIcon,
+  RadioButtonChecked as RecordIcon,
+  Stop as StopIcon,
+} from '@material-ui/icons';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { ButtonWrapper } from './ActionButtons.styles';
@@ -12,7 +15,14 @@ const styles = () => ({
   },
 });
 
-const ActionButtons = ({ isConnected, isReading, onToggleRead, classes }) => {
+const ActionButtons = ({
+  isConnected,
+  isReading,
+  isWriting,
+  onToggleRead,
+  onToggleWrite,
+  classes,
+}) => {
   return (
     <ButtonWrapper>
       <Button
@@ -24,7 +34,7 @@ const ActionButtons = ({ isConnected, isReading, onToggleRead, classes }) => {
         onClick={onToggleRead}
       >
         {isReading ? (
-          <StopIcon style={{ fontSize: 20 }} />
+          <StopReadIcon style={{ fontSize: 20 }} />
         ) : (
           <ReadIcon style={{ fontSize: 20 }} />
         )}
@@ -35,8 +45,14 @@ const ActionButtons = ({ isConnected, isReading, onToggleRead, classes }) => {
         variant="contained"
         size="large"
         color="default"
+        disabled={isReading}
+        onClick={onToggleWrite}
       >
-        <RecordIcon style={{ fontSize: 20 }} />
+        {isWriting ? (
+          <StopIcon style={{ fontSize: 20 }} />
+        ) : (
+          <RecordIcon style={{ fontSize: 20 }} />
+        )}
       </Button>
     </ButtonWrapper>
   );

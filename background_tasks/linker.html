@@ -19,10 +19,11 @@
 			});
 
 			pyshell.on('stderr', function(stderr) {
-				log.info(stderr);
+				log.error(stderr);
 			});
 
 			pyshell.on('message', function(results) {
+				// log.info(results);
 				try {
 					const parsedJSON = JSON.parse(results);
 					switch (parsedJSON['type']) {
@@ -64,6 +65,9 @@
 							break;
 						case 'DEVICE_CONNECTION_STATUS':
 							ipcRenderer.send('CONNECTION_STATUS', parsedJSON);
+							break;
+						case 'DATA_WRITING_STATUS':
+							ipcRenderer.send('DATA_WRITING_STATUS', parsedJSON);
 							break;
 						default:
 							break;
