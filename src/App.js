@@ -41,11 +41,11 @@ class App extends Component {
       if (this.deviceStatus !== isConnected) {
         isConnected
           ? deviceConnected({
-              deviceInformation: {
-                deviceName,
-                portName,
-              },
-            })
+            deviceInformation: {
+              deviceName,
+              portName,
+            },
+          })
           : deviceDisconnected();
         this.deviceStatus = isConnected;
       }
@@ -134,6 +134,7 @@ class App extends Component {
               textTitle={dialog.textTitle}
               onDialogClose={closeDialog}
               onCheck={dialog.onCheck}
+              inputCheck={dialog.inputCheck}
               onAccept={dialog.onAccept}
               onCancel={dialog.onCancel}
             />

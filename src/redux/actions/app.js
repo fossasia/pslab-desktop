@@ -42,6 +42,7 @@ export const openDialog = ({
   hint = null,
   textTitle = null,
   onCheck = null,
+  inputCheck = null,
   onAccept = null,
   onCancel = null,
 }) => {
@@ -53,6 +54,7 @@ export const openDialog = ({
       hint,
       textTitle,
       onCheck,
+      inputCheck,
       onAccept,
       onCancel,
     },

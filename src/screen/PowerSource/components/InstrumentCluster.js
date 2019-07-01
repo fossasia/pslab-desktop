@@ -51,6 +51,11 @@ const Settings = props => {
     }
   };
 
+  const inputCheck = value => {
+    let regex = /^(?:\-)?[0-9]*(\.[0-9]{0,2})?$/;
+    return regex.test(value);
+  }
+
   return (
     <CardContainer>
       <CardColumnWrapper>
@@ -83,7 +88,8 @@ const Settings = props => {
                     textTitle: 'Enter Voltage ( -5 to 5 )',
                     onAccept: onChangeSlider('pv1'),
                     onCheck: onCheck('PV1'),
-                    onCancel: () => {},
+                    inputCheck: inputCheck,
+                    onCancel: () => { },
                   });
                 }}
               >
@@ -143,7 +149,8 @@ const Settings = props => {
                     textTitle: 'Enter Voltage ( -3.3 to 3.3 )',
                     onAccept: onChangeSlider('pv2'),
                     onCheck: onCheck('PV2'),
-                    onCancel: () => {},
+                    inputCheck: inputCheck,
+                    onCancel: () => { },
                   });
                 }}
               >
@@ -205,7 +212,8 @@ const Settings = props => {
                     textTitle: 'Enter Voltage ( 0 to 3.3 )',
                     onAccept: onChangeSlider('pv3'),
                     onCheck: onCheck('PV3'),
-                    onCancel: () => {},
+                    inputCheck: inputCheck,
+                    onCancel: () => { },
                   });
                 }}
               >
@@ -265,7 +273,8 @@ const Settings = props => {
                     textTitle: 'Enter Current ( 0 to 3.3 )',
                     onAccept: onChangeSlider('pcs'),
                     onCheck: onCheck('PCS'),
-                    onCancel: () => {},
+                    inputCheck: inputCheck,
+                    onCancel: () => { },
                   });
                 }}
               >
