@@ -38,7 +38,6 @@ import {
   AppshellContainer,
   ChildrenContainer,
   Spacer,
-  AppIconWrapper,
   ChildrenWrapper,
   ButtonContainer,
   TitleContainer,
@@ -133,18 +132,22 @@ const Appshell = ({ device, reset, children, location, classes }) => {
           </List>
           <Divider />
           <List>
-            <ListItem button>
-              <ListItemIcon>
-                <FeedbackIcon />
-              </ListItemIcon>
-              <ListItemText primary={'FAQs'} />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <AboutUsIcon />
-              </ListItemIcon>
-              <ListItemText primary={'About Us'} />
-            </ListItem>
+            <Link to="/faq">
+              <ListItem button>
+                <ListItemIcon>
+                  <FeedbackIcon />
+                </ListItemIcon>
+                <ListItemText primary={'FAQs'} />
+              </ListItem>
+            </Link>
+            <Link to="/aboutus">
+              <ListItem button>
+                <ListItemIcon>
+                  <AboutUsIcon />
+                </ListItemIcon>
+                <ListItemText primary={'About Us'} />
+              </ListItem>
+            </Link>
             <ListItem button>
               <ListItemIcon>
                 <BugIcon />

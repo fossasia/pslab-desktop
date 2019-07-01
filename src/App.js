@@ -13,6 +13,8 @@ import PowerSource from './screen/PowerSource';
 import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
 import Settings from './screen/Settings';
+import FAQ from './screen/FAQ';
+import AboutUs from './screen/AboutUs';
 import CustomDialog from './components/CustomDialog';
 import theme from './theme';
 import {
@@ -41,11 +43,11 @@ class App extends Component {
       if (this.deviceStatus !== isConnected) {
         isConnected
           ? deviceConnected({
-            deviceInformation: {
-              deviceName,
-              portName,
-            },
-          })
+              deviceInformation: {
+                deviceName,
+                portName,
+              },
+            })
           : deviceDisconnected();
         this.deviceStatus = isConnected;
       }
@@ -113,6 +115,11 @@ class App extends Component {
                   path="/multimeter"
                   render={props => <Multimeter {...props} />}
                 />
+                <Route
+                  path="/aboutus"
+                  render={props => <AboutUs {...props} />}
+                />
+                <Route path="/faq" render={props => <FAQ {...props} />} />
                 <Route path="/settings" component={Settings} />
               </Switch>
             </Appshell>
