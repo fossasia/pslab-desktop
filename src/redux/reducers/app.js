@@ -24,6 +24,7 @@ const initialState = {
     hint: null,
     textTitle: null,
     onCheck: null,
+    inputCheck: null,
     onAccept: null,
     onCancel: null,
   },
@@ -78,6 +79,7 @@ export const appReducer = (prevState = initialState, action) => {
         hint,
         textTitle,
         onCheck,
+        inputCheck,
         onAccept,
         onCancel,
       } = action.payload;
@@ -90,6 +92,7 @@ export const appReducer = (prevState = initialState, action) => {
           hint,
           textTitle,
           onCheck,
+          inputCheck,
           onAccept,
           onCancel,
         },

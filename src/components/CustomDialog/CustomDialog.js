@@ -17,6 +17,7 @@ const CustomDialog = ({
   textTitle,
   onDialogClose,
   onCheck,
+  inputCheck,
   onAccept,
   onCancel,
 }) => {
@@ -26,11 +27,13 @@ const CustomDialog = ({
   });
 
   const onTextFieldChange = fieldName => event => {
-    setValues({
-      ...values,
-      [fieldName]: event.target.value,
-      isTextError: false,
-    });
+    if (inputCheck(event.target.value)) {
+      setValues({
+        ...values,
+        [fieldName]: event.target.value,
+        isTextError: false,
+      });
+    }
   };
 
   const onReset = () => {
@@ -41,16 +44,18 @@ const CustomDialog = ({
   };
 
   const onHandleAccept = () => {
-    const isError = onCheck ? onCheck(values.textValue) : false;
-    if (isError) {
-      setValues({
-        ...values,
-        isTextError: true,
-      });
-    } else {
-      onAccept(values.textValue);
-      onReset();
-      onDialogClose();
+    if (inputCheck(values.textValue)) {
+      const isError = onCheck ? onCheck(values.textValue) : false;
+      if (isError) {
+        setValues({
+          ...values,
+          isTextError: true,
+        });
+      } else {
+        onAccept(values.textValue);
+        onReset();
+        onDialogClose();
+      }
     }
   };
 
@@ -77,7 +82,7 @@ const CustomDialog = ({
               id="name"
               error={values.isTextError}
               label={textTitle}
-              type="number"
+              type="text"
               value={values.textValue}
               onChange={onTextFieldChange('textValue')}
               fullWidth
