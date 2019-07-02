@@ -11,5 +11,9 @@ export const TabsContainer = styled.div`
 export const TabsWrapper = styled.div`
   margin: 16px 16px 0px 0px;
   display: flex;
+`;
+
+export const TabsRow = styled.div`
+  display: flex;
   justify-content: center;
 `;

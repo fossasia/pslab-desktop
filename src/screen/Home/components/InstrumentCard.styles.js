@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const CustomCard = styled.div`
+  position: relative;
   display: flex;
-  width: 52em;
-  height: 34em;
+  width: 48em;
+  height: 26em;
   transition-timing-function: ease-in-out;
   transition-duration: 200ms;
   border-radius: 8px;
@@ -43,4 +44,28 @@ export const Description = styled.div`
   font-weight: 350;
   margin: 32px 0px 0px 0px;
   color: ${props => props.theme.common.white};
+`;
+
+export const HorizontalBar = styled.div`
+  width: 71.5%;
+  height: 2em;
+  z-index: 1;
+  bottom: 5.5em;
+  left: 0px;
+  position: absolute;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 4px 0px 4px 0px;
+`;
+
+export const VerticalBar = styled.div`
+  width: 2em;
+  height: 46.5%;
+  z-index: 1;
+  top: 0px;
+  right: 5.5em;
+  position: absolute;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0px 4px 0px 4px;
 `;
