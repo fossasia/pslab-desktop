@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { LinearProgress } from '@material-ui/core';
 import { withTheme } from 'styled-components';
-import { GraphWrapper,ProgressWrapper } from './Settings.styles';
+import { GraphWrapper, ProgressWrapper } from './Settings.styles';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;

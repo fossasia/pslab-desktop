@@ -26,13 +26,6 @@ import {
   DeveloperBoard as DeviceIcon,
   Menu as DrawerIcon,
 } from '@material-ui/icons';
-import {
-  OscilloscopeIcon,
-  LogicAnalyserIcon,
-  WaveGeneratorIcon,
-  PowerSourceIcon,
-  MultimeterIcon,
-} from '../../components/Icons/PSLabIcons';
 import AppIcon from '../../resources/app_icon.png';
 import {
   AppshellContainer,
@@ -56,35 +49,7 @@ const styles = theme => ({
   },
 });
 
-const topNavigationItems = [
-  {
-    name: 'Oscilloscope',
-    redirectPath: '/oscilloscope',
-    icon: <OscilloscopeIcon size={'2em'} />,
-  },
-  {
-    name: 'Logica Analyser',
-    redirectPath: '/logicanalyser',
-    icon: <LogicAnalyserIcon size={'2em'} />,
-  },
-  {
-    name: 'Power Source',
-    redirectPath: '/powersource',
-    icon: <PowerSourceIcon size={'2em'} />,
-  },
-  {
-    name: 'Wave Generator',
-    redirectPath: '/wavegenerator',
-    icon: <WaveGeneratorIcon size={'2em'} />,
-  },
-  {
-    name: 'Multimeter',
-    redirectPath: '/multimeter',
-    icon: <MultimeterIcon size={'2em'} />,
-  },
-];
-
-const Appshell = ({ device, reset, children, location, classes }) => {
+const Appshell = ({ device, reset, children, history, classes }) => {
   const [drawerOpen, toggleDrawer] = useState(false);
 
   return (
@@ -167,11 +132,13 @@ const Appshell = ({ device, reset, children, location, classes }) => {
             >
               <DrawerIcon style={{ fontSize: 24 }} />
             </IconButton>
-            <Link to="/">
-              <IconButton className={classes.iconButton} size="medium">
-                <BackIcon style={{ fontSize: 24 }} />
-              </IconButton>
-            </Link>
+            <IconButton
+              className={classes.iconButton}
+              size="medium"
+              onClick={() => history.goBack()}
+            >
+              <BackIcon style={{ fontSize: 24 }} />
+            </IconButton>
           </ButtonContainer>
           <TitleContainer />
           <Spacer />
