@@ -12,7 +12,7 @@ const styles = () => ({
 });
 
 const onCheck = (min, max) => value => {
-  return value >= min && value <= max ? false : true;
+  return !(value >= min && value <= max);
 };
 
 const CustomSliderInput = ({
@@ -71,7 +71,7 @@ const CustomSliderInput = ({
               },
               onCheck: onCheck(min, max),
               inputCheck: inputCheck,
-              onCancel: () => { },
+              onCancel: () => {},
             });
         }}
         style={{
@@ -82,7 +82,7 @@ const CustomSliderInput = ({
           cursor: 'pointer',
         }}
       >{`${display ? display : value} ${unit}`}</span>
-    </div >
+    </div>
   );
 };
 const mapDispatchToProps = dispatch => ({

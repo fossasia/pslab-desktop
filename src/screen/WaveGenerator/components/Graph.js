@@ -38,7 +38,7 @@ const Graph = ({ activePreview, theme }) => {
         <Tooltip />
         <Legend align="right" iconType="triangle" />
         {
-          //activePreview.s1 &&
+          // activePreview.s1 &&
           <Line
             yAxisId="left"
             type="monotone"
@@ -49,7 +49,7 @@ const Graph = ({ activePreview, theme }) => {
           />
         }
         {
-          //activePreview.s2 &&
+          // activePreview.s2 &&
           <Line
             yAxisId="left"
             type="monotone"
@@ -60,7 +60,7 @@ const Graph = ({ activePreview, theme }) => {
           />
         }
         {
-          //activePreview.sqr1 &&
+          // activePreview.sqr1 &&
           <Line
             yAxisId="left"
             type="monotone"
@@ -71,7 +71,7 @@ const Graph = ({ activePreview, theme }) => {
           />
         }
         {
-          //activePreview.sqr2 &&
+          // activePreview.sqr2 &&
           <Line
             yAxisId="left"
             type="monotone"
@@ -82,7 +82,7 @@ const Graph = ({ activePreview, theme }) => {
           />
         }
         {
-          //activePreview.sqr3 &&
+          // activePreview.sqr3 &&
           <Line
             yAxisId="left"
             type="monotone"
@@ -93,7 +93,7 @@ const Graph = ({ activePreview, theme }) => {
           />
         }
         {
-          //activePreview.sqr4 &&
+          // activePreview.sqr4 &&
           <Line
             yAxisId="left"
             type="monotone"

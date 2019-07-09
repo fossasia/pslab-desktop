@@ -54,7 +54,7 @@ const Settings = props => {
   const inputCheck = value => {
     let regex = /^(?:\-)?[0-9]*(\.[0-9]{0,2})?$/;
     return regex.test(value);
-  }
+  };
 
   return (
     <CardContainer>
@@ -89,7 +89,7 @@ const Settings = props => {
                     onAccept: onChangeSlider('pv1'),
                     onCheck: onCheck('PV1'),
                     inputCheck: inputCheck,
-                    onCancel: () => { },
+                    onCancel: () => {},
                   });
                 }}
               >
@@ -150,7 +150,7 @@ const Settings = props => {
                     onAccept: onChangeSlider('pv2'),
                     onCheck: onCheck('PV2'),
                     inputCheck: inputCheck,
-                    onCancel: () => { },
+                    onCancel: () => {},
                   });
                 }}
               >
@@ -213,7 +213,7 @@ const Settings = props => {
                     onAccept: onChangeSlider('pv3'),
                     onCheck: onCheck('PV3'),
                     inputCheck: inputCheck,
-                    onCancel: () => { },
+                    onCancel: () => {},
                   });
                 }}
               >
@@ -274,7 +274,7 @@ const Settings = props => {
                     onAccept: onChangeSlider('pcs'),
                     onCheck: onCheck('PCS'),
                     inputCheck: inputCheck,
-                    onCancel: () => { },
+                    onCancel: () => {},
                   });
                 }}
               >
