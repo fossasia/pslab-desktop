@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 15.402107 15.402105"
+   height="1.5402104cm"
+   width="1.5402105cm"
+   sodipodi:docname="compass_red.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:export-filename="C:\Users\user\Documents\pslab-artwork\Instrument_Tile_Icons\red\compass_red.png"
+   inkscape:export-xdpi="247.36879"
+   inkscape:export-ydpi="247.36879">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     id="namedview905"
+     showgrid="false"
+     inkscape:zoom="7.0644682"
+     inkscape:cx="21.12306"
+     inkscape:cy="27.559585"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="cm" />
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="matrix(0.97429971,0,0,0.97429672,-4.4804176,-249.96576)"
+     id="layer1"
+     style="stroke:#fffefe;stroke-opacity:1">
+    <ellipse
+       ry="7.4968724"
+       rx="7.4968486"
+       cy="264.46442"
+       cx="12.502796"
+       id="path815"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#e00000;stroke-width:0.81468904;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       inkscape:export-xdpi="250"
+       inkscape:export-ydpi="250" />
+    <path
+       id="path1140"
+       d="m 15.995,260.5876 c -0.05608,0.002 -0.110454,0.0199 -0.156884,0.0514 l -4.276725,2.88926 c -0.03173,0.0214 -0.05906,0.0488 -0.08048,0.0805 l -2.8892547,4.27674 c -0.1840676,0.27223 0.1424421,0.59874 0.4146676,0.41466 l 4.2773071,-2.88925 c 0.03173,-0.0214 0.05906,-0.0488 0.08048,-0.0805 l 2.88867,-4.27676 c 0.137121,-0.20229 -0.01355,-0.47465 -0.257781,-0.466 z m -4.051602,3.40308 0.957641,0.95766 -2.9516586,1.99401 z"
+       style="line-height:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;text-transform:none;isolation:auto;mix-blend-mode:normal;fill:#e00000;stroke-width:0.29860717;fill-opacity:1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccc" />
+    <ellipse
+       style="fill:#e00000;fill-opacity:1;stroke:#e00000;stroke-width:0.30251804;stroke-opacity:1"
+       id="path838"
+       cx="12.546203"
+       cy="257.40558"
+       rx="0.37853891"
+       ry="0.64762539" />
+    <ellipse
+       ry="0.64762539"
+       rx="0.37853891"
+       cy="271.43646"
+       cx="12.546203"
+       id="ellipse840"
+       style="fill:#e00000;fill-opacity:1;stroke:#d40000;stroke-width:0.30251804;stroke-opacity:1" />
+    <ellipse
+       style="fill:#e00000;fill-opacity:1;stroke:#e00000;stroke-width:0.30251804;stroke-opacity:1"
+       id="ellipse842"
+       cx="264.44025"
+       cy="-5.5115676"
+       rx="0.37854007"
+       ry="0.64762342"
+       transform="rotate(90)" />
+    <ellipse
+       transform="rotate(90)"
+       ry="0.64762342"
+       rx="0.37854007"
+       cy="-19.542397"
+       cx="264.44025"
+       id="ellipse844"
+       style="fill:#e00000;fill-opacity:1;stroke:#e00000;stroke-width:0.30251804;stroke-opacity:1" />
+  </g>
+</svg>

@@ -82,12 +82,14 @@ const Appshell = ({ device, reset, children, history, classes }) => {
               </ListItemIcon>
               <ListItemText primary={'Device'} />
             </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <LoggedDataIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Logged Data'} />
-            </ListItem>
+            <Link to="/loggeddata">
+              <ListItem button>
+                <ListItemIcon>
+                  <LoggedDataIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Logged Data'} />
+              </ListItem>
+            </Link>
             <ListItem button>
               <ListItemIcon>
                 <SettingIcon />

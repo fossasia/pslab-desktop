@@ -15,6 +15,7 @@ import Multimeter from './screen/Multimeter';
 import Settings from './screen/Settings';
 import FAQ from './screen/FAQ';
 import AboutUs from './screen/AboutUs';
+import LoggedData from './screen/LoggedData';
 import CustomDialog from './components/CustomDialog';
 import theme from './theme';
 import {
@@ -118,6 +119,10 @@ class App extends Component {
                 <Route
                   path="/aboutus"
                   render={props => <AboutUs {...props} />}
+                />
+                <Route
+                  path="/loggeddata"
+                  render={props => <LoggedData {...props} />}
                 />
                 <Route path="/faq" render={props => <FAQ {...props} />} />
                 <Route path="/settings" component={Settings} />
