@@ -19,6 +19,7 @@ class Oscilloscope extends Component {
     super(props);
     this.timeBaseList = [0.5, 1, 5, 10, 20, 25, 50];
     this.state = {
+      isWriting: false,
       isReading: false,
       timeBaseIndex: 0,
       activeChannels: {
@@ -96,10 +97,14 @@ class Oscilloscope extends Component {
   }
 
   componentWillUnmount() {
-    const { isReading } = this.state;
+    const { isReading, isWriting } = this.state;
     isReading &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_OSC',
+      });
+    isWriting &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'STOP_WRITE',
       });
     ipcRenderer.removeAllListeners('OSC_CONFIG');
   }
@@ -162,6 +167,25 @@ class Oscilloscope extends Component {
     } else {
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'START_OSC',
+      });
+    }
+  };
+
+  onToggleWrite = event => {
+    const { isWriting } = this.state;
+    const { dataPath } = this.props;
+    this.setState(prevState => ({
+      isWriting: !prevState.isWriting,
+    }));
+    if (isWriting) {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'STOP_WRITE',
+      });
+    } else {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'START_WRITE',
+        deviceType: 'Oscilloscope',
+        dataPath: dataPath,
       });
     }
   };
@@ -318,6 +342,7 @@ class Oscilloscope extends Component {
   render() {
     const {
       isReading,
+      isWriting,
       timeBaseIndex,
       activeChannels,
       channelRanges,
@@ -369,8 +394,10 @@ class Oscilloscope extends Component {
         actionButtons={
           <ActionButtons
             isConnected={isConnected}
+            isWriting={isWriting}
             isReading={isReading}
             onToggleRead={this.onToggleRead}
+            onToggleWrite={this.onToggleWrite}
           />
         }
         graph={this.graphRenderer()}

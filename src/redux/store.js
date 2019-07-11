@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 import { appReducer } from './reducers/app';
+import { configReducer } from './reducers/config';
 
 const reducer = combineReducers({
   app: appReducer,
+  config: configReducer,
 });
 
 export const store = createStore(

@@ -102,3 +102,7 @@ ipcMain.on('WAV_GEN_CONFIG', (event, args) => {
 ipcMain.on('CONNECTION_STATUS', (event, args) => {
   mainWindow.webContents.send('CONNECTION_STATUS', args);
 });
+
+ipcMain.on('DATA_WRITING_STATUS', (event, args) => {
+  mainWindow.webContents.send('DATA_WRITING_STATUS', args);
+});

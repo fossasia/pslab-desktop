@@ -1,6 +1,7 @@
 import threading
 import sys
 import time
+import datetime
 import json
 import numpy as np
 from PSL import analyticsClass
@@ -9,7 +10,9 @@ analytics = analyticsClass.analyticsClass()
 
 
 class Oscilloscope:
-    def __init__(self, I):
+    def __init__(self, I, file_write):
+        self.file_write = file_write
+
         self.oscilloscope_voltage_read_thread = None
         self.oscilloscope_fft_read_thread = None
         self.oscilloscope_xy_plot_read_thread = None
@@ -148,23 +151,33 @@ class Oscilloscope:
                 trigger=self.is_trigger_active)
             time.sleep(self.delay)
             keys = ['time']
+            datetime_data = datetime.datetime.now()
+            timestamp = time.time()
             vector = ()
             if self.ch1:
                 x, y1 = self.device.fetch_trace(1)
                 keys.append('ch1')
                 vector = vector + (y1, )
+                self.file_write.update_buffer(
+                    "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH1', xData=x, yData=y1, timebase=self.time_gap)
             if self.ch2:
                 x, y2 = self.device.fetch_trace(2)
                 keys.append('ch2')
                 vector = vector + (y2, )
+                self.file_write.update_buffer(
+                    "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH2', xData=x, yData=y2, timebase=self.time_gap)
             if self.ch3:
                 x, y3 = self.device.fetch_trace(3)
                 keys.append('ch3')
                 vector = vector + (y3, )
+                self.file_write.update_buffer(
+                    "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH3', xData=x, yData=y3, timebase=self.time_gap)
             if self.mic:
                 x, y4 = self.device.fetch_trace(4)
                 keys.append('mic')
                 vector = vector + (y4, )
+                self.file_write.update_buffer(
+                    "OSC", timestamp=timestamp, datetime=datetime_data, channel='MIC', xData=x, yData=y4, timebase=self.time_gap)
             vector = (x * 1e-3, ) + vector
             output = {
                 'type': 'START_OSC',

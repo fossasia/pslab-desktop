@@ -2,6 +2,7 @@ import sys
 import time
 import threading
 import json
+from file_write import FileWrite
 from oscilloscope import Oscilloscope
 from device_detection import Device_detection
 from power_source import Power_source
@@ -10,12 +11,13 @@ from wave_generator import Wave_generator
 
 
 def main():
+    file_write = FileWrite()
     device_detection = Device_detection()
     device_detection.async_connect()
     I = device_detection.device
 
     # instrument cluster initialization
-    oscilloscope = Oscilloscope(I)
+    oscilloscope = Oscilloscope(I, file_write)
     power_source = Power_source(I)
     multimeter = Multimeter(I)
     wave_generator = Wave_generator(I)
@@ -124,13 +126,23 @@ def main():
             wave_generator.set_config(
                 wave, digital,
                 s1_frequency, s2_frequency, s2_phase, wave_form_s1,
-                wave_form_s2, pwm_frequency, sqr1_duty_cycle, 
+                wave_form_s2, pwm_frequency, sqr1_duty_cycle,
                 sqr2_duty_cycle, sqr2_phase,
                 sqr3_duty_cycle, sqr3_phase,
                 sqr4_duty_cycle, sqr4_phase)
 
         if command == 'GET_CONFIG_WAV_GEN':
             wave_generator.get_config()
+
+        # -------------------------------- Write block -----------------------------------
+
+        if command == 'START_WRITE':
+            data_path = parsed_stream_data['dataPath']
+            device_type = parsed_stream_data['deviceType']
+            file_write.start_recording(data_path, device_type)
+
+        if command == 'STOP_WRITE':
+            file_write.stop_recording()
 
         # -------------------------- Script termination block ----------------------------
         if command == 'KILL':

@@ -38,6 +38,13 @@ class App extends Component {
 
   componentDidMount() {
     const { deviceConnected, deviceDisconnected } = this.props;
+
+    ipcRenderer.on('DATA_WRITING_STATUS', (event, args) => {
+      const { openSnackbar } = this.props;
+      const { message } = args;
+      openSnackbar({ message });
+    });
+
     ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
       const { isConnected, message, deviceName, portName } = args;
 
@@ -59,6 +66,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    ipcRenderer.removeAllListeners('DATA_WRITING_STATUS');
     ipcRenderer.removeAllListeners('CONNECTION_STATUS');
     loadBalancer.stop(ipcRenderer, 'linker');
   }
@@ -90,7 +98,13 @@ class App extends Component {
   };
 
   render() {
-    const { closeSnackbar, snackbar, dialog, closeDialog } = this.props;
+    const {
+      closeSnackbar,
+      snackbar,
+      dialog,
+      closeDialog,
+      dataPath,
+    } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -101,7 +115,9 @@ class App extends Component {
                 <Route path="/" exact component={Home} />
                 <Route
                   path="/oscilloscope"
-                  render={props => <Oscilloscope {...props} />}
+                  render={props => (
+                    <Oscilloscope {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route path="/logicanalyser" component={LogicAnalyser} />
                 <Route
@@ -157,7 +173,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => state.app;
+const mapStateToProps = state => ({ ...state.app, ...state.config });
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
