@@ -85,6 +85,7 @@ const CustomSliderInput = ({
     </div>
   );
 };
+
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(
     {
@@ -93,6 +94,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch,
   ),
 });
+
 export default withStyles(styles)(
   connect(
     null,
