@@ -1,9 +1,13 @@
 import sys
 import json
+import time
+import datetime
 
 
 class Wave_generator:
-    def __init__(self, I):
+    def __init__(self, I, file_write):
+        self.file_write = file_write
+
         self.device = I
         self.wave = True
         self.digital = False
@@ -77,3 +81,16 @@ class Wave_generator:
                   }
         print(json.dumps(output))
         sys.stdout.flush()
+
+    def save_config(self, data_path):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+        self.file_write.save_config(
+            data_path, "WaveGenerator",  timestamp=timestamp, datetime=datetime_data,
+            wave=self.wave, s1_f=self.s1_frequency, s1_shape=self.wave_form_s1,
+            s2_f=self.s2_frequency, s2_p=self.s2_phase, s2_shape=self.wave_form_s2,
+            pwm_f=self.pwm_frequency,
+            dc_1=self.sqr1_duty_cycle,
+            p2=self.sqr2_phase, dc_2=self.sqr2_duty_cycle,
+            p3=self.sqr3_phase, dc_3=self.sqr3_duty_cycle,
+            p4=self.sqr4_phase, dc_4=self.sqr4_duty_cycle)

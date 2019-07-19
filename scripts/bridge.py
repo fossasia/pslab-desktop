@@ -21,7 +21,7 @@ def main():
     oscilloscope = Oscilloscope(I, file_write)
     power_source = Power_source(I)
     multimeter = Multimeter(I)
-    wave_generator = Wave_generator(I)
+    wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
 
     while(True):
@@ -135,6 +135,10 @@ def main():
 
         if command == 'GET_CONFIG_WAV_GEN':
             wave_generator.get_config()
+
+        if command == 'SAVE_CONFIG_WAV_GEN':
+            data_path = parsed_stream_data['dataPath']
+            wave_generator.save_config(data_path)
 
         # ------------------------------- Robtic Arm block -------------------------------
         if command == 'SET_ROB_ARM':

@@ -112,7 +112,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme.pallet}>
           <HashRouter>
-            <Appshell reset={this.reset}>
+            <Appshell reset={this.reset} dataPath={dataPath}>
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route

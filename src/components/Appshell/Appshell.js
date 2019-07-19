@@ -26,6 +26,7 @@ import {
   DeveloperBoard as DeviceIcon,
   Menu as DrawerIcon,
 } from '@material-ui/icons';
+import { Save as SaveIcon } from '@material-ui/icons';
 import AppIcon from '../../resources/app_icon.png';
 import {
   AppshellContainer,
@@ -36,6 +37,10 @@ import {
   TitleContainer,
   AppBar,
 } from './Appshell.styles';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
+const loadBalancer = window.require('electron-load-balancer');
 
 const styles = theme => ({
   iconButton: {
@@ -49,8 +54,39 @@ const styles = theme => ({
   },
 });
 
-const Appshell = ({ device, reset, children, history, classes }) => {
+const Appshell = ({
+  device,
+  reset,
+  children,
+  history,
+  location,
+  classes,
+  dataPath,
+}) => {
   const [drawerOpen, toggleDrawer] = useState(false);
+
+  const saveButtonRenderer = location => {
+    switch (location.pathname) {
+      case '/wavegenerator':
+        return (
+          <IconButton
+            disabled={!device.isConnected}
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => {
+              loadBalancer.sendData(ipcRenderer, 'linker', {
+                command: 'SAVE_CONFIG_WAV_GEN',
+                dataPath: dataPath,
+              });
+            }}
+          >
+            <SaveIcon />
+          </IconButton>
+        );
+      default:
+        return undefined;
+    }
+  };
 
   return (
     <AppshellContainer>
@@ -170,6 +206,7 @@ const Appshell = ({ device, reset, children, history, classes }) => {
                 )}
               </IconButton>
             </Tooltip>
+            {saveButtonRenderer(location)}
           </ButtonContainer>
         </AppBar>
         <ChildrenWrapper>{children}</ChildrenWrapper>
