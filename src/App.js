@@ -12,6 +12,7 @@ import LogicAnalyser from './screen/LogicAnalyser';
 import PowerSource from './screen/PowerSource';
 import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
+import Sensors from './screen/Sensors';
 import Settings from './screen/Settings';
 import FAQ from './screen/FAQ';
 import AboutUs from './screen/AboutUs';
@@ -131,6 +132,10 @@ class App extends Component {
                 <Route
                   path="/multimeter"
                   render={props => <Multimeter {...props} />}
+                />
+                <Route
+                  path="/sensors"
+                  render={props => <Sensors {...props} />}
                 />
                 <Route
                   path="/aboutus"

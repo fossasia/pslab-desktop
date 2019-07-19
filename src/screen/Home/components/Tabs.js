@@ -9,6 +9,7 @@ import {
   WaveGeneratorIcon,
   PowerSourceIcon,
   MultimeterIcon,
+  SensorsIcon,
 } from '../../../components/Icons/PSLabIcons';
 
 const Tabs = () => {
@@ -60,6 +61,16 @@ const Tabs = () => {
                 'Measure voltage, current, resistance and capacitance.'
               }
               redirectPath={'/multimeter'}
+            />
+          </TabsWrapper>
+          <TabsWrapper>
+            <InstrumentCard
+              icon={<SensorsIcon size={'10em'} />}
+              title={'Sensors'}
+              description={
+                'Allows logging of data returned by sensor connected.'
+              }
+              redirectPath={'/sensors'}
             />
           </TabsWrapper>
         </TabsRow>
