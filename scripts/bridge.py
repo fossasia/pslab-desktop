@@ -8,6 +8,7 @@ from device_detection import Device_detection
 from power_source import Power_source
 from multimeter import Multimeter
 from wave_generator import Wave_generator
+from robotic_arm import RoboticArm
 
 
 def main():
@@ -21,6 +22,7 @@ def main():
     power_source = Power_source(I)
     multimeter = Multimeter(I)
     wave_generator = Wave_generator(I)
+    robotic_arm = RoboticArm(I, file_write)
 
     while(True):
         in_stream_data = input()
@@ -133,6 +135,14 @@ def main():
 
         if command == 'GET_CONFIG_WAV_GEN':
             wave_generator.get_config()
+
+        # ------------------------------- Robtic Arm block -------------------------------
+        if command == 'SET_ROB_ARM':
+            angle1 = parsed_stream_data['angle1']
+            angle2 = parsed_stream_data['angle2']
+            angle3 = parsed_stream_data['angle3']
+            angle4 = parsed_stream_data['angle4']
+            robotic_arm.setServo(angle1, angle2, angle3, angle4)
 
         # -------------------------------- Write block -----------------------------------
 
