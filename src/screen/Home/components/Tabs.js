@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings as SettingIcon } from '@material-ui/icons';
+import { Settings as SettingIcon, TabRounded } from '@material-ui/icons';
 import { Scrollbars } from 'react-custom-scrollbars';
 import InstrumentCard from './InstrumentCard';
 import { TabsContainer, TabsWrapper, TabsRow } from './Tabs.styles';
@@ -71,6 +71,16 @@ const Tabs = () => {
                 'Allows logging of data returned by sensor connected.'
               }
               redirectPath={'/sensors'}
+            />
+          </TabsWrapper>
+        </TabsRow>
+        <TabsRow>
+          <TabsWrapper>
+            <InstrumentCard
+              icon={<MultimeterIcon size={'10em'} />}
+              title={'Robotic Arm'}
+              description={'To control servo motors using a timeline.'}
+              redirectPath={'/robotarm'}
             />
           </TabsWrapper>
         </TabsRow>

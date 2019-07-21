@@ -13,6 +13,7 @@ import PowerSource from './screen/PowerSource';
 import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
 import Sensors from './screen/Sensors';
+import RobotArm from './screen/RobotArm';
 import Settings from './screen/Settings';
 import FAQ from './screen/FAQ';
 import AboutUs from './screen/AboutUs';
@@ -132,6 +133,10 @@ class App extends Component {
                 <Route
                   path="/multimeter"
                   render={props => <Multimeter {...props} />}
+                />
+                <Route
+                  path="/robotarm"
+                  render={props => <RobotArm {...props} />}
                 />
                 <Route
                   path="/sensors"
