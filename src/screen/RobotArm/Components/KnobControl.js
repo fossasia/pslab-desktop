@@ -1,4 +1,5 @@
 import React from 'react';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
   KnobCell,
   KnobCellWrapper,
@@ -19,6 +20,12 @@ import {
 } from '@material-ui/icons';
 import CustomCircularInput from '../../../components/CustomCircularInput';
 
+const styles = theme => ({
+  iconButton: {
+    color: theme.pallet.common.white,
+  },
+});
+
 const KnobControl = ({
   brush1,
   brush2,
@@ -30,6 +37,8 @@ const KnobControl = ({
   stop,
   pause,
   active,
+  isConnected,
+  classes,
 }) => {
   return (
     <KnobCellWrapper>
@@ -139,26 +148,33 @@ const KnobControl = ({
       </KnobCell>
       <TimeControlPanel>
         {active ? (
-          <IconButton onClick={pause} style={{ color: '#fff' }}>
+          <IconButton
+            disabled={!isConnected}
+            onClick={pause}
+            className={classes.iconButton}
+          >
             <PauseIcon />
           </IconButton>
         ) : (
-          <IconButton onClick={start} style={{ color: '#fff' }}>
+          <IconButton
+            disabled={!isConnected}
+            onClick={start}
+            className={classes.iconButton}
+          >
             <PlayIcon />
           </IconButton>
         )}
         <IconButton
+          disabled={!isConnected}
           onClick={stop}
-          style={{ margin: '8px 8px 0px 8px', color: '#fff' }}
+          style={{ margin: '8px 8px 0px 8px' }}
+          className={classes.iconButton}
         >
           <StopIcon />
-        </IconButton>
-        <IconButton style={{ margin: '8px 8px 0px 8px', color: '#fff' }}>
-          <SaveIcon />
         </IconButton>
       </TimeControlPanel>
     </KnobCellWrapper>
   );
 };
 
-export default KnobControl;
+export default withTheme()(withStyles(styles)(KnobControl));
