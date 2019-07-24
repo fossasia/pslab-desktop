@@ -45,9 +45,9 @@ class FileWrite:
         if device_type == 'WaveGenerator':
             buffer = []
             self.file_pointed.write(
-                "Timestamp, DateTime, Wave, S1_Frequency, S1_Shape, S2_Frequency, S2_Phase, S2_Shape, PWM_Frequency, SQR1_Duty, SQR2_Phase, SQR2_Duty, SQR3_Phase, SQR3_Duty, SQR4_Phase, SQR4_Duty, \n")
+                "Timestamp, DateTime, Wave, Digital, S1_Frequency, S1_Shape, S2_Frequency, S2_Phase, S2_Shape, PWM_Frequency, SQR1_Duty, SQR2_Phase, SQR2_Duty, SQR3_Phase, SQR3_Duty, SQR4_Phase, SQR4_Duty, \n")
             data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
-                str(kwargs['wave']) + ", " + str(kwargs['s1_f']) + ", " + str(kwargs['s1_shape']) + ", " + \
+                str(kwargs['wave']) + ", " + str(kwargs['digital']) + ", " + str(kwargs['s1_f']) + ", " + str(kwargs['s1_shape']) + ", " + \
                 str(kwargs['s2_f']) + ", " + str(kwargs['s2_p']) + ", " + str(kwargs["s2_shape"]) + ", " + \
                 str(kwargs['pwm_f']) + ", " + \
                 str(kwargs['dc_1']) + ", " + \
