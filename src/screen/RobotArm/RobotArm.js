@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Container,
   KnobWrapper,
@@ -116,10 +117,13 @@ class RobotArm extends Component {
       active,
     } = this.state;
 
+    const { isConnected } = this.props;
+
     return (
       <Container>
         <KnobWrapper>
           <KnobControl
+            isConnected={isConnected}
             changeBrushValue={this.changeBrushValue}
             brush1={brush1}
             brush2={brush2}
@@ -153,4 +157,11 @@ class RobotArm extends Component {
   }
 }
 
-export default RobotArm;
+const mapStateToProps = state => ({
+  isConnected: state.app.device.isConnected,
+});
+
+export default connect(
+  mapStateToProps,
+  null,
+)(RobotArm);
