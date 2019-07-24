@@ -37,6 +37,30 @@ class FileWrite:
                           'message': 'Data recording started', }))
         sys.stdout.flush()
 
+    def save_config(self, data_path, device_type, **kwargs):
+        file_name = str(time.time())
+        self.file_pointed = open(data_path + '/' + file_name + '.csv', "w+")
+        self.file_pointed.write("%s, %s \n\n" % (
+            device_type, str(datetime.datetime.now())))
+        if device_type == 'WaveGenerator':
+            buffer = []
+            self.file_pointed.write(
+                "Timestamp, DateTime, Wave, S1_Frequency, S1_Shape, S2_Frequency, S2_Phase, S2_Shape, PWM_Frequency, SQR1_Duty, SQR2_Phase, SQR2_Duty, SQR3_Phase, SQR3_Duty, SQR4_Phase, SQR4_Duty, \n")
+            data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
+                str(kwargs['wave']) + ", " + str(kwargs['s1_f']) + ", " + str(kwargs['s1_shape']) + ", " + \
+                str(kwargs['s2_f']) + ", " + str(kwargs['s2_p']) + ", " + str(kwargs["s2_shape"]) + ", " + \
+                str(kwargs['pwm_f']) + ", " + \
+                str(kwargs['dc_1']) + ", " + \
+                str(kwargs['p2']) + ", " + str(kwargs['dc_2']) + ", " + \
+                str(kwargs['p3']) + ", " + str(kwargs['dc_3']) + ", " + \
+                str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + "\n"
+            buffer.append(data)
+            self.file_pointed.writelines(buffer)
+        self.file_pointed.close()
+        print(json.dumps({'type': 'DATA_WRITING_STATUS',
+                          'message': 'Config saved', }))
+        sys.stdout.flush()
+
     def stop_recording(self):
         if len(self.data_buffer) != 0:
             self.file_pointed.writelines(self.data_buffer)
