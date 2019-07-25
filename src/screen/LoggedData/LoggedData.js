@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Delete as DeleteIcon } from '@material-ui/icons';
+import { Delete as DeleteIcon, Share as ExportIcon } from '@material-ui/icons';
 import {
   OscilloscopeIcon,
   LogicAnalyserIcon,
@@ -22,10 +24,12 @@ import {
   TitleWrapper,
   InfoContainer,
 } from './LoggedData.styles.js';
+import { openSnackbar } from '../../redux/actions/app';
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
 const os = remote.require('os');
 const path = remote.require('path');
+const { dialog } = remote;
 const chokidar = window.require('chokidar');
 
 class LoggedData extends Component {
@@ -52,6 +56,32 @@ class LoggedData extends Component {
 
   componentWillUnmount() {
     this.watcher.unwatch(this.destDir);
+  }
+
+  extractFileName = filePath => {
+    const fileArray = filePath.split('/');
+    return fileArray[fileArray.length - 1];
+  };
+
+  openExportWindow(filePath) {
+    const { openSnackbar } = this.props;
+    const fileName = this.extractFileName(filePath);
+    dialog.showOpenDialog(
+      null,
+      {
+        title: 'Select export location',
+        properties: ['openDirectory'],
+      },
+      dirPath => {
+        dirPath &&
+          fs.copyFile(filePath, `${dirPath}/${fileName}`, err => {
+            if (err) {
+              openSnackbar({ message: 'Export failed' });
+            }
+            openSnackbar({ message: 'Export successful' });
+          });
+      },
+    );
   }
 
   listFiles = extension => {
@@ -144,10 +174,18 @@ class LoggedData extends Component {
                           e.stopPropagation();
                           this.deleteFile(item.filepath);
                         }}
-                        aria-label="Delete"
                         size="medium"
                       >
                         <DeleteIcon style={{ color: '#d32f2f' }} />
+                      </IconButton>
+                      <IconButton
+                        size="medium"
+                        onClick={e => {
+                          e.stopPropagation();
+                          this.openExportWindow(item.filepath);
+                        }}
+                      >
+                        <ExportIcon style={{ color: '#d32f2f' }} />
                       </IconButton>
                     </ButtonContainer>
                   </ContentWrapper>
@@ -161,4 +199,18 @@ class LoggedData extends Component {
   }
 }
 
-export default withRouter(LoggedData);
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      openSnackbar,
+    },
+    dispatch,
+  ),
+});
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(LoggedData),
+);
