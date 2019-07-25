@@ -1,9 +1,13 @@
 import sys
 import json
+import time
+import datetime
 
 
 class Power_source:
-    def __init__(self, I):
+    def __init__(self, I, file_write):
+        self.file_write = file_write
+
         self.device = I
         self.device.set_pcs(0)
         self.device.set_pv1(0)
@@ -24,3 +28,11 @@ class Power_source:
                   'pv3': self.device.get_pv3()}
         print(json.dumps(output))
         sys.stdout.flush()
+
+    def save_config(self, data_path):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+        self.file_write.save_config(
+            data_path, "PowerSource",  timestamp=timestamp, datetime=datetime_data,
+            pcs=self.device.get_pcs(), pv1=self.device.get_pv1(), pv2=self.device.get_pv2(),
+            pv3=self.device.get_pv3())
