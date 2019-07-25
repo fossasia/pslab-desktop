@@ -87,7 +87,7 @@ class Wave_generator:
         timestamp = time.time()
         self.file_write.save_config(
             data_path, "WaveGenerator",  timestamp=timestamp, datetime=datetime_data,
-            wave=self.wave, s1_f=self.s1_frequency, s1_shape=self.wave_form_s1,
+            wave=self.wave, digital=self.digital, s1_f=self.s1_frequency, s1_shape=self.wave_form_s1,
             s2_f=self.s2_frequency, s2_p=self.s2_phase, s2_shape=self.wave_form_s2,
             pwm_f=self.pwm_frequency,
             dc_1=self.sqr1_duty_cycle,
