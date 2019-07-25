@@ -35,6 +35,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
+  margin: 0px 16px 0px 0px;
   z-index: 4;
   display: flex;
   justify-content: center;

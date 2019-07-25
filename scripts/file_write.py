@@ -57,8 +57,7 @@ class FileWrite:
                 str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
-        self.file_pointed.close()
-
+        
         if device_type == 'PowerSource':
             buffer = []
             self.file_pointed.write(
@@ -68,6 +67,7 @@ class FileWrite:
                 str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
+        
         self.file_pointed.close()
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
                           'message': 'Config saved', }))

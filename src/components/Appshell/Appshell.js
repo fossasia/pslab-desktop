@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router-dom';
 import {
   IconButton,
@@ -25,6 +26,7 @@ import {
   ArrowBack as BackIcon,
   DeveloperBoard as DeviceIcon,
   Menu as DrawerIcon,
+  ArrowDownward as ImportIcon,
 } from '@material-ui/icons';
 import { Save as SaveIcon } from '@material-ui/icons';
 import AppIcon from '../../resources/app_icon.png';
@@ -37,9 +39,13 @@ import {
   TitleContainer,
   AppBar,
 } from './Appshell.styles';
+import { openSnackbar } from '../../redux/actions/app';
 
 const electron = window.require('electron');
+const { remote } = window.require('electron');
 const { ipcRenderer } = electron;
+const fs = remote.require('fs');
+const { dialog } = remote;
 const loadBalancer = window.require('electron-load-balancer');
 
 const styles = theme => ({
@@ -62,8 +68,36 @@ const Appshell = ({
   location,
   classes,
   dataPath,
+  openSnackbar,
 }) => {
   const [drawerOpen, toggleDrawer] = useState(false);
+
+  const extractFileName = filePath => {
+    const fileArray = filePath.split('/');
+    return fileArray[fileArray.length - 1];
+  };
+
+  const openImportWindow = () => {
+    dialog.showOpenDialog(
+      null,
+      {
+        title: 'Select file to import',
+        properties: ['openFile'],
+        filters: [{ name: 'Data File', extensions: ['csv'] }],
+      },
+      filePath => {
+        if (filePath) {
+          const fileName = extractFileName(filePath[0]);
+          fs.copyFile(filePath[0], `${dataPath}/${fileName}`, err => {
+            if (err) {
+              openSnackbar({ message: 'Import failed' });
+            }
+            openSnackbar({ message: 'Import successful' });
+          });
+        }
+      },
+    );
+  };
 
   const saveButtonRenderer = location => {
     switch (location.pathname) {
@@ -97,6 +131,16 @@ const Appshell = ({
             }}
           >
             <SaveIcon />
+          </IconButton>
+        );
+      case '/loggeddata':
+        return (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={openImportWindow}
+          >
+            <ImportIcon />
           </IconButton>
         );
       default:
@@ -233,12 +277,21 @@ const Appshell = ({
 
 const mapStateToProps = state => state.app;
 
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      openSnackbar,
+    },
+    dispatch,
+  ),
+});
+
 export default withRouter(
   withTheme()(
     withStyles(styles)(
       connect(
         mapStateToProps,
-        null,
+        mapDispatchToProps,
       )(Appshell),
     ),
   ),
