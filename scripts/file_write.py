@@ -42,6 +42,7 @@ class FileWrite:
         self.file_pointed = open(data_path + '/' + file_name + '.csv', "w+")
         self.file_pointed.write("%s, %s \n\n" % (
             device_type, str(datetime.datetime.now())))
+
         if device_type == 'WaveGenerator':
             buffer = []
             self.file_pointed.write(
@@ -54,6 +55,17 @@ class FileWrite:
                 str(kwargs['p2']) + ", " + str(kwargs['dc_2']) + ", " + \
                 str(kwargs['p3']) + ", " + str(kwargs['dc_3']) + ", " + \
                 str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + "\n"
+            buffer.append(data)
+            self.file_pointed.writelines(buffer)
+        self.file_pointed.close()
+
+        if device_type == 'PowerSource':
+            buffer = []
+            self.file_pointed.write(
+                "Timestamp, DateTime, PCS, PV1, PV2, PV3 \n")
+            data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
+                str(kwargs['pcs']) + ", " + str(kwargs['pv1']) + ", " + \
+                str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
         self.file_pointed.close()

@@ -19,7 +19,7 @@ def main():
 
     # instrument cluster initialization
     oscilloscope = Oscilloscope(I, file_write)
-    power_source = Power_source(I)
+    power_source = Power_source(I, file_write)
     multimeter = Multimeter(I)
     wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
@@ -107,6 +107,10 @@ def main():
 
         if command == 'GET_CONFIG_PWR_SRC':
             power_source.get_config()
+
+        if command == 'SAVE_CONFIG_PWR_SRC':
+            data_path = parsed_stream_data['dataPath']
+            power_source.save_config(data_path)
 
         # -------------------------- Wave Generator block ---------------------------------
         if command == 'SET_CONFIG_WAV_GEN':

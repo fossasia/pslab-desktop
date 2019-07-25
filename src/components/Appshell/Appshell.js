@@ -83,6 +83,22 @@ const Appshell = ({
             <SaveIcon />
           </IconButton>
         );
+      case '/powersource':
+        return (
+          <IconButton
+            disabled={!device.isConnected}
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => {
+              loadBalancer.sendData(ipcRenderer, 'linker', {
+                command: 'SAVE_CONFIG_PWR_SRC',
+                dataPath: dataPath,
+              });
+            }}
+          >
+            <SaveIcon />
+          </IconButton>
+        );
       default:
         return undefined;
     }
