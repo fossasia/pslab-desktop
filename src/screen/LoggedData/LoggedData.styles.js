@@ -22,11 +22,9 @@ export const Wrapper = styled.div`
 
 export const CustomCard = styled(Card)`
   width: calc(50% - 32px);
-  height: 7.2em;
 `;
 
 export const ContentWrapper = styled.div`
-  height: 100%;
   width: 100%;
   z-index: 1;
   display: flex;
@@ -40,8 +38,8 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 7.2em;
-  width: 7.2em;
+  height: 9.2em;
+  width: 9.2em;
 `;
 
 export const Spacer = styled.div`
@@ -49,7 +47,7 @@ export const Spacer = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  height: 7.2em;
+  height: 9.2em;
   display: flex;
   flex-direction: column;
   margin: 0px 0px 0px 48px;
@@ -57,7 +55,14 @@ export const TextContainer = styled.div`
 
 export const TitleWrapper = styled.div`
   color: ${props => props.theme.text.primary};
-  font-size: 1.4em;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 16px 0px 0px 0px;
+`;
+
+export const InstrumentWrapper = styled.div`
+  color: ${props => props.theme.text.secondary};
+  font-size: 1.1em;
   font-weight: 600;
   margin: 16px 0px 0px 0px;
 `;
@@ -65,9 +70,9 @@ export const TitleWrapper = styled.div`
 export const InfoContainer = styled.div`
   display: flex;
   color: ${props => props.theme.text.secondary};
-  margin: 16px 0px 0px 0px;
+  margin: 16px 0px 16px 0px;
 
   & > * + * {
-    margin: 0px 0px 0px 16px;
+    margin: 0px 0px 0px 32px;
   }
 `;

@@ -28,6 +28,7 @@ import {
   Menu as DrawerIcon,
   ArrowDownward as ImportIcon,
 } from '@material-ui/icons';
+import { extractFileName } from '../../utils/fileNameProcessor';
 import { Save as SaveIcon } from '@material-ui/icons';
 import AppIcon from '../../resources/app_icon.png';
 import {
@@ -71,11 +72,6 @@ const Appshell = ({
   openSnackbar,
 }) => {
   const [drawerOpen, toggleDrawer] = useState(false);
-
-  const extractFileName = filePath => {
-    const fileArray = filePath.split('/');
-    return fileArray[fileArray.length - 1];
-  };
 
   const openImportWindow = () => {
     dialog.showOpenDialog(
