@@ -197,7 +197,7 @@ class AppWindow(QtGui.QMainWindow, digitalScopeNoTrig.Ui_MainWindow, utilitiesCl
         if len(self.I.dchans[0].timestamps) > 2:
             offset = self.I.dchans[0].timestamps[0]
             txt = 'CH1: Offset:\t%.3euS\ttimestamps(uS):\t' % (offset / 64.)
-            txt += string.join(['%.2e' % (a / 64.) for a in (self.I.dchans[0].timestamps[1:4] - offset)], '\t')
+            txt += '\t'.join(['%.2e' % (a / 64.) for a in (self.I.dchans[0].timestamps[1:4] - offset)])
             self.message_label.setText(txt + '...')
         else:
             self.message_label.setText('CH1: too few points to display')
