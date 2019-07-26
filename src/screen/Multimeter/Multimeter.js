@@ -12,6 +12,7 @@ class Multimeter extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isWriting: false,
       isReading: false,
       unit: 'V',
       activeCategory: 'VOLTAGE',
@@ -75,9 +76,6 @@ class Multimeter extends Component {
 
   onToggleRead = event => {
     const { isReading } = this.state;
-    this.setState(prevState => ({
-      isReading: !prevState.isReading,
-    }));
     if (isReading) {
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_MUL_MET',
@@ -87,6 +85,28 @@ class Multimeter extends Component {
         command: 'START_MUL_MET',
       });
     }
+    this.setState(prevState => ({
+      isReading: !prevState.isReading,
+    }));
+  };
+
+  onToggleWrite = event => {
+    const { isWriting } = this.state;
+    const { dataPath } = this.props;
+    if (isWriting) {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'STOP_WRITE',
+      });
+    } else {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'START_WRITE',
+        deviceType: 'Multimeter',
+        dataPath: dataPath,
+      });
+    }
+    this.setState(prevState => ({
+      isWriting: !prevState.isWriting,
+    }));
   };
 
   onTogglePulseUnit = () => {
@@ -144,6 +164,7 @@ class Multimeter extends Component {
       data,
       unit,
       dialValue,
+      isWriting,
       isReading,
       activeCategory,
     } = this.state;
@@ -164,6 +185,8 @@ class Multimeter extends Component {
             dialValue={dialValue}
             isConnected={isConnected}
             activeCategory={activeCategory}
+            isWriting={isWriting}
+            onToggleWrite={this.onToggleWrite}
           />
         }
       />

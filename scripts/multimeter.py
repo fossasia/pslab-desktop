@@ -1,12 +1,15 @@
 import threading
 import sys
 import time
+import datetime
 import json
 import numpy as np
 
 
 class Multimeter:
-    def __init__(self, I):
+    def __init__(self, I, file_write):
+        self.file_write = file_write
+
         self.multimeter_data_read_thread = None
         self.device = I
         self.is_reading = False
@@ -48,7 +51,12 @@ class Multimeter:
                 self.read_misc(self.active_subtype)
 
     def read_voltage(self, channel_name):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+
         voltage = self.device.get_voltage(channel_name)
+        self.file_write.update_buffer(
+            "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=channel_name, value=voltage)
         voltage, prefix = self.precision_control(voltage)
         time.sleep(0.25)
         output = {'type': 'START_MUL_MET', 'data': voltage, 'prefix': prefix}
@@ -56,21 +64,32 @@ class Multimeter:
         sys.stdout.flush()
 
     def read_pulse(self, pin_name, reading_type):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+
         data = None
         prefix = None
         if reading_type == 'PULSE_COUNT':
             self.device.countPulses(pin_name)
             time.sleep(1)
             data = self.device.readPulseCount()
+            self.file_write.update_buffer(
+                "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=pin_name, value=data)
         elif reading_type == 'PULSE_FREQUENCY':
             data = self.device.get_freq(pin_name, timeout=0.5)
+            self.file_write.update_buffer(
+                "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=pin_name, value=data)
             data, prefix = self.precision_control(data)
             time.sleep(0.25)
+
         output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}
         print(json.dumps(output))
         sys.stdout.flush()
 
     def read_misc(self, pin_name):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+
         data = None
         prefix = None
         if pin_name == 'RESISTOR':
@@ -80,6 +99,8 @@ class Multimeter:
             data = self.device.get_capacitance()
             time.sleep(1.5)
             pass
+        self.file_write.update_buffer(
+            "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=pin_name, value=data)
         data, prefix = self.precision_control(data)
         output = {'type': 'START_MUL_MET', 'data': data, 'prefix': prefix}
         print(json.dumps(output))
