@@ -23,7 +23,12 @@ import {
   TextContainer,
   TitleWrapper,
   InfoContainer,
+  InstrumentWrapper,
 } from './LoggedData.styles.js';
+import {
+  fileNameTrimmer,
+  extractFileName,
+} from '../../utils/fileNameProcessor';
 import { openSnackbar } from '../../redux/actions/app';
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
@@ -58,14 +63,9 @@ class LoggedData extends Component {
     this.watcher.unwatch(this.destDir);
   }
 
-  extractFileName = filePath => {
-    const fileArray = filePath.split('/');
-    return fileArray[fileArray.length - 1];
-  };
-
   openExportWindow(filePath) {
     const { openSnackbar } = this.props;
-    const fileName = this.extractFileName(filePath);
+    const fileName = extractFileName(filePath);
     dialog.showOpenDialog(
       null,
       {
@@ -143,6 +143,7 @@ class LoggedData extends Component {
   render() {
     const { loading, fileList } = this.state;
     const { history } = this.props;
+
     return (
       <Container>
         {loading ? (
@@ -161,7 +162,12 @@ class LoggedData extends Component {
                       {this.iconRenderer(item.metaData.device)}
                     </ButtonContainer>
                     <TextContainer>
-                      <TitleWrapper>{item.metaData.device}</TitleWrapper>
+                      <TitleWrapper>
+                        {fileNameTrimmer(item.name, 23)}
+                      </TitleWrapper>
+                      <InstrumentWrapper>
+                        {item.metaData.device}
+                      </InstrumentWrapper>
                       <InfoContainer>
                         <div>{item.metaData.date}</div>
                         <div>{item.metaData.time}</div>
