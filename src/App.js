@@ -132,7 +132,9 @@ class App extends Component {
                 />
                 <Route
                   path="/multimeter"
-                  render={props => <Multimeter {...props} />}
+                  render={props => (
+                    <Multimeter {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route
                   path="/robotarm"

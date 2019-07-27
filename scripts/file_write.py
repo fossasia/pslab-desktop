@@ -15,12 +15,17 @@ class FileWrite:
     def update_buffer(self, inst_type, **kwargs):
         if self.is_writing:
             data = None
+
             if inst_type == 'OSC':
                 xData = ' '.join(map(str, kwargs['xData'].tolist()))
                 yData = ' '.join(map(str, kwargs['yData'].tolist()))
                 data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
                     kwargs['channel'] + ", " + xData + ", " + \
                     yData + ", " + str(kwargs['timebase']) + "\n"
+
+            if inst_type == 'MUL_MET':
+                data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
+                    kwargs['data'] + ", " + str(kwargs['value']) + "\n"
 
             self.data_buffer.append(data)
 
@@ -32,6 +37,9 @@ class FileWrite:
         if device_type == 'Oscilloscope':
             self.file_pointed.write(
                 "Timestamp, DateTime, Channel, xData, yData, Timebase\n")
+        if device_type == 'Multimeter':
+            self.file_pointed.write(
+                "Timestamp, DateTime, Data, Value\n")
         self.is_writing = True
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
                           'message': 'Data recording started', }))
@@ -57,7 +65,7 @@ class FileWrite:
                 str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
-        
+
         if device_type == 'PowerSource':
             buffer = []
             self.file_pointed.write(
@@ -67,7 +75,7 @@ class FileWrite:
                 str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
-        
+
         self.file_pointed.close()
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
                           'message': 'Config saved', }))

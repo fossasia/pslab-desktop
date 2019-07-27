@@ -20,7 +20,7 @@ def main():
     # instrument cluster initialization
     oscilloscope = Oscilloscope(I, file_write)
     power_source = Power_source(I, file_write)
-    multimeter = Multimeter(I)
+    multimeter = Multimeter(I, file_write)
     wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
 

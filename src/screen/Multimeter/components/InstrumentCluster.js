@@ -31,6 +31,8 @@ const InstrumentCluster = ({
   onTogglePulseUnit,
   classes,
   activeCategory,
+  isWriting,
+  onToggleWrite,
 }) => {
   return (
     <InstrumentContainer>
@@ -57,6 +59,8 @@ const InstrumentCluster = ({
             isReading={isReading}
             isConnected={isConnected}
             onToggleRead={onToggleRead}
+            isWriting={isWriting}
+            onToggleWrite={onToggleWrite}
           />
         </Card>
       </DisplayContainer>

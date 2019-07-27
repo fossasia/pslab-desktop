@@ -45,7 +45,7 @@ const ActionButtons = ({
         variant="contained"
         size="large"
         color="default"
-        disabled={isReading}
+        disabled={!isConnected || isReading}
         onClick={onToggleWrite}
       >
         {isWriting ? (
