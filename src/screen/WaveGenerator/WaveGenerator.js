@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
-import GraphPanelLayout from '../../components/GraphPanelLayout';
-import Graph from './components/Graph';
-import Settings from './components/Settings';
+import { Container, Wrapper } from './styles';
+import AnalogController from './components/AnalogController';
+import DigitalController from './components/DigitalController';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -13,8 +13,8 @@ class WaveGenerator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wave: true,
-      digital: false,
+      wave: false,
+      digital: true,
       s1Frequency: 10,
       s2Frequency: 10,
       s2Phase: 0,
@@ -149,31 +149,35 @@ class WaveGenerator extends Component {
       waveFormS2,
     } = this.state;
     return (
-      <GraphPanelLayout
-        settings={
-          <Settings
-            wave={wave}
-            digital={digital}
-            s1Frequency={s1Frequency}
-            s2Frequency={s2Frequency}
-            s2Phase={s2Phase}
-            pwmFrequency={pwmFrequency}
-            sqr1DutyCycle={sqr1DutyCycle}
-            sqr2DutyCycle={sqr2DutyCycle}
-            sqr2Phase={sqr2Phase}
-            sqr3DutyCycle={sqr3DutyCycle}
-            sqr3Phase={sqr3Phase}
-            sqr4DutyCycle={sqr4DutyCycle}
-            sqr4Phase={sqr4Phase}
-            waveFormS1={waveFormS1}
-            waveFormS2={waveFormS2}
-            onTogglePreview={this.onTogglePreview}
-            onChangeWaveForm={this.onChangeWaveForm}
-            onChangeSlider={this.onChangeSlider}
-          />
-        }
-        graph={<Graph wave={wave} digital={digital} />}
-      />
+      <Container>
+        <Wrapper>
+          {wave ? (
+            <AnalogController
+              s1Frequency={s1Frequency}
+              s2Frequency={s2Frequency}
+              s2Phase={s2Phase}
+              waveFormS1={waveFormS1}
+              waveFormS2={waveFormS2}
+              onChangeWaveForm={this.onChangeWaveForm}
+              onChangeSlider={this.onChangeSlider}
+              onTogglePreview={this.onTogglePreview}
+            />
+          ) : (
+            <DigitalController
+              pwmFrequency={pwmFrequency}
+              sqr1DutyCycle={sqr1DutyCycle}
+              sqr2DutyCycle={sqr2DutyCycle}
+              sqr2Phase={sqr2Phase}
+              sqr3DutyCycle={sqr3DutyCycle}
+              sqr3Phase={sqr3Phase}
+              sqr4DutyCycle={sqr4DutyCycle}
+              sqr4Phase={sqr4Phase}
+              onChangeSlider={this.onChangeSlider}
+              onTogglePreview={this.onTogglePreview}
+            />
+          )}
+        </Wrapper>
+      </Container>
     );
   }
 }

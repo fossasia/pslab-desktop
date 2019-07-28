@@ -51,7 +51,7 @@ const theme = createMuiTheme({
     sqr2Color: '#5e35b1',
     sqr3Color: '#ff9800',
     sqr4Color: '#03a9f4',
-  },
+  }
 });
 
 export default theme;
