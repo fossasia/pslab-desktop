@@ -18,6 +18,8 @@ import Settings from './screen/Settings';
 import FAQ from './screen/FAQ';
 import AboutUs from './screen/AboutUs';
 import LoggedData from './screen/LoggedData';
+import FrontLayout from './screen/Layout/FrontLayout';
+import BackLayout from './screen/Layout/BackLayout';
 import CustomDialog from './components/CustomDialog';
 import theme from './theme';
 import {
@@ -158,6 +160,8 @@ class App extends Component {
                 />
                 <Route path="/faq" render={props => <FAQ {...props} />} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/frontlayout" component={FrontLayout} />
+                <Route path="/backlayout" component={BackLayout} />
               </Switch>
             </Appshell>
             <Snackbar
