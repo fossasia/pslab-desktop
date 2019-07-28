@@ -26,7 +26,7 @@ import {
   ArrowBack as BackIcon,
   DeveloperBoard as DeviceIcon,
   Menu as DrawerIcon,
-  ArrowDownward as ImportIcon,
+  SaveAlt as ImportIcon,
 } from '@material-ui/icons';
 import { extractFileName } from '../../utils/fileNameProcessor';
 import { Save as SaveIcon } from '@material-ui/icons';
