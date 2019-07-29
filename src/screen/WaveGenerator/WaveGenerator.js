@@ -13,12 +13,12 @@ class WaveGenerator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wave: false,
-      digital: true,
+      wave: true,
+      digital: false,
       s1Frequency: 10,
       s2Frequency: 10,
       s2Phase: 0,
-      pwmFrequency: 0,
+      pwmFrequency: 10,
       sqr1DutyCycle: 0,
       sqr2DutyCycle: 0,
       sqr2Phase: 0,
@@ -108,10 +108,11 @@ class WaveGenerator extends Component {
     );
   };
 
-  onChangeWaveForm = pinName => event => {
+  onChangeWaveForm = pinName => {
+    const current = this.state[pinName];
     this.setState(
       prevState => ({
-        [pinName]: event.target.value,
+        [pinName]: current === 'sine' ? 'tria' : 'sine',
       }),
       () => {
         this.sendConfigToDevice();
