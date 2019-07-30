@@ -4,6 +4,7 @@ import threading
 import json
 from file_write import FileWrite
 from oscilloscope import Oscilloscope
+from logic_analyser import LogicAnalyser
 from device_detection import Device_detection
 from power_source import Power_source
 from multimeter import Multimeter
@@ -19,6 +20,7 @@ def main():
 
     # instrument cluster initialization
     oscilloscope = Oscilloscope(I, file_write)
+    logic_analyser = LogicAnalyser(I, file_write)
     power_source = Power_source(I, file_write)
     multimeter = Multimeter(I, file_write)
     wave_generator = Wave_generator(I, file_write)
@@ -71,6 +73,25 @@ def main():
 
         if command == 'GET_CONFIG_OSC':
             oscilloscope.get_config()
+
+        # ---------------------------- LA block ------------------------------
+        if command == 'START_LA':
+            logic_analyser.start_read()
+
+        if command == "STOP_LA":
+            logic_analyser.stop_read()
+
+        if command == "SET_CONFIG_OSC":
+            number_of_channels = parsed_stream_data['numberOfChannels']
+            trigger1_type = parsed_stream_data['trigger1Type']
+            trigger2_type = parsed_stream_data['trigger2Type']
+            trigger3_type = parsed_stream_data['trigger3Type']
+            trigger4_type = parsed_stream_data['trigger4Type']
+            logic_analyser.set_config(
+                number_of_channels, trigger1_type, trigger2_type, trigger3_type, trigger4_type)
+
+        if command == 'GET_CONFIG_OSC':
+            logic_analyser.get_config()
 
         # --------------------------- Multimeter block ---------------------------------
         if command == 'START_MUL_MET':

@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import debounce from 'lodash/debounce';
 import GraphPanelLayout from '../../components/GraphPanelLayout';
 import Graph from './components/Graph';
 import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
+const loadBalancer = window.require('electron-load-balancer');
 
 class LogicAnalyser extends Component {
   constructor(props) {
@@ -31,8 +36,47 @@ class LogicAnalyser extends Component {
 
   componentWillUnmount() {}
 
+  getConfigFromDevice = debounce(() => {
+    const { isConnected } = this.props;
+    isConnected &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'GET_CONFIG_LA',
+      });
+  }, 500);
+
+  sendConfigToDevice = debounce(() => {
+    const { isConnected } = this.props;
+    const {
+      numberOfChannels,
+      trigger1Type,
+      trigger2Type,
+      trigger3Type,
+      trigger4Type,
+    } = this.state;
+    isConnected &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'SET_CONFIG_LA',
+        numberOfChannels,
+        trigger1Type,
+        trigger2Type,
+        trigger3Type,
+        trigger4Type,
+      });
+  }, 500);
+
   toggleRead = () => {
+    const { isReading } = this.state;
     this.setState(prevState => ({ isReading: !prevState.isReading }));
+    if (isReading) {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'STOP_LA',
+      });
+    } else {
+      console.log('starting la');
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'START_LA',
+      });
+    }
   };
 
   changeNumberOfChannels = event => {

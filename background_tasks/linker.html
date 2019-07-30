@@ -23,7 +23,7 @@
 			});
 
 			pyshell.on('message', function(results) {
-				// log.info(results);
+				log.info(results);
 				try {
 					const parsedJSON = JSON.parse(results);
 					switch (parsedJSON['type']) {
@@ -47,6 +47,8 @@
 								parsedOutput = oscilloscopeVoltageProcessor(parsedJSON);
 								ipcRenderer.send('OSC_VOLTAGE_DATA', { data: parsedOutput });
 							}
+							break;
+						case 'START_LA':
 							break;
 						case 'START_MUL_MET':
 							ipcRenderer.send('MUL_MET_DATA', { data: parsedJSON.data, prefix: parsedJSON.prefix });
