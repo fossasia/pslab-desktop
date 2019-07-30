@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import SimplePanelLayout from '../../components/SimplePanelLayout';
 import InstrumentCluster from './components/InstrumentCluster';
 import roundOff from '../../utils/arithmetics';
@@ -33,12 +34,25 @@ class PowerSouce extends Component {
         pcs: roundOff(pcs),
       });
     });
-    this.getConfigFromDevice();
+
+    const { filePath } = this.props.match.params;
+    console.log(filePath);
+    filePath ? this.getConfigFromFile() : this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
     ipcRenderer.removeAllListeners('PWR_SRC_CONFIG');
   }
+
+  getConfigFromFile = debounce(() => {
+    const { filePath } = this.props.match.params;
+    const { isConnected, dataPath } = this.props;
+    isConnected &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'GET_CONFIG_PWR_SRC_FILE',
+        dataPath: `${dataPath}/${filePath}`,
+      });
+  }, 500);
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
@@ -103,7 +117,9 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(PowerSouce);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    null,
+  )(PowerSouce),
+);
