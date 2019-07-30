@@ -5,7 +5,10 @@ import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Delete as DeleteIcon, Share as ExportIcon } from '@material-ui/icons';
+import {
+  Delete as DeleteIcon,
+  ScreenShare as ExportIcon,
+} from '@material-ui/icons';
 import {
   OscilloscopeIcon,
   LogicAnalyserIcon,
