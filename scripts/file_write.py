@@ -46,7 +46,7 @@ class FileWrite:
         sys.stdout.flush()
 
     def save_config(self, data_path, device_type, **kwargs):
-        file_name = str(time.time())
+        file_name = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S:000")
         self.file_pointed = open(data_path + '/' + file_name + '.csv', "w+")
         self.file_pointed.write("%s, %s \n\n" % (
             device_type, str(datetime.datetime.now())))
