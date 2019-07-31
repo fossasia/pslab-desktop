@@ -81,7 +81,7 @@ def main():
         if command == "STOP_LA":
             logic_analyser.stop_read()
 
-        if command == "SET_CONFIG_OSC":
+        if command == "SET_CONFIG_LA":
             number_of_channels = parsed_stream_data['numberOfChannels']
             trigger1_type = parsed_stream_data['trigger1Type']
             trigger2_type = parsed_stream_data['trigger2Type']
@@ -90,7 +90,7 @@ def main():
             logic_analyser.set_config(
                 number_of_channels, trigger1_type, trigger2_type, trigger3_type, trigger4_type)
 
-        if command == 'GET_CONFIG_OSC':
+        if command == 'GET_CONFIG_LA':
             logic_analyser.get_config()
 
         # --------------------------- Multimeter block ---------------------------------

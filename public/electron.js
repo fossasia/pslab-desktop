@@ -79,6 +79,10 @@ ipcMain.on('OSC_FIT_DATA', (event, args) => {
   mainWindow.webContents.send('OSC_FIT_DATA', args);
 });
 
+ipcMain.on('LA_DATA', (event, args) => {
+  mainWindow.webContents.send('LA_DATA', args);
+});
+
 ipcMain.on('MUL_MET_DATA', (event, args) => {
   mainWindow.webContents.send('MUL_MET_DATA', args);
 });
@@ -89,6 +93,10 @@ ipcMain.on('PWR_SRC_CONFIG', (event, args) => {
 
 ipcMain.on('OSC_CONFIG', (event, args) => {
   mainWindow.webContents.send('OSC_CONFIG', args);
+});
+
+ipcMain.on('LA_CONFIG', (event, args) => {
+  mainWindow.webContents.send('LA_CONFIG', args);
 });
 
 ipcMain.on('MUL_MET_CONFIG', (event, args) => {
