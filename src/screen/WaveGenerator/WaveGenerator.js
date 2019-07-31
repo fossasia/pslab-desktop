@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 import { Container, Wrapper } from './styles';
@@ -72,7 +73,10 @@ class WaveGenerator extends Component {
         sqr4Phase,
       });
     });
-    this.getConfigFromDevice();
+
+    const { filePath } = this.props.match.params;
+    console.log(filePath);
+    filePath ? this.getConfigFromFile() : this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
@@ -84,6 +88,16 @@ class WaveGenerator extends Component {
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'GET_CONFIG_WAV_GEN',
+      });
+  }, 500);
+
+  getConfigFromFile = debounce(() => {
+    const { filePath } = this.props.match.params;
+    const { isConnected, dataPath } = this.props;
+    isConnected &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'GET_CONFIG_WAV_GEN_FILE',
+        dataPath: `${dataPath}/${filePath}`,
       });
   }, 500);
 
@@ -187,7 +201,9 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(WaveGenerator);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    null,
+  )(WaveGenerator),
+);

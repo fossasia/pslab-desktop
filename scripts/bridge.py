@@ -161,6 +161,10 @@ def main():
         if command == 'GET_CONFIG_WAV_GEN':
             wave_generator.get_config()
 
+        if command == 'GET_CONFIG_WAV_GEN_FILE':
+            data_path = parsed_stream_data['dataPath']
+            wave_generator.get_config_from_file(data_path)
+
         if command == 'SAVE_CONFIG_WAV_GEN':
             data_path = parsed_stream_data['dataPath']
             wave_generator.save_config(data_path)

@@ -82,6 +82,9 @@ class Wave_generator:
         print(json.dumps(output))
         sys.stdout.flush()
 
+    def get_config_from_file(self, data_path):
+        self.file_write.get_config_from_file(data_path, "WaveGenerator")
+
     def save_config(self, data_path):
         datetime_data = datetime.datetime.now()
         timestamp = time.time()

@@ -127,8 +127,10 @@ class App extends Component {
                   render={props => <PowerSource {...props} />}
                 />
                 <Route
-                  path="/wavegenerator"
-                  render={props => <WaveGenerator {...props} />}
+                  path="/wavegenerator/:filePath?"
+                  render={props => (
+                    <WaveGenerator {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route
                   path="/multimeter"

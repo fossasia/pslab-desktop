@@ -81,6 +81,33 @@ class FileWrite:
                           'message': 'Config saved', }))
         sys.stdout.flush()
 
+    def get_config_from_file(self, data_path, device_type):
+        if device_type == 'WaveGenerator':
+            f = open(data_path, "r")
+            lines = f.readlines()
+            data = lines[3].split(',')
+            output = {'type': 'GET_CONFIG_WAV_GEN',
+                      'wave': data[2],
+                      'digital': data[3],
+                      's1Frequency': data[4],
+                      's2Frequency': data[5],
+                      's2Phase': data[6],
+                      'waveFormS1': data[7],
+                      'waveFormS2': data[8],
+                      'pwmFrequency': data[9],
+                      'sqr1DutyCycle': data[10],
+                      'sqr2DutyCycle': data[11],
+                      'sqr2Phase': data[12],
+                      'sqr3DutyCycle': data[13],
+                      'sqr3Phase': data[14],
+                      'sqr4DutyCycle': data[15],
+                      'sqr4Phase': data[16],
+                      }
+        print(json.dumps(output))
+        sys.stdout.flush()
+        print(json.dumps(output))
+        sys.stdout.flush()
+
     def stop_recording(self):
         if len(self.data_buffer) != 0:
             self.file_pointed.writelines(self.data_buffer)

@@ -158,7 +158,9 @@ class LoggedData extends Component {
                 <CustomCard key={index}>
                   <ContentWrapper
                     onClick={() =>
-                      history.push(`/${item.metaData.device.toLowerCase()}`)
+                      history.push(
+                        `/${item.metaData.device.toLowerCase()}/${item.name}`,
+                      )
                     }
                   >
                     <ButtonContainer>
