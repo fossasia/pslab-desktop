@@ -129,8 +129,10 @@ class App extends Component {
                   )}
                 />
                 <Route
-                  path="/wavegenerator"
-                  render={props => <WaveGenerator {...props} />}
+                  path="/wavegenerator/:filePath?"
+                  render={props => (
+                    <WaveGenerator {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route
                   path="/multimeter"
