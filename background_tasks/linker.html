@@ -23,7 +23,7 @@
 			});
 
 			pyshell.on('message', function(results) {
-				log.info(results);
+				// log.info(results);
 				try {
 					const parsedJSON = JSON.parse(results);
 					switch (parsedJSON['type']) {
