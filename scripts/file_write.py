@@ -90,3 +90,16 @@ class FileWrite:
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
                           'message': 'Data recording stopped', }))
         sys.stdout.flush()
+
+    def get_config_from_file(self, data_path, device_type):
+        if device_type == 'PowerSource':
+            f = open(data_path, "r")
+            lines = f.readlines()
+            data = lines[3].split(',')
+            output = {'type': 'GET_CONFIG_PWR_SRC',
+                      'pcs': data[2],
+                      'pv1': data[3],
+                      'pv2': data[4],
+                      'pv3': data[5]}
+            print(json.dumps(output))
+            sys.stdout.flush()

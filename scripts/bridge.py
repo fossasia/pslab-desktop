@@ -129,6 +129,10 @@ def main():
         if command == 'GET_CONFIG_PWR_SRC':
             power_source.get_config()
 
+        if command == 'GET_CONFIG_PWR_SRC_FILE':
+            data_path = parsed_stream_data['dataPath']
+            power_source.get_config_from_file(data_path)
+
         if command == 'SAVE_CONFIG_PWR_SRC':
             data_path = parsed_stream_data['dataPath']
             power_source.save_config(data_path)

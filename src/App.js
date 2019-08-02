@@ -123,8 +123,10 @@ class App extends Component {
                 />
                 <Route path="/logicanalyser" component={LogicAnalyser} />
                 <Route
-                  path="/powersource"
-                  render={props => <PowerSource {...props} />}
+                  path="/powersource/:filePath?"
+                  render={props => (
+                    <PowerSource {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route
                   path="/wavegenerator"
