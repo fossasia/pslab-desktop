@@ -21,12 +21,27 @@ class Graph extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      oscData: [
+      LA1Data: [
         {
-          ch1: 0,
-          ch2: 0,
-          ch3: 0,
-          ch4: 0,
+          voltage: 0,
+          time: 0,
+        },
+      ],
+      LA2Data: [
+        {
+          voltage: 0,
+          time: 0,
+        },
+      ],
+      LA3Data: [
+        {
+          voltage: 0,
+          time: 0,
+        },
+      ],
+      LA4Data: [
+        {
+          voltage: 0,
           time: 0,
         },
       ],
@@ -34,29 +49,29 @@ class Graph extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('OSC_VOLTAGE_DATA', (event, args) => {
+    ipcRenderer.on('LA_DATA', (event, args) => {
       const { isReading } = this.props;
       isReading &&
         this.setState({
-          oscData: args.data,
+          ...args.data,
         });
+      console.log(args.data);
     });
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeAllListeners('OSC_VOLTAGE_DATA');
+    ipcRenderer.removeAllListeners('LA_DATA');
   }
 
   render() {
     const { numberOfChannels, isReading, theme } = this.props;
-    const { oscData } = this.state;
+    const { LA1Data, LA2Data, LA3Data, LA4Data } = this.state;
 
     return (
       <GraphWrapper>
         <ProgressWrapper>{isReading && <LinearProgress />}</ProgressWrapper>
         <ResponsiveContainer>
           <LineChart
-            data={oscData}
             margin={{
               top: 48,
               right: 0,
@@ -65,49 +80,57 @@ class Graph extends Component {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" type="number">
+            <XAxis dataKey="time" type="number" domain={[0, 'dataMax']}>
               <Label value="mSec" position="bottom" />
             </XAxis>
-            <YAxis yAxisId="left" />
-            <YAxis yAxisId="right" orientation="right" />
+            <YAxis yAxisId="left" domain={['dataMin - 2', 'dataMax + 2']} />
+            <YAxis dataKey="voltage" yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend align="right" iconType="triangle" />
             <Line
               yAxisId="left"
               type="monotone"
-              dataKey="ch1"
+              dataKey="voltage"
+              data={LA1Data}
               stroke={theme.ch1Color}
               dot={false}
               activeDot={{ r: 4 }}
+              name="LA1"
             />
             {numberOfChannels > 1 && (
               <Line
                 yAxisId="left"
                 type="monotone"
-                dataKey="ch2"
+                dataKey="voltage"
+                data={LA2Data}
                 stroke={theme.ch2Color}
                 dot={false}
                 activeDot={{ r: 4 }}
+                name="LA2"
               />
             )}
             {numberOfChannels > 2 && (
               <Line
                 yAxisId="left"
                 type="monotone"
-                dataKey="ch3"
+                dataKey="voltage"
+                data={LA3Data}
                 stroke={theme.ch3Color}
                 dot={false}
                 activeDot={{ r: 4 }}
+                name="LA3"
               />
             )}
             {numberOfChannels > 3 && (
               <Line
                 yAxisId="left"
                 type="monotone"
-                dataKey="ch4"
+                dataKey="voltage"
+                data={LA4Data}
                 stroke={theme.micColor}
                 dot={false}
                 activeDot={{ r: 4 }}
+                name="LA4"
               />
             )}
           </LineChart>

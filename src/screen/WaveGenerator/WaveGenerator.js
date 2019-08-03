@@ -75,7 +75,6 @@ class WaveGenerator extends Component {
     });
 
     const { filePath } = this.props.match.params;
-    console.log(filePath);
     filePath ? this.getConfigFromFile() : this.getConfigFromDevice();
   }
 

@@ -3,7 +3,7 @@
 	const { ipcRenderer } = require('electron');
 	const loadBalancer = require('electron-load-balancer');
 	const path = require('path');
-	const { oscilloscopeXYProcessor, oscilloscopeVoltageProcessor } = require('../utils/preProcessor.js');
+	const { oscilloscopeXYProcessor, oscilloscopeVoltageProcessor, LAProcessor } = require('../utils/preProcessor.js');
 	const log = require('electron-log');
 
 	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
@@ -49,6 +49,10 @@
 							}
 							break;
 						case 'START_LA':
+							parsedOutput = LAProcessor(parsedJSON)
+							ipcRenderer.send('LA_DATA', {
+										data: parsedOutput
+									});
 							break;
 						case 'START_MUL_MET':
 							ipcRenderer.send('MUL_MET_DATA', { data: parsedJSON.data, prefix: parsedJSON.prefix });
@@ -58,6 +62,9 @@
 							break;
 						case 'GET_CONFIG_OSC':
 							ipcRenderer.send('OSC_CONFIG', parsedJSON);
+							break;
+							case 'GET_CONFIG_LA':
+							ipcRenderer.send('LA_CONFIG', parsedJSON);
 							break;
 						case 'GET_CONFIG_MUL_MET':
 							ipcRenderer.send('MUL_MET_CONFIG', parsedJSON);

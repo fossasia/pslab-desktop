@@ -18,10 +18,10 @@ class LogicAnalyser extends Component {
       numberOfChannels: 1,
       channel1Map: 'ID1',
       channel2Map: 'ID2',
-      trigger1Type: 0,
-      trigger2Type: 0,
-      trigger3Type: 0,
-      trigger4Type: 0,
+      trigger1Type: 1,
+      trigger2Type: 1,
+      trigger3Type: 1,
+      trigger4Type: 1,
       timeMeasureChannel1: 'ID1',
       timeMeasureChannel2: 'ID2',
       timeMeasuretrigger1Type: 1,
@@ -32,9 +32,38 @@ class LogicAnalyser extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
+      const { isConnected } = args;
+      isConnected && this.getConfigFromDevice();
+    });
+    ipcRenderer.on('LA_CONFIG', (event, args) => {
+      const {
+        numberOfChannels,
+        trigger1Type,
+        trigger2Type,
+        trigger3Type,
+        trigger4Type,
+      } = args;
+      this.setState({
+        numberOfChannels,
+        trigger1Type,
+        trigger2Type,
+        trigger3Type,
+        trigger4Type,
+      });
+    });
+    this.getConfigFromDevice();
+  }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    const { isReading } = this.state;
+    isReading &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'STOP_LA',
+      });
+    ipcRenderer.removeAllListeners('LA_CONFIG');
+  }
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
@@ -80,9 +109,14 @@ class LogicAnalyser extends Component {
   };
 
   changeNumberOfChannels = event => {
-    this.setState({
-      numberOfChannels: event.target.value,
-    });
+    this.setState(
+      {
+        numberOfChannels: event.target.value,
+      },
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
   changeChannelMap = channelName => event => {
     this.setState({
@@ -90,9 +124,14 @@ class LogicAnalyser extends Component {
     });
   };
   changeTriggerType = triggerNumber => event => {
-    this.setState({
-      [triggerNumber]: event.target.value,
-    });
+    this.setState(
+      {
+        [triggerNumber]: event.target.value,
+      },
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
   };
 
   changeTimeMeasureChannel = channelName => event => {
