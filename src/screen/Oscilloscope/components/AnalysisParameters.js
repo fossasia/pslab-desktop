@@ -41,6 +41,7 @@ class AnalysisParameters extends Component {
 
   render() {
     const {
+      filePath,
       isFourierTransformActive,
       fitType,
       fitChannel1,
@@ -69,110 +70,116 @@ class AnalysisParameters extends Component {
             label="Fourier Transforms"
           />
         </OptionsRowWrapper>
-        <OptionsRowWrapper>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            disabled={!isFourierTransformActive}
-          >
-            <InputLabel
-              ref={ref => {
-                this.analysisTypeRef = ref;
-              }}
-              htmlFor="outlined-analysis-type"
+        {!filePath && (
+          <OptionsRowWrapper>
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              disabled={!isFourierTransformActive}
             >
-              Fit Type
-            </InputLabel>
-            <Select
-              value={fitType}
-              onChange={onChangeFitType}
-              input={
-                <OutlinedInput
-                  labelWidth={analysisTypeLabelWidth}
-                  name="analysis-type"
-                  id="outlined-analysis-type"
-                />
-              }
+              <InputLabel
+                ref={ref => {
+                  this.analysisTypeRef = ref;
+                }}
+                htmlFor="outlined-analysis-type"
+              >
+                Fit Type
+              </InputLabel>
+              <Select
+                value={fitType}
+                onChange={onChangeFitType}
+                input={
+                  <OutlinedInput
+                    labelWidth={analysisTypeLabelWidth}
+                    name="analysis-type"
+                    id="outlined-analysis-type"
+                  />
+                }
+              >
+                {Object.entries(options.FitSelect).map((item, index) => {
+                  const key = item[0];
+                  const value = item[1];
+                  return (
+                    <MenuItem key={index} value={key}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+              disabled={!isFourierTransformActive}
             >
-              {Object.entries(options.FitSelect).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-            disabled={!isFourierTransformActive}
-          >
-            <InputLabel
-              ref={ref => {
-                this.analysisChannelRef = ref;
-              }}
-              htmlFor="outlined-analysis-channel"
+              <InputLabel
+                ref={ref => {
+                  this.analysisChannelRef = ref;
+                }}
+                htmlFor="outlined-analysis-channel"
+              >
+                Channel 1
+              </InputLabel>
+              <Select
+                value={fitChannel1}
+                onChange={onChangeFitChannel('fitChannel1')}
+                input={
+                  <OutlinedInput
+                    labelWidth={analysisChannelLabelWidth}
+                    name="analysis-channel"
+                    id="outlined-analysis-channel"
+                  />
+                }
+              >
+                {Object.entries(options.DataAnalysisSelect).map(
+                  (item, index) => {
+                    const key = item[0];
+                    const value = item[1];
+                    return (
+                      <MenuItem key={index} value={key}>
+                        {value}
+                      </MenuItem>
+                    );
+                  },
+                )}
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+              disabled={!isFourierTransformActive}
             >
-              Channel 1
-            </InputLabel>
-            <Select
-              value={fitChannel1}
-              onChange={onChangeFitChannel('fitChannel1')}
-              input={
-                <OutlinedInput
-                  labelWidth={analysisChannelLabelWidth}
-                  name="analysis-channel"
-                  id="outlined-analysis-channel"
-                />
-              }
-            >
-              {Object.entries(options.DataAnalysisSelect).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="outlined"
-            fullWidth={true}
-            className={classes.formControl}
-            disabled={!isFourierTransformActive}
-          >
-            <InputLabel htmlFor="outlined-analysis-channel">
-              Channel 2
-            </InputLabel>
-            <Select
-              value={fitChannel2}
-              onChange={onChangeFitChannel('fitChannel2')}
-              input={
-                <OutlinedInput
-                  labelWidth={analysisChannelLabelWidth}
-                  name="analysis-channel"
-                  id="outlined-analysis-channel"
-                />
-              }
-            >
-              {Object.entries(options.DataAnalysisSelect).map((item, index) => {
-                const key = item[0];
-                const value = item[1];
-                return (
-                  <MenuItem key={index} value={key}>
-                    {value}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </OptionsRowWrapper>
+              <InputLabel htmlFor="outlined-analysis-channel">
+                Channel 2
+              </InputLabel>
+              <Select
+                value={fitChannel2}
+                onChange={onChangeFitChannel('fitChannel2')}
+                input={
+                  <OutlinedInput
+                    labelWidth={analysisChannelLabelWidth}
+                    name="analysis-channel"
+                    id="outlined-analysis-channel"
+                  />
+                }
+              >
+                {Object.entries(options.DataAnalysisSelect).map(
+                  (item, index) => {
+                    const key = item[0];
+                    const value = item[1];
+                    return (
+                      <MenuItem key={index} value={key}>
+                        {value}
+                      </MenuItem>
+                    );
+                  },
+                )}
+              </Select>
+            </FormControl>
+          </OptionsRowWrapper>
+        )}
       </SettingsWrapper>
     );
   }

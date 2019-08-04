@@ -11,6 +11,7 @@ import AnalysisParameters from './AnalysisParameters';
 import PlotParameters from './PlotParameters';
 
 const Settings = ({
+  filePath,
   timeBaseIndex,
   timeBase,
   activeChannels,
@@ -40,29 +41,33 @@ const Settings = ({
 }) => (
   <SettingsContainer>
     <FixedWrapper>
-      <ChannelParameters
-        activeChannels={activeChannels}
-        channelRanges={channelRanges}
-        channelMaps={channelMaps}
-        onToggleChannel={onToggleChannel}
-        onChangeChannelRange={onChangeChannelRange}
-        onChangeChannelMap={onChangeChannelMap}
-      />
+      {!filePath && (
+        <ChannelParameters
+          activeChannels={activeChannels}
+          channelRanges={channelRanges}
+          channelMaps={channelMaps}
+          onToggleChannel={onToggleChannel}
+          onChangeChannelRange={onChangeChannelRange}
+          onChangeChannelMap={onChangeChannelMap}
+        />
+      )}
     </FixedWrapper>
     <ScrollWrapper>
       <Scrollbars autoHide autoHideTimeout={1000}>
-        <TimeParameters
-          triggerVoltage={triggerVoltage}
-          timeBaseListLength={timeBaseListLength}
-          timeBaseIndex={timeBaseIndex}
-          timeBase={timeBase}
-          triggerChannel={triggerChannel}
-          isTriggerActive={isTriggerActive}
-          onToggleCheckBox={onToggleCheckBox}
-          onChangeTriggerVoltage={onChangeTriggerVoltage}
-          onChangeTriggerChannel={onChangeTriggerChannel}
-          onChangeTimeBaseIndex={onChangeTimeBaseIndex}
-        />
+        {!filePath && (
+          <TimeParameters
+            triggerVoltage={triggerVoltage}
+            timeBaseListLength={timeBaseListLength}
+            timeBaseIndex={timeBaseIndex}
+            timeBase={timeBase}
+            triggerChannel={triggerChannel}
+            isTriggerActive={isTriggerActive}
+            onToggleCheckBox={onToggleCheckBox}
+            onChangeTriggerVoltage={onChangeTriggerVoltage}
+            onChangeTriggerChannel={onChangeTriggerChannel}
+            onChangeTimeBaseIndex={onChangeTimeBaseIndex}
+          />
+        )}
         <AnalysisParameters
           isFourierTransformActive={isFourierTransformActive}
           fitType={fitType}
@@ -71,14 +76,17 @@ const Settings = ({
           onToggleCheckBox={onToggleCheckBox}
           onChangeFitType={onChangeFitType}
           onChangeFitChannel={onChangeFitChannel}
+          filePath={filePath}
         />
-        <PlotParameters
-          isXYPlotActive={isXYPlotActive}
-          plotChannel1={plotChannel1}
-          plotChannel2={plotChannel2}
-          onToggleCheckBox={onToggleCheckBox}
-          onChangePlotChannel={onChangePlotChannel}
-        />
+        {!filePath && (
+          <PlotParameters
+            isXYPlotActive={isXYPlotActive}
+            plotChannel1={plotChannel1}
+            plotChannel2={plotChannel2}
+            onToggleCheckBox={onToggleCheckBox}
+            onChangePlotChannel={onChangePlotChannel}
+          />
+        )}
       </Scrollbars>
     </ScrollWrapper>
   </SettingsContainer>

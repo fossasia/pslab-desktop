@@ -93,7 +93,9 @@ class Oscilloscope extends Component {
         plotChannel2,
       });
     });
-    this.getConfigFromDevice();
+
+    const { filePath } = this.props.match.params;
+    filePath ? this.getDataFromFile() : this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
@@ -108,6 +110,15 @@ class Oscilloscope extends Component {
       });
     ipcRenderer.removeAllListeners('OSC_CONFIG');
   }
+
+  getDataFromFile = debounce(() => {
+    const { isConnected } = this.props;
+    // isConnected &&
+    //   loadBalancer.sendData(ipcRenderer, 'linker', {
+    //     command: 'GET_CONFIG_OSC',
+    //   });
+    //  Get data and store in an array
+  }, 500);
 
   getConfigFromDevice = debounce(() => {
     const { isConnected } = this.props;
@@ -157,14 +168,17 @@ class Oscilloscope extends Component {
 
   onToggleRead = event => {
     const { isReading } = this.state;
+    const { filePath } = this.props.match.params;
     this.setState(prevState => ({
       isReading: !prevState.isReading,
     }));
     if (isReading) {
+      // stop read from array
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_OSC',
       });
     } else {
+      // read from array
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'START_OSC',
       });
@@ -359,10 +373,12 @@ class Oscilloscope extends Component {
       plotChannel2,
     } = this.state;
     const { isConnected } = this.props;
+    const { filePath } = this.props.match.params;
     return (
       <GraphPanelLayout
         settings={
           <Settings
+            filePath={filePath}
             timeBaseIndex={timeBaseIndex}
             timeBase={this.timeBaseList[timeBaseIndex]}
             activeChannels={activeChannels}
@@ -393,6 +409,7 @@ class Oscilloscope extends Component {
         }
         actionButtons={
           <ActionButtons
+            filePath={filePath}
             isConnected={isConnected}
             isWriting={isWriting}
             isReading={isReading}

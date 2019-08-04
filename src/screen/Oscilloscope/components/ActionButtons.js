@@ -16,6 +16,7 @@ const styles = () => ({
 });
 
 const ActionButtons = ({
+  filePath,
   isConnected,
   isReading,
   isWriting,
@@ -39,21 +40,23 @@ const ActionButtons = ({
           <ReadIcon style={{ fontSize: 20 }} />
         )}
       </Button>
-      <Button
-        className={classes.buttonMargin}
-        fullWidth={true}
-        variant="contained"
-        size="large"
-        color="default"
-        disabled={!isConnected || isReading}
-        onClick={onToggleWrite}
-      >
-        {isWriting ? (
-          <StopIcon style={{ fontSize: 20 }} />
-        ) : (
-          <RecordIcon style={{ fontSize: 20 }} />
-        )}
-      </Button>
+      {!filePath && (
+        <Button
+          className={classes.buttonMargin}
+          fullWidth={true}
+          variant="contained"
+          size="large"
+          color="default"
+          disabled={!isConnected || isReading}
+          onClick={onToggleWrite}
+        >
+          {isWriting ? (
+            <StopIcon style={{ fontSize: 20 }} />
+          ) : (
+            <RecordIcon style={{ fontSize: 20 }} />
+          )}
+        </Button>
+      )}
     </ButtonWrapper>
   );
 };

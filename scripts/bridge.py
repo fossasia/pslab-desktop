@@ -10,7 +10,7 @@ from power_source import Power_source
 from multimeter import Multimeter
 from wave_generator import Wave_generator
 from robotic_arm import RoboticArm
-
+from osc_playback import OscPlayback
 
 def main():
     file_write = FileWrite()
@@ -25,6 +25,7 @@ def main():
     multimeter = Multimeter(I, file_write)
     wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
+    osc_playback = OscPlayback()
 
     while(True):
         in_stream_data = input()
