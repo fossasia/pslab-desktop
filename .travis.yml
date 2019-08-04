@@ -1,58 +1,17 @@
 language: node_js
+
 node_js:
-  - "9"
-sudo: true
-dist: trusty
-
-cache:
-  directories:
-    - node_modules
-
-matrix:
-  allow_failures:
-    - os: osx
-  include:
-    - os: linux
-      env:
-        - DISPLAY=:99.0
-        - CC=clang
-        - CXX=clang++
-        - npm_config_clang=1
-        - TARGET_ARCH=x64
-        - OS=LINUX
-    - os: osx
-      osx_image: xcode7.3
-      env:
-        - TARGET_ARCH=x64
-        - OS=DARWIN
-        - DISPLAY=:99.0
-
-addons:
-  apt:
-    packages:
-      - xvfb
+  - node
 
 before_script:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-
-install:
-  - npm install
+  - export CI=false
 
 script:
-  - echo "skipping tests"
+  - npm run build
 
-stages:
-  - test
-
-# test stage - test job
-test:
-  stage: test
-  script:
-    - npm test -- --coverage
-
-# test stage - lint job
-lint:
-  stage: test
-  script:
-    - npm run lint
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: bash travis-scripts/upload-packages.sh
+  on:
+    branch: v2
