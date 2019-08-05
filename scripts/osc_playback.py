@@ -3,14 +3,13 @@ class OscPlayback:
         self.f = None
         self.data = None
 
-    def read( self, data_path ):
+    def read(self, data_path):
         self.f = open(data_path, "r")
-        lines = f.readlines()
+        lines = self.f.readlines()
         data = lines[3:]
 
-    def start( self ):
-        pass
-    
-    def stop(self):
+    def start(self):
         pass
 
+    def stop(self):
+        pass
