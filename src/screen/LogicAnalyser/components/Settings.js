@@ -52,7 +52,7 @@ const Settings = ({
           changeChannelMap={changeChannelMap}
           changeTriggerType={changeTriggerType}
         />
-        <AnalysisParameters
+        {/* <AnalysisParameters
           timeMeasureChannel1={timeMeasureChannel1}
           timeMeasureChannel2={timeMeasureChannel2}
           timeMeasuretrigger1Type={timeMeasuretrigger1Type}
@@ -64,7 +64,7 @@ const Settings = ({
           changeTimeMeasureTriggerType={changeTimeMeasureTriggerType}
           changeTimeMeasureWrite={changeTimeMeasureWrite}
           changeTimeout={changeTimeout}
-        />
+        /> */}
       </Scrollbars>
     </ScrollWrapper>
   </SettingsContainer>

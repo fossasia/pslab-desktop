@@ -80,7 +80,14 @@ class Graph extends Component {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" type="number" domain={[0, 'dataMax']}>
+            <XAxis
+              dataKey="time"
+              type="number"
+              domain={[0, dataMax => Math.round(dataMax)]}
+              allowDecimals={false}
+              tickCount={20}
+              interval="preserveStart"
+            >
               <Label value="mSec" position="bottom" />
             </XAxis>
             <YAxis yAxisId="left" domain={['dataMin - 2', 'dataMax + 2']} />
