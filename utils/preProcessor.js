@@ -106,7 +106,16 @@ exports.oscilloscopeXYProcessor = parsedJSON => {
 };
 
 exports.LAProcessor = parsedJSON => {
-  const { ts1, v1, ts2, v2, ts3, v3, ts4, v4 } = parsedJSON;
+  const {
+    time1,
+    voltage1,
+    time2,
+    voltage2,
+    time3,
+    voltage3,
+    time4,
+    voltage4,
+  } = parsedJSON;
   const { numberOfChannels } = parsedJSON;
 
   let parsedOutput = {
@@ -117,48 +126,48 @@ exports.LAProcessor = parsedJSON => {
   };
   if (numberOfChannels >= 1) {
     parsedOutput.LA1Data = [];
-    ts1.map((time, index) => {
+    time1.map((time, index) => {
       parsedOutput.LA1Data = [
         ...parsedOutput.LA1Data,
         {
-          voltage: v1[index],
-          time: time,
+          voltage: voltage1[index],
+          time,
         },
       ];
     });
   }
   if (numberOfChannels >= 2) {
     parsedOutput.LA2Data = [];
-    ts2.map((time, index) => {
+    time2.map((time, index) => {
       parsedOutput.LA2Data = [
         ...parsedOutput.LA2Data,
         {
-          voltage: v2[index],
-          time: time,
+          voltage: voltage2[index],
+          time,
         },
       ];
     });
   }
   if (numberOfChannels >= 3) {
     parsedOutput.LA3Data = [];
-    ts3.map((time, index) => {
+    time3.map((time, index) => {
       parsedOutput.LA3Data = [
         ...parsedOutput.LA3Data,
         {
-          voltage: v3[index],
-          time: time,
+          voltage: voltage3[index],
+          time,
         },
       ];
     });
   }
   if (numberOfChannels >= 4) {
     parsedOutput.LA4Data = [];
-    ts4.map((time, index) => {
+    time4.map((time, index) => {
       parsedOutput.LA4Data = [
         ...parsedOutput.LA4Data,
         {
-          voltage: v4[index],
-          time: time,
+          voltage: voltage4[index],
+          time,
         },
       ];
     });
