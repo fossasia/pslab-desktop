@@ -50,12 +50,13 @@ class Graph extends Component {
 
   componentDidMount() {
     ipcRenderer.on('LA_DATA', (event, args) => {
-      const { isReading } = this.props;
-      isReading &&
+      const { isReading, toggleRead } = this.props;
+      if (isReading) {
         this.setState({
           ...args.data,
         });
-      console.log(args.data);
+        toggleRead();
+      }
     });
   }
 

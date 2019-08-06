@@ -101,7 +101,6 @@ class LogicAnalyser extends Component {
         command: 'STOP_LA',
       });
     } else {
-      console.log('starting la');
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'START_LA',
       });
@@ -209,7 +208,11 @@ class LogicAnalyser extends Component {
           />
         }
         graph={
-          <Graph isReading={isReading} numberOfChannels={numberOfChannels} />
+          <Graph
+            isReading={isReading}
+            numberOfChannels={numberOfChannels}
+            toggleRead={this.toggleRead}
+          />
         }
       />
     );
