@@ -11,6 +11,8 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
@@ -27,6 +29,7 @@ import {
   DeveloperBoard as DeviceIcon,
   Menu as DrawerIcon,
   SaveAlt as ImportIcon,
+  MoreVert as LayoutIcon,
 } from '@material-ui/icons';
 import { extractFileName } from '../../utils/fileNameProcessor';
 import { Save as SaveIcon } from '@material-ui/icons';
@@ -72,6 +75,7 @@ const Appshell = ({
   openSnackbar,
 }) => {
   const [drawerOpen, toggleDrawer] = useState(false);
+  const [menuOpen, toggleMenu] = useState(null);
 
   const openImportWindow = () => {
     dialog.showOpenDialog(
@@ -93,6 +97,52 @@ const Appshell = ({
         }
       },
     );
+  };
+
+  const layoutButtonRenderer = location => {
+    if (
+      location.pathname === '/' ||
+      location.pathname === '/frontlayout' ||
+      location.pathname === '/backlayout'
+    ) {
+      return (
+        <div>
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={event => {
+              toggleMenu(event.currentTarget);
+            }}
+          >
+            <LayoutIcon />
+          </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={menuOpen}
+            keepMounted
+            open={Boolean(menuOpen)}
+            onClose={() => toggleMenu(null)}
+          >
+            <MenuItem
+              onClick={() => {
+                toggleMenu(null);
+                history.push('/frontlayout');
+              }}
+            >
+              Front Layout
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                toggleMenu(null);
+                history.push('/backlayout');
+              }}
+            >
+              Back Layout
+            </MenuItem>
+          </Menu>
+        </div>
+      );
+    }
   };
 
   const saveButtonRenderer = location => {
@@ -263,6 +313,7 @@ const Appshell = ({
               </IconButton>
             </Tooltip>
             {saveButtonRenderer(location)}
+            {layoutButtonRenderer(location)}
           </ButtonContainer>
         </AppBar>
         <ChildrenWrapper>{children}</ChildrenWrapper>
