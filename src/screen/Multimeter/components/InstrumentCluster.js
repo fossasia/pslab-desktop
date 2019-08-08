@@ -33,6 +33,7 @@ const InstrumentCluster = ({
   activeCategory,
   isWriting,
   onToggleWrite,
+  filePath
 }) => {
   return (
     <InstrumentContainer>
@@ -61,6 +62,7 @@ const InstrumentCluster = ({
             onToggleRead={onToggleRead}
             isWriting={isWriting}
             onToggleWrite={onToggleWrite}
+            filePath={filePath}
           />
         </Card>
       </DisplayContainer>

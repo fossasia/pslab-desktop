@@ -137,7 +137,7 @@ class App extends Component {
                   )}
                 />
                 <Route
-                  path="/multimeter"
+                  path="/multimeter/:filePath?"
                   render={props => (
                     <Multimeter {...props} dataPath={dataPath} />
                   )}

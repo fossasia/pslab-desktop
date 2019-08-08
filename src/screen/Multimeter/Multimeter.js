@@ -42,15 +42,17 @@ class Multimeter extends Component {
         unit,
       });
     });
-    this.getConfigFromDevice();
+
+    const { filePath } = this.props.match.params;
+    filePath ? this.getDataFromFile() : this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
     const { isReading } = this.state;
-    isReading &&
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_MUL_MET',
-      });
+    // isReading &&
+    //   loadBalancer.sendData(ipcRenderer, 'linker', {
+    //     command: 'STOP_MUL_MET',
+    //   });
     ipcRenderer.removeAllListeners('MUL_MET_CONFIG');
   }
 
@@ -62,32 +64,32 @@ class Multimeter extends Component {
       });
   }, 500);
 
-  sendConfigToDevice = debounce(() => {
+  getDataFromFile = debounce(() => {
     const { isConnected } = this.props;
-    const { activeCategory, activeSubType, parameter } = this.state;
-    isConnected &&
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'SET_CONFIG_MUL_MET',
-        activeCategory,
-        activeSubType,
-        parameter,
-      });
+    // isConnected &&
+    //   loadBalancer.sendData(ipcRenderer, 'linker', {
+    //     command: 'GET_CONFIG_MUL_MET',
+    //   });
+    //  Get data and store in an array
   }, 500);
 
   onToggleRead = event => {
+    const { filePath } = this.props.match.params;
     const { isReading } = this.state;
+    this.setState(prevState => ({
+      isReading: !prevState.isReading,
+    }));
     if (isReading) {
+      // stop read from array
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'STOP_MUL_MET',
       });
     } else {
+      // read from array
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'START_MUL_MET',
       });
     }
-    this.setState(prevState => ({
-      isReading: !prevState.isReading,
-    }));
   };
 
   onToggleWrite = event => {
@@ -168,7 +170,9 @@ class Multimeter extends Component {
       isReading,
       activeCategory,
     } = this.state;
+    const { filePath } = this.props.match.params;
     const { isConnected } = this.props;
+
     return (
       <SimplePanelLayout
         panel={
@@ -187,6 +191,7 @@ class Multimeter extends Component {
             activeCategory={activeCategory}
             isWriting={isWriting}
             onToggleWrite={this.onToggleWrite}
+            filePath={filePath}
           />
         }
       />
