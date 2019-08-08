@@ -11,6 +11,8 @@ from multimeter import Multimeter
 from wave_generator import Wave_generator
 from robotic_arm import RoboticArm
 from osc_playback import OscPlayback
+from multimeter_playback import MulmetPlayback
+
 
 def main():
     file_write = FileWrite()
@@ -26,6 +28,7 @@ def main():
     wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
     osc_playback = OscPlayback()
+    mulmet_playback = MulmetPlayback()
 
     while(True):
         in_stream_data = input()
