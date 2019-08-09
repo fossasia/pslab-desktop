@@ -49,10 +49,13 @@ class Multimeter extends Component {
 
   componentWillUnmount() {
     const { isReading } = this.state;
-    // isReading &&
-    //   loadBalancer.sendData(ipcRenderer, 'linker', {
-    //     command: 'STOP_MUL_MET',
-    //   });
+    const { filePath } = this.props.match.params;
+    if (isReading) {
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: filePath ? 'STOP_PLAYBACK_MUL_MET' : 'STOP_MUL_MET',
+      });
+    }
+
     ipcRenderer.removeAllListeners('MUL_MET_CONFIG');
   }
 
@@ -65,6 +68,7 @@ class Multimeter extends Component {
   }, 500);
 
   getDataFromFile = debounce(() => {
+    console.log('get data from file triggered');
     const { isConnected, dataPath } = this.props;
     const { filePath } = this.props.match.params;
     isConnected &&
@@ -80,6 +84,7 @@ class Multimeter extends Component {
     this.setState(prevState => ({
       isReading: !prevState.isReading,
     }));
+    console.log(filePath, 'read');
     if (isReading) {
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: filePath ? 'STOP_PLAYBACK_MUL_MET' : 'STOP_MUL_MET',

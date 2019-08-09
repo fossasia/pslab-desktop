@@ -1,12 +1,18 @@
+import sys
+
+
 class MulmetPlayback:
     def __init__(self):
         self.buffer = None
 
     def read_data_from_file(self, data_path):
-        pass
+        print('Reading files')
+        sys.stdout.flush()
 
     def start_playback(self):
-        pass
+        print('starting playback')
+        sys.stdout.flush()
 
     def stop_playback(self):
-        pass
+        print('Stoping playback')
+        sys.stdout.flush()
