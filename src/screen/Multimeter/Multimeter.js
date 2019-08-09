@@ -65,12 +65,13 @@ class Multimeter extends Component {
   }, 500);
 
   getDataFromFile = debounce(() => {
-    const { isConnected } = this.props;
-    // isConnected &&
-    //   loadBalancer.sendData(ipcRenderer, 'linker', {
-    //     command: 'GET_CONFIG_MUL_MET',
-    //   });
-    //  Get data and store in an array
+    const { isConnected, dataPath } = this.props;
+    const { filePath } = this.props.match.params;
+    isConnected &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'READ_DATA_FROM_FILE_MUL_MET',
+        dataPath: `${dataPath}/${filePath}`,
+      });
   }, 500);
 
   onToggleRead = event => {
@@ -80,14 +81,12 @@ class Multimeter extends Component {
       isReading: !prevState.isReading,
     }));
     if (isReading) {
-      // stop read from array
       loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_MUL_MET',
+        command: filePath ? 'STOP_PLAYBACK_MUL_MET' : 'STOP_MUL_MET',
       });
     } else {
-      // read from array
       loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'START_MUL_MET',
+        command: filePath ? 'START_PLAYBACK_MUL_MET' : 'START_MUL_MET',
       });
     }
   };

@@ -120,9 +120,15 @@ def main():
         if command == 'GET_CONFIG_MUL_MET':
             multimeter.get_config()
 
-        if command == 'READ_DATA_FROM_FILE':
+        if command == 'READ_DATA_FROM_FILE_MUL_MET':
             data_path = parsed_stream_data['dataPath']
             mulmet_playback.read_data_from_file(data_path)
+
+        if command == 'START_PLAYBACK_MUL_MET':
+            mulmet_playback.start_playback()
+
+        if command == 'STOP_PLAYBACK_MUL_MET':
+            mulmet_playback.stop_playback()
 
         # -------------------------- Power Source block ---------------------------------
         if command == 'SET_CONFIG_PWR_SRC':
