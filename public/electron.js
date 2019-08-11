@@ -61,6 +61,7 @@ app.on('activate', () => {
 
 loadBalancer.register(ipcMain, {
   linker: '/background_tasks/linker.html',
+  playback: '/background_tasks/playback.html',
 });
 
 ipcMain.on('OSC_VOLTAGE_DATA', (event, args) => {

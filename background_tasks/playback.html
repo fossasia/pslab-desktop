@@ -1,0 +1,33 @@
+<script>
+	const { PythonShell } = require('python-shell');
+	const { ipcRenderer } = require('electron');
+	const loadBalancer = require('electron-load-balancer');
+	const path = require('path');
+	const { LAProcessor } = require('../utils/preProcessor.js');
+	const log = require('electron-log');
+
+	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/playback_bridge.py'), {
+		pythonPath: 'python3',
+	});
+
+	loadBalancer.job(
+		ipcRenderer,
+		'linker',
+		() => {
+			loadBalancer.onRecieveData(ipcRenderer, 'linker', args => {
+				pyshell.send(JSON.stringify(args));
+			});
+
+			pyshell.on('stderr', function(stderr) {
+				log.error(stderr);
+			});
+
+			pyshell.on('message', function(results) {
+				log.info(results);
+			});
+		},
+		() => {
+			pyshell.terminate();
+		},
+	);
+</script>
