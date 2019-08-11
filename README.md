@@ -65,9 +65,23 @@ Currently the build pipeline spits a **debian** and a **snap** file that can be 
 ## Build Step for Linux ( Debian bases OS ) :beginner:
 While in the project root  
 ```bash
-npm run build
+npm run build-linux
 ```  
-This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installer.  
+## Build Step for Windows :beginner:
+While in the project root  
+```bash
+npm run build-windows
+```
+This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installers. 
+
+---
+
+## Build Step for universal platforms :beginner:
+While in the project root  
+```bash
+npm run build
+```
+This will generate installers both for linux and windows in one step.
 
 To pulish the app on snap store, follow the steps mentioned in the link https://docs.snapcraft.io/releasing-your-app
 
