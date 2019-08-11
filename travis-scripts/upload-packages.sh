@@ -4,11 +4,17 @@ git config --global user.name "Travis CI"
 git config --global user.email "noreply@travis.com"
 
 git clone --quiet --branch=install https://fossasia:$GITHUB_API_KEY@github.com/fossasia/pslab-desktop install > /dev/null
+    
 cd install 
 
-rm -rf *
+rm -rf pslab-desktop-$TRAVIS_BRANCH-$TRAVIS_JOB_NAME*
 
-find ../dist -type f \( -name '*.snap' -o -name '*.deb' \) -exec cp -v {} . \;
+find ../dist -maxdepth 1 -type f \( -name '*.snap' -o -name '*.deb' -o -name '*.exe' \) -exec sh -c 'file=$(basename {});cp {} "temp-$file"' \;
+
+for file in temp-*; do
+    filename=$(basename -- "$file")
+    mv $file "pslab-desktop-$TRAVIS_BRANCH-$TRAVIS_JOB_NAME.${filename##*.}"
+done
 
 git checkout --orphan temporary
 git add --all .
