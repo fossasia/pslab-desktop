@@ -14,4 +14,5 @@ deploy:
   skip_cleanup: true
   script: bash travis-scripts/upload-packages.sh
   on:
-    branch: v2
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^(master|development)$
