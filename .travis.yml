@@ -3,11 +3,21 @@ language: node_js
 node_js:
   - node
 
+matrix:
+  include:
+    - name: "linux"
+      os: linux
+      script: npm run build-linux
+    - name: "windows"
+      os: linux
+      services: docker
+      script: docker run --rm -e GH_TOKEN=$GITHUB_API_KEY -v $PWD:/project -v ~/.cache/electron:/root/.cache/electron -v ~/.cache/electron-builder:/root/.cache/electron-builder electronuserland/builder:wine /bin/bash -c "npm run build-windows"
+
+cache:
+  npm: false
+
 before_script:
   - export CI=false
-
-script:
-  - npm run build
 
 deploy:
   provider: script
