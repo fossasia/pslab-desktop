@@ -9,11 +9,11 @@ cd install
 
 rm -rf pslab-desktop-$TRAVIS_BRANCH-$TRAVIS_JOB_NAME*
 
-find ../dist -maxdepth 1 -type f \( -name '*.snap' -o -name '*.deb' -o -name '*.exe' \) -exec sh -c 'file=$(basename {});cp {} "temp-$file"' \;
+find ../dist -maxdepth 1 -type f \( -name '*.snap' -o -name '*.deb' -o -name '*.exe' \) -exec sh -c 'file=$(basename "{}");cp "{}" "temp-$file";' \;
 
 for file in temp-*; do
     filename=$(basename -- "$file")
-    mv $file "pslab-desktop-$TRAVIS_BRANCH-$TRAVIS_JOB_NAME.${filename##*.}"
+    mv "$file" "pslab-desktop-$TRAVIS_BRANCH-$TRAVIS_JOB_NAME.${filename##*.}"
 done
 
 git checkout --orphan temporary
