@@ -29,6 +29,7 @@ import {
   deviceDisconnected,
   closeDialog,
 } from './redux/actions/app';
+import debounce from 'lodash/debounce';
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 const loadBalancer = window.require('electron-load-balancer');
@@ -38,7 +39,75 @@ class App extends Component {
     super(props);
     this.deviceStatus = false;
     this.reconnect = false;
+
+    this.state = {
+      isReading: false,
+      isWriting: false,
+    };
   }
+
+  startRead = debounce(command => {
+    const { isReading } = this.state;
+    const { device } = this.props;
+    const { isConnected } = device;
+    if (isConnected) {
+      this.setState({
+        isReading: true,
+      });
+      !isReading &&
+        loadBalancer.sendData(ipcRenderer, 'linker', {
+          command,
+        });
+    }
+  }, 1000);
+
+  stopRead = command => {
+    const { isReading } = this.state;
+    const { device } = this.props;
+    const { isConnected } = device;
+    if (isConnected) {
+      isReading &&
+        loadBalancer.sendData(ipcRenderer, 'linker', {
+          command,
+        });
+    }
+    this.setState({
+      isReading: false,
+    });
+  };
+
+  startWriting = debounce(deviceType => {
+    const { isWriting } = this.state;
+    const { device, dataPath } = this.props;
+    const { isConnected } = device;
+    if (isConnected) {
+      this.setState({
+        isWriting: true,
+      });
+      isConnected &&
+        !isWriting &&
+        loadBalancer.sendData(ipcRenderer, 'linker', {
+          command: 'START_WRITE',
+          deviceType,
+          dataPath,
+        });
+    }
+  }, 300);
+
+  stopWriting = debounce(() => {
+    const { isWriting } = this.state;
+    const { device } = this.props;
+    const { isConnected } = device;
+    if (isConnected) {
+      isWriting &&
+        loadBalancer.sendData(ipcRenderer, 'linker', {
+          command: 'STOP_WRITE',
+        });
+    }
+    this.setState({
+      isWriting: false,
+    });
+  }, 300);
 
   componentDidMount() {
     const { deviceConnected, deviceDisconnected } = this.props;
@@ -109,12 +178,19 @@ class App extends Component {
       closeDialog,
       dataPath,
     } = this.props;
+    const { isReading, isWriting } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme.pallet}>
           <HashRouter>
-            <Appshell reset={this.reset} dataPath={dataPath}>
+            <Appshell
+              reset={this.reset}
+              dataPath={dataPath}
+              isWriting={isWriting}
+              startWriting={this.startWriting}
+              stopWriting={this.stopWriting}
+            >
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route
@@ -139,7 +215,14 @@ class App extends Component {
                 <Route
                   path="/multimeter"
                   render={props => (
-                    <Multimeter {...props} dataPath={dataPath} />
+                    <Multimeter
+                      {...props}
+                      dataPath={dataPath}
+                      isReading={isReading}
+                      startRead={this.startRead}
+                      stopRead={this.stopRead}
+                      stopWriting={this.stopWriting}
+                    />
                   )}
                 />
                 <Route

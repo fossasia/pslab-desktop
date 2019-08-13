@@ -23,9 +23,11 @@ class Multimeter extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
+    const { startRead, stopRead } = this.props;
+    ipcRenderer.on('CONNECTION_STATUS_MUL_MET', (event, args) => {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
+      isConnected ? startRead('START_MUL_MET') : stopRead('STOP_MUL_MET');
     });
     ipcRenderer.on('MUL_MET_CONFIG', (event, args) => {
       const { activeCategory, activeSubType, parameter } = args;
@@ -43,15 +45,15 @@ class Multimeter extends Component {
       });
     });
     this.getConfigFromDevice();
+    startRead('START_MUL_MET');
   }
 
   componentWillUnmount() {
-    const { isReading } = this.state;
-    isReading &&
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_MUL_MET',
-      });
+    const { stopRead, stopWriting } = this.props;
+    stopRead('STOP_MUL_MET');
+    stopWriting();
     ipcRenderer.removeAllListeners('MUL_MET_CONFIG');
+    ipcRenderer.removeAllListeners('CONNECTION_STATUS_MUL_MET');
   }
 
   getConfigFromDevice = debounce(() => {
@@ -73,41 +75,6 @@ class Multimeter extends Component {
         parameter,
       });
   }, 500);
-
-  onToggleRead = event => {
-    const { isReading } = this.state;
-    if (isReading) {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_MUL_MET',
-      });
-    } else {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'START_MUL_MET',
-      });
-    }
-    this.setState(prevState => ({
-      isReading: !prevState.isReading,
-    }));
-  };
-
-  onToggleWrite = event => {
-    const { isWriting } = this.state;
-    const { dataPath } = this.props;
-    if (isWriting) {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_WRITE',
-      });
-    } else {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'START_WRITE',
-        deviceType: 'Multimeter',
-        dataPath: dataPath,
-      });
-    }
-    this.setState(prevState => ({
-      isWriting: !prevState.isWriting,
-    }));
-  };
 
   onTogglePulseUnit = () => {
     let { activeSubType, parameter } = this.state;
@@ -164,11 +131,9 @@ class Multimeter extends Component {
       data,
       unit,
       dialValue,
-      isWriting,
-      isReading,
       activeCategory,
     } = this.state;
-    const { isConnected } = this.props;
+    const { isReading } = this.props;
     return (
       <SimplePanelLayout
         panel={
@@ -177,16 +142,12 @@ class Multimeter extends Component {
             onClickButton={this.onClickButton}
             changeOption={this.changeOption}
             changeDialValue={this.changeDialValue}
-            onToggleRead={this.onToggleRead}
             onTogglePulseUnit={this.onTogglePulseUnit}
             isReading={isReading}
             data={data}
             unit={unit}
             dialValue={dialValue}
-            isConnected={isConnected}
             activeCategory={activeCategory}
-            isWriting={isWriting}
-            onToggleWrite={this.onToggleWrite}
           />
         }
       />
