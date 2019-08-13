@@ -30,6 +30,8 @@ import {
   Menu as DrawerIcon,
   SaveAlt as ImportIcon,
   MoreVert as LayoutIcon,
+  RadioButtonChecked as StartRecordIcon,
+  Stop as StopRecordIcon,
 } from '@material-ui/icons';
 import { extractFileName } from '../../utils/fileNameProcessor';
 import { Save as SaveIcon } from '@material-ui/icons';
@@ -73,6 +75,9 @@ const Appshell = ({
   classes,
   dataPath,
   openSnackbar,
+  isWriting,
+  startWriting,
+  stopWriting,
 }) => {
   const [drawerOpen, toggleDrawer] = useState(false);
   const [menuOpen, toggleMenu] = useState(null);
@@ -177,6 +182,25 @@ const Appshell = ({
             }}
           >
             <SaveIcon />
+          </IconButton>
+        );
+      case '/multimeter':
+        return isWriting ? (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => stopWriting()}
+          >
+            <StopRecordIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => startWriting('Multimeter')}
+            disabled={!device.isConnected}
+          >
+            <StartRecordIcon />
           </IconButton>
         );
       case '/loggeddata':

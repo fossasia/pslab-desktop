@@ -6,7 +6,6 @@ import {
   SwitchWrapper,
 } from './InstrumentCluster.styles';
 import Dial from './Dial';
-import ActionButtons from './ActionButtons';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import MeasurementDisplay from './MeasurementDisplay';
 
@@ -55,13 +54,6 @@ const InstrumentCluster = ({
             />
             <span>Count Pulse</span>
           </SwitchWrapper>
-          <ActionButtons
-            isReading={isReading}
-            isConnected={isConnected}
-            onToggleRead={onToggleRead}
-            isWriting={isWriting}
-            onToggleWrite={onToggleWrite}
-          />
         </Card>
       </DisplayContainer>
     </InstrumentContainer>
