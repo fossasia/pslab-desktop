@@ -44,6 +44,8 @@ import {
   ButtonContainer,
   TitleContainer,
   AppBar,
+  ButtonTextModifier,
+  RecText,
 } from './Appshell.styles';
 import { openSnackbar } from '../../redux/actions/app';
 
@@ -200,7 +202,32 @@ const Appshell = ({
             onClick={() => startWriting('Multimeter')}
             disabled={!device.isConnected}
           >
-            <StartRecordIcon />
+            <ButtonTextModifier>
+              <StartRecordIcon />
+              <RecText>Rec</RecText>
+            </ButtonTextModifier>
+          </IconButton>
+        );
+      case '/oscilloscope':
+        return isWriting ? (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => stopWriting()}
+          >
+            <StopRecordIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => startWriting('Oscilloscope')}
+            disabled={!device.isConnected}
+          >
+            <ButtonTextModifier>
+              <StartRecordIcon />
+              <RecText>Rec</RecText>
+            </ButtonTextModifier>
           </IconButton>
         );
       case '/loggeddata':

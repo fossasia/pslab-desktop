@@ -6,7 +6,7 @@ import Graph from './components/Graph';
 import FFTGraph from './components/FFTGraph';
 import FitPanel from './components/FitPanel';
 import XYPlotGraph from './components/XYPlotGraph';
-import ActionButtons from './components/ActionButtons';
+// import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
 import roundOff from '../../utils/arithmetics';
 
@@ -19,8 +19,8 @@ class Oscilloscope extends Component {
     super(props);
     this.timeBaseList = [0.5, 1, 5, 10, 20, 25, 50];
     this.state = {
-      isWriting: false,
-      isReading: false,
+      // isWriting: false,
+      // isReading: false,
       timeBaseIndex: 0,
       activeChannels: {
         ch1: true,
@@ -52,9 +52,11 @@ class Oscilloscope extends Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('CONNECTION_STATUS', (event, args) => {
+    const { startRead, stopRead } = this.props;
+    ipcRenderer.on('CONNECTION_STATUS_OSC', (event, args) => {
       const { isConnected } = args;
       isConnected && this.getConfigFromDevice();
+      isConnected ? startRead('START_OSC') : stopRead('STOP_OSC');
     });
     ipcRenderer.on('OSC_CONFIG', (event, args) => {
       const {
@@ -94,19 +96,15 @@ class Oscilloscope extends Component {
       });
     });
     this.getConfigFromDevice();
+    startRead('START_OSC');
   }
 
   componentWillUnmount() {
-    const { isReading, isWriting } = this.state;
-    isReading &&
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_OSC',
-      });
-    isWriting &&
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_WRITE',
-      });
+    const { stopRead, stopWriting } = this.props;
+    stopRead('STOP_OSC');
+    stopWriting();
     ipcRenderer.removeAllListeners('OSC_CONFIG');
+    ipcRenderer.removeAllListeners('CONNECTION_STATUS_OSC');
   }
 
   getConfigFromDevice = debounce(() => {
@@ -154,41 +152,6 @@ class Oscilloscope extends Component {
         plotChannel2,
       });
   }, 500);
-
-  onToggleRead = event => {
-    const { isReading } = this.state;
-    this.setState(prevState => ({
-      isReading: !prevState.isReading,
-    }));
-    if (isReading) {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_OSC',
-      });
-    } else {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'START_OSC',
-      });
-    }
-  };
-
-  onToggleWrite = event => {
-    const { isWriting } = this.state;
-    const { dataPath } = this.props;
-    this.setState(prevState => ({
-      isWriting: !prevState.isWriting,
-    }));
-    if (isWriting) {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'STOP_WRITE',
-      });
-    } else {
-      loadBalancer.sendData(ipcRenderer, 'linker', {
-        command: 'START_WRITE',
-        deviceType: 'Oscilloscope',
-        dataPath: dataPath,
-      });
-    }
-  };
 
   onToggleChannel = channelName => event => {
     this.setState(
@@ -307,7 +270,6 @@ class Oscilloscope extends Component {
 
   graphRenderer = () => {
     const {
-      isReading,
       timeBaseIndex,
       activeChannels,
       channelRanges,
@@ -316,6 +278,7 @@ class Oscilloscope extends Component {
       plotChannel1,
       plotChannel2,
     } = this.state;
+    const { isReading } = this.props;
     if (isFourierTransformActive) {
       return <FFTGraph isReading={isReading} activeChannels={activeChannels} />;
     }
@@ -341,8 +304,6 @@ class Oscilloscope extends Component {
 
   render() {
     const {
-      isReading,
-      isWriting,
       timeBaseIndex,
       activeChannels,
       channelRanges,
@@ -358,7 +319,7 @@ class Oscilloscope extends Component {
       plotChannel1,
       plotChannel2,
     } = this.state;
-    const { isConnected } = this.props;
+    const { isReading } = this.props;
     return (
       <GraphPanelLayout
         settings={
@@ -389,15 +350,6 @@ class Oscilloscope extends Component {
             onChangeFitType={this.onChangeFitType}
             onChangeFitChannel={this.onChangeFitChannel}
             onChangePlotChannel={this.onChangePlotChannel}
-          />
-        }
-        actionButtons={
-          <ActionButtons
-            isConnected={isConnected}
-            isWriting={isWriting}
-            isReading={isReading}
-            onToggleRead={this.onToggleRead}
-            onToggleWrite={this.onToggleWrite}
           />
         }
         graph={this.graphRenderer()}

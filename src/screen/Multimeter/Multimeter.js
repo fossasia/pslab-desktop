@@ -126,13 +126,7 @@ class Multimeter extends Component {
   };
 
   render() {
-    const {
-      activeSubType,
-      data,
-      unit,
-      dialValue,
-      activeCategory,
-    } = this.state;
+    const { activeSubType, data, unit, dialValue, activeCategory } = this.state;
     const { isReading } = this.props;
     return (
       <SimplePanelLayout
