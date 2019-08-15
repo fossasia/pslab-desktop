@@ -196,7 +196,14 @@ class App extends Component {
                 <Route
                   path="/oscilloscope"
                   render={props => (
-                    <Oscilloscope {...props} dataPath={dataPath} />
+                    <Oscilloscope
+                      {...props}
+                      dataPath={dataPath}
+                      isReading={isReading}
+                      startRead={this.startRead}
+                      stopRead={this.stopRead}
+                      stopWriting={this.stopWriting}
+                    />
                   )}
                 />
                 <Route path="/logicanalyser" component={LogicAnalyser} />

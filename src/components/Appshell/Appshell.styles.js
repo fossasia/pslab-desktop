@@ -81,3 +81,12 @@ export const BottomNavigationWrapper = styled.div``;
 export const Spacer = styled.div`
   flex: 1;
 `;
+
+export const ButtonTextModifier = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const RecText = styled.div`
+  font-size: 10px;
+`;
