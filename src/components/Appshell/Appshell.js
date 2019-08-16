@@ -16,8 +16,6 @@ import {
 } from '@material-ui/core';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
-  Usb as ConnectedIcon,
-  Warning as DisconnectedIcon,
   Settings as SettingIcon,
   Refresh as ResetIcon,
   BugReport as BugIcon,
@@ -47,6 +45,8 @@ import {
   ButtonTextModifier,
   RecText,
 } from './Appshell.styles';
+import DisconnectedIcon from '../../resources/device_disconnected.svg';
+import ConnectedIcon from '../../resources/device_connected.svg';
 import { openSnackbar } from '../../redux/actions/app';
 
 const electron = window.require('electron');
@@ -357,9 +357,15 @@ const Appshell = ({
             >
               <IconButton className={classes.iconButton} size="medium">
                 {device.isConnected ? (
-                  <ConnectedIcon style={{ fontSize: 24 }} />
+                  <img
+                    src={ConnectedIcon}
+                    style={{ height: '20px', width: '20px' }}
+                  />
                 ) : (
-                  <DisconnectedIcon style={{ fontSize: 24 }} />
+                  <img
+                    src={DisconnectedIcon}
+                    style={{ height: '20px', width: '20px' }}
+                  />
                 )}
               </IconButton>
             </Tooltip>
