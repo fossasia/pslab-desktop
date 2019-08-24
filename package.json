@@ -111,7 +111,10 @@
                 "nsis"
             ],
             "legalTrademarks": "Copyright © 2019 FOSSASIA",
-            "signingHashAlgorithms": ["sha1", "sha256"]
+            "signingHashAlgorithms": [
+                "sha1",
+                "sha256"
+            ]
         },
         "nsis": {
             "oneClick": true

@@ -21,11 +21,11 @@ class FileWrite:
                 yData = ' '.join(map(str, kwargs['yData'].tolist()))
                 data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
                     kwargs['channel'] + ", " + xData + ", " + \
-                    yData + ", " + str(kwargs['timebase']) + "\n"
+                    yData + ", " + str(kwargs['timebase']) + ", " + " " + ", " + " " +"\n"
 
             if inst_type == 'MUL_MET':
                 data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
-                    kwargs['data'] + ", " + str(kwargs['value']) + "\n"
+                    kwargs['data'] + ", " + str(kwargs['value']) + ", " + " " + ", " + " " + "\n"
 
             self.data_buffer.append(data)
 
@@ -36,10 +36,10 @@ class FileWrite:
             device_type, str(datetime.datetime.now())))
         if device_type == 'Oscilloscope':
             self.file_pointed.write(
-                "Timestamp, DateTime, Channel, xData, yData, Timebase\n")
+                "Timestamp, DateTime, Channel, xData, yData, Timebase, Latitude, Longitude\n")
         if device_type == 'Multimeter':
             self.file_pointed.write(
-                "Timestamp, DateTime, Data, Value\n")
+                "Timestamp, DateTime, Data, Value, Latitude, Longitude\n")
         self.is_writing = True
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
                           'message': 'Data recording started', }))
@@ -54,7 +54,7 @@ class FileWrite:
         if device_type == 'WaveGenerator':
             buffer = []
             self.file_pointed.write(
-                "Timestamp, DateTime, Wave, Digital, S1_Frequency, S1_Shape, S2_Frequency, S2_Phase, S2_Shape, PWM_Frequency, SQR1_Duty, SQR2_Phase, SQR2_Duty, SQR3_Phase, SQR3_Duty, SQR4_Phase, SQR4_Duty, \n")
+                "Timestamp, DateTime, Wave, Digital, S1_Frequency, S1_Shape, S2_Frequency, S2_Phase, S2_Shape, PWM_Frequency, SQR1_Duty, SQR2_Phase, SQR2_Duty, SQR3_Phase, SQR3_Duty, SQR4_Phase, SQR4_Duty, Latitude, Longitude \n")
             data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
                 str(kwargs['wave']) + ", " + str(kwargs['digital']) + ", " + str(kwargs['s1_f']) + ", " + str(kwargs['s1_shape']) + ", " + \
                 str(kwargs['s2_f']) + ", " + str(kwargs['s2_p']) + ", " + str(kwargs["s2_shape"]) + ", " + \
@@ -62,17 +62,18 @@ class FileWrite:
                 str(kwargs['dc_1']) + ", " + \
                 str(kwargs['p2']) + ", " + str(kwargs['dc_2']) + ", " + \
                 str(kwargs['p3']) + ", " + str(kwargs['dc_3']) + ", " + \
-                str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + "\n"
+                str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + ", " + \
+                 " " + ", " + " " + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
 
         if device_type == 'PowerSource':
             buffer = []
             self.file_pointed.write(
-                "Timestamp, DateTime, PCS, PV1, PV2, PV3 \n")
+                "Timestamp, DateTime, PCS, PV1, PV2, PV3, Latitude, Longitude \n")
             data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
                 str(kwargs['pcs']) + ", " + str(kwargs['pv1']) + ", " + \
-                str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + "\n"
+                str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + ", " + " " + "," + " " + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
 
@@ -102,6 +103,8 @@ class FileWrite:
                       'sqr3Phase': data[14],
                       'sqr4DutyCycle': data[15],
                       'sqr4Phase': data[16],
+                      "latitude": " ",
+                      "longitude": " "
                       }
         print(json.dumps(output))
         sys.stdout.flush()
@@ -111,7 +114,7 @@ class FileWrite:
     def stop_recording(self):
         if len(self.data_buffer) != 0:
             self.file_pointed.writelines(self.data_buffer)
-            self.data_buffer = None
+            self.data_buffer = []
         self.file_pointed.close()
         self.is_writing = False
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
@@ -127,6 +130,9 @@ class FileWrite:
                       'pcs': data[2],
                       'pv1': data[3],
                       'pv2': data[4],
-                      'pv3': data[5]}
+                      'pv3': data[5],
+                      'latitude': " ",
+                      'longitude': " "                      
+                      }
             print(json.dumps(output))
             sys.stdout.flush()
