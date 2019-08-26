@@ -10,10 +10,13 @@ export const TabsContainer = styled.div`
 
 export const TabsWrapper = styled.div`
   margin: 16px 16px 0px 0px;
+  width: 98em;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
-
 export const TabsRow = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
