@@ -60,6 +60,41 @@ Data can be captured and saved in a CSV file. We also have a playback feature in
 # How to Contribute
 Great you are interested to contribute! Please check the issue tracker for open bugs and feature requests and read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) of FOSSASIA to start.
 
+# Features
+|   **Feature**          | **Description**                                                   | **Status**         |
+|------------------------|-------------------------------------------------------------------|--------------------|
+| Home Screen            | Show status and version of PSLab device                           | :heavy_check_mark: |
+| Instruments            | Exposes PSLab instruments like Oscilloscope, etc                  | :heavy_check_mark: |
+| Oscilloscope           | Shows variation of analog signals                                 | :heavy_check_mark: |
+| Multimeter             | Measures voltage, current, resistance and capacitance             | :heavy_check_mark: |
+| Logical Analyzer       | Captures and displays signals from digital system                 | :heavy_check_mark: |
+| Wave Generator         | Generates arbitrary analog and digital waveforms                  | :negative_squared_cross_mark: |
+| Power Source           | Generates programmable voltage and currents	                     | :heavy_check_mark: |
+| Lux Meter              | Measures the ambient light intensity                              | :negative_squared_cross_mark: |
+| Barometer              | Measures the Pressure                                             | :negative_squared_cross_mark: |
+| Accelerometer          | Measures the acceleration of the device                           | :negative_squared_cross_mark: |
+| Gyrometer              | Measures the rate of rotation                                     | :negative_squared_cross_mark: |
+| Compass                | Measures the absolute rotation relative to earth magnetic poles   | :negative_squared_cross_mark: |
+| Thermometer            | Measures the ambient temperature                                  | :negative_squared_cross_mark: |
+| Gas Sensor             | Detects gases, including NH3, NOx, alcohol, benzene, smoke and CO2| :negative_squared_cross_mark: |
+| Robotic Arm Controller | Allows to control 4 servo motors of the robotic arm independently | :heavy_check_mark: |
+
+# Roadmap
+The goal of the project is to provide a fully functional science application that works with PSLab and other open scientific hardware. Furthermore the application should be fully compatible and feature matching to the PSLab Android app. Current status of the development:
+* [x] Implement all major instruments
+* [x] Have an effective build system for linux and windows
+* [x] Have a basic data logging feature in place
+* [ ] Implement interface for I<sup>2</sup>C sensors
+* [ ] Implement more minor instruments 
+	- [ ] Lux meter
+	- [ ] Gas meter
+	- [ ] Compass
+	- [ ] pH meter
+	- [ ] Accelerometer
+	- [ ] Barometer 
+* [ ] Make data logging and playback more robust
+* [ ] Code refactoring and architecture improvement
+
 # Branch Policy
 
 * The **development** branch holds is the standard branch of the project. PRs are merged to this branch and tested on an ongoing basis.
@@ -82,7 +117,7 @@ sudo snap install --dangerous --classic <snap-package-name>
 ## How to Install on Windows
 Download the windows files from the install branch and execute the file to install the system on your Windows machine.
 
-# How to Setup the Project from Source
+# How to Setup the Project from Source on Your Development Environment
 1. Fork the project to get a copy of the repository in your github profile.
 2. Clone the copied project from your profile ( Not the original repository from FOSSASIA ).
 3. ```cd``` into your project folder.
@@ -128,21 +163,11 @@ While in the project root
 npm run build
 ```
 
-# Roadmap
-The goal of the project is to provide a fully functional science application that works with PSLab and other open scientific hardware. Furthermore the application should be fully compatible and feature matching to the PSLab Android app. Current status of the development:
-* [x] Implement all major instruments
-* [x] Have an effective build system for linux and windows
-* [x] Have a basic data logging feature in place
-* [ ] Implement interface for I<sup>2</sup>C sensors
-* [ ] Implement more minor instruments 
-	- [ ] Lux meter
-	- [ ] Gas meter
-	- [ ] Compass
-	- [ ] pH meter
-	- [ ] Accelerometer
-	- [ ] Barometer 
-* [ ] Make data logging and playback more robust
-* [ ] Code refactoring and architecture improvement
-
 # License
 This project is Free and Open Source software. The project us licensed under the [GPL v3](LICENSE). Copyright is owned by FOSSASIA. More details in the license files.
+
+# Maintainers
+The project is maintained by
+- Padmal ([@CloudyPadmal](https://github.com/CloudyPadmal))
+- Mario Behling ([@mariobehling](http://github.com/mariobehling))
+- Wei Tat ([@cweitat](https://github.com/cweitat))
