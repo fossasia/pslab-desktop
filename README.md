@@ -58,7 +58,7 @@ Data can be captured and saved in a CSV file. We also have a playback feature in
 <img src="./docs/images/data_logger.jpg" width="700px"/>
 
 # How to Contribute
-Great you are interested to contribute! Please check the issue tracker for open bugs and feature requests and read read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) of FOSSASIA to start.
+Great you are interested to contribute! Please check the issue tracker for open bugs and feature requests and read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) of FOSSASIA to start.
 
 # Branch Policy
 
