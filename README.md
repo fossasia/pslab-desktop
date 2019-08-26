@@ -1,6 +1,11 @@
-# PSLab Desktop :gemini:
+# PSLab Desktop
 
-Electron desktop application for an awesome open-hardware platform. Made with love :purple_heart:
+Desktop application for [Pocket Science Lab (PSlab)](https://pslab.io) open-hardware platform.
+
+
+<a href="https://pslab.io/" rel="PSLab Link">
+	<img src="./docs/images/project_banner.jpg" alt="PSLab Banner" width="300px"/>
+</a>   
 
 [![Build Status](https://travis-ci.org/fossasia/pslab-desktop.svg?branch=v2)](https://travis-ci.org/fossasia/pslab-desktop)
 [![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -8,117 +13,20 @@ Electron desktop application for an awesome open-hardware platform. Made with lo
 [![Mailing List](https://img.shields.io/badge/Mailing%20List-FOSSASIA-blue.svg)](https://groups.google.com/forum/#!forum/pslab-fossasia)
 [![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
-<a href="https://pslab.io/" rel="PSLab Link">
-	<img src="./docs/images/project_banner.jpg" alt="PSLab Banner" width="700px" height="200px"/>
-</a>   
-  
-This project is a reimplementation of the PSLab Desktop orginally developed using the python stack. As of now, we are working on replicating features of the android app one by one.
-
-The goal of PSLab is to create an Open Source hardware device (open on all layers) that can be used for experiments by teachers, students and citizen scientists. Our tiny pocket lab provides an array of sensors for doing science and engineering experiments. It provides functions of numerous measurement devices including an oscilloscope, a waveform generator, a frequency counter, a programmable voltage, current source and as a data logger.
+The PSlab-Desktop repository holds the PSLab Desktop application using Python as a backend technology and Electron as a frontend. The goal of PSLab is to create an Open Source hardware device (open on all layers) that can be used for experiments by teachers, students and citizen scientists. Our tiny pocket lab provides an array of sensors for doing science and engineering experiments. It provides functions of numerous measurement devices including an oscilloscope, a waveform generator, a frequency counter, a programmable voltage, current source and as a data logger.
 
 We are developing the experiments starting on the hardware to libraries and user interfaces for desktop PCs and Android apps for smartphones. The PSLab project is inspired by the work of the Open Science Hardware community and the ExpEYES project. Our website is at: https://pslab.io
 
-### Communication
+# Communication
 
 Please join us on the following channels:
 * [Pocket Science Channel](https://gitter.im/fossasia/pslab)
 * [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
-***
-
-# How to contribute
-In order to contribute, we would recommend you to first read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) as stated by FOSSASIA.
-
-## Setup  :metal:
-1. Fork the project to get a copy of the repository in your github profile.
-2. Clone the copied project from your profile ( Not the original repository from FOSSASIA ).
-3. ```cd``` into your project folder.
-4. ```git remote add upstream https://github.com/fossasia/pslab-desktop.git``` This command will set up the upsteam link.
-
-## Installing development dependencies :snowflake:
-While in your project folder
-```bash
-npm install
-```
-This command will install all the necessary dependencies required by the electron app to run.  
-  
-As this app uses the **PSL** library under the hood for device communication, you'll have to install it as well.
-The instructions to install it are provided [here](https://github.com/fossasia/pslab-python).
-After installation of **PSL** make sure you can property import it in **Python3**. Run the following command in your bash shell.
-```bash
-python3
->>> from PSL import sciencelab
-```
-If this command runs without throwing an error, then we are good to go.
-
-## Starting the app ( development ) :zap:
-Everything command to start and debug the app are writen in package.json. To simply get it running run the following command while in your project repository.
-```bash
-npm start
-```
-And wait for the electron shell to open. 
-Happy coding!  :fire:
-  
-*** 
-		  
-# Generating production build
-Currently the build pipeline spits a **debian** and a **snap** file that can be installed on any debian based distro
-
-## Build Step for Linux ( Debian bases OS ) :beginner:
-While in the project root  
-```bash
-npm run build-linux
-```  
-## Build Step for Windows :beginner:
-While in the project root  
-```bash
-npm run build-windows
-```
-This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installers. 
-
----
-
-## Build Step for universal platforms :beginner:
-While in the project root  
-```bash
-npm run build
-```
-This will generate installers both for linux and windows in one step.
-
-To pulish the app on snap store, follow the steps mentioned in the link https://docs.snapcraft.io/releasing-your-app
-
-*** 
-
-# Installer files
-The [install](https://github.com/fossasia/pslab-desktop/tree/install) branch of the PSLab-Desktop repository hosts all the installers that we support for different desktop platforms. 
-
-### Stable
-The stable installers are generated and updated on a weekly basis and are created from the **master** branch automatically.
-
-### Development
-The development installers are generated and updated on every PR merge on **development** branch. These installers are used for testing purpose. 
-
-***
-		  
-# Installation
-Based on your preference, you can either install the app directly from the debian file produced in the previous step or from online servers.
-
-## Install from file ( Linux ) :penguin: 
-The *debian* file thus produced can be installed from the command line using 
-```bash
-sudo dpkg -i <deb-file-name>
-```
-For testing purpose, you can install the snap package generated by the above command using:
-```bash
-sudo snap install --dangerous --classic <snap-package-name>
-```
-
-***
-
-# Current Project Status
+# Project Overview
 Currently the following components have been implemented and tested:
 
-### 1. Easy to use UI
+### 1. User Interface
 The UI has been desgined to match the existing android app so that the user does not have to invest time on understanding the desktop app from scratch.
 <img src="./docs/images/home_screen.jpg" width="700px"/>
 
@@ -126,7 +34,7 @@ The UI has been desgined to match the existing android app so that the user does
 A four channel oscilloscope with a 25FPS refresh rate. Comes with features like variable time-base, fourier transform, sine/square fitting and XY plotting.
 <img src="./docs/images/oscilloscope.jpg" width="700px"/>
 
-### 3. Logic analyser
+### 3. Logic Analyzer
 A four channel logic analyser. It supports variable edge detection modes for the user to analyze digital waveforms.    
 <img src="./docs/images/logic_analyser.jpg" width="700px"/>
 
@@ -150,8 +58,82 @@ A neat UI that can be used to program four servo motors ( placed in a robotic ar
 Data can be captured and saved in a CSV file. We also have a playback feature in place that lets the user replay the data from the CSV file.  
 <img src="./docs/images/data_logger.jpg" width="700px"/>
 
-# Goals
+# How to Contribute
+In order to contribute, we would recommend you to first read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) of FOSSASIA.
 
+# Branch Policy
+
+The **development** branch holds is the standard branch of the project. PRs are merged to this branch and tested on an ongoing basis.
+
+The **master** branch holds the stable version of the project and merges the development branch regularly after it is tested thouroughly.
+
+The **install** install branch holds autogenerated install images for Linux and Windows. It is generated through using a Travis script and created automatically on merged PRs in the dev and master branch.
+
+The gh-pages is currently outdated, but is intended to hold information of the project from the Readme.md and /docs folder.
+
+# How to Install
+The [install](https://github.com/fossasia/pslab-desktop/tree/install) branch of the PSLab-Desktop repository hosts all the installers that we support for different desktop platforms. You can either install the app directly from the debian .deb package file or windows installer file. "Stable installers" are generated and updated on a weekly basis and are created from the **master** branch automatically. "Development Installers" are generated and updated on every PR merged on from the **development** branch. These installers are used for testing purpose. 
+		  
+## How to Install on Linux
+Download the .deb file from the install branch and click the file to open it using your package manager or use the following commands in your terminal:
+```bash
+sudo dpkg -i <deb-file-name>
+```
+For testing purpose, you can install the snap package generated by the above command using:
+```bash
+sudo snap install --dangerous --classic <snap-package-name>
+```
+## How to Install on Windows
+Download the windows files from the install branch and execute the file to install the system on your Windows machine.
+
+# How to Setup the Project from Source
+1. Fork the project to get a copy of the repository in your github profile.
+2. Clone the copied project from your profile ( Not the original repository from FOSSASIA ).
+3. ```cd``` into your project folder.
+4. ```git remote add upstream https://github.com/fossasia/pslab-desktop.git``` This command will set up the upsteam link.
+
+**Installing development dependencies**
+While in your project folder
+```bash
+npm install
+```
+This command will install all the necessary dependencies required by the electron app to run. As this app uses the **PSL** library under the hood for device communication, you'll have to install it as well. The instructions to install it are provided [here](https://github.com/fossasia/pslab-python). After installation of **PSL** make sure you can property import it in **Python3**. Run the following command in your bash shell.
+```bash
+python3
+>>> from PSL import sciencelab
+```
+If this command runs without throwing an error, then you are good to go.
+
+**Starting the app**
+All commands to start and debug the app are outlined in the package.json. To simply get it running run the following command while in your project repository.
+```bash
+npm start
+```
+And wait for the electron shell to open. 
+
+# Generating production builds
+We are generating production builds automatically in the install branch of the project. The build pipeline generates a **debian** file that can be installed on any debian based distro. A .win file is generated as well.
+
+## How to build for Linux (Debian based OS)
+While in the project root  
+```bash
+npm run build-linux
+```  
+## How to build for Windows
+While in the project root  
+```bash
+npm run build-windows
+```
+This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installers. 
+
+## How to build for other platforms
+While in the project root  
+```bash
+npm run build
+```
+
+# Roadmap
+The goal of the project is to provide a fully functional science application that works with PSLab and other open scientific hardware. Furthermore the application should be fully compatible and feature matching to the PSLab Android app. Current status of the development:
 * [x] Implement all major instruments
 * [x] Have an effective build system for linux and windows
 * [x] Have a basic data logging feature in place
@@ -165,3 +147,6 @@ Data can be captured and saved in a CSV file. We also have a playback feature in
 	- [ ] Barometer 
 * [ ] Make data logging and playback more robust
 * [ ] Code refactoring and architecture improvement
+
+# License
+The project us licensed under the [GPL v3](LICENSE). More details in the license files.
