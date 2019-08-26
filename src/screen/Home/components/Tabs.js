@@ -24,8 +24,6 @@ const Tabs = () => {
               description={'Allows observation of varying signal voltages'}
               redirectPath={'/oscilloscope'}
             />
-          </TabsWrapper>
-          <TabsWrapper>
             <InstrumentCard
               icon={<LogicAnalyserIcon size={'10em'} />}
               title={'Logic Analyser'}
@@ -42,8 +40,6 @@ const Tabs = () => {
               description={'Generates arbitrary analog and digital waveforms'}
               redirectPath={'/wavegenerator'}
             />
-          </TabsWrapper>
-          <TabsWrapper>
             <InstrumentCard
               icon={<PowerSourceIcon size={'10em'} />}
               title={'Power Source'}
@@ -62,8 +58,6 @@ const Tabs = () => {
               }
               redirectPath={'/multimeter'}
             />
-          </TabsWrapper>
-          <TabsWrapper>
             <InstrumentCard
               icon={<SensorsIcon size={'10em'} />}
               title={'Sensors'}
