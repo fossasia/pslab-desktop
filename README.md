@@ -8,9 +8,7 @@ Desktop application for [Pocket Science Lab (PSlab)](https://pslab.io) open-hard
 [![Mailing List](https://img.shields.io/badge/Mailing%20List-FOSSASIA-blue.svg)](https://groups.google.com/forum/#!forum/pslab-fossasia)
 [![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
-The PSlab-Desktop repository holds the PSLab Desktop application using Python as a backend technology and Electron as a frontend. The goal of PSLab is to create an Open Source hardware device (open on all layers) that can be used for experiments by teachers, students and citizen scientists. Our tiny pocket lab provides an array of sensors for doing science and engineering experiments. It provides functions of numerous measurement devices including an oscilloscope, a waveform generator, a frequency counter, a programmable voltage, current source and as a data logger.
-
-We are developing the experiments starting on the hardware to libraries and user interfaces for desktop PCs and Android apps for smartphones. The PSLab project is inspired by the work of the Open Science Hardware community and the ExpEYES project. Our website is at: https://pslab.io
+The PSlab-Desktop repository holds the PSLab Desktop application using Python as a backend technology and Electron for the frontend. The goal of PSLab is to create an Open Source hardware device (open on all layers) and software applications that can be used for experiments by teachers, students and scientists. Our tiny pocket lab provides an array of instruments for doing science and engineering experiments. It provides functions of numerous measurement tools including an oscilloscope, a waveform generator, a frequency counter, a programmable voltage, current source and even a component to control robots with up to four servos. Our website is at: https://pslab.io
 
 <a href="https://pslab.io/" rel="PSLab">
 	<img src="./docs/images/project_banner.jpg" alt="PSLab Banner" width="300px"/>
