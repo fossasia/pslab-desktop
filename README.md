@@ -21,7 +21,7 @@ Please join us on the following channels:
 * [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
 # Project Overview
-Currently the following components have been implemented and tested:
+A number of instruments have already been implemented.
 
 ### 1. User Interface
 The UI has been desgined to match the existing android app so that the user does not have to invest time on understanding the desktop app from scratch.
@@ -55,10 +55,8 @@ A neat UI that can be used to program four servo motors ( placed in a robotic ar
 Data can be captured and saved in a CSV file. We also have a playback feature in place that lets the user replay the data from the CSV file.  
 <img src="./docs/images/data_logger.jpg" width="700px"/>
 
-# How to Contribute
-Great you are interested in contributing! Please check the issue tracker for open bugs and feature requests and read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) of FOSSASIA to start.
+# Features and Implementation Status
 
-# Features
 |   **Feature**          | **Description**                                                   | **Status**         |
 |------------------------|-------------------------------------------------------------------|--------------------|
 | Home Screen            | Show status and version of PSLab device                           | :heavy_check_mark: |
@@ -92,6 +90,9 @@ The goal of the project is to provide a fully functional science application tha
 	- [ ] Barometer 
 * [ ] Make data logging and playback more robust
 * [ ] Code refactoring and architecture improvement
+
+# How to Contribute
+Great you are interested in contributing! Please check the issue tracker for open bugs and feature requests and read the [community guidelines](https://blog.fossasia.org/open-source-developer-guide-and-best-practices-at-fossasia/) of FOSSASIA to start.
 
 # Branch Policy
 
