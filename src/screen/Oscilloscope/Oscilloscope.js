@@ -19,8 +19,6 @@ class Oscilloscope extends Component {
     super(props);
     this.timeBaseList = [0.5, 1, 5, 10, 20, 25, 50];
     this.state = {
-      // isWriting: false,
-      // isReading: false,
       timeBaseIndex: 0,
       activeChannels: {
         ch1: true,

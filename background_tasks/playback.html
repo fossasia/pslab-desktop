@@ -12,9 +12,9 @@
 
 	loadBalancer.job(
 		ipcRenderer,
-		'linker',
+		'playback',
 		() => {
-			loadBalancer.onRecieveData(ipcRenderer, 'linker', args => {
+			loadBalancer.onRecieveData(ipcRenderer, 'playback', args => {
 				pyshell.send(JSON.stringify(args));
 			});
 
@@ -24,6 +24,20 @@
 
 			pyshell.on('message', function(results) {
 				log.info(results);
+				try {
+					const parsedJSON = JSON.parse(results);
+					switch (parsedJSON['type']) {
+						case 'FETCH_ROB_ARM':
+							ipcRenderer.send('FETCH_ROB_ARM');
+							break;
+						case 'DATA_WRITING_STATUS':
+							ipcRenderer.send('DATA_WRITING_STATUS', parsedJSON);
+							break;
+					}
+				}
+				catch (error) {
+					log.error(error);
+				}
 			});
 		},
 		() => {

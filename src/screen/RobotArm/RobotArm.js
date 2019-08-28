@@ -33,6 +33,28 @@ class RobotArm extends Component {
     this.timer = null;
   }
 
+  componentDidMount() {
+    ipcRenderer.on('FETCH_ROB_ARM', (event, args) => {
+      const { servo1, servo2, servo3, servo4 } = this.state;
+      const { dataPath } = this.props;
+      loadBalancer.sendData(ipcRenderer, 'playback', {
+        command: 'WRITE_ROB_ARM',
+        servo1,
+        servo2,
+        servo3,
+        servo4,
+        dataPath,
+      });
+      setTimeout(() => {
+        loadBalancer.stop(ipcRenderer, 'playback');
+      }, 500);
+    });
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners('FETCH_ROB_ARM');
+  }
+
   sendCommand = () => {
     const { active, timeLine, servo1, servo2, servo3, servo4 } = this.state;
     if (timeLine < 60) {

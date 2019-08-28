@@ -186,6 +186,23 @@ const Appshell = ({
             <SaveIcon />
           </IconButton>
         );
+      case '/robotarm':
+        return (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            onClick={() => {
+              loadBalancer.start(ipcRenderer, 'playback');
+              setTimeout(() => {
+                loadBalancer.sendData(ipcRenderer, 'playback', {
+                  command: 'SAVE_CONFIG_ROB_ARM',
+                });
+              }, 500);
+            }}
+          >
+            <SaveIcon />
+          </IconButton>
+        );
       case '/multimeter':
         return isWriting ? (
           <IconButton

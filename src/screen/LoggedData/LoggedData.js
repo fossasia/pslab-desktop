@@ -138,6 +138,8 @@ class LoggedData extends Component {
         return <PowerSourceIcon color="red" size={'2em'} />;
       case 'Multimeter':
         return <MultimeterIcon color="red" size={'2em'} />;
+      case 'RobotArm':
+        return <MultimeterIcon color="red" size={'2em'} />;
       default:
         break;
     }
