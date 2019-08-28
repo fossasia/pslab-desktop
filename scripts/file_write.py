@@ -21,11 +21,13 @@ class FileWrite:
                 yData = ' '.join(map(str, kwargs['yData'].tolist()))
                 data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
                     kwargs['channel'] + ", " + xData + ", " + \
-                    yData + ", " + str(kwargs['timebase']) + ", " + " " + ", " + " " +"\n"
+                    yData + ", " + str(kwargs['timebase']) + \
+                    ", " + " " + ", " + " " + "\n"
 
             if inst_type == 'MUL_MET':
                 data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
-                    kwargs['data'] + ", " + str(kwargs['value']) + ", " + " " + ", " + " " + "\n"
+                    kwargs['data'] + ", " + \
+                    str(kwargs['value']) + ", " + " " + ", " + " " + "\n"
 
             self.data_buffer.append(data)
 
@@ -63,7 +65,7 @@ class FileWrite:
                 str(kwargs['p2']) + ", " + str(kwargs['dc_2']) + ", " + \
                 str(kwargs['p3']) + ", " + str(kwargs['dc_3']) + ", " + \
                 str(kwargs['p4']) + ", " + str(kwargs['dc_4']) + ", " + \
-                 " " + ", " + " " + "\n"
+                " " + ", " + " " + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
 
@@ -73,7 +75,8 @@ class FileWrite:
                 "Timestamp, DateTime, PCS, PV1, PV2, PV3, Latitude, Longitude \n")
             data = str(kwargs['timestamp']) + ", " + str(kwargs['datetime']) + ", " + \
                 str(kwargs['pcs']) + ", " + str(kwargs['pv1']) + ", " + \
-                str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + ", " + " " + "," + " " + "\n"
+                str(kwargs['pv2']) + ", " + str(kwargs['pv3']) + \
+                ", " + " " + "," + " " + "\n"
             buffer.append(data)
             self.file_pointed.writelines(buffer)
 
@@ -106,6 +109,20 @@ class FileWrite:
                       "latitude": " ",
                       "longitude": " "
                       }
+        if device_type == 'PowerSource':
+            f = open(data_path, "r")
+            lines = f.readlines()
+            data = lines[3].split(',')
+            output = {'type': 'GET_CONFIG_PWR_SRC',
+                      'pcs': data[2],
+                      'pv1': data[3],
+                      'pv2': data[4],
+                      'pv3': data[5],
+                      'latitude': " ",
+                      'longitude': " "
+                      }
+            print(json.dumps(output))
+            sys.stdout.flush()
         print(json.dumps(output))
         sys.stdout.flush()
         print(json.dumps(output))
@@ -120,19 +137,3 @@ class FileWrite:
         print(json.dumps({'type': 'DATA_WRITING_STATUS',
                           'message': 'Data recording stopped', }))
         sys.stdout.flush()
-
-    def get_config_from_file(self, data_path, device_type):
-        if device_type == 'PowerSource':
-            f = open(data_path, "r")
-            lines = f.readlines()
-            data = lines[3].split(',')
-            output = {'type': 'GET_CONFIG_PWR_SRC',
-                      'pcs': data[2],
-                      'pv1': data[3],
-                      'pv2': data[4],
-                      'pv3': data[5],
-                      'latitude': " ",
-                      'longitude': " "                      
-                      }
-            print(json.dumps(output))
-            sys.stdout.flush()

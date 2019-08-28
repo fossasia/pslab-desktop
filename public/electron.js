@@ -117,3 +117,7 @@ ipcMain.on('CONNECTION_STATUS', (event, args) => {
 ipcMain.on('DATA_WRITING_STATUS', (event, args) => {
   mainWindow.webContents.send('DATA_WRITING_STATUS', args);
 });
+
+ipcMain.on('FETCH_ROB_ARM', (event, args) => {
+  mainWindow.webContents.send('FETCH_ROB_ARM', args);
+});

@@ -234,7 +234,7 @@ class App extends Component {
                 />
                 <Route
                   path="/robotarm"
-                  render={props => <RobotArm {...props} />}
+                  render={props => <RobotArm {...props} dataPath={dataPath} />}
                 />
                 <Route
                   path="/sensors"
