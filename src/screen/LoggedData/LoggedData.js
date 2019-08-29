@@ -10,7 +10,7 @@ import {
 } from '@material-ui/icons';
 import {
   OscilloscopeIcon,
-  LogicAnalyserIcon,
+  LogicAnalyzerIcon,
   WaveGeneratorIcon,
   PowerSourceIcon,
   MultimeterIcon,
@@ -130,8 +130,8 @@ class LoggedData extends Component {
     switch (device) {
       case 'Oscilloscope':
         return <OscilloscopeIcon color="red" size={'2em'} />;
-      case 'LogicAnalyser':
-        return <LogicAnalyserIcon color="red" size={'2em'} />;
+      case 'LogicAnalyzer':
+        return <LogicAnalyzerIcon color="red" size={'2em'} />;
       case 'WaveGenerator':
         return <WaveGeneratorIcon color="red" size={'2em'} />;
       case 'PowerSource':

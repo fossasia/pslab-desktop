@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import Appshell from './components/Appshell';
 import Home from './screen/Home';
 import Oscilloscope from './screen/Oscilloscope';
-import LogicAnalyser from './screen/LogicAnalyser';
+import LogicAnalyzer from './screen/LogicAnalyzer';
 import PowerSource from './screen/PowerSource';
 import WaveGenerator from './screen/WaveGenerator';
 import Multimeter from './screen/Multimeter';
@@ -206,7 +206,12 @@ class App extends Component {
                     />
                   )}
                 />
-                <Route path="/logicanalyser" component={LogicAnalyser} />
+                <Route
+                  path="/logicanalyzer"
+                  render={props => (
+                    <LogicAnalyzer {...props} dataPath={dataPath} />
+                  )}
+                />
                 <Route
                   path="/powersource/:filePath?"
                   render={props => (

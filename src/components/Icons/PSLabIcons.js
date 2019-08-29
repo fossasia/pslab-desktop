@@ -1,12 +1,12 @@
 import React from 'react';
 import OscilloscopeSvg from '../../resources/oscilloscope.svg';
-import LogicAnalyserSvg from '../../resources/logic_analyzer.svg';
+import LogicAnalyzerSvg from '../../resources/logic_analyzer.svg';
 import PowerSourceSvg from '../../resources/power_source.svg';
 import WaveGeneratorSvg from '../../resources/wave_generator.svg';
 import MultimeterSvg from '../../resources/multimeter.svg';
 import SensorsSvg from '../../resources/sensors.svg';
 import OscilloscopeRedSvg from '../../resources/oscilloscope_red.svg';
-import LogicAnalyserRedSvg from '../../resources/logic_analyzer_red.svg';
+import LogicAnalyzerRedSvg from '../../resources/logic_analyzer_red.svg';
 import PowerSourceRedSvg from '../../resources/power_source_red.svg';
 import WaveGeneratorRedSvg from '../../resources/wave_generator_red.svg';
 import MultimeterRedSvg from '../../resources/multimeter_red.svg';
@@ -24,14 +24,14 @@ export const OscilloscopeIcon = ({ size, color }) => {
   );
 };
 
-export const LogicAnalyserIcon = ({ size, color }) => {
+export const LogicAnalyzerIcon = ({ size, color }) => {
   return (
     <img
       style={{
         height: size,
         width: 'auto',
       }}
-      src={color === 'red' ? LogicAnalyserRedSvg : LogicAnalyserSvg}
+      src={color === 'red' ? LogicAnalyzerRedSvg : LogicAnalyzerSvg}
     />
   );
 };

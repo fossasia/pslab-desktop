@@ -10,7 +10,7 @@ const electron = window.require('electron');
 const { ipcRenderer } = electron;
 const loadBalancer = window.require('electron-load-balancer');
 
-class LogicAnalyser extends Component {
+class LogicAnalyzer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -212,6 +212,7 @@ class LogicAnalyser extends Component {
             isReading={isReading}
             numberOfChannels={numberOfChannels}
             toggleRead={this.toggleRead}
+            dataPath={this.props.dataPath}
           />
         }
       />
@@ -226,4 +227,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null,
-)(LogicAnalyser);
+)(LogicAnalyzer);

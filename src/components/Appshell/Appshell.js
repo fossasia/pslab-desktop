@@ -203,6 +203,24 @@ const Appshell = ({
             <SaveIcon />
           </IconButton>
         );
+      case '/logicanalyzer':
+        return (
+          <IconButton
+            className={classes.iconButton}
+            size="medium"
+            disabled={!device.isConnected}
+            onClick={() => {
+              loadBalancer.start(ipcRenderer, 'playback');
+              setTimeout(() => {
+                loadBalancer.sendData(ipcRenderer, 'playback', {
+                  command: 'SAVE_DATA_LA',
+                });
+              }, 500);
+            }}
+          >
+            <SaveIcon />
+          </IconButton>
+        );
       case '/multimeter':
         return isWriting ? (
           <IconButton
