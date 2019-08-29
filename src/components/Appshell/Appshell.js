@@ -262,6 +262,27 @@ const Appshell = ({
     }
   };
 
+  const titleRenderer = location => {
+    switch (location.pathname) {
+      case '/wavegenerator':
+        return 'Wave Generator';
+      case '/powersource':
+        return 'Power Source';
+      case '/robotarm':
+        return 'Robot Arm';
+      case '/multimeter':
+        return 'Multimeter';
+      case '/oscilloscope':
+        return 'Oscilloscope';
+      case '/logicanalyzer':
+        return 'Logic Analyzer';
+      case '/loggeddata':
+        return 'Data Logger';
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <AppshellContainer>
       <Drawer open={drawerOpen} onClose={() => toggleDrawer(!drawerOpen)}>
@@ -352,7 +373,7 @@ const Appshell = ({
               <BackIcon style={{ fontSize: 24 }} />
             </IconButton>
           </ButtonContainer>
-          <TitleContainer />
+          <TitleContainer>{titleRenderer(location)}</TitleContainer>
           <Spacer />
           <ButtonContainer>
             <Tooltip title="Reset">

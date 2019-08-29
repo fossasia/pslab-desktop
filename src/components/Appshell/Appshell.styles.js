@@ -28,7 +28,12 @@ export const AppBar = styled.div`
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
-export const TitleContainer = styled.div``;
+export const TitleContainer = styled.div`
+  font-size: 24px;
+  color: #ffffff;
+  line-height: 48px;
+  vertical-align: middle;
+`;
 
 export const ButtonContainer = styled.div`
   display: flex;
