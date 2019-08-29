@@ -51,6 +51,9 @@ class LoggedData extends Component {
 
   componentDidMount() {
     this.destDir = path.join(os.homedir(), 'Documents', 'PSLab');
+    if (!fs.existsSync(this.destDir)) {
+      fs.mkdirSync(this.destDir);
+    }
     this.watcher = chokidar.watch(this.destDir);
     this.setState({
       loading: true,
