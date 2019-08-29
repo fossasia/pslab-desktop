@@ -74,6 +74,12 @@ Please join us on the following channels:
 		The app drawer gives you access to many more options like the FAQ, Device Information Screen etc.
 	 </td>
 	</tr>
+	<tr>
+   <td>
+	 	<img src="./docs/images/device_screen.jpg" width="460px"/>
+		A device information screen that shows device information and guide to connect it to the app.
+	 </td>
+	</tr>
 </table>
 
 ## Project Videos

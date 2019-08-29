@@ -339,12 +339,14 @@ const Appshell = ({
               </ListItem>
             </Link>
             <Divider />
-            <ListItem button>
-              <ListItemIcon>
-                <DeviceIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Connected Device'} />
-            </ListItem>
+            <Link to="/devicescreen">
+              <ListItem button>
+                <ListItemIcon>
+                  <DeviceIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Connected Device'} />
+              </ListItem>
+            </Link>
             <ListItem button>
               <ListItemIcon>
                 <SettingIcon />

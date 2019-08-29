@@ -35,8 +35,9 @@ class Device_detection:
             output = {'type': 'DEVICE_CONNECTION_STATUS',
                       'isConnected': True,
                       'message': 'Device connected',
-                      'deviceName': self.device.generic_name + ':' + hex(self.device.device_id and 0xFFFF),
-                      'portName': self.device.H.portname}
+                      'deviceName': str(self.device.get_version()),
+                      'portName': self.device.H.portname
+                      }
             self.connected = True
         print(json.dumps(output))
         sys.stdout.flush()
