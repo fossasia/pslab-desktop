@@ -300,13 +300,13 @@ const Appshell = ({
                 <ListItemText primary={'Logged Data'} />
               </ListItem>
             </Link>
-            <ListItem button>
-              <ListItemIcon>
-                <SettingIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Settings'} />
-            </ListItem>
           </List>
+          <ListItem button>
+            <ListItemIcon>
+              <SettingIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Settings'} />
+          </ListItem>
           <Divider />
           <List>
             <Link to="/faq">

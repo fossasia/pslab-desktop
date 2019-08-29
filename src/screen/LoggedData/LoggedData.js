@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import IconButton from '@material-ui/core/IconButton';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   Delete as DeleteIcon,
   ScreenShare as ExportIcon,
@@ -27,6 +26,7 @@ import {
   TitleWrapper,
   InfoContainer,
   InstrumentWrapper,
+  EmptyWrapper,
 } from './LoggedData.styles.js';
 import {
   fileNameTrimmer,
@@ -152,58 +152,66 @@ class LoggedData extends Component {
     return (
       <Container>
         {loading ? (
-          <CircularProgress />
+          <EmptyWrapper>
+            <div>There are no data logs to display</div>
+          </EmptyWrapper>
         ) : (
           <Scrollbars autoHide autoHideTimeout={1000}>
             <Wrapper>
-              {fileList.map((item, index) => (
-                <CustomCard key={index}>
-                  <ContentWrapper
-                    onClick={() =>
-                      history.push(
-                        `/${item.metaData.device.toLowerCase()}/${item.name}`,
-                      )
-                    }
-                  >
-                    <ButtonContainer>
-                      {this.iconRenderer(item.metaData.device)}
-                    </ButtonContainer>
-                    <TextContainer>
-                      <TitleWrapper>
-                        {fileNameTrimmer(item.name, 23)}
-                      </TitleWrapper>
-                      <InstrumentWrapper>
-                        {item.metaData.device}
-                      </InstrumentWrapper>
-                      <InfoContainer>
-                        <div>{item.metaData.date}</div>
-                        <div>{item.metaData.time}</div>
-                      </InfoContainer>
-                    </TextContainer>
-                    <Spacer />
-                    <ButtonContainer>
-                      <IconButton
-                        onClick={e => {
-                          e.stopPropagation();
-                          this.deleteFile(item.filepath);
-                        }}
-                        size="medium"
-                      >
-                        <DeleteIcon style={{ color: '#d32f2f' }} />
-                      </IconButton>
-                      <IconButton
-                        size="medium"
-                        onClick={e => {
-                          e.stopPropagation();
-                          this.openExportWindow(item.filepath);
-                        }}
-                      >
-                        <ExportIcon style={{ color: '#d32f2f' }} />
-                      </IconButton>
-                    </ButtonContainer>
-                  </ContentWrapper>
-                </CustomCard>
-              ))}
+              {fileList.length !== 0 &&
+                fileList.map((item, index) => (
+                  <CustomCard key={index}>
+                    <ContentWrapper
+                      onClick={() =>
+                        history.push(
+                          `/${item.metaData.device.toLowerCase()}/${item.name}`,
+                        )
+                      }
+                    >
+                      <ButtonContainer>
+                        {this.iconRenderer(item.metaData.device)}
+                      </ButtonContainer>
+                      <TextContainer>
+                        <TitleWrapper>
+                          {fileNameTrimmer(item.name, 23)}
+                        </TitleWrapper>
+                        <InstrumentWrapper>
+                          {item.metaData.device}
+                        </InstrumentWrapper>
+                        <InfoContainer>
+                          <div>{item.metaData.date}</div>
+                          <div>{item.metaData.time}</div>
+                        </InfoContainer>
+                      </TextContainer>
+                      <Spacer />
+                      <ButtonContainer>
+                        <IconButton
+                          onClick={e => {
+                            e.stopPropagation();
+                            this.deleteFile(item.filepath);
+                          }}
+                          size="medium"
+                        >
+                          <DeleteIcon style={{ color: '#d32f2f' }} />
+                        </IconButton>
+                        <IconButton
+                          size="medium"
+                          onClick={e => {
+                            e.stopPropagation();
+                            this.openExportWindow(item.filepath);
+                          }}
+                        >
+                          <ExportIcon style={{ color: '#d32f2f' }} />
+                        </IconButton>
+                      </ButtonContainer>
+                    </ContentWrapper>
+                  </CustomCard>
+                ))}
+              {fileList.length === 0 && (
+                <EmptyWrapper>
+                  <div>There are no data logs to display</div>
+                </EmptyWrapper>
+              )}
             </Wrapper>
           </Scrollbars>
         )}
