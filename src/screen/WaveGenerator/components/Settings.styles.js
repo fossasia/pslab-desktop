@@ -29,7 +29,9 @@ export const Spacer = styled.div`
   flex: 1;
 `;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  width: 1208px;
+`;
 
 export const MainContainer = styled.div`
   display: flex;
@@ -128,6 +130,8 @@ export const BorderMaker = styled.div`
   border-color: ${props => props.theme.primary.main};
   border-radius: 4px;
   padding: 16px 8px;
+  height: 258px;
+  width: 510px;
 `;
 
 export const SliderContainer = styled.div`
