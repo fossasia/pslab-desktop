@@ -73,6 +73,10 @@ Please join us on the following channels:
 	 	<img src="./docs/images/drawer.jpg" width="460px"/>
 		The app drawer gives you access to many more options like the FAQ, Device Information Screen etc.
 	 </td>
+	 <td>
+	 	<img src="./docs/images/settings.jpg" width="460px"/>
+		A settings page for configuring your app as per your requirement.
+	 </td>
 	</tr>
 </table>
 
