@@ -10,13 +10,13 @@ import {
   InputWrapper,
   TimeControlPanel,
 } from './styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import {
   Menu as PaintIcon,
   PlayArrow as PlayIcon,
   Stop as StopIcon,
   Pause as PauseIcon,
-  Save as SaveIcon,
 } from '@material-ui/icons';
 import CustomCircularInput from '../../../components/CustomCircularInput';
 
@@ -51,7 +51,9 @@ const KnobControl = ({
               draggable="true"
               onDragStart={event => setActiveBrush('servo1')}
             >
-              <PaintIcon size={28} />
+              <Tooltip title="Drag into servo 1 timeline">
+                <PaintIcon style={{ fontSize: '38px' }} />
+              </Tooltip>
             </div>
           </ButtonWrapper>
         </Title>
@@ -77,7 +79,9 @@ const KnobControl = ({
               draggable="true"
               onDragStart={event => setActiveBrush('servo2')}
             >
-              <PaintIcon size={28} />
+              <Tooltip title="Drag into servo 2 timeline">
+                <PaintIcon style={{ fontSize: '38px' }} />
+              </Tooltip>
             </div>
           </ButtonWrapper>
         </Title>
@@ -103,7 +107,9 @@ const KnobControl = ({
               draggable="true"
               onDragStart={event => setActiveBrush('servo3')}
             >
-              <PaintIcon size={28} />
+              <Tooltip title="Drag into servo 3 timeline">
+                <PaintIcon style={{ fontSize: '38px' }} />
+              </Tooltip>
             </div>
           </ButtonWrapper>
         </Title>
@@ -129,7 +135,9 @@ const KnobControl = ({
               draggable="true"
               onDragStart={event => setActiveBrush('servo4')}
             >
-              <PaintIcon size={28} />
+              <Tooltip title="Drag into servo 4 timeline">
+                <PaintIcon style={{ fontSize: '38px' }} />
+              </Tooltip>
             </div>
           </ButtonWrapper>
         </Title>

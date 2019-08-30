@@ -158,7 +158,6 @@ class RobotArm extends Component {
             active={active}
           />
         </KnobWrapper>
-        <Spacer />
         <PaintWrapper>
           <PaintArea
             timeLine={timeLine}
