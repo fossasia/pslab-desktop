@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
-import PlusIcon from '@material-ui/icons/Add';
-import MinusIcon from '@material-ui/icons/Remove';
+import PlusIcon from '@material-ui/icons/ArrowRight';
+import MinusIcon from '@material-ui/icons/ArrowLeft';
 import {
   Wrapper,
   MainContainer,
@@ -49,6 +49,10 @@ const styles = theme => ({
   },
   colorBar: {},
   colorChecked: {},
+  disabledButton: {
+    backgroundColor: '#ef9a9a',
+    color: '#fff',
+  },
 });
 
 class AnalogController extends Component {
@@ -144,14 +148,14 @@ class AnalogController extends Component {
     const { activePin } = this.state;
     if (activePin === 'wave1') {
       if (waveFormS1 === 'tria') {
-        return <img src={SineIcon} />;
+        return 'tria';
       }
-      return <img src={TriaIcon} />;
+      return 'sine';
     }
     if (waveFormS2 === 'tria') {
-      return <img src={SineIcon} />;
+      return 'tria';
     }
-    return <img src={TriaIcon} />;
+    return 'sine';
   };
 
   highlightedInformation = () => {
@@ -215,7 +219,11 @@ class AnalogController extends Component {
                 <ButtonRow>
                   <Button
                     style={{
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'wave1'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -227,19 +235,25 @@ class AnalogController extends Component {
                         activeSetting: 'Freq',
                       })
                     }
+                    disabled={activePin === 'wave1'}
                   >
                     <TextWrapper>Wave1</TextWrapper>
                   </Button>
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'wave2'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     color="primary"
                     variant="contained"
                     fullWidth={true}
                     onClick={() => this.setState({ activePin: 'wave2' })}
+                    disabled={activePin === 'wave2'}
                   >
                     <TextWrapper>Wave2</TextWrapper>
                   </Button>
@@ -260,7 +274,11 @@ class AnalogController extends Component {
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'wave1'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -274,7 +292,10 @@ class AnalogController extends Component {
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        this.waveFormInv() === 'sine'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
                     }}
                     size="large"
                     variant="contained"
@@ -282,25 +303,63 @@ class AnalogController extends Component {
                     fullWidth={true}
                     onClick={
                       activePin === 'wave1'
-                        ? () => onChangeWaveForm('waveFormS1')
-                        : () => onChangeWaveForm('waveFormS2')
+                        ? () => onChangeWaveForm('waveFormS1', 'sine')
+                        : () => onChangeWaveForm('waveFormS2', 'sine')
                     }
+                    disabled={this.waveFormInv() === 'sine'}
                   >
-                    <TextWrapper>{this.waveFormInv()}</TextWrapper>
+                    <TextWrapper>
+                      <img
+                        src={SineIcon}
+                        style={{ width: '30px', height: '30px' }}
+                      />
+                    </TextWrapper>
+                  </Button>
+                  <Button
+                    style={{
+                      margin: '0px 0px 0px 16px',
+                      backgroundColor:
+                        this.waveFormInv() === 'tria'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                    }}
+                    size="large"
+                    variant="contained"
+                    color="primary"
+                    fullWidth={true}
+                    onClick={
+                      activePin === 'wave1'
+                        ? () => onChangeWaveForm('waveFormS1', 'tria')
+                        : () => onChangeWaveForm('waveFormS2', 'tria')
+                    }
+                    disabled={this.waveFormInv() === 'tria'}
+                  >
+                    <TextWrapper>
+                      <img
+                        src={TriaIcon}
+                        style={{ width: '30px', height: '30px' }}
+                      />
+                    </TextWrapper>
                   </Button>
                 </ButtonRow>
               </BorderMaker>
               <ButtonRow>
                 <Button
-                  style={{
-                    backgroundColor: theme.pallet.primary.main,
-                  }}
                   size="large"
                   variant="contained"
                   color="primary"
                   fullWidth={true}
+                  style={{
+                    margin: '0px 0px 0px 16px',
+                    backgroundColor: this.props.wave
+                      ? '#ef9a9a'
+                      : theme.pallet.primary.main,
+                    color: '#fff',
+                  }}
+                  onClick={onTogglePreview}
+                  disabled={this.props.wave}
                 >
-                  <TextWrapper>View</TextWrapper>
+                  <TextWrapper>Analog</TextWrapper>
                 </Button>
                 <Button
                   size="large"
@@ -309,16 +368,35 @@ class AnalogController extends Component {
                   fullWidth={true}
                   style={{
                     margin: '0px 0px 0px 16px',
-                    backgroundColor: theme.pallet.primary.main,
+                    backgroundColor: !this.props.wave
+                      ? '#ef9a9a'
+                      : theme.pallet.primary.main,
+                    color: '#fff',
                   }}
                   onClick={onTogglePreview}
+                  disabled={!this.props.wave}
                 >
-                  <TextWrapper>Mode</TextWrapper>
+                  <TextWrapper>Digital</TextWrapper>
                 </Button>
               </ButtonRow>
             </ControllerWrapper>
           </MainContainer>
           <SliderContainer>
+            <ButtonContainer>
+              <Button
+                size="large"
+                color="primary"
+                variant="outlined"
+                onClick={this.onHandleMinus}
+                style={{
+                  backgroundColor: theme.pallet.primary.main,
+                  color: '#ffffff',
+                  margin: '0px 16px 0px 0px',
+                }}
+              >
+                <MinusIcon style={{ fontSize: 24 }} />
+              </Button>
+            </ButtonContainer>
             <SliderWrapper>
               <Slider
                 value={this.sliderValue()}
@@ -334,18 +412,15 @@ class AnalogController extends Component {
                 size="large"
                 color="primary"
                 variant="outlined"
-                onClick={this.onHandleMinus}
-              >
-                <MinusIcon style={{ fontSize: 20 }} />
-              </Button>
-              <Button
-                size="large"
-                color="primary"
-                variant="outlined"
                 style={{ margin: '0px 0px 0px 16px' }}
                 onClick={this.onHandlePlus}
+                style={{
+                  margin: '0px 0px 0px 16px',
+                  backgroundColor: theme.pallet.primary.main,
+                  color: '#ffffff',
+                }}
               >
-                <PlusIcon style={{ fontSize: 20 }} />
+                <PlusIcon style={{ fontSize: 24 }} />
               </Button>
             </ButtonContainer>
           </SliderContainer>
