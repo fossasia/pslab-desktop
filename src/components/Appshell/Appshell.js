@@ -18,7 +18,6 @@ import { withStyles, withTheme } from '@material-ui/core/styles';
 import {
   Settings as SettingIcon,
   Refresh as ResetIcon,
-  BugReport as BugIcon,
   Feedback as FeedbackIcon,
   Error as AboutUsIcon,
   WifiTethering as LoggedDataIcon,
@@ -30,6 +29,7 @@ import {
   MoreVert as LayoutIcon,
   RadioButtonChecked as StartRecordIcon,
   Stop as StopRecordIcon,
+  ShoppingCart as CartIcon,
 } from '@material-ui/icons';
 import { extractFileName } from '../../utils/fileNameProcessor';
 import { Save as SaveIcon } from '@material-ui/icons';
@@ -287,10 +287,33 @@ const Appshell = ({
     <AppshellContainer>
       <Drawer open={drawerOpen} onClose={() => toggleDrawer(!drawerOpen)}>
         <div className={classes.list} role="presentation">
-          <img
-            src={AppIcon}
-            style={{ height: '8em', width: 'auto', margin: '32px' }}
-          />
+          <div
+            style={{
+              borderRadius: '50%',
+              border: '3px solid #000',
+              width: '8.2em',
+              height: '8.2em',
+              margin: '16px 0px 8px 32px',
+            }}
+          >
+            <img
+              src={AppIcon}
+              style={{
+                height: '6.5em',
+                width: 'auto',
+                margin: '8px 8px 8px 10px',
+              }}
+            />
+          </div>
+          <div
+            style={{
+              color: '#000',
+              fontSize: '18px',
+              margin: '16px 0px 16px 32px',
+            }}
+          >
+            {device.isConnected ? 'Connected' : 'Not Connected'}
+          </div>
         </div>
         <div
           className={classes.list}
@@ -307,12 +330,6 @@ const Appshell = ({
                 <ListItemText primary={'Instruments'} />
               </ListItem>
             </Link>
-            <ListItem button>
-              <ListItemIcon>
-                <DeviceIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Device'} />
-            </ListItem>
             <Link to="/loggeddata">
               <ListItem button>
                 <ListItemIcon>
@@ -321,14 +338,44 @@ const Appshell = ({
                 <ListItemText primary={'Logged Data'} />
               </ListItem>
             </Link>
+            <Divider />
+            <ListItem button>
+              <ListItemIcon>
+                <DeviceIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Connected Device'} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <SettingIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Settings'} />
+            </ListItem>
           </List>
-          <ListItem button>
-            <ListItemIcon>
-              <SettingIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Settings'} />
-          </ListItem>
           <Divider />
+          <Link to="/aboutus">
+            <ListItem button>
+              <ListItemIcon>
+                <AboutUsIcon />
+              </ListItemIcon>
+              <ListItemText primary={'About Us'} />
+            </ListItem>
+          </Link>
+          <ListItem
+            button
+            onClick={() => {
+              window.open(
+                'https://pslab.io/',
+                '_blank',
+                'height=650,width=1000,frame=true,show=true',
+              );
+            }}
+          >
+            <ListItemIcon>
+              <CartIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Buy PSLab'} />
+          </ListItem>
           <List>
             <Link to="/faq">
               <ListItem button>
@@ -338,20 +385,6 @@ const Appshell = ({
                 <ListItemText primary={'FAQs'} />
               </ListItem>
             </Link>
-            <Link to="/aboutus">
-              <ListItem button>
-                <ListItemIcon>
-                  <AboutUsIcon />
-                </ListItemIcon>
-                <ListItemText primary={'About Us'} />
-              </ListItem>
-            </Link>
-            <ListItem button>
-              <ListItemIcon>
-                <BugIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Feedback & Bugs'} />
-            </ListItem>
           </List>
         </div>
       </Drawer>

@@ -68,6 +68,12 @@ Please join us on the following channels:
 	  Save data and config in CSV and retrieve them back later.
 	 </td>
 	</tr>
+	<tr>
+   <td>
+	 	<img src="./docs/images/drawer.jpg" width="460px"/>
+		The app drawer gives you access to many more options like the FAQ, Device Information Screen etc.
+	 </td>
+	</tr>
 </table>
 
 ## Project Videos

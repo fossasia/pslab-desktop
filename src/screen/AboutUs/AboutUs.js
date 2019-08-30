@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Wrapper } from './AboutUs.styles';
 import AppIcon from '../../resources/app_icon.png';
+import { BugReport as BugIcon } from '@material-ui/icons';
 import {
   Typography,
   Divider,
@@ -57,6 +58,13 @@ const AboutUs = () => {
           style={{
             margin: '8px 0px 0px 0px',
           }}
+          onClick={() => {
+            window.open(
+              'mailto:pslab-fossasia@googlegroups.com',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
         >
           <ListItemIcon>
             <MailIcon style={{ height: '1.6em', width: '1.6em' }} />
@@ -68,7 +76,16 @@ const AboutUs = () => {
             width: '100%',
           }}
         />
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.open(
+              'https://pslab.io/',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
+        >
           <ListItemIcon>
             <LinkIcon style={{ height: '1.6em', width: '1.6em' }} />
           </ListItemIcon>
@@ -79,7 +96,16 @@ const AboutUs = () => {
             width: '100%',
           }}
         />
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.open(
+              'https://github.com/fossasia/pslab-desktop',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
+        >
           <ListItemIcon>
             <img src={GithubIcon} style={{ height: '3em', width: '3em' }} />
           </ListItemIcon>
@@ -90,7 +116,16 @@ const AboutUs = () => {
             width: '100%',
           }}
         />
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.open(
+              'https://www.facebook.com/pslabio',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
+        >
           <ListItemIcon>
             <img src={FacebookIcon} style={{ height: '3em', width: '3em' }} />
           </ListItemIcon>
@@ -101,7 +136,16 @@ const AboutUs = () => {
             width: '100%',
           }}
         />
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.open(
+              'https://twitter.com/pslabio',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
+        >
           <ListItemIcon>
             <img src={TwitterIcon} style={{ height: '3em', width: '3em' }} />
           </ListItemIcon>
@@ -112,11 +156,35 @@ const AboutUs = () => {
             width: '100%',
           }}
         />
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.open(
+              'https://www.youtube.com/channel/UCQprMsG-raCIMlBudm20iLQ',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
+        >
           <ListItemIcon>
             <img src={YoutubeIcon} style={{ height: '3em', width: '3em' }} />
           </ListItemIcon>
           <ListItemText primary="Watch us on Youtube" />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() => {
+            window.open(
+              'https://docs.google.com/forms/d/e/1FAIpQLSfn2MAk_4TzJ07iu93KNU8g2Ac3UHm2aKww1qJVsduSbsI4Wg/viewform ',
+              '_blank',
+              'height=650,width=1000,frame=true,show=true',
+            );
+          }}
+        >
+          <ListItemIcon>
+            <BugIcon style={{ fontSize: '36px' }} />
+          </ListItemIcon>
+          <ListItemText primary="Feedback & Bugs" />
         </ListItem>
       </Wrapper>
     </Container>
