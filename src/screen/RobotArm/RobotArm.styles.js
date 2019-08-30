@@ -5,6 +5,7 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
 export const KnobWrapper = styled.div`
@@ -13,9 +14,4 @@ export const KnobWrapper = styled.div`
 
 export const PaintWrapper = styled.div`
   width: 100%;
-  flex: 1;
-`;
-
-export const Spacer = styled.div`
-  flex: 1;
 `;

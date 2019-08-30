@@ -26,6 +26,10 @@ export const TitleText = styled.div`
 
 export const ButtonWrapper = styled.div`
   margin: 16px 16px 16px 0px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Spacer = styled.div`
@@ -57,7 +61,7 @@ export const PaintCell = styled.div`
   border-top-color: ${props =>
     props.active ? props.theme.primary.main : '#fff'};
   width: 160px;
-  height: 100px;
+  height: 90px;
   display: flex;
   flex-direction: column;
 `;
