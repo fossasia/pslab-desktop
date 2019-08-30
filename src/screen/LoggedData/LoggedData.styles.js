@@ -76,3 +76,12 @@ export const InfoContainer = styled.div`
     margin: 0px 0px 0px 32px;
   }
 `;
+
+export const EmptyWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 48px);
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+`;
