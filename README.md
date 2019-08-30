@@ -26,40 +26,52 @@ Please join us on the following channels:
 * [Pocket Science Channel](https://gitter.im/fossasia/pslab)
 * [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
-## Project Overview
-A number of instruments have already been implemented.
+## Screenshots
+<table>
+  <tr>
+   <td>
+	 	<img src="./docs/images/home_screen.jpg" width="460px"/>  
+	 	The home screen that showcases all our instruments.
+	 </td>
+	 <td>
+	 	<img src="./docs/images/oscilloscope.jpg" width="460px"/>  
+		A four channel oscilloscope with analysis features.
+	</td>
+	</tr>
+	<tr>
+   <td>
+	 <img src="./docs/images/logic_analyzer.jpg" width="460px"/>  
+	 A four channel Logic Analyzer for digital outputs.
+	</td>
+	<td>
+	 <img src="./docs/images/multimeter.jpg" width="460px"/>  
+	 A full fledged multimeter that can measure voltage, frequency, resistance etc.
+	</td>
+	</tr>
+	<tr>
+   <td>
+	 	<img src="./docs/images/wave_generator.jpg" width="460px"/>  
+		Instrument used to generate analoge and digital waves of different frequencies, phase and duty cycles. 
+	 </td>
+	 <td>
+	 <img src="./docs/images/power_source.jpg" width="460px"/>
+	 A programmable voltage and current source to drive your external circuits.
+	 </td>
+	</tr>
+	<tr>
+   <td>
+	 	<img src="./docs/images/robot.jpg" width="460px"/>
+		An intutive interface to control 4 servo motor robot arm.
+	 </td>
+	 <td>
+	 	<img src="./docs/images/data_logger.jpg" width="460px"/>
+	  Save data and config in CSV and retrieve them back later.
+	 </td>
+	</tr>
+</table>
 
-### 1. User Interface
-The UI has been desgined to match the existing android app so that the user does not have to invest time on understanding the desktop app from scratch.
-<img src="./docs/images/home_screen.jpg" width="700px"/>
-
-### 2. Oscilloscope
-A four channel oscilloscope with a 25FPS refresh rate. Comes with features like variable time-base, fourier transform, sine/square fitting and XY plotting.
-<img src="./docs/images/oscilloscope.jpg" width="700px"/>
-
-### 3. Logic Analyzer
-A four channel logic analyser. It supports variable edge detection modes for the user to analyze digital waveforms.    
-<img src="./docs/images/logic_analyser.jpg" width="700px"/>
-
-### 4. Multimeter
-It can be used to measure voltage, resistance, capacitance, wave frequency etc.
-<img src="./docs/images/multimeter.jpg" width="700px"/>
-
-### 5. Wave generator
-This can be used to generate sine/triangular and PWM waves of different frequencies and phase angles.  
-<img src="./docs/images/wave_generator.jpg" width="700px"/>
-
-### 6. Power source
-Three programmable voltage sources and one programmable current source that can be used to power external circuits.
-<img src="./docs/images/power_source.jpg" width="700px"/>
-
-### 7. Robotic arm
-A neat UI that can be used to program four servo motors ( placed in a robotic arm ) using a timeline.
-<img src="./docs/images/robot.jpg" width="700px"/>
-
-### 8. Data logger
-Data can be captured and saved in a CSV file. We also have a playback feature in place that lets the user replay the data from the CSV file.  
-<img src="./docs/images/data_logger.jpg" width="700px"/>
+## Project Videos
+[Project Overview](https://www.youtube.com/watch?v=0fVkTbNWDME)
 
 ## Features and Implementation Status
 
@@ -70,7 +82,7 @@ Data can be captured and saved in a CSV file. We also have a playback feature in
 | Oscilloscope           | Shows variation of analog signals                                 | :heavy_check_mark: |
 | Multimeter             | Measures voltage, current, resistance and capacitance             | :heavy_check_mark: |
 | Logical Analyzer       | Captures and displays signals from digital system                 | :heavy_check_mark: |
-| Wave Generator         | Generates arbitrary analog and digital waveforms                  | :negative_squared_cross_mark: |
+| Wave Generator         | Generates arbitrary analog and digital waveforms                  | :heavy_check_mark: |
 | Power Source           | Generates programmable voltage and currents	                     | :heavy_check_mark: |
 | Lux Meter              | Measures the ambient light intensity                              | :negative_squared_cross_mark: |
 | Barometer              | Measures the Pressure                                             | :negative_squared_cross_mark: |
@@ -178,3 +190,4 @@ The project is maintained by
 - Padmal ([@CloudyPadmal](https://github.com/CloudyPadmal))
 - Mario Behling ([@mariobehling](http://github.com/mariobehling))
 - Wei Tat ([@cweitat](https://github.com/cweitat))
+- Aakash Mallik ([@AakashMallik](https://github.com/AakashMallik))
