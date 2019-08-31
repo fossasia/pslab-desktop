@@ -19,6 +19,8 @@ export const DialContainer = styled.div`
 
 export const DialWrapper = styled.div`
   z-index: 999;
+  background: white;
+  border-radius: 50%;
 `;
 
 export const IconWrapper = styled.div`

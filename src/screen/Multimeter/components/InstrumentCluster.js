@@ -4,6 +4,11 @@ import {
   InstrumentContainer,
   DisplayContainer,
   SwitchWrapper,
+  Backdrop,
+  TopSection,
+  BottomSection,
+  ResSection,
+  WaveSection,
 } from './InstrumentCluster.styles';
 import Dial from './Dial';
 import { withTheme, withStyles } from '@material-ui/core/styles';
@@ -22,22 +27,31 @@ const InstrumentCluster = ({
   onClickButton,
   changeDialValue,
   changeOption,
-  onToggleRead,
   dialValue,
   unit,
-  isConnected,
   isReading,
   onTogglePulseUnit,
   classes,
   activeCategory,
-  isWriting,
-  onToggleWrite,
 }) => {
   return (
     <InstrumentContainer>
       <MeasurementDisplay unit={unit} isReading={isReading} />
       <DisplayContainer>
-        <Card className={classes.cardMargin}>
+        <Card
+          className={classes.cardMargin}
+          style={{
+            height: '590px',
+            position: 'relative',
+          }}
+        >
+          <Backdrop>
+            <TopSection>Voltage</TopSection>
+            <BottomSection>
+              <WaveSection></WaveSection>
+              <ResSection>Measure</ResSection>
+            </BottomSection>
+          </Backdrop>
           <Dial
             activeSubType={activeSubType}
             value={dialValue}
