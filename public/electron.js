@@ -121,3 +121,7 @@ ipcMain.on('DATA_WRITING_STATUS', (event, args) => {
 ipcMain.on('FETCH_ROB_ARM', (event, args) => {
   mainWindow.webContents.send('FETCH_ROB_ARM', args);
 });
+
+ipcMain.on('FETCH_LA', (event, args) => {
+  mainWindow.webContents.send('FETCH_LA', args);
+});

@@ -30,6 +30,9 @@
 						case 'FETCH_ROB_ARM':
 							ipcRenderer.send('FETCH_ROB_ARM');
 							break;
+						case 'FETCH_LA':
+							ipcRenderer.send('FETCH_LA');
+							break;
 						case 'DATA_WRITING_STATUS':
 							ipcRenderer.send('DATA_WRITING_STATUS', parsedJSON);
 							break;

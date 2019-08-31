@@ -16,6 +16,7 @@ import { GraphWrapper, ProgressWrapper } from './Settings.styles';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
+const loadBalancer = window.require('electron-load-balancer');
 
 class Graph extends Component {
   constructor(props) {
@@ -58,10 +59,32 @@ class Graph extends Component {
         toggleRead();
       }
     });
+
+    ipcRenderer.on('FETCH_LA', (event, args) => {
+      const { LA1Data, LA2Data, LA3Data, LA4Data } = this.state;
+      const { dataPath, numberOfChannels } = this.props;
+      loadBalancer.sendData(ipcRenderer, 'playback', {
+        command: 'WRITE_LA',
+        LA1Voltage: LA1Data ? LA1Data.map(item => item.voltage) : [],
+        LA1Time: LA1Data ? LA1Data.map(item => item.time) : [],
+        LA2Voltage: LA2Data ? LA2Data.map(item => item.voltage) : [],
+        LA2Time: LA2Data ? LA2Data.map(item => item.time) : [],
+        LA3Voltage: LA3Data ? LA3Data.map(item => item.voltage) : [],
+        LA3Time: LA3Data ? LA3Data.map(item => item.time) : [],
+        LA4Voltage: LA4Data ? LA4Data.map(item => item.voltage) : [],
+        LA4Time: LA4Data ? LA4Data.map(item => item.time) : [],
+        numberOfChannels,
+        dataPath,
+      });
+      setTimeout(() => {
+        loadBalancer.stop(ipcRenderer, 'playback');
+      }, 500);
+    });
   }
 
   componentWillUnmount() {
     ipcRenderer.removeAllListeners('LA_DATA');
+    ipcRenderer.removeAllListeners('FETCH_LA');
   }
 
   render() {

@@ -1,7 +1,4 @@
 import React from 'react';
-import ReadIcon from '@material-ui/icons/PlayCircleFilled';
-import StopIcon from '@material-ui/icons/PauseCircleFilled';
-import RecordIcon from '@material-ui/icons/RadioButtonChecked';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { ButtonWrapper } from './ActionButtons.styles';
@@ -19,24 +16,11 @@ const ActionButtons = ({ isConnected, isReading, toggleRead, classes }) => {
         fullWidth={true}
         variant="contained"
         size="large"
-        color="default"
         disabled={!isConnected}
         onClick={toggleRead}
+        style={{ color: '#d32f2f' }}
       >
-        {isReading ? (
-          <StopIcon style={{ fontSize: 20 }} />
-        ) : (
-          <ReadIcon style={{ fontSize: 20 }} />
-        )}
-      </Button>
-      <Button
-        className={classes.buttonMargin}
-        fullWidth={true}
-        variant="contained"
-        size="large"
-        color="default"
-      >
-        <RecordIcon style={{ fontSize: 20 }} />
+        {isReading ? <b>ANALYZING</b> : <b>ANALYZE</b>}
       </Button>
     </ButtonWrapper>
   );
