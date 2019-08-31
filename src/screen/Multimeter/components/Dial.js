@@ -14,7 +14,13 @@ const Dial = ({
   theme,
 }) => {
   const onChangeDial = value => {
-    const dialValue = Math.round(value);
+    let dialValue = Math.round(value);
+    Object.keys(angleMap).map(angle => {
+      const compAngle = parseInt(angle, 10);
+      if (compAngle - 5 <= dialValue && dialValue < compAngle + 5) {
+        dialValue = compAngle;
+      }
+    });
     const activeSubType = angleMap[dialValue];
     if (activeSubType) {
       changeOption(activeSubType);
