@@ -6,7 +6,6 @@ import Graph from './components/Graph';
 import FFTGraph from './components/FFTGraph';
 import FitPanel from './components/FitPanel';
 import XYPlotGraph from './components/XYPlotGraph';
-// import ActionButtons from './components/ActionButtons';
 import Settings from './components/Settings';
 import roundOff from '../../utils/arithmetics';
 

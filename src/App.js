@@ -21,6 +21,7 @@ import LoggedData from './screen/LoggedData';
 import FrontLayout from './screen/Layout/FrontLayout';
 import BackLayout from './screen/Layout/BackLayout';
 import CustomDialog from './components/CustomDialog';
+import DeviceScreen from './screen/DeviceScreen';
 import theme from './theme';
 import {
   openSnackbar,
@@ -125,7 +126,7 @@ class App extends Component {
         isConnected
           ? deviceConnected({
               deviceInformation: {
-                deviceName,
+                deviceName: deviceName && deviceName.split("'")[1],
                 portName,
               },
             })
@@ -252,6 +253,7 @@ class App extends Component {
                 <Route path="/settings" component={Settings} />
                 <Route path="/frontlayout" component={FrontLayout} />
                 <Route path="/backlayout" component={BackLayout} />
+                <Route path="/devicescreen" component={DeviceScreen} />
               </Switch>
             </Appshell>
             <Snackbar
