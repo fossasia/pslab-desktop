@@ -116,7 +116,9 @@ export const ButtonRow = styled.div`
 `;
 
 export const TextWrapper = styled.div`
-  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Title = styled.div`
@@ -130,7 +132,7 @@ export const BorderMaker = styled.div`
   border-color: ${props => props.theme.primary.main};
   border-radius: 4px;
   padding: 16px 8px;
-  height: 258px;
+  height: 138px;
   width: 510px;
 `;
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
-import PlusIcon from '@material-ui/icons/Add';
-import MinusIcon from '@material-ui/icons/Remove';
+import PlusIcon from '@material-ui/icons/ArrowRight';
+import MinusIcon from '@material-ui/icons/ArrowLeft';
 import {
   Wrapper,
   MainContainer,
@@ -312,7 +312,13 @@ class DigitalController extends Component {
               <BorderMaker>
                 <ButtonRow>
                   <Button
-                    style={{ backgroundColor: theme.pallet.primary.main }}
+                    style={{
+                      backgroundColor:
+                        activePin === 'sqr1'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
+                    }}
                     size="large"
                     variant="contained"
                     color="primary"
@@ -324,13 +330,18 @@ class DigitalController extends Component {
                         activeSetting: 'Freq',
                       })
                     }
+                    disabled={activePin === 'sqr1'}
                   >
                     <TextWrapper>SQR1</TextWrapper>
                   </Button>
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'sqr2'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -338,13 +349,18 @@ class DigitalController extends Component {
                     className={classes.button}
                     fullWidth={true}
                     onClick={() => this.setState({ activePin: 'sqr2' })}
+                    disabled={activePin === 'sqr2'}
                   >
                     <TextWrapper>SQR2</TextWrapper>
                   </Button>
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'sqr3'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -352,13 +368,18 @@ class DigitalController extends Component {
                     className={classes.button}
                     fullWidth={true}
                     onClick={() => this.setState({ activePin: 'sqr3' })}
+                    disabled={activePin === 'sqr3'}
                   >
                     <TextWrapper>SQR3</TextWrapper>
                   </Button>
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'sqr4'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -366,6 +387,7 @@ class DigitalController extends Component {
                     className={classes.button}
                     fullWidth={true}
                     onClick={() => this.setState({ activePin: 'sqr4' })}
+                    disabled={activePin === 'sqr4'}
                   >
                     <TextWrapper>SQR4</TextWrapper>
                   </Button>
@@ -385,7 +407,11 @@ class DigitalController extends Component {
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor:
+                        activePin === 'sqr1'
+                          ? '#ef9a9a'
+                          : theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -401,6 +427,7 @@ class DigitalController extends Component {
                     style={{
                       margin: '0px 0px 0px 16px',
                       backgroundColor: theme.pallet.primary.main,
+                      color: '#fff',
                     }}
                     size="large"
                     variant="contained"
@@ -415,33 +442,58 @@ class DigitalController extends Component {
               </BorderMaker>
               <ButtonRow>
                 <Button
-                  style={{ backgroundColor: theme.pallet.primary.main }}
                   size="large"
                   variant="contained"
                   color="primary"
-                  className={classes.button}
                   fullWidth={true}
+                  style={{
+                    margin: '0px 0px 0px 16px',
+                    backgroundColor: this.props.wave
+                      ? '#ef9a9a'
+                      : theme.pallet.primary.main,
+                    color: '#fff',
+                  }}
+                  onClick={onTogglePreview}
+                  disabled={this.props.wave}
                 >
-                  <TextWrapper>View</TextWrapper>
+                  <TextWrapper>Analog</TextWrapper>
                 </Button>
                 <Button
                   size="large"
                   variant="contained"
                   color="primary"
-                  className={classes.button}
                   fullWidth={true}
                   style={{
                     margin: '0px 0px 0px 16px',
-                    backgroundColor: theme.pallet.primary.main,
+                    backgroundColor: !this.props.wave
+                      ? '#ef9a9a'
+                      : theme.pallet.primary.main,
+                    color: '#fff',
                   }}
                   onClick={onTogglePreview}
+                  disabled={!this.props.wave}
                 >
-                  <TextWrapper>Mode</TextWrapper>
+                  <TextWrapper>Digital</TextWrapper>
                 </Button>
               </ButtonRow>
             </ControllerWrapper>
           </MainContainer>
           <SliderContainer>
+            <ButtonContainer>
+              <Button
+                size="large"
+                variant="contained"
+                className={classes.button}
+                onClick={this.onHandleMinus}
+                style={{
+                  backgroundColor: theme.pallet.primary.main,
+                  color: '#ffffff',
+                  margin: '0px 16px 0px 0px',
+                }}
+              >
+                <MinusIcon style={{ fontSize: 24 }} />
+              </Button>
+            </ButtonContainer>
             <SliderWrapper>
               <Slider
                 value={this.sliderValue()}
@@ -461,22 +513,16 @@ class DigitalController extends Component {
             <ButtonContainer>
               <Button
                 size="large"
-                color="primary"
-                variant="outlined"
+                variant="contained"
                 className={classes.button}
-                onClick={this.onHandleMinus}
-              >
-                <MinusIcon style={{ fontSize: 20 }} />
-              </Button>
-              <Button
-                size="large"
-                color="primary"
-                variant="outlined"
-                className={classes.button}
-                style={{ margin: '0px 0px 0px 16px' }}
+                style={{
+                  margin: '0px 0px 0px 16px',
+                  backgroundColor: theme.pallet.primary.main,
+                  color: '#ffffff',
+                }}
                 onClick={this.onHandlePlus}
               >
-                <PlusIcon style={{ fontSize: 20 }} />
+                <PlusIcon style={{ fontSize: 24 }} />
               </Button>
             </ButtonContainer>
           </SliderContainer>

@@ -121,11 +121,10 @@ class WaveGenerator extends Component {
     );
   };
 
-  onChangeWaveForm = pinName => {
-    const current = this.state[pinName];
+  onChangeWaveForm = (pinName, type) => {
     this.setState(
       prevState => ({
-        [pinName]: current === 'sine' ? 'tria' : 'sine',
+        [pinName]: type,
       }),
       () => {
         this.sendConfigToDevice();
@@ -147,7 +146,6 @@ class WaveGenerator extends Component {
   render() {
     const {
       wave,
-      digital,
       s1Frequency,
       s2Frequency,
       s2Phase,
@@ -175,6 +173,7 @@ class WaveGenerator extends Component {
               onChangeWaveForm={this.onChangeWaveForm}
               onChangeSlider={this.onChangeSlider}
               onTogglePreview={this.onTogglePreview}
+              wave={wave}
             />
           ) : (
             <DigitalController
@@ -188,6 +187,7 @@ class WaveGenerator extends Component {
               sqr4Phase={sqr4Phase}
               onChangeSlider={this.onChangeSlider}
               onTogglePreview={this.onTogglePreview}
+              wave={wave}
             />
           )}
         </Wrapper>
