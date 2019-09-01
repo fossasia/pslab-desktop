@@ -20,6 +20,11 @@ This repository holds the PSLab Desktop application. It is using ElectronJS runn
 * You can get a Pocket Science Lab device from the [FOSSASIA Shop](https://fossasia.com).
 * More resellers are listed on the [PSLab website](https://pslab.io/shop/).
 
+## Download Installer
+
+* Download that latest [PSLab Desktop Development Build for Linux](https://github.com/fossasia/pslab-desktop/raw/install/pslab-desktop-development-linux.deb).
+* Download that latest [PSLab Desktop Stable Build for Linux](https://github.com/fossasia/pslab-desktop/raw/install/pslab-desktop-master-linux.deb).
+
 ## Communication
 
 Please join us on the following channels:
