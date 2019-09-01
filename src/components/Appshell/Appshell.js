@@ -296,6 +296,20 @@ const Appshell = ({
         return 'Logic Analyzer';
       case '/loggeddata':
         return 'Data Logger';
+      case '/sensors':
+        return 'Sensors';
+      case '/aboutus':
+        return 'About Us';
+      case '/faq':
+        return 'FAQ';
+      case '/settings':
+        return 'Settings';
+      case '/devicescreen':
+        return 'Device Status';
+      case '/frontlayout':
+        return 'Front Pin Layout';
+      case 'backlayout':
+        return 'Back Pin Layout';
       default:
         return undefined;
     }
@@ -365,12 +379,14 @@ const Appshell = ({
                 <ListItemText primary={'Connected Device'} />
               </ListItem>
             </Link>
-            <ListItem button>
-              <ListItemIcon>
-                <SettingIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Settings'} />
-            </ListItem>
+            <Link to="/settings">
+              <ListItem button>
+                <ListItemIcon>
+                  <SettingIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Settings'} />
+              </ListItem>
+            </Link>
           </List>
           <Divider />
           <Link to="/aboutus">

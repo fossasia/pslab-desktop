@@ -83,6 +83,16 @@ Please join us on the following channels:
 	 	<img src="./docs/images/device_screen.jpg" /> </br> 
 		A device information screen that shows device information and guide to connect it to the app.
 	 </td>
+	 <td>
+	 	<img src="./docs/images/faq.jpg" /> </br> 
+		A new FAQ screen that covers all generic as well as app specific questions that a user may have.
+	 </td>
+	</tr>
+	<tr>
+   <td>
+	 	<img src="./docs/images/about_us.jpg" /> </br> 
+		A page that has all the important links that can be used to reach out to us, or contribute to the project.
+	 </td>
 	</tr>
 </table>
 
