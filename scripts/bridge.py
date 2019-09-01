@@ -87,8 +87,9 @@ def main():
             trigger2_type = parsed_stream_data['trigger2Type']
             trigger3_type = parsed_stream_data['trigger3Type']
             trigger4_type = parsed_stream_data['trigger4Type']
+            capture_time = parsed_stream_data['captureTime']
             logic_analyser.set_config(
-                number_of_channels, trigger1_type, trigger2_type, trigger3_type, trigger4_type)
+                number_of_channels, trigger1_type, trigger2_type, trigger3_type, trigger4_type,capture_time)
 
         if command == 'GET_CONFIG_LA':
             logic_analyser.get_config()
