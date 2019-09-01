@@ -13,7 +13,9 @@ const loadBalancer = window.require('electron-load-balancer');
 class LogicAnalyzer extends Component {
   constructor(props) {
     super(props);
+    this.captureTimeList = [0.05, 0.1, 0.25, 0.5, 1, 2];
     this.state = {
+      captureTimeIndex: 0,
       isReading: false,
       numberOfChannels: 1,
       channel1Map: 'ID1',
@@ -39,6 +41,7 @@ class LogicAnalyzer extends Component {
     });
     ipcRenderer.on('LA_CONFIG', (event, args) => {
       const {
+        captureTime,
         numberOfChannels,
         trigger1Type,
         trigger2Type,
@@ -46,6 +49,7 @@ class LogicAnalyzer extends Component {
         trigger4Type,
       } = args;
       this.setState({
+        captureTimeIndex: this.captureTimeList.indexOf(captureTime),
         numberOfChannels,
         trigger1Type,
         trigger2Type,
@@ -76,6 +80,7 @@ class LogicAnalyzer extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const {
+      captureTimeIndex,
       numberOfChannels,
       trigger1Type,
       trigger2Type,
@@ -85,6 +90,7 @@ class LogicAnalyzer extends Component {
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_LA',
+        captureTime: this.captureTimeList[captureTimeIndex],
         numberOfChannels,
         trigger1Type,
         trigger2Type,
@@ -153,7 +159,16 @@ class LogicAnalyzer extends Component {
       timeout: value,
     });
   };
-
+  onChangeCaptureTimeIndex = (event, value) => {
+    this.setState(
+      () => ({
+        captureTimeIndex: value,
+      }),
+      () => {
+        this.sendConfigToDevice();
+      },
+    );
+  };
   render() {
     const {
       isReading,
@@ -171,6 +186,7 @@ class LogicAnalyzer extends Component {
       timeMeasureWrite1,
       timeMeasureWrite2,
       timeout,
+      captureTimeIndex,
     } = this.state;
     const { isConnected } = this.props;
     return (
@@ -198,6 +214,10 @@ class LogicAnalyzer extends Component {
             changeTimeMeasureTriggerType={this.changeTimeMeasureTriggerType}
             changeTimeMeasureWrite={this.changeTimeMeasureWrite}
             changeTimeout={this.changeTimeout}
+            captureTimeIndex={captureTimeIndex}
+            captureTime={this.captureTimeList[captureTimeIndex]}
+            onChangeCaptureTimeIndex={this.onChangeCaptureTimeIndex}
+            captureTimeListLength={this.captureTimeList.length}
           />
         }
         actionButtons={
