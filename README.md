@@ -30,57 +30,57 @@ Please join us on the following channels:
 <table>
   <tr>
    <td>
-	 	<img src="./docs/images/home_screen.jpg" width="460px"/>  
+	 	<img src="./docs/images/home_screen.jpg" width="340px"/> </br>   
 	 	The home screen that showcases all our instruments.
 	 </td>
 	 <td>
-	 	<img src="./docs/images/oscilloscope.jpg" width="460px"/>  
+	 	<img src="./docs/images/oscilloscope.jpg" width="340px"/> </br>   
 		A four channel oscilloscope with analysis features.
 	</td>
 	</tr>
 	<tr>
    <td>
-	 <img src="./docs/images/logic_analyzer.jpg" width="460px"/>  
+	 <img src="./docs/images/logic_analyzer.jpg" width="340px"/> </br>   
 	 A four channel Logic Analyzer for digital outputs.
 	</td>
 	<td>
-	 <img src="./docs/images/multimeter.jpg" width="460px"/>  
+	 <img src="./docs/images/multimeter.jpg" width="340px"/> </br>   
 	 A full fledged multimeter that can measure voltage, frequency, resistance etc.
 	</td>
 	</tr>
 	<tr>
    <td>
-	 	<img src="./docs/images/wave_generator.jpg" width="460px"/>  
+	 	<img src="./docs/images/wave_generator.jpg" width="340px"/> </br>   
 		Instrument used to generate analoge and digital waves of different frequencies, phase and duty cycles. 
 	 </td>
 	 <td>
-	 <img src="./docs/images/power_source.jpg" width="460px"/>
+	 <img src="./docs/images/power_source.jpg" width="340px"/> </br> 
 	 A programmable voltage and current source to drive your external circuits.
 	 </td>
 	</tr>
 	<tr>
    <td>
-	 	<img src="./docs/images/robot.jpg" width="460px"/>
+	 	<img src="./docs/images/robot.jpg" width="340px"/> </br> 
 		An intutive interface to control 4 servo motor robot arm.
 	 </td>
 	 <td>
-	 	<img src="./docs/images/data_logger.jpg" width="460px"/>
+	 	<img src="./docs/images/data_logger.jpg" width="340px"/> </br> 
 	  Save data and config in CSV and retrieve them back later.
 	 </td>
 	</tr>
 	<tr>
    <td>
-	 	<img src="./docs/images/drawer.jpg" width="460px"/>
+	 	<img src="./docs/images/drawer.jpg" width="340px"/> </br> 
 		The app drawer gives you access to many more options like the FAQ, Device Information Screen etc.
 	 </td>
 	 <td>
-	 	<img src="./docs/images/settings.jpg" width="460px"/>
+	 	<img src="./docs/images/settings.jpg" width="340px"/> </br> 
 		A settings page for configuring your app as per your requirement.
 	 </td>
 	</tr>
 	<tr>
    <td>
-	 	<img src="./docs/images/device_screen.jpg" width="460px"/>
+	 	<img src="./docs/images/device_screen.jpg" width="340px"/> </br> 
 		A device information screen that shows device information and guide to connect it to the app.
 	 </td>
 	</tr>
