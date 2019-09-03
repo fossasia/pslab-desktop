@@ -297,7 +297,7 @@ const Appshell = ({
       case '/loggeddata':
         return 'Data Logger';
       default:
-        return undefined;
+        return 'Pocket Science Lab - PSLab';
     }
   };
 
@@ -418,13 +418,17 @@ const Appshell = ({
             >
               <DrawerIcon style={{ fontSize: 24 }} />
             </IconButton>
-            <IconButton
-              className={classes.iconButton}
-              size="medium"
-              onClick={() => history.goBack()}
-            >
-              <BackIcon style={{ fontSize: 24 }} />
-            </IconButton>
+            {location.pathname !== '/' ? (
+              <IconButton
+                className={classes.iconButton}
+                size="medium"
+                onClick={() => history.goBack()}
+              >
+                <BackIcon style={{ fontSize: 24 }} />
+              </IconButton>
+            ) : (
+              ''
+            )}
           </ButtonContainer>
           <TitleContainer>{titleRenderer(location)}</TitleContainer>
           <Spacer />
