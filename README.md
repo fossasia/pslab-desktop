@@ -35,27 +35,27 @@ Please join us on the following channels:
 <table>
   <tr>
    <td>
-	 	<img src="./docs/images/home_screen.jpg" /> </br>   
+	 	<img src="./docs/images/home_screen.png" /> </br>
 	 	The home screen that showcases all our instruments.
 	 </td>
 	 <td>
-	 	<img src="./docs/images/oscilloscope.jpg" /> </br>   
+	 	<img src="./docs/images/oscilloscope.jpg" /> </br>
 		A four channel oscilloscope with analysis features.
 	</td>
 	</tr>
 	<tr>
    <td>
-	 <img src="./docs/images/logic_analyzer.jpg" /> </br>   
+	 <img src="./docs/images/logic_analyzer.jpg" /> </br>
 	 A four channel Logic Analyzer for digital outputs.
 	</td>
 	<td>
-	 <img src="./docs/images/multimeter.jpg" /> </br>   
+	 <img src="./docs/images/multimeter.jpg" /> </br>
 	 A full fledged multimeter that can measure voltage, frequency, resistance etc.
 	</td>
 	</tr>
 	<tr>
    <td>
-	 	<img src="./docs/images/wave_generator.jpg" /> </br>   
+	 	<img src="./docs/images/wave_generator.jpg" /> </br>
 		Instrument used to generate analoge and digital waves of different frequencies, phase and duty cycles. 
 	 </td>
 	 <td>
@@ -196,19 +196,19 @@ And wait for the electron shell to open.
 We are generating production builds automatically in the install branch of the project. The build pipeline generates a **debian** file that can be installed on any debian based distro. A .win file is generated as well. You can also build the files yourself.
 
 ### How to Build for Linux (Debian based OS)
-While in the project root  
+While in the project root
 ```bash
 npm run build-linux
-```  
+```
 ### How to Build for Windows
-While in the project root  
+While in the project root
 ```bash
 npm run build-windows
 ```
 This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installers. 
 
 ### How to Build for Other Platforms
-While in the project root  
+While in the project root
 ```bash
 npm run build
 ```
