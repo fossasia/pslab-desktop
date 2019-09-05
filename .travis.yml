@@ -19,10 +19,10 @@ cache:
 before_script:
   - export CI=false
 
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: bash travis-scripts/upload-packages.sh
-  on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^(master|development)$
+#deploy:
+#  provider: script
+#  skip_cleanup: true
+#  script: bash travis-scripts/upload-packages.sh
+#  on:
+#    all_branches: true
+#    condition: $TRAVIS_BRANCH =~ ^(master|development)$
