@@ -39,9 +39,9 @@ const Settings = props => {
   const onCheck = activeComponent => value => {
     switch (activeComponent) {
       case 'PV1':
-        return !(value >= -5 && value <= 5);
+        return !(value >= 0 && value <= 5);
       case 'PV2':
-        return !(value >= -3.3 && value <= 3.3);
+        return !(value >= 0 && value <= 3.3);
       case 'PV3':
         return !(value >= 0 && value <= 3.3);
       case 'PCS':
@@ -74,7 +74,7 @@ const Settings = props => {
                 setValue={onChangeSlider('pv1')}
                 value={pv1}
                 radius={86}
-                min={-5}
+                min={0}
                 max={5}
                 step={0.01}
               />
@@ -85,7 +85,7 @@ const Settings = props => {
                   openDialog({
                     variant: 'simple-input',
                     title: 'PV1',
-                    textTitle: 'Enter Voltage ( -5 to 5 )',
+                    textTitle: 'Enter Voltage ( 0 to 5 )',
                     onAccept: onChangeSlider('pv1'),
                     onCheck: onCheck('PV1'),
                     inputCheck: inputCheck,
@@ -97,7 +97,7 @@ const Settings = props => {
               </ValueWrapper>
               <ButtonContainer>
                 <Button
-                  disabled={pv1 === -5}
+                  disabled={pv1 === 0}
                   onClick={onPressButton('pv1', false)}
                   size="large"
                   color="secondary"
@@ -135,7 +135,7 @@ const Settings = props => {
                 setValue={onChangeSlider('pv2')}
                 value={pv2}
                 radius={86}
-                min={-3.3}
+                min={0}
                 max={3.3}
                 step={0.01}
               />
@@ -146,7 +146,7 @@ const Settings = props => {
                   openDialog({
                     variant: 'simple-input',
                     title: 'PV2',
-                    textTitle: 'Enter Voltage ( -3.3 to 3.3 )',
+                    textTitle: 'Enter Voltage ( 0 to 3.3 )',
                     onAccept: onChangeSlider('pv2'),
                     onCheck: onCheck('PV2'),
                     inputCheck: inputCheck,
@@ -158,7 +158,7 @@ const Settings = props => {
               </ValueWrapper>
               <ButtonContainer>
                 <Button
-                  disabled={pv2 === -3.3}
+                  disabled={pv2 === 0}
                   onClick={onPressButton('pv2', false)}
                   color="secondary"
                   variant="outlined"

@@ -13,8 +13,8 @@ class PowerSouce extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pv1: -5,
-      pv2: -3.3,
+      pv1: 0,
+      pv2: 0,
       pv3: 0,
       pcs: 0,
     };
