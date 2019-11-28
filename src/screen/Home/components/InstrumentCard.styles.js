@@ -48,7 +48,7 @@ export const Description = styled.div`
 `;
 
 export const HorizontalBar = styled.div`
-  width: 71.5%;
+  width: 74%;
   height: 2em;
   z-index: 1;
   bottom: 5.5em;
@@ -57,11 +57,12 @@ export const HorizontalBar = styled.div`
   border-style: solid;
   border-color: #fff;
   border-width: 4px 0px 4px 0px;
+  clip-path: polygon(0 0, 96% 0, 100% 100%, 0 100%);
 `;
 
 export const VerticalBar = styled.div`
   width: 2em;
-  height: 46.5%;
+  height: 52.5%;
   z-index: 1;
   top: 0px;
   right: 5.5em;
@@ -69,4 +70,5 @@ export const VerticalBar = styled.div`
   border-style: solid;
   border-color: #fff;
   border-width: 0px 4px 0px 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 89%);
 `;
