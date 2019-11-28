@@ -196,6 +196,13 @@ And wait for the electron shell to open.
 We are generating production builds automatically in the install branch of the project. The build pipeline generates a **debian** file that can be installed on any debian based distro. A .win file is generated as well. You can also build the files yourself.
 
 ### How to Build for Linux (Debian based OS)
+Add local mirror will make the dependencies downloading much faster:
+If you are in China, please run the following line in GNU/Linux shell.
+For more local npm package mirror information, please visit the following link:
+[https://www.npmjs.com/package/mirror-config-china](https://www.npmjs.com/package/mirror-config-china)
+```bash
+echo 'registry = http://registry.npm.taobao.org/' >> ~/.npmrc
+```
 While in the project root
 ```bash
 npm run build-linux
