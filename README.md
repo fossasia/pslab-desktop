@@ -154,7 +154,7 @@ Great you are interested in contributing! Please check the issue tracker for ope
 The [install](https://github.com/fossasia/pslab-desktop/tree/install) branch of the PSLab-Desktop repository hosts all the installers that we support for different desktop platforms. You can either install the app directly from the debian .deb package file or windows installer file. "Stable installers" are generated and updated on a weekly basis and are created from the **master** branch automatically. "Development Installers" are generated and updated on every PR merged on from the **development** branch. These installers are used for testing purpose. 
 		  
 ### How to Install on Linux
-Download the .deb file from the install branch and click the file to open it using your package manager or use the following commands in your terminal:
+Download the .deb file from the **[install branch](https://github.com/fossasia/pslab-desktop/tree/install)** and click the file to open it using your package manager or use the following commands in your terminal:
 ```bash
 sudo dpkg -i <deb-file-name>
 ```
