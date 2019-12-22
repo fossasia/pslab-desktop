@@ -44,7 +44,7 @@ Please join us on the following channels:
 	</td>
 	</tr>
 	<tr>
-   <td>
+   <td> 
 	 <img src="./docs/images/logic_analyzer.jpg" /> </br>
 	 A four channel Logic Analyzer for digital outputs.
 	</td>
