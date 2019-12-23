@@ -5,7 +5,8 @@ export const CustomCard = styled.div`
   display: flex;
   width: 48em;
   height: 26em;
-  margin-right:1em;
+  margin-right: 1em;
+  margin-bottom: 1em;
   transition-timing-function: ease-in-out;
   transition-duration: 200ms;
   border-radius: 8px;
