@@ -118,6 +118,12 @@
                 "sha256"
             ]
         },
+        "mac": {
+            "category": "public.app-category.education",
+            "target": [
+                "default"
+            ]
+        },
         "nsis": {
             "oneClick": true
         },
