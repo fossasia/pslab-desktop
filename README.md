@@ -210,6 +210,13 @@ npm run build-windows
 ```
 This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installers. 
 
+### How to Build for Mac / OSX
+While in the project root
+```bash
+npm run build-mac
+```
+This command will produce a **build** and a **dist** directory inside the project folder. The **build** folder contains the optimized react files, while the **dist** folder contains the final electron installers. 
+
 ### How to Build for Other Platforms
 While in the project root
 ```bash
