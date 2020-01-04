@@ -11,8 +11,8 @@ export const Container = styled.div`
 
 export const Wrapper = styled(Card)`
   margin: 16px 0px;
-  width: 35%;
   height: 870px;
+  width: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
