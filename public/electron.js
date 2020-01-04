@@ -30,7 +30,13 @@ function createWindow() {
         protocol: 'file:',
         slashes: true,
       });
-  mainWindow = new BrowserWindow({ show: false, icon });
+  mainWindow = new BrowserWindow({
+    show: false,
+    icon,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
   mainWindow.maximize();
   mainWindow.show();
 
