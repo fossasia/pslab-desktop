@@ -29,7 +29,7 @@
     "scripts": {
         "react-start": "BROWSER=NONE react-scripts start",
         "electron-start": "DEV=1 electron .",
-        "start": "concurrently \"react-scripts start BROWSER=none\" \"wait-on http://localhost:3000 && electron .\"",
+        "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
         "react-build": "react-scripts build",
         "electron-build-linux": "electron-builder --linux -c.extraMetadata.main=build/electron.js",
         "electron-build-windows": "electron-builder --win -c.extraMetadata.main=build/electron.js",
@@ -62,7 +62,7 @@
     ],
     "devDependencies": {
         "babel-eslint": "^10.0.1",
-        "concurrently": "^5.0.0",
+        "concurrently": "^4.1.0",
         "devtron": "^1.4.0",
         "electron": "^4.1.4",
         "electron-builder": "^21.1.5",

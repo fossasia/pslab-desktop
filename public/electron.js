@@ -30,7 +30,6 @@ function createWindow() {
         protocol: 'file:',
         slashes: true,
       });
-<<<<<<< HEAD
   mainWindow = new BrowserWindow({
     show: false,
     icon,
@@ -38,9 +37,6 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
-=======
-  mainWindow = new BrowserWindow({ show: false, icon, 'minWidth': 500, 'minHeight': 300 });
->>>>>>> 4c85483... Update min size to be smaller
   mainWindow.maximize();
   mainWindow.show();
 
