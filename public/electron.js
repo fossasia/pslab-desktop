@@ -36,6 +36,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    minWidth: 500,
+    minHeight: 300,
   });
   mainWindow.maximize();
   mainWindow.show();
