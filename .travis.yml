@@ -7,24 +7,11 @@ matrix:
   include:
     - name: "linux"
       os: linux
-      script:
-        - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - npm run build-linux
-        - kill %1
-    - name: "macos"
-      os: osx
-      osx_image: xcode11.3
-      script: 
-        - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - npm run build-mac
-        - kill %1
+      script: npm run build-linux
     - name: "windows"
       os: linux
       services: docker
-      script: 
-        - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-        - docker run --rm -e GH_TOKEN=$GITHUB_API_KEY -v $PWD:/project -v ~/.cache/electron:/root/.cache/electron -v ~/.cache/electron-builder:/root/.cache/electron-builder electronuserland/builder:wine /bin/bash -c "npm run build-windows"
-        - kill %1
+      script: docker run --rm -e GH_TOKEN=$GITHUB_API_KEY -v $PWD:/project -v ~/.cache/electron:/root/.cache/electron -v ~/.cache/electron-builder:/root/.cache/electron-builder electronuserland/builder:wine /bin/bash -c "npm run build-windows"
 
 cache:
   npm: false
@@ -32,11 +19,10 @@ cache:
 before_script:
   - export CI=false
 
-deploy:
- provider: script
- skip_cleanup: true
- script: bash travis-scripts/upload-packages.sh
- on:
-   all_branches: true
-   condition: $TRAVIS_BRANCH =~ ^(master|development)$
-   repo: fossasia/pslab-desktop
+#deploy:
+#  provider: script
+#  skip_cleanup: true
+#  script: bash travis-scripts/upload-packages.sh
+#  on:
+#    all_branches: true
+#    condition: $TRAVIS_BRANCH =~ ^(master|development)$

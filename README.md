@@ -1,6 +1,6 @@
 # PSLab Desktop
 
-Desktop application for the [Pocket Science Lab (PSLab)](https://pslab.io) open hardware platform.
+Desktop application for the [Pocket Science Lab (PSlab)](https://pslab.io) open hardware platform.
 
 Development [![Build Status](https://travis-ci.org/fossasia/pslab-desktop.svg?branch=development)](https://travis-ci.org/fossasia/pslab-desktop)
 Master [![Build Status](https://travis-ci.org/fossasia/pslab-desktop.svg?branch=master)](https://travis-ci.org/fossasia/pslab-desktop)
