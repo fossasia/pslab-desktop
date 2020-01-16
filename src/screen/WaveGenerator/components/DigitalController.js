@@ -500,11 +500,11 @@ class DigitalController extends Component {
                 onChange={this.onChangeSlider}
                 className={classes.slider}
                 step={1}
-                min={activeSetting == 'Freq' ? 10 : 0}
+                min={activeSetting === 'Freq' ? 10 : 0}
                 max={
-                  activeSetting == 'Freq'
+                  activeSetting === 'Freq'
                     ? 5000
-                    : activeSetting == 'Phase'
+                    : activeSetting === 'Phase'
                     ? 360
                     : 100
                 }
