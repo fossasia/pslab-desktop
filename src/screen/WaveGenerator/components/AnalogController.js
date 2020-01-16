@@ -162,7 +162,7 @@ class AnalogController extends Component {
     const { activePin, activeSetting } = this.state;
     const { s1Frequency, s2Frequency, s2Phase } = this.props;
 
-    if (activePin == 'wave1') {
+    if (activePin === 'wave1') {
       if (activeSetting === 'Freq') {
         return `Wave Frequency : ${s1Frequency}Hz`;
       }
@@ -403,8 +403,8 @@ class AnalogController extends Component {
                 onChange={this.onChangeSlider}
                 className={classes.slider}
                 step={1}
-                min={activeSetting == 'Freq' ? 10 : 0}
-                max={activeSetting == 'Freq' ? 5000 : 360}
+                min={activeSetting === 'Freq' ? 10 : 0}
+                max={activeSetting === 'Freq' ? 5000 : 360}
               />
             </SliderWrapper>
             <ButtonContainer>
