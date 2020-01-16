@@ -15,9 +15,9 @@ const loadBalancer = require('electron-load-balancer');
 //   installExtension(REACT_DEVELOPER_TOOLS);
 // }
 
-const { app } = electron;
-const { BrowserWindow } = electron;
+const { app, BrowserWindow, Menu } = electron;
 const nativeImage = electron.nativeImage;
+const shell = require('electron').shell;
 
 const icon = nativeImage.createFromPath(path.join(__dirname, 'app_icon.png'));
 let mainWindow;
@@ -30,7 +30,15 @@ function createWindow() {
         protocol: 'file:',
         slashes: true,
       });
-  mainWindow = new BrowserWindow({ show: false, icon });
+  mainWindow = new BrowserWindow({
+    show: false,
+    icon,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+    minWidth: 500,
+    minHeight: 300,
+  });
   mainWindow.maximize();
   mainWindow.show();
 
@@ -41,6 +49,98 @@ function createWindow() {
     loadBalancer.stopAll();
     mainWindow = null;
   });
+  const isMac = process.platform === 'darwin';
+
+  var menu = Menu.buildFromTemplate([
+    ...(isMac
+      ? [
+          {
+            label: app.name,
+            submenu: [
+              { role: 'about' },
+              { type: 'separator' },
+              { role: 'services' },
+              { type: 'separator' },
+              { role: 'hide' },
+              { role: 'hideothers' },
+              { role: 'unhide' },
+              { type: 'separator' },
+              { role: 'quit' },
+            ],
+          },
+        ]
+      : []),
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Quit',
+          role: 'quit',
+        },
+      ],
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Reload',
+          role: 'reload',
+        },
+        {
+          label: 'Force Reload',
+          role: 'forceReload',
+        },
+        {
+          label: 'Toggle Developer Tools',
+          role: 'toggleDevTools',
+        },
+        { type: 'separator' },
+        {
+          label: 'Actual Size',
+          role: 'toggleDevTools',
+        },
+        {
+          label: 'Zoom In',
+          role: 'zoomIn',
+        },
+        {
+          label: 'Zoom Out',
+          role: 'zoomOut',
+        },
+      ],
+    },
+    {
+      label: 'Window',
+      submenu: [
+        {
+          label: 'Minimize',
+          role: 'minimize',
+        },
+        {
+          label: 'Close',
+          role: 'close',
+        },
+      ],
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Visit Website',
+          click() {
+            shell.openExternal('https://pslab.io/');
+          },
+        },
+        {
+          label: 'Documentation',
+          click() {
+            shell.openExternal('https://docs.pslab.io/');
+          },
+        },
+      ],
+    },
+  ]);
+  Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', createWindow);
