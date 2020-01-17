@@ -15,7 +15,7 @@ const FrontLayout = () => {
     >
       <ImageContainer>
         {/* I2C */}
-        <img src={FrontLayoutImg}></img>
+        <img src={FrontLayoutImg} alt=""></img>
         <Tooltip
           title={
             <React.Fragment>
