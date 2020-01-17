@@ -133,14 +133,14 @@ class AnalogController extends Component {
     const { activePin } = this.state;
     if (activePin === 'wave1') {
       if (waveFormS1 === 'sine') {
-        return <img src={SineIcon} />;
+        return <img src={SineIcon} alt="" />;
       }
-      return <img src={TriaIcon} />;
+      return <img src={TriaIcon} alt="" />;
     }
     if (waveFormS2 === 'sine') {
-      return <img src={SineIcon} />;
+      return <img src={SineIcon} alt="" />;
     }
-    return <img src={TriaIcon} />;
+    return <img src={TriaIcon} alt="" />;
   };
 
   waveFormInv = () => {
@@ -310,6 +310,7 @@ class AnalogController extends Component {
                   >
                     <TextWrapper>
                       <img
+                        alt=""
                         src={SineIcon}
                         style={{ width: '30px', height: '30px' }}
                       />
@@ -336,6 +337,7 @@ class AnalogController extends Component {
                   >
                     <TextWrapper>
                       <img
+                        alt=""
                         src={TriaIcon}
                         style={{ width: '30px', height: '30px' }}
                       />
