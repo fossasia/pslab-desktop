@@ -282,7 +282,7 @@ class DigitalController extends Component {
               <InformationRow2>
                 <WaveType>
                   <InfoText>
-                    <img src={PWMIcon} />
+                    <img src={PWMIcon} alt="" />
                   </InfoText>
                 </WaveType>
                 <InfoList>
