@@ -15,6 +15,7 @@ import SensorsRedSvg from '../../resources/sensors_red.svg';
 export const OscilloscopeIcon = ({ size, color }) => {
   return (
     <img
+      alt=""
       style={{
         height: size,
         width: 'auto',
@@ -27,6 +28,7 @@ export const OscilloscopeIcon = ({ size, color }) => {
 export const LogicAnalyzerIcon = ({ size, color }) => {
   return (
     <img
+      alt=""
       style={{
         height: size,
         width: 'auto',
@@ -39,6 +41,7 @@ export const LogicAnalyzerIcon = ({ size, color }) => {
 export const PowerSourceIcon = ({ size, color }) => {
   return (
     <img
+      alt=""
       style={{
         height: size,
         width: 'auto',
@@ -51,6 +54,7 @@ export const PowerSourceIcon = ({ size, color }) => {
 export const WaveGeneratorIcon = ({ size, color }) => {
   return (
     <img
+      alt=""
       style={{
         height: size,
         width: 'auto',
@@ -63,6 +67,7 @@ export const WaveGeneratorIcon = ({ size, color }) => {
 export const MultimeterIcon = ({ size, color }) => {
   return (
     <img
+      alt=""
       style={{
         height: size,
         width: 'auto',
@@ -75,6 +80,7 @@ export const MultimeterIcon = ({ size, color }) => {
 export const SensorsIcon = ({ size, color }) => {
   return (
     <img
+      alt=""
       style={{
         height: size,
         width: 'auto',
