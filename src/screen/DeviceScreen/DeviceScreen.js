@@ -9,6 +9,7 @@ const DeviceScreen = ({ isConnected, deviceInformation }) => {
     <Container>
       <Wrapper>
         <img
+          alt=""
           src={ConnectedImage}
           style={{
             height: '104px',
@@ -52,6 +53,7 @@ const DeviceScreen = ({ isConnected, deviceInformation }) => {
     <Container>
       <Wrapper>
         <img
+          alt=""
           src={DisconnectedImage}
           style={{
             height: '104px',
