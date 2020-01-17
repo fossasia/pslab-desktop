@@ -412,7 +412,6 @@ class AnalogController extends Component {
                 size="large"
                 color="primary"
                 variant="outlined"
-                style={{ margin: '0px 0px 0px 16px' }}
                 onClick={this.onHandlePlus}
                 style={{
                   margin: '0px 0px 0px 16px',
