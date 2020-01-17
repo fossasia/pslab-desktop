@@ -14,7 +14,7 @@ const BackLayout = () => {
       }}
     >
       <ImageContainer>
-        <img src={BackLayoutImg}></img>
+        <img src={BackLayoutImg} alt=""></img>
         {/* I2C */}
         <Tooltip
           title={
