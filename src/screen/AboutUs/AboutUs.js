@@ -87,9 +87,7 @@ const AboutUs = () => {
             );
           }}
         >
-
-          <ListItemIcon
-            >
+          <ListItemIcon>
             <LinkIcon style={{ height: '1.6em', width: '1.6em' }} />
           </ListItemIcon>
           <ListItemText primary="Visit our website" />
@@ -182,7 +180,11 @@ const AboutUs = () => {
           }}
         >
           <ListItemIcon>
-            <img src={YoutubeIcon} style={{ height: '3em', width: '3em' }} alt="" />
+            <img
+              src={YoutubeIcon}
+              style={{ height: '3em', width: '3em' }}
+              alt="" 
+            />
           </ListItemIcon>
           <ListItemText primary="Watch us on Youtube" />
         </ListItem>
