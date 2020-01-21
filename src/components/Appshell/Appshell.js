@@ -49,9 +49,15 @@ import DisconnectedIcon from '../../resources/device_disconnected.svg';
 import ConnectedIcon from '../../resources/device_connected.svg';
 import { openSnackbar } from '../../redux/actions/app';
 
-const electron = window.require('electron');
-const { remote } = window.require('electron');
-const { ipcRenderer } = electron;
+mainWindow = new BrowserWindow({
+  width: 800,
+  height: 600,
+  webPreferences: {
+    nodeIntegration: true
+  }
+})
+
+const { ipcRenderer, remote } = require('electron');
 const fs = remote.require('fs');
 const { dialog } = remote;
 const loadBalancer = window.require('electron-load-balancer');
