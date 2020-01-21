@@ -161,6 +161,21 @@ sudo dpkg -i <deb-file-name>
 ### How to Install on Windows
 Download the windows files from the install branch and execute the file to install the system on your Windows machine.
 
+### How to Install on Mac Os
+In the current install branch there is no any dmg file for Mac OS. Therefore it should be built manually.
+
+First you have to setup the development environment. To do it navigate to, [How to Setup the Project from Source on Your Development Environment](#how-to-setup-the-project-from-source-on-your-development-environment)
+
+Now you must build the installation file for Mac OS. To do it navigate to, [How to Build for Mac/OSX](#how-to-build-for-mac--osx)
+
+After the process navigate to the newly created directory named `dist`.
+
+Now open the `PSLab-0.1.0.dmg` file.
+
+Drag and drop the `PSLab` icon to the `Application` directory within the installation window.
+
+Now the PSLab will appear in the `Launchpad`.
+
 ## How to Setup the Project from Source on Your Development Environment
 1. Fork the project to get a copy of the repository in your github profile.
 2. Clone the copied project from your profile ( Not the original repository from FOSSASIA ).
