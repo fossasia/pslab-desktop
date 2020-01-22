@@ -1,4 +1,4 @@
-const fs = window.require('fs');
+/*const fs = window.require('fs');*/
 const os = window.require('os');
 const path = window.require('path');
 const dataPath = path.join(os.homedir(), 'Documents', 'PSLab');
