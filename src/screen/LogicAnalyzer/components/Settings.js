@@ -7,7 +7,7 @@ import {
 } from './Settings.styles';
 import NumberParameter from './NumberParameter';
 import ChannelParameters from './ChannelParameters';
-import AnalysisParameters from './AnalysisParameters';
+/*import AnalysisParameters from './AnalysisParameters';*/
 
 const Settings = ({
   numberOfChannels,
