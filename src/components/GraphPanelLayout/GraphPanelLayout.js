@@ -5,8 +5,8 @@ import {
   SettingsContainer,
   SettingsWrapper,
   GraphContainer,
-  InformationContainer,
-  ThickBar,
+  InformationContainer
+  /*ThickBar,*/
 } from './GraphPanelLayout.styles';
 
 const GraphPanelLayout = ({ actionButtons, settings, graph, information }) => {
