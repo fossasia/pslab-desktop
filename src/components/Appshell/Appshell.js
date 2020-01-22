@@ -329,7 +329,7 @@ const Appshell = ({
             }}
           >
             <img
-              alt=""
+              alt="App"
               src={AppIcon}
               style={{
                 height: '6.5em',
@@ -470,13 +470,13 @@ const Appshell = ({
               <IconButton className={classes.iconButton} size="medium">
                 {device.isConnected ? (
                   <img
-                    alt=""
+                    alt="Connected"
                     src={ConnectedIcon}
                     style={{ height: '20px', width: '20px' }}
                   />
                 ) : (
                   <img
-                    alt=""
+                    alt="Disconnected"
                     src={DisconnectedIcon}
                     style={{ height: '20px', width: '20px' }}
                   />
