@@ -4,7 +4,6 @@ import {
   Container,
   KnobWrapper,
   PaintWrapper
-  /*Spacer,*/
 } from './RobotArm.styles';
 import PaintArea from './Components/PaintArea';
 import KnobControl from './Components/KnobControl';
