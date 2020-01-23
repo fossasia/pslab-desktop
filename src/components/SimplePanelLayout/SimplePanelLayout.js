@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  /*ThickBar,*/
   LayoutWrapper,
   LayoutContainer,
 } from './SimplePanelLayout.styles';
