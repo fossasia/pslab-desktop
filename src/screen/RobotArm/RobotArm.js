@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import {
   Container,
   KnobWrapper,
-  PaintWrapper,
-  Spacer,
+  PaintWrapper
 } from './RobotArm.styles';
 import PaintArea from './Components/PaintArea';
 import KnobControl from './Components/KnobControl';
