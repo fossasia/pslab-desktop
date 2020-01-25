@@ -20,6 +20,7 @@ const Dial = ({
       if (compAngle - 5 <= dialValue && dialValue < compAngle + 5) {
         dialValue = compAngle;
       }
+      return null;
     });
     const activeSubType = angleMap[dialValue];
     if (activeSubType) {
