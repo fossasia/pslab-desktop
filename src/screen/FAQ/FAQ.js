@@ -436,7 +436,7 @@ const FAQ = () => {
               collected. Future versions of the device will come with a SD card
               to store the data locally as well. At the moment there are still
               limits to using this feature, but we are continuously working on
-              it 🙂
+              it <span role="img" aria-label="smiley">🙂</span>
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>
