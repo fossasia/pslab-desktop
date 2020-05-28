@@ -94,8 +94,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withTheme(
-  connect(
-    null,
-    mapDispatchToProps,
-  )(CustomCircularInput),
+  connect(null, mapDispatchToProps)(CustomCircularInput),
 );

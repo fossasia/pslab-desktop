@@ -132,10 +132,10 @@ const AboutUs = () => {
           }}
         >
           <ListItemIcon>
-            <img 
+            <img
               src={FacebookIcon}
-              style={{ height: '3em', width: '3em' }} 
-              alt="" 
+              style={{ height: '3em', width: '3em' }}
+              alt=""
             />
           </ListItemIcon>
           <ListItemText primary="Like us on Facebook" />
@@ -156,10 +156,10 @@ const AboutUs = () => {
           }}
         >
           <ListItemIcon>
-            <img 
+            <img
               src={TwitterIcon}
-              style={{ height: '3em', width: '3em' }} 
-              alt=""  
+              style={{ height: '3em', width: '3em' }}
+              alt=""
             />
           </ListItemIcon>
           <ListItemText primary="Follow us on Twitter" />
@@ -183,7 +183,7 @@ const AboutUs = () => {
             <img
               src={YoutubeIcon}
               style={{ height: '3em', width: '3em' }}
-              alt="" 
+              alt=""
             />
           </ListItemIcon>
           <ListItemText primary="Watch us on Youtube" />

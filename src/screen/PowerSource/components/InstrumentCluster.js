@@ -319,9 +319,4 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
-export default withStyles(styles)(
-  connect(
-    null,
-    mapDispatchToProps,
-  )(Settings),
-);
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Settings));

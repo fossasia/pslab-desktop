@@ -125,7 +125,4 @@ const mapStateToProps = state => ({
   deviceInformation: state.app.device.deviceInformation,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(DeviceScreen);
+export default connect(mapStateToProps, null)(DeviceScreen);

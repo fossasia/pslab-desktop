@@ -153,7 +153,4 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(Multimeter);
+export default connect(mapStateToProps, null)(Multimeter);

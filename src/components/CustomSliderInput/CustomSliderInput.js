@@ -96,8 +96,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withStyles(styles)(
-  connect(
-    null,
-    mapDispatchToProps,
-  )(CustomSliderInput),
+  connect(null, mapDispatchToProps)(CustomSliderInput),
 );

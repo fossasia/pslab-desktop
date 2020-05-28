@@ -9,27 +9,26 @@ export const TabsContainer = styled.div`
 
 export const TabsRow = styled.div`
   display: flex;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 `;
 
 export const TabsWrapper = styled.div`
   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
-export const InstrumentCard= styled.div`
+export const InstrumentCard = styled.div`
   display: flex;
-      flex-wrap: wrap;
-    justify-content: center;
-   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   @media only screen and (max-width: 1800px) {
     display: flex;
-     flex-direction: wrap;
-   justify-content: center;
-   align-items: center;
+    flex-direction: wrap;
+    justify-content: center;
+    align-items: center;
   }
 `;
-

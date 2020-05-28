@@ -116,9 +116,4 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null,
-  )(PowerSouce),
-);
+export default withRouter(connect(mapStateToProps, null)(PowerSouce));

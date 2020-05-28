@@ -370,7 +370,4 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(Oscilloscope);
+export default connect(mapStateToProps, null)(Oscilloscope);

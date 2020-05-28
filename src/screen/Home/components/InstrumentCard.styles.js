@@ -5,7 +5,7 @@ export const CustomCard = styled.div`
   display: flex;
   width: 48em;
   height: 26em;
-  margin-right:1em;
+  margin-right: 1em;
   transition-timing-function: ease-in-out;
   transition-duration: 200ms;
   border-radius: 8px;
@@ -20,7 +20,7 @@ export const CustomCard = styled.div`
   }
 
   @media only screen and (max-width: 1800px) {
-    margin-top:10px;
+    margin-top: 10px;
   }
 `;
 
@@ -75,5 +75,4 @@ export const VerticalBar = styled.div`
   border-color: #fff;
   border-width: 0px 4px 0px 4px;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 89%);
-
 `;

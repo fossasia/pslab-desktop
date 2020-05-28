@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Container,
-  KnobWrapper,
-  PaintWrapper
-} from './RobotArm.styles';
+import { Container, KnobWrapper, PaintWrapper } from './RobotArm.styles';
 import PaintArea from './Components/PaintArea';
 import KnobControl from './Components/KnobControl';
 import range from 'lodash/range';
@@ -181,7 +177,4 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(RobotArm);
+export default connect(mapStateToProps, null)(RobotArm);
