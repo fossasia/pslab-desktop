@@ -13,6 +13,7 @@ import {
 
 const Tabs = () => {
   return (
+    
     <TabsContainer>
       <Scrollbars autoHide autoHideTimeout={1000}>
         <TabsRow>
