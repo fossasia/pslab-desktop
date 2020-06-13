@@ -43,7 +43,9 @@ const Tabs = () => {
           <InstrumentCard
             icon={<MultimeterIcon size={'10em'} />}
             title={'Multimeter'}
-            description={'Measure voltage, current, resistance and capacitance.'}
+            description={
+              'Measure voltage, current, resistance and capacitance.'
+            }
             redirectPath={'/multimeter'}
           />
           <InstrumentCard

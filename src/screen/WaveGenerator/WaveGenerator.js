@@ -200,9 +200,4 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null,
-  )(WaveGenerator),
-);
+export default withRouter(connect(mapStateToProps, null)(WaveGenerator));

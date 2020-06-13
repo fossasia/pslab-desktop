@@ -5,7 +5,7 @@ import {
   SettingsContainer,
   SettingsWrapper,
   GraphContainer,
-  InformationContainer
+  InformationContainer,
 } from './GraphPanelLayout.styles';
 
 const GraphPanelLayout = ({ actionButtons, settings, graph, information }) => {

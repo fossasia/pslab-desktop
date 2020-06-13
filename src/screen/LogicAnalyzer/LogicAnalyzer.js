@@ -224,7 +224,4 @@ const mapStateToProps = state => ({
   isConnected: state.app.device.isConnected,
 });
 
-export default connect(
-  mapStateToProps,
-  null,
-)(LogicAnalyzer);
+export default connect(mapStateToProps, null)(LogicAnalyzer);

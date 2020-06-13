@@ -506,11 +506,6 @@ const mapDispatchToProps = dispatch => ({
 
 export default withRouter(
   withTheme()(
-    withStyles(styles)(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps,
-      )(Appshell),
-    ),
+    withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Appshell)),
   ),
 );
