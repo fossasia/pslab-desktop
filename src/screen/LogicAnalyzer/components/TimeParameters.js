@@ -4,9 +4,6 @@ import CustomSliderInput from '../../../components/CustomSliderInput';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 
 class TimeParameters extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const {
       captureTimeListLength,
