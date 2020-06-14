@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button } from '@material-ui/core';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 import PlusIcon from '@material-ui/icons/ArrowRight';
 import MinusIcon from '@material-ui/icons/ArrowLeft';
 import {
