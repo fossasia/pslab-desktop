@@ -14,7 +14,7 @@
 		ipcRenderer,
 		'playback',
 		() => {
-			loadBalancer.onRecieveData(ipcRenderer, 'playback', args => {
+			loadBalancer.onReceiveData(ipcRenderer, 'playback', args => {
 				pyshell.send(JSON.stringify(args));
 			});
 

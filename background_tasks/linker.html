@@ -14,7 +14,7 @@
 		ipcRenderer,
 		'linker',
 		() => {
-			loadBalancer.onRecieveData(ipcRenderer, 'linker', args => {
+			loadBalancer.onReceiveData(ipcRenderer, 'linker', args => {
 				pyshell.send(JSON.stringify(args));
 			});
 
