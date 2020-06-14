@@ -96,7 +96,7 @@
     "build": {
         "appId": "FOSSASIA-PSLAB",
         "productName": "PSLab",
-        "copyright": "Copyright © 2019 FOSSASIA",
+        "copyright": "Copyright © 2019-2020 FOSSASIA",
         "asar": true,
         "linux": {
             "target": [
@@ -112,7 +112,7 @@
             "target": [
                 "nsis"
             ],
-            "legalTrademarks": "Copyright © 2019 FOSSASIA",
+            "legalTrademarks": "Copyright © 2019-2020 FOSSASIA",
             "signingHashAlgorithms": [
                 "sha1",
                 "sha256"
