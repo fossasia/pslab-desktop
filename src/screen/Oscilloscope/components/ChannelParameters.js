@@ -17,38 +17,38 @@ import formStyles from '../../../utils/formStyles';
 
 const styles = theme => ({
   ch1ColorSwitchBase: {
-    color: theme.pallet.ch1Color,
+    color: theme.palette.ch1Color,
     '&$colorChecked': {
-      color: theme.pallet.ch1Color,
+      color: theme.palette.ch1Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.ch1Color,
+        backgroundColor: theme.palette.ch1Color,
       },
     },
   },
   ch2ColorSwitchBase: {
-    color: theme.pallet.ch2Color,
+    color: theme.palette.ch2Color,
     '&$colorChecked': {
-      color: theme.pallet.ch2Color,
+      color: theme.palette.ch2Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.ch2Color,
+        backgroundColor: theme.palette.ch2Color,
       },
     },
   },
   ch3ColorSwitchBase: {
-    color: theme.pallet.ch3Color,
+    color: theme.palette.ch3Color,
     '&$colorChecked': {
-      color: theme.pallet.ch3Color,
+      color: theme.palette.ch3Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.ch3Color,
+        backgroundColor: theme.palette.ch3Color,
       },
     },
   },
   micColorSwitchBase: {
-    color: theme.pallet.micColor,
+    color: theme.palette.micColor,
     '&$colorChecked': {
-      color: theme.pallet.micColor,
+      color: theme.palette.micColor,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.micColor,
+        backgroundColor: theme.palette.micColor,
       },
     },
   },

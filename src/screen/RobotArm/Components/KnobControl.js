@@ -22,7 +22,7 @@ import CustomCircularInput from '../../../components/CustomCircularInput';
 
 const styles = theme => ({
   iconButton: {
-    color: theme.pallet.common.white,
+    color: theme.palette.common.white,
   },
 });
 

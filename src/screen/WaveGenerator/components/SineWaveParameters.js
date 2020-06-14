@@ -23,20 +23,20 @@ import formStyles from '../../../utils/formStyles';
 
 const styles = theme => ({
   s1colorSwitchBase: {
-    color: theme.pallet.s1Color,
+    color: theme.palette.s1Color,
     '&$colorChecked': {
-      color: theme.pallet.s1Color,
+      color: theme.palette.s1Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.s1Color,
+        backgroundColor: theme.palette.s1Color,
       },
     },
   },
   s2colorSwitchBase: {
-    color: theme.pallet.s2Color,
+    color: theme.palette.s2Color,
     '&$colorChecked': {
-      color: theme.pallet.s2Color,
+      color: theme.palette.s2Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.s2Color,
+        backgroundColor: theme.palette.s2Color,
       },
     },
   },

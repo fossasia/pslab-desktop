@@ -1,7 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-  pallet: {
+  palette: {
     common: {
       black: '#000',
       white: '#fff',

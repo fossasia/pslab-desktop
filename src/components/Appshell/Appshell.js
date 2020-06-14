@@ -58,7 +58,7 @@ const loadBalancer = window.require('electron-load-balancer');
 
 const styles = theme => ({
   iconButton: {
-    color: theme.pallet.common.white,
+    color: theme.palette.common.white,
   },
   list: {
     width: 250,

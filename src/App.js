@@ -183,7 +183,7 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme.pallet}>
+        <ThemeProvider theme={theme.palette}>
           <HashRouter>
             <Appshell
               reset={this.reset}
