@@ -74,10 +74,15 @@ app.on('activate', () => {
 
 /* ----------------------------------- Custom code starts here ------------------------------------- */
 
-loadBalancer.register(ipcMain, {
-  linker: '/background_tasks/linker.html',
-  playback: '/background_tasks/playback.html',
-});
+loadBalancer.register(
+  ipcMain,
+  {
+    linker: '/background_tasks/linker.html',
+    playback: '/background_tasks/playback.html',
+  },
+  // Set to true to unhide the window, useful for IPC debugging
+  { debug: false },
+);
 
 ipcMain.on('OSC_VOLTAGE_DATA', (event, args) => {
   mainWindow.webContents.send('OSC_VOLTAGE_DATA', args);

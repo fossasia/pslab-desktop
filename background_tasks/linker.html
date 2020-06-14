@@ -9,12 +9,14 @@
 	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
 		pythonPath: 'python3',
 	});
+	log.info('Python spawned:', pyshell && pyshell.command);
 
 	loadBalancer.job(
 		ipcRenderer,
 		'linker',
 		() => {
 			loadBalancer.onReceiveData(ipcRenderer, 'linker', args => {
+				log.info({ args });
 				pyshell.send(JSON.stringify(args));
 			});
 
@@ -23,7 +25,7 @@
 			});
 
 			pyshell.on('message', function(results) {
-				// log.info(results);
+				log.info({ results });
 				try {
 					const parsedJSON = JSON.parse(results);
 					switch (parsedJSON['type']) {
