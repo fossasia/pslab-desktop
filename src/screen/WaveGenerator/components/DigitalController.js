@@ -267,7 +267,18 @@ class DigitalController extends Component {
       onTogglePreview,
     } = this.props;
     const { activePin, activeSetting } = this.state;
-
+    const getMaxSliderValue = () => {
+      switch (activeSetting) {
+        case 'Freq':
+          return 5000;
+        case 'Phase':
+          // the maximum angle is 360
+          return 360;
+        default:
+          // maximum percentage, used for duty cycle
+          return 100;
+      }
+    };
     return (
       <Card>
         <Wrapper>
@@ -501,13 +512,7 @@ class DigitalController extends Component {
                 className={classes.slider}
                 step={1}
                 min={activeSetting === 'Freq' ? 10 : 0}
-                max={
-                  activeSetting === 'Freq'
-                    ? 5000
-                    : activeSetting === 'Phase'
-                    ? 360
-                    : 100
-                }
+                max={getMaxSliderValue()}
               />
             </SliderWrapper>
             <ButtonContainer>
