@@ -1,3 +1,5 @@
+/* eslint-disable */
+// ESlint will always complain about the line length here, so ignore it.
 export default {
   knobX: 84,
   knobY: 84,
