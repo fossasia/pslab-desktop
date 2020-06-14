@@ -10,7 +10,7 @@ from power_source import Power_source
 from multimeter import Multimeter
 from wave_generator import Wave_generator
 from robotic_arm import RoboticArm
-
+from sensors import Sensors
 
 def main():
     file_write = FileWrite()
@@ -25,6 +25,7 @@ def main():
     multimeter = Multimeter(I, file_write)
     wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
+    sensors = Sensors(I, file_write)
 
     while(True):
         in_stream_data = input()
@@ -181,6 +182,10 @@ def main():
             angle3 = parsed_stream_data['angle3']
             angle4 = parsed_stream_data['angle4']
             robotic_arm.setServo(angle1, angle2, angle3, angle4)
+
+        # ------------------------------- Sensors block ----------------------------------
+        if command == 'SENSORS_SCAN':
+            sensors.scan()
 
         # -------------------------------- Write block -----------------------------------
 

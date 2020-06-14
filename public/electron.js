@@ -145,3 +145,7 @@ ipcMain.on('FETCH_ROB_ARM', (event, args) => {
 ipcMain.on('FETCH_LA', (event, args) => {
   mainWindow.webContents.send('FETCH_LA', args);
 });
+
+ipcMain.on('SENSORS_SCAN', (event, args) => {
+  mainWindow.webContents.send('SENSORS_SCAN', args);
+});
