@@ -32,7 +32,7 @@ class ChannelParameters extends Component {
           Channel Parameters
         </Typography>
         <OptionsRowWrapper>
-          <Typography component="h6" variant="subheading">
+          <Typography component="h6" variant="subtitle1">
             LA1
           </Typography>
           {numberOfChannels <= 2 && (
@@ -103,7 +103,7 @@ class ChannelParameters extends Component {
         </OptionsRowWrapper>
         {numberOfChannels > 1 && (
           <OptionsRowWrapper>
-            <Typography component="h6" variant="subheading">
+            <Typography component="h6" variant="subtitle1">
               LA2
             </Typography>
             {numberOfChannels <= 2 && (
@@ -178,7 +178,7 @@ class ChannelParameters extends Component {
         )}
         {numberOfChannels > 2 && (
           <OptionsRowWrapper>
-            <Typography component="h6" variant="subheading">
+            <Typography component="h6" variant="subtitle1">
               LA3
             </Typography>
             <FormControl
@@ -218,7 +218,7 @@ class ChannelParameters extends Component {
         )}
         {numberOfChannels > 3 && (
           <OptionsRowWrapper>
-            <Typography component="h6" variant="subheading">
+            <Typography component="h6" variant="subtitle1">
               LA4
             </Typography>
             <FormControl
