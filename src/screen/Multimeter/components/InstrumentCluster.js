@@ -74,4 +74,4 @@ const InstrumentCluster = ({
   );
 };
 
-export default withTheme()(withStyles(styles)(InstrumentCluster));
+export default withTheme(withStyles(styles)(InstrumentCluster));

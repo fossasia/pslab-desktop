@@ -203,6 +203,6 @@ class SineWaveParameters extends Component {
   }
 }
 
-export default withTheme()(
+export default withTheme(
   withStyles({ ...styles, ...formStyles })(SineWaveParameters),
 );

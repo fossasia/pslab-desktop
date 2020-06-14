@@ -431,4 +431,4 @@ class AnalogController extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(AnalogController));
+export default withTheme(withStyles(styles)(AnalogController));

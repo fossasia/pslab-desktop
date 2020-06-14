@@ -230,4 +230,4 @@ const SquareWaveParameters = ({
   </SettingsWrapper>
 );
 
-export default withTheme()(withStyles(styles)(SquareWaveParameters));
+export default withTheme(withStyles(styles)(SquareWaveParameters));

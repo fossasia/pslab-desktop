@@ -185,4 +185,4 @@ const KnobControl = ({
   );
 };
 
-export default withTheme()(withStyles(styles)(KnobControl));
+export default withTheme(withStyles(styles)(KnobControl));

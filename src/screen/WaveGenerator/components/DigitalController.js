@@ -537,4 +537,4 @@ class DigitalController extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(DigitalController));
+export default withTheme(withStyles(styles)(DigitalController));

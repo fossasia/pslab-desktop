@@ -289,6 +289,6 @@ class ChannelParameters extends Component {
   }
 }
 
-export default withTheme()(
+export default withTheme(
   withStyles({ ...styles, ...formStyles })(ChannelParameters),
 );
