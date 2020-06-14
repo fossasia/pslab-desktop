@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Select,
   MenuItem,
@@ -10,40 +9,18 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
-
-const styles = theme => ({
-  formControl: {
-    margin: '0px 0px 0px 16px',
-  },
-});
+import formStyles from '../../../utils/formStyles';
 
 class NumberParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      numberOfChannelLabelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      numberOfChannelLabelWidth: ReactDOM.findDOMNode(this.numberOfChannelRef)
-        .offsetWidth,
-    });
-  }
-
   render() {
-    const { numberOfChannels, changeNumberOfChannels } = this.props;
-    const { numberOfChannelLabelWidth } = this.state;
+    const { numberOfChannels, changeNumberOfChannels, classes } = this.props;
 
     return (
       <SettingsWrapper>
         <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
             <InputLabel
-              ref={ref => {
-                this.numberOfChannelRef = ref;
-              }}
+              className={classes.label}
               htmlFor="outlined-number-of-channels"
             >
               Number of Channels
@@ -53,7 +30,7 @@ class NumberParameters extends Component {
               onChange={changeNumberOfChannels}
               input={
                 <OutlinedInput
-                  labelWidth={numberOfChannelLabelWidth}
+                  labelWidth={0}
                   name="outlined-number-of-channels"
                   id="outlined-number-of-channels"
                 />
@@ -76,4 +53,4 @@ class NumberParameters extends Component {
   }
 }
 
-export default withStyles(styles)(NumberParameters);
+export default withStyles(formStyles)(NumberParameters);

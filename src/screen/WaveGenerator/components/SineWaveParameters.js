@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Select,
   Typography,
@@ -20,6 +19,7 @@ import {
   Spacer,
 } from './Settings.styles';
 import { options } from './settingOptions';
+import formStyles from '../../../utils/formStyles';
 
 const styles = theme => ({
   s1colorSwitchBase: {
@@ -45,19 +45,6 @@ const styles = theme => ({
 });
 
 class SineWaveParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      WaveFormLabelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      WaveFormLabelWidth: ReactDOM.findDOMNode(this.WaveFormRef).offsetWidth,
-    });
-  }
-
   render() {
     const {
       wave,
@@ -71,8 +58,6 @@ class SineWaveParameters extends Component {
       onChangeSlider,
       classes,
     } = this.props;
-    const { WaveFormLabelWidth } = this.state;
-
     return (
       <SettingsWrapper>
         <TitleWrapper>
@@ -104,9 +89,7 @@ class SineWaveParameters extends Component {
         <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
             <InputLabel
-              ref={ref => {
-                this.WaveFormRef = ref;
-              }}
+              className={classes.label}
               htmlFor="outlined-waveform-s1"
             >
               Wave Type
@@ -117,7 +100,7 @@ class SineWaveParameters extends Component {
               disabled={!wave}
               input={
                 <OutlinedInput
-                  labelWidth={WaveFormLabelWidth}
+                  labelWidth={0}
                   name="outlined-waveform-s1"
                   id="outlined-waveform-s1"
                 />
@@ -157,14 +140,19 @@ class SineWaveParameters extends Component {
         </OptionsRowWrapper>
         <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel htmlFor="outlined-waveform-s2">Wave Type</InputLabel>
+            <InputLabel
+              className={classes.label}
+              htmlFor="outlined-waveform-s2"
+            >
+              Wave Type
+            </InputLabel>
             <Select
               value={waveFormS2}
               onChange={onChangeWaveForm('waveFormS2')}
               disabled={!wave}
               input={
                 <OutlinedInput
-                  labelWidth={WaveFormLabelWidth}
+                  labelWidth={0}
                   name="outlined-waveform-s2"
                   id="outlined-waveform-s2"
                 />
@@ -215,4 +203,6 @@ class SineWaveParameters extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(SineWaveParameters));
+export default withTheme()(
+  withStyles({ ...styles, ...formStyles })(SineWaveParameters),
+);

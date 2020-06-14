@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Select,
   Typography,
@@ -14,11 +13,9 @@ import {
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
+import formStyles from '../../../utils/formStyles';
 
 const styles = theme => ({
-  formControl: {
-    margin: '0px 0px 0px 16px',
-  },
   ch1ColorSwitchBase: {
     color: theme.pallet.ch1Color,
     '&$colorChecked': {
@@ -60,23 +57,6 @@ const styles = theme => ({
 });
 
 class ChannelParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      RangeLabelWidth: 0,
-      MapLabelWidth: 0,
-      MicLabelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      RangeLabelWidth: ReactDOM.findDOMNode(this.RangeRef).offsetWidth,
-      MapLabelWidth: ReactDOM.findDOMNode(this.MapRef).offsetWidth,
-      MicLabelWidth: ReactDOM.findDOMNode(this.MicRef).offsetWidth,
-    });
-  }
-
   render() {
     const {
       activeChannels,
@@ -87,7 +67,6 @@ class ChannelParameters extends Component {
       onChangeChannelMap,
       classes,
     } = this.props;
-    const { RangeLabelWidth, MapLabelWidth, MicLabelWidth } = this.state;
 
     return (
       <SettingsWrapper>
@@ -112,12 +91,7 @@ class ChannelParameters extends Component {
             label="CH1"
           />
           <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel
-              ref={ref => {
-                this.RangeRef = ref;
-              }}
-              htmlFor="outlined-range-ch1"
-            >
+            <InputLabel className={classes.label} htmlFor="outlined-range-ch1">
               Range
             </InputLabel>
             <Select
@@ -125,7 +99,7 @@ class ChannelParameters extends Component {
               onChange={onChangeChannelRange('ch1')}
               input={
                 <OutlinedInput
-                  labelWidth={RangeLabelWidth}
+                  labelWidth={0}
                   name="outlined-range-ch1"
                   id="outlined-range-ch1"
                 />
@@ -147,12 +121,7 @@ class ChannelParameters extends Component {
             fullWidth={true}
             className={classes.formControl}
           >
-            <InputLabel
-              ref={ref => {
-                this.MapRef = ref;
-              }}
-              htmlFor="outlined-map-ch1"
-            >
+            <InputLabel className={classes.label} htmlFor="outlined-map-ch1">
               Mapped To
             </InputLabel>
             <Select
@@ -160,7 +129,7 @@ class ChannelParameters extends Component {
               onChange={onChangeChannelMap('ch1')}
               input={
                 <OutlinedInput
-                  labelWidth={MapLabelWidth}
+                  labelWidth={0}
                   name="outlined-map-ch1"
                   id="outlined-map-ch1"
                 />
@@ -195,13 +164,15 @@ class ChannelParameters extends Component {
             label="CH2"
           />
           <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel htmlFor="outlined-range-ch2">Range</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-range-ch2">
+              Range
+            </InputLabel>
             <Select
               value={channelRanges.ch2}
               onChange={onChangeChannelRange('ch2')}
               input={
                 <OutlinedInput
-                  labelWidth={RangeLabelWidth}
+                  labelWidth={0}
                   name="outlined-range-ch2"
                   id="outlined-range-ch2"
                 />
@@ -223,13 +194,15 @@ class ChannelParameters extends Component {
             fullWidth={true}
             className={classes.formControl}
           >
-            <InputLabel htmlFor="outlined-map-ch2">Mapped To</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-map-ch2">
+              Mapped To
+            </InputLabel>
             <Select
               value={channelMaps.ch2}
               onChange={onChangeChannelMap('ch2')}
               input={
                 <OutlinedInput
-                  labelWidth={MapLabelWidth}
+                  labelWidth={0}
                   name="outlined-map-ch2"
                   id="outlined-map-ch2"
                 />
@@ -285,12 +258,7 @@ class ChannelParameters extends Component {
             fullWidth={true}
             disabled={!activeChannels.mic}
           >
-            <InputLabel
-              ref={ref => {
-                this.MicRef = ref;
-              }}
-              htmlFor="outlined-map-mic"
-            >
+            <InputLabel className={classes.label} htmlFor="outlined-map-mic">
               Mic Type
             </InputLabel>
             <Select
@@ -298,7 +266,7 @@ class ChannelParameters extends Component {
               onChange={onChangeChannelMap('mic')}
               input={
                 <OutlinedInput
-                  labelWidth={MicLabelWidth}
+                  labelWidth={0}
                   name="outlined-map-mic"
                   id="outlined-map-mic"
                 />
@@ -321,4 +289,6 @@ class ChannelParameters extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(ChannelParameters));
+export default withTheme()(
+  withStyles({ ...styles, ...formStyles })(ChannelParameters),
+);

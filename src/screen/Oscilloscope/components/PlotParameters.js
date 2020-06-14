@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Checkbox,
   Select,
@@ -14,28 +13,9 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
-
-const styles = () => ({
-  formControl: {
-    margin: '0px 0px 0px 16px',
-  },
-});
+import formStyles from '../../../utils/formStyles';
 
 class AnalysisParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      plotChannelLabelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      plotChannelLabelWidth: ReactDOM.findDOMNode(this.plotChannelRef)
-        .offsetWidth,
-    });
-  }
-
   render() {
     const {
       isXYPlotActive,
@@ -45,7 +25,6 @@ class AnalysisParameters extends Component {
       onChangePlotChannel,
       classes,
     } = this.props;
-    const { plotChannelLabelWidth } = this.state;
 
     return (
       <SettingsWrapper>
@@ -71,9 +50,7 @@ class AnalysisParameters extends Component {
             disabled={!isXYPlotActive}
           >
             <InputLabel
-              ref={ref => {
-                this.plotChannelRef = ref;
-              }}
+              className={classes.label}
               htmlFor="outlined-trigger-channel"
             >
               Channel 1
@@ -83,7 +60,7 @@ class AnalysisParameters extends Component {
               onChange={onChangePlotChannel('plotChannel1')}
               input={
                 <OutlinedInput
-                  labelWidth={plotChannelLabelWidth}
+                  labelWidth={0}
                   name="analysis-channel"
                   id="outlined-analysis-channel"
                 />
@@ -106,7 +83,10 @@ class AnalysisParameters extends Component {
             className={classes.formControl}
             disabled={!isXYPlotActive}
           >
-            <InputLabel htmlFor="outlined-trigger-channel">
+            <InputLabel
+              className={classes.label}
+              htmlFor="outlined-trigger-channel"
+            >
               Channel 2
             </InputLabel>
             <Select
@@ -114,7 +94,7 @@ class AnalysisParameters extends Component {
               onChange={onChangePlotChannel('plotChannel2')}
               input={
                 <OutlinedInput
-                  labelWidth={plotChannelLabelWidth}
+                  labelWidth={0}
                   name="analysis-channel"
                   id="outlined-analysis-channel"
                 />
@@ -137,4 +117,4 @@ class AnalysisParameters extends Component {
   }
 }
 
-export default withStyles(styles)(AnalysisParameters);
+export default withStyles(formStyles)(AnalysisParameters);
