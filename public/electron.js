@@ -4,20 +4,26 @@ const url = require('url');
 const { ipcMain } = require('electron');
 const loadBalancer = require('electron-load-balancer');
 
-// if (process.env.DEV) {
-//   const {
-//     default: installExtension,
-//     REDUX_DEVTOOLS,
-//     REACT_DEVELOPER_TOOLS,
-//   } = require('electron-devtools-installer');
-
-//   installExtension(REDUX_DEVTOOLS);
-//   installExtension(REACT_DEVELOPER_TOOLS);
-// }
-
 const { app } = electron;
 const { BrowserWindow } = electron;
 const nativeImage = electron.nativeImage;
+
+if (process.env.DEV) {
+  const {
+    default: installExtension,
+    REDUX_DEVTOOLS,
+    REACT_DEVELOPER_TOOLS,
+  } = require('electron-devtools-installer');
+
+  app.whenReady().then(() => {
+    installExtension(REDUX_DEVTOOLS).then(name =>
+      console.log(`Added Extension:  ${name}`),
+    );
+    installExtension(REACT_DEVELOPER_TOOLS).then(name =>
+      console.log(`Added Extension:  ${name}`),
+    );
+  });
+}
 
 const icon = nativeImage.createFromPath(path.join(__dirname, 'app_icon.png'));
 let mainWindow;

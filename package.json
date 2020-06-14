@@ -67,8 +67,6 @@
         "electron": "^9.0.4",
         "electron-builder": "^21.1.5",
         "electron-devtools-installer": "^3.0.0",
-        "electron-react-devtools": "^0.5.3",
-        "electron-redux-devtools": "^0.3.4",
         "enzyme": "^3.9.0",
         "enzyme-adapter-react-16": "^1.12.1",
         "eslint": "^5.16.0",
