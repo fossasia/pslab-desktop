@@ -22,8 +22,7 @@
         "recharts": "^1.5.0",
         "redux": "^4.0.1",
         "redux-thunk": "^2.3.0",
-        "styled-components": "^4.2.0",
-        "typescript": "^3.4.5"
+        "styled-components": "^4.2.0"
     },
     "scripts": {
         "react-start": "BROWSER=NONE react-scripts start",
