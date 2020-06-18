@@ -18,7 +18,7 @@ class Device_detection:
 
     def async_connect(self):
         # First connection attempt
-        self.device = sciencelab.ScienceLab(vebose=False)
+        self.device = sciencelab.ScienceLab(verbose=False)
         output = None
         if not self.device.connected:
             if len(self.device.H.occupiedPorts):
