@@ -2,13 +2,12 @@
 	const { PythonShell } = require('python-shell');
 	const { ipcRenderer } = require('electron');
 	const loadBalancer = require('electron-load-balancer');
-	const path = require('path');
+	const { getScriptPath } = require('../utils/bundling');
 	const { oscilloscopeXYProcessor, oscilloscopeVoltageProcessor, LAProcessor } = require('../utils/preProcessor.js');
 	const log = require('electron-log');
 
-	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/bridge.py'), {
-		pythonPath: 'python3',
-	});
+	const bridgePath = getScriptPath('bridge.py');
+	const pyshell = new PythonShell(bridgePath,	{ pythonPath: 'python3'	});
 	log.info('Python spawned:', pyshell && pyshell.command);
 
 	loadBalancer.job(
