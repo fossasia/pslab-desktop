@@ -94,7 +94,8 @@
     "appId": "FOSSASIA-PSLAB",
     "productName": "PSLab-Desktop",
     "copyright": "Copyright © 2019-2020 FOSSASIA",
-    "asar": false,
+    "asar": true,
+    "asarUnpack": "scripts/",
     "linux": {
       "target": [
         "deb",
