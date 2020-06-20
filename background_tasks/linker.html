@@ -56,6 +56,9 @@
 										data: parsedOutput
 									});
 							break;
+						case 'SENSORS_SCAN':
+							ipcRenderer.send('SENSORS_SCAN', { data: parsedJSON.data });
+							break;
 						case 'START_MUL_MET':
 							ipcRenderer.send('MUL_MET_DATA', { data: parsedJSON.data, prefix: parsedJSON.prefix });
 							break;
