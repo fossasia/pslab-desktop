@@ -47,7 +47,7 @@ class Sensors:
         data = sensor.getRaw()
 
         self.file_write.update_buffer(
-            "SENSORS", timestamp=timestamp, datetime=datetime_data, data='scan', value=data)
+            "SENSOR_DATA", timestamp=timestamp, datetime=datetime_data, data='sensor_data', value=data)
         time.sleep(0.25)
 
         output = {'type': 'SENSORS_READ', 'data': data}

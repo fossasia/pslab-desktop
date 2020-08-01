@@ -245,3 +245,8 @@ getMetaData = path => {
     time: data[2],
   };
 };
+
+// TODO
+ipcMain.handle('SENSORS_READ', (event, args) => {
+  mainWindow.webContents.send('SENSORS_READ', args);
+});
