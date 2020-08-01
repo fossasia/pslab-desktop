@@ -3,7 +3,7 @@ import json
 import sys
 import threading
 import time
-
+from PSL.SENSORS.SHT21 import SHT21
 
 class Sensors:
     def __init__(self, I, file_write):
@@ -38,6 +38,22 @@ class Sensors:
         while self.is_reading:
             if self.active_category == 'SCAN':
                 self.scan()
+
+    def read(self):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+
+        sensor = SHT21(self.device.I2C)
+        data = sensor.getRaw()
+
+        self.file_write.update_buffer(
+            "SENSORS", timestamp=timestamp, datetime=datetime_data, data='scan', value=data)
+        time.sleep(0.25)
+
+        output = {'type': 'SENSORS_READ', 'data': data}
+        print(json.dumps(output))
+        sys.stdout.flush()
+
 
     def scan(self):
         datetime_data = datetime.datetime.now()
