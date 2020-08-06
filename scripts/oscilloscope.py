@@ -74,17 +74,8 @@ class Oscilloscope:
             self.ch1, self.ch2, self.ch3, self.mic)
         self.delay, self.time_gap = self.calculate_delay_time_gap(
             self.time_base, self.number_of_samples)
-        trigger_channel_number = None
-        if self.trigger_channel == 'CH1':
-            trigger_channel_number = 0
-        elif self.trigger_channel == 'CH2':
-            trigger_channel_number = 1
-        elif self.trigger_channel == 'CH3':
-            trigger_channel_number = 2
-        else:
-            trigger_channel_number = 3
-        self.device.configure_trigger(
-            trigger_channel_number, self.trigger_channel, self.trigger_voltage)
+        self.device.oscilloscope.configure_trigger(
+            self.trigger_channel, self.trigger_voltage)
 
     def get_config(self):
         output = {'type': 'GET_CONFIG_OSC',
@@ -146,34 +137,34 @@ class Oscilloscope:
         y3 = None
         y4 = None
         while self.is_reading_voltage:
-            self.device.capture_traces(
-                self.channels_to_read, self.number_of_samples, self.time_gap,
-                trigger=self.is_trigger_active)
+            self.device.oscilloscope.trigger_enabled = self.is_trigger_active
+            x = self.device.oscilloscope.capture_nonblocking(
+                self.channels_to_read, self.number_of_samples, self.time_gap)
             time.sleep(self.delay)
             keys = ['time']
             datetime_data = datetime.datetime.now()
             timestamp = time.time()
             vector = ()
             if self.ch1:
-                x, y1 = self.device.fetch_trace(1)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
                 keys.append('ch1')
                 vector = vector + (y1, )
                 self.file_write.update_buffer(
                     "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH1', xData=x, yData=y1, timebase=self.time_gap)
             if self.ch2:
-                x, y2 = self.device.fetch_trace(2)
+                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
                 keys.append('ch2')
                 vector = vector + (y2, )
                 self.file_write.update_buffer(
                     "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH2', xData=x, yData=y2, timebase=self.time_gap)
             if self.ch3:
-                x, y3 = self.device.fetch_trace(3)
+                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
                 keys.append('ch3')
                 vector = vector + (y3, )
                 self.file_write.update_buffer(
                     "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH3', xData=x, yData=y3, timebase=self.time_gap)
             if self.mic:
-                x, y4 = self.device.fetch_trace(4)
+                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
                 keys.append('mic')
                 vector = vector + (y4, )
                 self.file_write.update_buffer(
@@ -200,30 +191,30 @@ class Oscilloscope:
         fit_output1_square = False
         fit_output2_square = False
         while self.is_reading_fft:
-            self.device.capture_traces(
-                self.channels_to_read, self.number_of_samples, self.time_gap,
-                trigger=self.is_trigger_active)
+            self.device.oscilloscope.trigger_enabled = self.is_trigger_active
+            x = self.device.oscilloscope.capture_nonblocking(
+                self.channels_to_read, self.number_of_samples, self.time_gap)
             time.sleep(self.delay)
             keys = ['frequency']
             vector = ()
             frequency = None
             if self.ch1:
-                x, y1 = self.device.fetch_trace(1)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
                 frequency, amp1 = self.fft(y1, self.time_gap * 1e-3)
                 keys.append('ch1')
                 vector = vector + (amp1, )
             if self.ch2:
-                x, y2 = self.device.fetch_trace(2)
+                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
                 frequency, amp2 = self.fft(y2, self.time_gap * 1e-3)
                 keys.append('ch2')
                 vector = vector + (amp2, )
             if self.ch3:
-                x, y3 = self.device.fetch_trace(3)
+                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
                 frequency, amp3 = self.fft(y3, self.time_gap * 1e-3)
                 keys.append('ch3')
                 vector = vector + (amp3, )
             if self.mic:
-                x, y4 = self.device.fetch_trace(4)
+                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
                 frequency, amp4 = self.fft(y4, self.time_gap * 1e-3)
                 keys.append('mic')
                 vector = vector + (amp4, )
@@ -311,35 +302,35 @@ class Oscilloscope:
         y3 = None
         y4 = None
         while self.is_reading_xy_plot:
-            self.device.capture_traces(
-                self.channels_to_read, self.number_of_samples, self.time_gap,
-                trigger=self.is_trigger_active)
+            self.device.oscilloscope.trigger_enabled = self.is_trigger_active
+            x = self.device.oscilloscope.capture_nonblocking(
+                self.channels_to_read, self.number_of_samples, self.time_gap)
             time.sleep(self.delay)
             vector = ()
             if self.ch1 and self.plot_channel1 == 'CH1':
-                x, y1 = self.device.fetch_trace(1)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
                 vector = vector + (y1, )
             if self.ch2 and self.plot_channel1 == 'CH2':
-                x, y2 = self.device.fetch_trace(2)
+                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
                 vector = vector + (y2, )
             if self.ch3 and self.plot_channel1 == 'CH3':
-                x, y3 = self.device.fetch_trace(3)
+                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
                 vector = vector + (y3, )
             if self.mic and self.plot_channel1 == 'MIC':
-                x, y4 = self.device.fetch_trace(4)
+                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
                 vector = vector + (y4, )
 
             if self.ch1 and self.plot_channel2 == 'CH1':
-                x, y1 = self.device.fetch_trace(1)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
                 vector = vector + (y1, )
             if self.ch2 and self.plot_channel2 == 'CH2':
-                x, y2 = self.device.fetch_trace(2)
+                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
                 vector = vector + (y2, )
             if self.ch3 and self.plot_channel2 == 'CH3':
-                x, y3 = self.device.fetch_trace(3)
+                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
                 vector = vector + (y3, )
             if self.mic and self.plot_channel2 == 'MIC':
-                x, y4 = self.device.fetch_trace(4)
+                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
                 vector = vector + (y4, )
 
             output = {

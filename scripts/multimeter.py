@@ -96,7 +96,10 @@ class Multimeter:
             data = self.device.get_resistance()
             time.sleep(0.25)
         elif pin_name == 'CAPACITOR':
-            data = self.device.get_capacitance()
+            try:
+                data = self.device.get_capacitance()
+            except NotImplementedError:
+                data = 0
             time.sleep(1.5)
             pass
         self.file_write.update_buffer(
