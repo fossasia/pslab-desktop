@@ -146,25 +146,25 @@ class Oscilloscope:
             timestamp = time.time()
             vector = ()
             if self.ch1:
-                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map)
                 keys.append('ch1')
                 vector = vector + (y1, )
                 self.file_write.update_buffer(
                     "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH1', xData=x, yData=y1, timebase=self.time_gap)
             if self.ch2:
-                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
+                y2 = self.device.oscilloscope.fetch_data("CH2")
                 keys.append('ch2')
                 vector = vector + (y2, )
                 self.file_write.update_buffer(
                     "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH2', xData=x, yData=y2, timebase=self.time_gap)
             if self.ch3:
-                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
+                y3 = self.device.oscilloscope.fetch_data("CH3")
                 keys.append('ch3')
                 vector = vector + (y3, )
                 self.file_write.update_buffer(
                     "OSC", timestamp=timestamp, datetime=datetime_data, channel='CH3', xData=x, yData=y3, timebase=self.time_gap)
             if self.mic:
-                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
+                y4 = self.device.oscilloscope.fetch_data("MIC")
                 keys.append('mic')
                 vector = vector + (y4, )
                 self.file_write.update_buffer(
@@ -199,22 +199,22 @@ class Oscilloscope:
             vector = ()
             frequency = None
             if self.ch1:
-                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map)
                 frequency, amp1 = self.fft(y1, self.time_gap * 1e-3)
                 keys.append('ch1')
                 vector = vector + (amp1, )
             if self.ch2:
-                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
+                y2 = self.device.oscilloscope.fetch_data("CH2")
                 frequency, amp2 = self.fft(y2, self.time_gap * 1e-3)
                 keys.append('ch2')
                 vector = vector + (amp2, )
             if self.ch3:
-                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
+                y3 = self.device.oscilloscope.fetch_data("CH3")
                 frequency, amp3 = self.fft(y3, self.time_gap * 1e-3)
                 keys.append('ch3')
                 vector = vector + (amp3, )
             if self.mic:
-                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
+                y4 = self.device.oscilloscope.fetch_data("MIC")
                 frequency, amp4 = self.fft(y4, self.time_gap * 1e-3)
                 keys.append('mic')
                 vector = vector + (amp4, )
@@ -308,29 +308,29 @@ class Oscilloscope:
             time.sleep(self.delay)
             vector = ()
             if self.ch1 and self.plot_channel1 == 'CH1':
-                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map)
                 vector = vector + (y1, )
             if self.ch2 and self.plot_channel1 == 'CH2':
-                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
+                y2 = self.device.oscilloscope.fetch_data("CH2")
                 vector = vector + (y2, )
             if self.ch3 and self.plot_channel1 == 'CH3':
-                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
+                y3 = self.device.oscilloscope.fetch_data("CH3")
                 vector = vector + (y3, )
             if self.mic and self.plot_channel1 == 'MIC':
-                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
+                y4 = self.device.oscilloscope.fetch_data("MIC")
                 vector = vector + (y4, )
 
             if self.ch1 and self.plot_channel2 == 'CH1':
-                y1 = self.device.oscilloscope.fetch_data(self.ch1_map, self.number_of_samples)
+                y1 = self.device.oscilloscope.fetch_data(self.ch1_map)
                 vector = vector + (y1, )
             if self.ch2 and self.plot_channel2 == 'CH2':
-                y2 = self.device.oscilloscope.fetch_data("CH2", self.number_of_samples)
+                y2 = self.device.oscilloscope.fetch_data("CH2")
                 vector = vector + (y2, )
             if self.ch3 and self.plot_channel2 == 'CH3':
-                y3 = self.device.oscilloscope.fetch_data("CH3", self.number_of_samples)
+                y3 = self.device.oscilloscope.fetch_data("CH3")
                 vector = vector + (y3, )
             if self.mic and self.plot_channel2 == 'MIC':
-                y4 = self.device.oscilloscope.fetch_data("MIC", self.number_of_samples)
+                y4 = self.device.oscilloscope.fetch_data("MIC")
                 vector = vector + (y4, )
 
             output = {
