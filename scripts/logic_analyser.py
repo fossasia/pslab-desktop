@@ -5,6 +5,10 @@ import datetime
 import json
 import numpy as np
 
+from PSL.digital_channel import MODES
+
+MODES = {v: k for k, v in MODES.items()}
+
 
 class LogicAnalyser:
     def __init__(self, I, file_write):
@@ -49,46 +53,51 @@ class LogicAnalyser:
     def stop_read(self):
         if self.is_reading:
             self.is_reading = False
-            self.device.stop_LA()
+            self.device.logic_analyzer.stop()
             self.la_read_thead.join()
 
     def capture(self):
         self.is_reading = True
-        if self.number_of_channels == 1:
-            self.device.start_one_channel_LA(
-                channel="ID1", channel_mode=self.trigger1_type)
-        elif self.number_of_channels == 2:
-            self.device.start_two_channel_LA(
-                channel=["ID1", "ID2"], channel_mode=[self.trigger1_type, self.trigger2_type])
-        elif self.number_of_channels == 3:
-            self.device.start_two_channel_LA(
-                channel=["ID1", "ID2", "ID3"], channel_mode=[self.trigger1_type, self.trigger2_type, self.trigger3_type])
-        elif self.number_of_channels == 4:
-            self.device.start_four_channel_LA(
-                mode=[self.trigger1_type, self.trigger2_type, self.trigger3_type, self.trigger4_type])
+        self.device.logic_analyzer.capture(
+                self.number_of_channels,
+                modes=[
+                        MODES[self.trigger1_type],
+                        MODES[self.trigger2_type],
+                        MODES[self.trigger3_type],
+                        MODES[self.trigger4_type],
+                ],
+                block=False
+        )
         time.sleep(self.capture_time)
-        self.device.fetch_LA_channels()
-        time1 = self.device.dchans[0].get_xaxis().tolist()
-        voltage1 = self.device.dchans[0].get_yaxis().tolist()
-        time2 = self.device.dchans[1].get_xaxis().tolist()
-        voltage2 = self.device.dchans[1].get_yaxis() + 2
-        voltage2 = voltage2.tolist()
-        time3 = self.device.dchans[2].get_xaxis().tolist()
-        voltage3 = self.device.dchans[2].get_yaxis() + 4
-        voltage3 = voltage3.tolist()
-        time4 = self.device.dchans[3].get_xaxis().tolist()
-        voltage4 = self.device.dchans[3].get_yaxis() + 6
-        voltage4 = voltage4.tolist()
+        timestamps = self.device.logic_analyzer.fetch_data()
+        shortest = min([len(t) for t in timestamps])
+
+        # If the capture routine was still running when fetch_data was called,
+        # the number of timestamps from each channel may differ.
+        for e, ts in enumerate(timestamps):
+            timestamps[e] = ts[:shortest]
+
+        x1, y1, x2, y2, x3, y3, x4, y4 = 8 * [np.array([])]
+
+        if self.number_of_channels == 1:
+            x1, y1 = self.device.logic_analyzer.get_xy(timestamps)
+        elif self.number_of_channels == 2:
+            x1, y1, x2, y2 = self.device.logic_analyzer.get_xy(timestamps)
+        elif self.number_of_channels == 3:
+            x1, y1, x2, y2, x3, y3 = self.device.logic_analyzer.get_xy(timestamps)
+        else:
+            x1, y1, x2, y2, x3, y3, x4, y4 = self.device.logic_analyzer.get_xy(timestamps)
+
         output = {
             'type': 'START_LA',
-            'time1': time1,
-            'voltage1': voltage1,
-            'time2': time2,
-            'voltage2': voltage2,
-            'time3': time3,
-            'voltage3': voltage3,
-            'time4': time4,
-            'voltage4': voltage4,
+            'time1': x1.tolist(),
+            'voltage1': (y1 + 0.).tolist(),
+            'time2': x2.tolist(),
+            'voltage2': (y2 + 2.).tolist(),
+            'time3': x3.tolist(),
+            'voltage3': (y3 + 4.).tolist(),
+            'time4': x4.tolist(),
+            'voltage4': (y4 + 6.).tolist(),
             'numberOfChannels': self.number_of_channels,
         }
         if self.is_reading:
