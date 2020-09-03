@@ -71,16 +71,9 @@ class LogicAnalyser:
         time.sleep(self.capture_time / 1e3)
         self.device.logic_analyzer.stop()
         timestamps = self.device.logic_analyzer.fetch_data()
-        x1, y1, x2, y2, x3, y3, x4, y4 = 8 * [np.array([])]
-
-        if self.number_of_channels == 1:
-            x1, y1 = self.device.logic_analyzer.get_xy(timestamps)
-        elif self.number_of_channels == 2:
-            x1, y1, x2, y2 = self.device.logic_analyzer.get_xy(timestamps)
-        elif self.number_of_channels == 3:
-            x1, y1, x2, y2, x3, y3 = self.device.logic_analyzer.get_xy(timestamps)
-        else:
-            x1, y1, x2, y2, x3, y3, x4, y4 = self.device.logic_analyzer.get_xy(timestamps)
+        xy = 8 * [np.array([])]
+        xy[: self.number_of_channels * 2] = self.device.logic_analyzer.get_xy(timestamps)
+        x1, y1, x2, y2, x3, y3, x4, y4 = xy
 
         output = {
             'type': 'START_LA',
