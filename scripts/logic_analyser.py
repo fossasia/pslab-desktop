@@ -68,15 +68,9 @@ class LogicAnalyser:
                 ],
                 block=False
         )
-        time.sleep(self.capture_time)
+        time.sleep(self.capture_time / 1e3)
+        self.device.logic_analyzer.stop()
         timestamps = self.device.logic_analyzer.fetch_data()
-        shortest = min([len(t) for t in timestamps])
-
-        # If the capture routine was still running when fetch_data was called,
-        # the number of timestamps from each channel may differ.
-        for e, ts in enumerate(timestamps):
-            timestamps[e] = ts[:shortest]
-
         x1, y1, x2, y2, x3, y3, x4, y4 = 8 * [np.array([])]
 
         if self.number_of_channels == 1:
