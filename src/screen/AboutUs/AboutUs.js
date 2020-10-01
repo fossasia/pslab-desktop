@@ -38,7 +38,9 @@ const AboutUs = () => {
           for doing science and engineering experiments. It provides functions
           of numerous measurement devices including an oscilloscope, a waveform
           generator, a frequecy counter, a programmable voltabe, current source
-          and as a data logger.
+          and as a data logger. (_ It is using ElectronJS running ReactJS on top
+          as UI renderer and uses Python scripts under the hood for device
+          communication._)
         </Typography>
         <Divider
           style={{
