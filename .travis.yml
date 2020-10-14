@@ -19,10 +19,15 @@ cache:
 before_script:
   - export CI=false
 
-#deploy:
-#  provider: script
-#  skip_cleanup: true
-#  script: bash travis-scripts/upload-packages.sh
-#  on:
+deploy:
+  provider: releases
+  api_key: "$GITHUB_API_KEY"
+  file:
+    - "dist/*.deb" # TODO: Be more specific? Files are named e.g. dist/pslab_2.1.0_amd64.deb
+    - "dist/*.exe"
+  skip_cleanup: true
+  draft: true # TODO: remove when it works
+  on:
+    tags: true
 #    all_branches: true
 #    condition: $TRAVIS_BRANCH =~ ^(master|development)$
