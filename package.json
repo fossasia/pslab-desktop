@@ -1,7 +1,7 @@
 {
     "name": "pslab",
     "description": "A desktop interface for the Pocket Science Lab open-harware device",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "private": true,
     "dependencies": {
         "@material-ui/core": "^4.10.2",
