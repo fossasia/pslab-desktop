@@ -7,11 +7,21 @@ matrix:
   include:
     - name: "linux"
       os: linux
-      script: npm run build-linux
+      script:
+        - sudo apt-get install rpm -y
+        - npm run build-linux
+        - ls -al dist/
     - name: "windows"
       os: linux
       services: docker
-      script: docker run --rm -e GH_TOKEN=$GITHUB_API_KEY -v $PWD:/project -v ~/.cache/electron:/root/.cache/electron -v ~/.cache/electron-builder:/root/.cache/electron-builder electronuserland/builder:wine /bin/bash -c "npm run build-windows"
+      script:
+        - >
+          docker run --rm -e GH_TOKEN=$GITHUB_TOKEN
+          -v $PWD:/project
+          -v ~/.cache/electron:/root/.cache/electron
+          -v ~/.cache/electron-builder:/root/.cache/electron-builder
+          electronuserland/builder:wine /bin/bash -c "npm run build-windows"
+        - ls -al dist/
 
 cache:
   npm: false
@@ -19,11 +29,19 @@ cache:
 before_script:
   - export CI=false
 
+script:
+  - npm run lint
+  - npm run fmt:check
+
 deploy:
   provider: releases
-  api_key: "$GITHUB_API_KEY"
+  api_key: "$GITHUB_TOKEN"
+  # see .build.*.target in package.json
+  # TODO: Be more specific? Files are named e.g. dist/pslab_2.1.0_amd64.deb
   file:
-    - "dist/*.deb" # TODO: Be more specific? Files are named e.g. dist/pslab_2.1.0_amd64.deb
+    - "dist/*.deb"
+    - "dist/*.rpm"
+    - "dist/*.tar.xz"
     - "dist/*.exe"
   skip_cleanup: true
   draft: true # TODO: remove when it works
