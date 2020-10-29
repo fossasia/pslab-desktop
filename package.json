@@ -31,7 +31,15 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@storybook/addon-actions": "^6.0.27",
+    "@storybook/addon-essentials": "^6.0.27",
+    "@storybook/addon-links": "^6.0.27",
+    "@storybook/node-logger": "^6.0.27",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.27",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.1.0",
     "concurrently": "^5.0.0",
     "devtron": "^1.4.0",
     "electron": "^9.0.4",
@@ -48,6 +56,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.20.0",
     "prettier": "^1.17.0",
+    "react-is": "^17.0.1",
     "wait-on": "^3.2.0"
   },
   "scripts": {
@@ -67,7 +76,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "fmt": "prettier --write 'src/**/*.js'",
-    "fmt:check": "prettier --check 'src/**/*.js'"
+    "fmt:check": "prettier --check 'src/**/*.js'",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
