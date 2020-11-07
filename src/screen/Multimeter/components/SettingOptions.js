@@ -31,38 +31,38 @@ export const iconMap = (activeSubType, theme) => ({
     transform:
       'translateX(-50%) translateY(-50%) rotate(-155.44deg) translate(160px) rotate(155.44deg)',
   },
-  ID4: {
+  LA4: {
     icon: (
-      <TextIcon style={{ color: '#000' }} active={activeSubType === 'ID4'}>
-        ID4
+      <TextIcon style={{ color: '#000' }} active={activeSubType === 'LA4'}>
+        LA4
       </TextIcon>
     ),
 
     transform:
       'translateX(-50%) translateY(-50%) rotate(-188.16deg) translate(160px) rotate(188.16deg)',
   },
-  ID3: {
+  LA3: {
     icon: (
-      <TextIcon style={{ color: '#000' }} active={activeSubType === 'ID3'}>
-        ID3
+      <TextIcon style={{ color: '#000' }} active={activeSubType === 'LA3'}>
+        LA3
       </TextIcon>
     ),
     transform:
       'translateX(-50%) translateY(-50%) rotate(-220.88deg) translate(160px) rotate(220.88deg)',
   },
-  ID2: {
+  LA2: {
     icon: (
-      <TextIcon style={{ color: '#000' }} active={activeSubType === 'ID2'}>
-        ID2
+      <TextIcon style={{ color: '#000' }} active={activeSubType === 'LA2'}>
+        LA2
       </TextIcon>
     ),
     transform:
       'translateX(-50%) translateY(-50%) rotate(-253.6deg) translate(160px) rotate(253.6deg)',
   },
-  ID1: {
+  LA1: {
     icon: (
-      <TextIcon style={{ color: '#000' }} active={activeSubType === 'ID1'}>
-        ID1
+      <TextIcon style={{ color: '#000' }} active={activeSubType === 'LA1'}>
+        LA1
       </TextIcon>
     ),
     transform:
@@ -93,10 +93,10 @@ export const iconMap = (activeSubType, theme) => ({
     transform:
       'translateX(-50%) translateY(-50%) rotate(-351.76deg) translate(160px) rotate(351.76deg)',
   },
-  AN8: {
+  VOL: {
     icon: (
-      <TextIcon style={{ color: '#d32f2f' }} active={activeSubType === 'AN8'}>
-        AN8
+      <TextIcon style={{ color: '#d32f2f' }} active={activeSubType === 'VOL'}>
+        VOL
       </TextIcon>
     ),
     transform:
@@ -118,11 +118,11 @@ export const optionsOrder = [
   'CH2',
   'CH3',
   'CAP',
-  'AN8',
-  'ID1',
-  'ID2',
-  'ID3',
-  'ID4',
+  'VOL',
+  'LA1',
+  'LA2',
+  'LA3',
+  'LA4',
   'RESISTOR',
   'CAPACITOR',
 ];
@@ -132,13 +132,13 @@ export const angleMap = {
   360: 'CH1',
   327: 'CH2',
   294: 'CH3',
-  262: 'ID4',
-  229: 'ID3',
-  196: 'ID2',
-  164: 'ID1',
+  262: 'LA4',
+  229: 'LA3',
+  196: 'LA2',
+  164: 'LA1',
   131: 'CAPACITOR',
   98: 'RESISTOR',
-  65: 'AN8',
+  65: 'VOL',
   33: 'CAP',
 };
 
@@ -158,22 +158,22 @@ export const optionMap = {
     unit: 'V',
     category: 'VOLTAGE',
   },
-  ID4: {
+  LA4: {
     angle: 262,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
     category: 'PULSE',
   },
-  ID3: {
+  LA3: {
     angle: 229,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
     category: 'PULSE',
   },
-  ID2: {
+  LA2: {
     angle: 196,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
     category: 'PULSE',
   },
-  ID1: {
+  LA1: {
     angle: 164,
     unit: { PULSE_COUNT: '1/sec', PULSE_FREQUENCY: 'Hz' },
     category: 'PULSE',
@@ -188,7 +188,7 @@ export const optionMap = {
     unit: 'Ω',
     category: 'MISC',
   },
-  AN8: {
+  VOL: {
     angle: 65,
     unit: 'V',
     category: 'VOLTAGE',
