@@ -11,7 +11,8 @@ class Multimeter:
         self.file_write = file_write
 
         self.multimeter_data_read_thread = None
-        self.device = I
+        self.multimeter = I.multimeter
+        self.logic_analyzer = I.logic_analyzer
         self.is_reading = False
         self.active_category = 'VOLTAGE'
         self.active_subtype = 'CH1'
@@ -54,7 +55,7 @@ class Multimeter:
         datetime_data = datetime.datetime.now()
         timestamp = time.time()
 
-        voltage = self.device.get_voltage(channel_name)
+        voltage = self.multimeter.measure_voltage(channel_name)
         self.file_write.update_buffer(
             "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=channel_name, value=voltage)
         voltage, prefix = self.precision_control(voltage)
@@ -70,13 +71,11 @@ class Multimeter:
         data = None
         prefix = None
         if reading_type == 'PULSE_COUNT':
-            self.device.countPulses(pin_name)
-            time.sleep(1)
-            data = self.device.readPulseCount()
+            data = self.logic_analyzer.count_pulses(pin_name)
             self.file_write.update_buffer(
                 "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=pin_name, value=data)
         elif reading_type == 'PULSE_FREQUENCY':
-            data = self.device.get_freq(pin_name, timeout=0.5)
+            data = self.logic_analyzer.measure_frequency(pin_name, timeout=0.5)
             self.file_write.update_buffer(
                 "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=pin_name, value=data)
             data, prefix = self.precision_control(data)
@@ -93,15 +92,12 @@ class Multimeter:
         data = None
         prefix = None
         if pin_name == 'RESISTOR':
-            data = self.device.get_resistance()
+            data = self.multimeter.measure_resistance()
             time.sleep(0.25)
         elif pin_name == 'CAPACITOR':
-            try:
-                data = self.device.get_capacitance()
-            except NotImplementedError:
-                data = 0
+            data = self.multimeter.measure_capacitance()
             time.sleep(1.5)
-            pass
+
         self.file_write.update_buffer(
             "MUL_MET", timestamp=timestamp, datetime=datetime_data, data=pin_name, value=data)
         data, prefix = self.precision_control(data)
