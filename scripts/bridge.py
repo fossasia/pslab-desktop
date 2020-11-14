@@ -176,7 +176,7 @@ def main():
             wave_generator.save_config(data_path)
 
         # ------------------------------- Robtic Arm block -------------------------------
-        if command == 'SET_ROB_ARM':
+        if command == 'SET_ROBO_ARM':
             angle1 = parsed_stream_data['angle1']
             angle2 = parsed_stream_data['angle2']
             angle3 = parsed_stream_data['angle3']
