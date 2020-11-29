@@ -12,7 +12,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
-    "chokidar": "^3.0.1",
+    "chokidar": "^3.4.3",
     "electron-load-balancer": "^3.0.0",
     "electron-log": "^3.0.5",
     "python-shell": "^1.0.7",
