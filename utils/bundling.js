@@ -12,7 +12,7 @@ const scriptDir = 'scripts';
 const getScriptPath = scriptName => {
   const appPath = remote.app.getAppPath();
   if (process.env.DEV) {
-    return path.join(appPath, '..', scriptDir, scriptName);
+    return path.join(appPath, scriptDir, scriptName);
   }
   return path
     .join(appPath, scriptDir, scriptName)
