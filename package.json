@@ -23,7 +23,6 @@
     "react-redux": "^7.1.0",
     "react-rotary-knob": "^1.1.5",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
     "react-spring": "^8.0.20",
     "recharts": "^1.5.0",
     "redux": "^4.0.1",
@@ -57,6 +56,7 @@
     "eslint-plugin-react": "^7.20.0",
     "prettier": "^1.17.0",
     "react-is": "^17.0.1",
+    "react-scripts": "^4.0.1",
     "wait-on": "^3.2.0"
   },
   "scripts": {
