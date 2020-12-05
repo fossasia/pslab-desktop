@@ -62,6 +62,7 @@
     "react-start": "BROWSER=NONE react-scripts start",
     "electron-start": "DEV=1 electron .",
     "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+    "react-build": "npm run build",
     "pack": "npm run build:electron -- --dir",
     "build:electron": "electron-builder -c.extraMetadata.main=build/electron.js",
     "build": "react-scripts build",
