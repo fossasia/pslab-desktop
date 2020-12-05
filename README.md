@@ -9,35 +9,24 @@ Master [![Build Status](https://travis-ci.org/fossasia/pslab-desktop.svg?branch=
 [![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
-## About
+This repository holds the PSLab Desktop application. It is using [ElectronJS](https://www.electronjs.org) running [React](https://reactjs.org/) on top as UI renderer and uses Python scripts under the hood for device communication. The goal of PSLab is to create an Open Source hardware device (open on all layers) and software applications that can be used for experiments by teachers, students and scientists. Our tiny pocket lab provides an array of instruments for doing science and engineering experiments. It provides functions of numerous measurement tools including an oscilloscope, a waveform generator, a frequency counter, a programmable voltage, current source and even a component to control robots with up to four servos. Our website is at [PSLab.io](https://pslab.io). See also the [screenshots and demos](docs/screenshots-and-demos.md).
 
-_TODO: move this to the general documentation and reference it (?)_
-
-The goal of PSLab is to create an Open Source hardware device (open on all
-layers) and software applications that can be used for experiments by teachers,
-students and scientists. Our tiny pocket lab provides an array of instruments
-for doing science and engineering experiments. It provides functions of numerous
-measurement tools including an oscilloscope, a waveform generator, a frequency
-counter, a programmable voltage, current source and even a component to
-control robots with up to four servos.
-For more details, see [pslab.io](https://pslab.io).
-
-[![PSLab](docs/images/project_banner.jpg)](https://pslab.io)
+<a href="https://pslab.io/" rel="PSLab">
+	<img src="./docs/images/project_banner.jpg" alt="PSLab Banner" width="300px"/>
+</a> 
 
 ## Buy
 
 * You can get a PSLab device from the [FOSSASIA Shop](https://fossasia.com).
 * More resellers are listed on the [PSLab website](https://pslab.io/shop/).
 
-## PSLab Desktop App
 
-This repository holds the PSLab Desktop application.
+## Communication
 
-It is built with the [Electron](https://www.electronjs.org/) cross-platform
-desktop application framework, using [React](https://reactjs.org/) for the UI,
-and Python scripts under the hood for device communication.
+Please join us on the following channels:
 
-See also the [screenshots and demos](docs/screenshots-and-demos.md).
+* [PSLab Gitter Channel](https://gitter.im/fossasia/pslab)
+* [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
 ## Downloads and Distribution
 
@@ -76,13 +65,6 @@ After the process, open the newly created directory named `dist/` in Finder.
 Open the `PSLab-*.dmg` file, drag and drop the `PSLab` icon to the `Application`
 directory within the installation window, and PSLab will appear in your
 Launchpad.
-
-## Communication
-
-Please join us on the following channels:
-
-* [PSLab Gitter Channel](https://gitter.im/fossasia/pslab)
-* [Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia)
 
 ## Development
 
