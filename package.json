@@ -65,7 +65,7 @@
     "react-build": "react-scripts build",
     "pack": "electron-builder --dir -c.extraMetadata.main=build/electron.js",
     "electron-build-linux": "electron-builder --linux -c.extraMetadata.main=build/electron.js",
-    "electron-build-windows": "electron-builder --win -c.extraMetadata.main=build/electron.js",
+    "electron-build-windows": "electron-builder --win --publish onTagOrDraft -c.extraMetadata.main=build/electron.js",
     "electron-build-mac": "electron-builder --mac -c.extraMetadata.main=build/electron.js",
     "build-linux": "npm run react-build && npm run electron-build-linux",
     "build-windows": "npm run react-build && npm run electron-build-windows",
