@@ -70,7 +70,7 @@
     "lint": "eslint src",
     "fmt": "prettier --write 'src/**/*.js'",
     "fmt:check": "prettier --check 'src/**/*.js'",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook --ci -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
