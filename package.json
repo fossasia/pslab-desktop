@@ -1,7 +1,7 @@
 {
   "name": "pslab",
   "description": "A desktop interface for the Pocket Science Lab open-harware device",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "private": true,
   "author": {
     "name": "FOSSASIA",
