@@ -108,6 +108,9 @@
       "target": [
         "nsis"
       ],
+      "publish": [
+         "github"
+      ],
       "icon": "src/resources/app_icon.png",
       "legalTrademarks": "Copyright © 2019-2020 FOSSASIA",
       "signingHashAlgorithms": [
