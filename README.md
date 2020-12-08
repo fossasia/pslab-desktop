@@ -34,6 +34,14 @@ Please join us on the following channels:
 We are providing binary packages. Please see the [releases page for downloads](
 https://github.com/fossasia/pslab-desktop/releases).
 
+### Python library
+
+As this app uses the **PSL** library under the hood for device communication,
+you need to have it installed as well. Instructions are provided in the
+[pslab-python repository](https://github.com/fossasia/pslab-python).
+
+As of now, you need to have the latest version installed.
+
 ### Arch Linux
 
 If you are running Arch Linux or another distribution based on it, install
@@ -142,11 +150,9 @@ registry = http://registry.npm.taobao.org/
 While in your project folder, run `npm install`.
 This will install all the necessary dependencies required by the app to run.
 
-### Python library
-
-As this app uses the **PSL** library under the hood for device communication,
-you need to have it installed as well. Instructions are provided in the
-[pslab-python repository](https://github.com/fossasia/pslab-python).
+Remember to also have the [Python library](#python-library) installed. If you
+are also working on it, set `PYTHON_PATH` to point to its directory in order to
+have your local version available to the desktop app.
 
 ### Starting the app
 
