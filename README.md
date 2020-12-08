@@ -2,7 +2,9 @@
 
 Desktop application for the [Pocket Science Lab (PSlab)](https://pslab.io) open hardware platform.
 
-Development [![Build Status](https://github.com/fossasia/workflows/CI/badge.svg?branch=development)](https://github.com/fossasia/pslab-desktop/actions?query=workflow%3Aci)
+Development [![Build Status](
+https://github.com/fossasia/pslab-desktop/workflows/Build/release/badge.svg)](
+https://github.com/fossasia/pslab-desktop/actions)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8259e5c2220f484e95a88cf4aaed1a96)](https://www.codacy.com/app/mb/pslab-desktop?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fossasia/pslab-desktop&amp;utm_campaign=Badge_Grade)
 [![Mailing List](https://img.shields.io/badge/Mailing%20List-FOSSASIA-blue.svg)](https://groups.google.com/forum/#!forum/pslab-fossasia)
 [![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -29,37 +31,26 @@ Please join us on the following channels:
 
 ## Downloads and Distribution
 
-**TODO**
-
-- [ ] redo the build pipeline and publish assets as release attachments
-- [ ] document building, bundling and distribution steps
+We are providing binary packages. Please see the [releases page for downloads](
+https://github.com/fossasia/pslab-desktop/releases).
 
 ### Arch Linux
 
 If you are running Arch Linux or another distribution based on it, install
 [`pslab-desktop`](https://aur.archlinux.org/packages/pslab-desktop).
 
-### Debian based distributions (outdated)
+### Other Linux distributions
 
-We have been building snapshots for Debian based distributions. Please see the
-[install branch](https://github.com/fossasia/pslab-desktop/tree/install).
+There are packages in `.deb` format (Debian, Ubuntu and derivatives), `.rpm`
+(Fedora, openSUSE etc), and `.tar.xz` archives.
 
-* [development build](https://github.com/fossasia/pslab-desktop/raw/install/pslab-desktop-development-linux.deb)
-* [stable build](https://github.com/fossasia/pslab-desktop/raw/install/pslab-desktop-master-linux.deb)
+### Windows
 
-### Windows (outdated)
-
-As for Debian, we have been building Windows installers, also found in the
-[install branch](https://github.com/fossasia/pslab-desktop/tree/install).
+There are installers as `.exe` executables, based on NSIS.
 
 ### macOS
 
-We are not producing builds for macOS, but provide instructions to do so.
-
-First you need to follow the instructions to [set up a development environment](
-#setting-up-a-development-environment). Then [build the app](#building-the-app).
-
-After the process, open the newly created directory named `dist/` in Finder.
+There are `.dmg` image files and `.zip` archives.
 
 Open the `PSLab-*.dmg` file, drag and drop the `PSLab` icon to the `Application`
 directory within the installation window, and PSLab will appear in your
@@ -195,15 +186,32 @@ Any action from the UI thus requires the following:
 
 ## Building the App
 
-While in the project root, run the build script as defined in `package.json`:
+First you need to follow the instructions to [set up a development environment](
+#setting-up-a-development-environment).
+
+While in the project root, run the build scripts as defined in `package.json`:
 
 ```sh
 npm run build
+npm run build:electron
 ```
 
-For a platform-specific build, run `npm run build-{linux,mac,win}` instead.
+For a platform-specific build, run the following instead, where `PLATFORM` can
+be [any of `linux`, `mac`, or `win`](https://www.electron.build/cli):
 
-This command will produce two directories in the project root. The `build/`
+```sh
+npm run build
+npm run build:electron -- --$PLATFORM
+```
+
+If you do not want to create an archive or package:
+
+```sh
+npm run build
+npm run pack
+```
+
+This will produce two directories in the project root. The `build/`
 directory contains the optimized React files, while the `dist/` directory
 contains the final Electron build with everything else.
 
