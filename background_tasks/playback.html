@@ -8,7 +8,7 @@
 
 	// For distribution, we bundle everything into an asar archive.
 	const bridgePath = getScriptPath('bridge.py');
-	const pyshell = new PythonShell(bridgePath,	{ pythonPath: 'python3'	});
+	const pyshell = new PythonShell(bridgePath);
 	log.info('Python spawned:', pyshell && pyshell.command);
 
 	loadBalancer.job(
