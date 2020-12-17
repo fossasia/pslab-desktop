@@ -40,8 +40,8 @@ def main():
             oscilloscope.stop_read()
 
         if command == "SET_CONFIG_OSC":
-            old_read_state = oscilloscope.is_reading_voltage or oscilloscope.is_reading_fft
-            if oscilloscope.is_reading_voltage or oscilloscope.is_reading_fft:
+            old_read_state = oscilloscope.is_reading_voltage or oscilloscope.is_reading_fft or oscilloscope.is_reading_xy_plot
+            if old_read_state:
                 oscilloscope.stop_read()
 
             time_base = parsed_stream_data['timeBase']

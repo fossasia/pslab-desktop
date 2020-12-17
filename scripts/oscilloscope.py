@@ -129,7 +129,7 @@ class Oscilloscope:
         if self.is_reading_fft:
             self.is_reading_fft = False
             self.oscilloscope_fft_read_thread.join()
-        if self.is_xy_plot_active:
+        if self.is_reading_xy_plot:
             self.is_reading_xy_plot = False
             self.oscilloscope_xy_plot_read_thread.join()
 
