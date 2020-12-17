@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+
+  <metadata>
+
+ 
+    <id>package</id>
+    
+    <version>2.5.2</version>
+    
+    <owners>FOSSASIA</owners>
+   
+    <title>package (Install)</title>
+    <authors>Edmund Simon</authors>
+    
+    <description>Creating a Chocolatey Package with FOSSASIA</description>
+    
+    
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
