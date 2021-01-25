@@ -5,7 +5,7 @@ import datetime
 import json
 import numpy as np
 
-from PSL.digital_channel import MODES
+from pslab.instrument.digital import MODES
 
 MODES = {v: k for k, v in MODES.items()}
 

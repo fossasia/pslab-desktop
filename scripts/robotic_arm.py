@@ -1,5 +1,5 @@
-from PSL.digital_channel import DIGITAL_OUTPUTS
-from PSL.motor import Servo
+from pslab.instrument.digital import DIGITAL_OUTPUTS
+from pslab.external.motor import Servo
 
 
 class RoboticArm:
