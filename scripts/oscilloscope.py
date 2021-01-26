@@ -147,6 +147,8 @@ class Oscilloscope:
                     self.number_of_samples,
                     self.time_gap,
                     block=False,
+                    trigger=self.trigger_voltage if self.is_trigger_active else False,
+                    trigger_channel=self.trigger_channel,
                 )
             time.sleep(self.delay)
             keys = ['time']
@@ -201,12 +203,13 @@ class Oscilloscope:
         fit_output1_square = False
         fit_output2_square = False
         while self.is_reading_fft:
-            self.device.oscilloscope.trigger_enabled = self.is_trigger_active
             x, = self.device.oscilloscope.capture(
                     self.channels_to_read,
                     self.number_of_samples,
                     self.time_gap,
                     block=False,
+                    trigger=self.trigger_voltage if self.is_trigger_active else False,
+                    trigger_channel=self.trigger_channel,
             )
             time.sleep(self.delay)
             keys = ['frequency']
@@ -318,12 +321,13 @@ class Oscilloscope:
         y3 = None
         y4 = None
         while self.is_reading_xy_plot:
-            self.device.oscilloscope.trigger_enabled = self.is_trigger_active
             self.device.oscilloscope.capture(
                 self.channels_to_read,
                 self.number_of_samples,
                 self.time_gap,
                 block=False,
+                trigger=self.trigger_voltage if self.is_trigger_active else False,
+                trigger_channel=self.trigger_channel,
             )
             time.sleep(self.delay)
             vector = ()
