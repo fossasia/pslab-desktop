@@ -77,14 +77,14 @@ class LogicAnalyser:
 
         output = {
             'type': 'START_LA',
-            'time1': x1.tolist(),
-            'voltage1': (y1 + 0.).tolist(),
-            'time2': x2.tolist(),
-            'voltage2': (y2 + 2.).tolist(),
-            'time3': x3.tolist(),
-            'voltage3': (y3 + 4.).tolist(),
-            'time4': x4.tolist(),
-            'voltage4': (y4 + 6.).tolist(),
+            'time1': x1[1:].tolist(),
+            'voltage1': (y1[1:] + 0.).tolist(),
+            'time2': x2[1:].tolist(),
+            'voltage2': (y2[1:] + 2.).tolist(),
+            'time3': x3[1:].tolist(),
+            'voltage3': (y3[1:] + 4.).tolist(),
+            'time4': x4[1:].tolist(),
+            'voltage4': (y4[1:] + 6.).tolist(),
             'numberOfChannels': self.number_of_channels,
         }
         if self.is_reading:
