@@ -52,8 +52,8 @@ class Wave_generator:
 
     def change_device_settings(self):
         if self.wave:
-            self.wavegen.load_equation("SI1", self.wave_form_s1)
-            self.wavegen.load_equation("SI2", self.wave_form_s2)
+            self.wavegen.load_function("SI1", self.wave_form_s1)
+            self.wavegen.load_function("SI2", self.wave_form_s2)
             self.wavegen.generate(
                     ["SI1", "SI2"],
                     [self.s1_frequency, self.s2_frequency],
