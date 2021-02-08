@@ -150,15 +150,44 @@ registry = http://registry.npm.taobao.org/
 While in your project folder, run `npm install`.
 This will install all the necessary dependencies required by the app to run.
 
-Remember to also have the [Python library](#python-library) installed. If you
-are also working on it, set `PYTHON_PATH` to point to its directory in order to
-have your local version available to the desktop app.
+### Using a virtual enviroment
+
+To isolate the Python dependencies, it is recommended to use a virtual enviroment for development. To create a virtual enviroment, run the following command while in your project repository:
+
+```sh
+python3 -m venv venv
+```
+
+Now activate the virtual enviroment in your current shell session:
+
+```sh
+# For bash/zsh users:
+source ./venv/bin/activate
+# For Windows cmd.exe users:
+.\venv\Scripts\activate.bat
+```
+(If you use a different shell, check the [Python venv docs](https://docs.python.org/3/library/venv.html#creating-virtual-environments) for the full list.)
+
+Within your virtual enviroment, now install the [Python library](#python-library):
+
+```sh
+python3 -m pip install pslab
+```
+
+With the virtual enviroment activated, the app will run using the libraries installed in the virtual enviroment, and not the global Python location.
+
+To deactivate the virtual enviroment, run:
+
+```sh
+deactivate
+```
+If you are also working on the [Python library](#python-library), set PYTHON_PATH to point to its directory in order to have your local version available to the desktop app.
 
 ### Starting the app
 
 All commands to start and debug the app are outlined in the `package.json` file.
 To simply get it running run the following command while in your project
-repository.
+repository and the virtual enviroment is active.
 
 ```sh
 npm start
