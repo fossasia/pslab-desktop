@@ -3,7 +3,8 @@ import json
 import sys
 import threading
 import time
-from PSL.SENSORS.SHT21 import SHT21
+from pslab.external import SHT21
+from pslab.bus import i2c
 
 class Sensors:
     def __init__(self, I, file_write):
@@ -43,7 +44,8 @@ class Sensors:
         datetime_data = datetime.datetime.now()
         timestamp = time.time()
 
-        sensor = SHT21(self.device.I2C)
+        # FIXME!
+        sensor = SHT21(self.device.i2c)
         data = sensor.getRaw()
 
         self.file_write.update_buffer(
