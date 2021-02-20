@@ -43,7 +43,7 @@ class Sensors:
         datetime_data = datetime.datetime.now()
         timestamp = time.time()
 
-        data = self.device.I2C.scan()
+        data = self.device.i2c.scan()
         self.file_write.update_buffer(
             "SENSORS", timestamp=timestamp, datetime=datetime_data, data='scan', value=data)
         time.sleep(0.25)
