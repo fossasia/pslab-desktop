@@ -24,7 +24,7 @@
     "react-rotary-knob": "^1.1.5",
     "react-router-dom": "^5.0.0",
     "react-spring": "^8.0.20",
-    "recharts": "^1.5.0",
+    "recharts": "^2.0.8",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.2.0"
