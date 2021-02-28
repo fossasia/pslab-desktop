@@ -19,6 +19,6 @@ export const InputDialog = () => (
     hint="hello :)"
     variant="simple-input"
     inputCheck={a => a.length > 0}
-    {...actions('onAccept', 'onCancel')}
+    {...actions('onAccept', 'onCancel', 'onDialogClose')}
   />
 );
