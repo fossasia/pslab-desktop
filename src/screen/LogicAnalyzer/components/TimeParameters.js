@@ -3,14 +3,14 @@ import { Typography, Divider } from '@material-ui/core';
 import CustomSliderInput from '../../../components/CustomSliderInput';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 
+const inputCheck = value => {
+  let regex = /(^([0-9]+([.][0-9]*)?|[.][0-9]+)$|^$)/; // non-negative float or blank
+  return regex.test(value);
+};
+
 class TimeParameters extends Component {
   render() {
-    const {
-      captureTimeListLength,
-      captureTimeIndex,
-      captureTime,
-      onChangeCaptureTimeIndex,
-    } = this.props;
+    const { onChangeCaptureTime, captureTime, maxCaptureTime } = this.props;
     return (
       <SettingsWrapper>
         <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
@@ -20,15 +20,15 @@ class TimeParameters extends Component {
         <OptionsRowWrapper>
           <CustomSliderInput
             title="captureTime"
-            unit="ms"
-            onChangeSlider={onChangeCaptureTimeIndex}
-            value={captureTimeIndex}
-            min={0}
-            max={captureTimeListLength - 1}
-            step={1}
+            unit="μs"
+            onChangeSlider={onChangeCaptureTime}
+            value={captureTime * 1e3} // convert ms to μs
+            min={10}
+            max={maxCaptureTime * 1e3} // convert ms to μs
+            inputCheck={inputCheck}
+            step={10}
             minTitleWidth="60px"
             minUnitWidth="66px"
-            display={captureTime}
           />
         </OptionsRowWrapper>
       </SettingsWrapper>

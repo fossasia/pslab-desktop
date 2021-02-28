@@ -13,10 +13,9 @@ const loadBalancer = window.require('electron-load-balancer');
 class LogicAnalyzer extends Component {
   constructor(props) {
     super(props);
-    this.captureTimeList = [0.05, 0.1, 0.25, 0.5, 1, 2];
     this.state = {
-      captureTimeIndex: 0,
       isReading: false,
+      isAutoReading: true,
       numberOfChannels: 1,
       channel1Map: 'ID1',
       channel2Map: 'ID2',
@@ -24,13 +23,8 @@ class LogicAnalyzer extends Component {
       trigger2Type: 1,
       trigger3Type: 1,
       trigger4Type: 1,
-      timeMeasureChannel1: 'ID1',
-      timeMeasureChannel2: 'ID2',
-      timeMeasuretrigger1Type: 1,
-      timeMeasuretrigger2Type: 1,
-      timeMeasureWrite1: 1,
-      timeMeasureWrite2: 2,
-      timeout: 10,
+      captureTime: 1, // ms
+      maxCaptureTime: 1e3, // ms
     };
   }
 
@@ -49,7 +43,7 @@ class LogicAnalyzer extends Component {
         trigger4Type,
       } = args;
       this.setState({
-        captureTimeIndex: this.captureTimeList.indexOf(captureTime),
+        captureTime,
         numberOfChannels,
         trigger1Type,
         trigger2Type,
@@ -80,7 +74,7 @@ class LogicAnalyzer extends Component {
   sendConfigToDevice = debounce(() => {
     const { isConnected } = this.props;
     const {
-      captureTimeIndex,
+      captureTime,
       numberOfChannels,
       trigger1Type,
       trigger2Type,
@@ -90,7 +84,7 @@ class LogicAnalyzer extends Component {
     isConnected &&
       loadBalancer.sendData(ipcRenderer, 'linker', {
         command: 'SET_CONFIG_LA',
-        captureTime: this.captureTimeList[captureTimeIndex],
+        captureTime: captureTime,
         numberOfChannels,
         trigger1Type,
         trigger2Type,
@@ -111,6 +105,9 @@ class LogicAnalyzer extends Component {
         command: 'START_LA',
       });
     }
+  };
+  toggleAutoRead = () => {
+    this.setState(prevState => ({ isAutoReading: !prevState.isAutoReading }));
   };
 
   changeNumberOfChannels = event => {
@@ -139,30 +136,10 @@ class LogicAnalyzer extends Component {
     );
   };
 
-  changeTimeMeasureChannel = channelName => event => {
-    this.setState({
-      [channelName]: event.target.value,
-    });
-  };
-  changeTimeMeasureTriggerType = triggerNumber => event => {
-    this.setState({
-      [triggerNumber]: event.target.value,
-    });
-  };
-  changeTimeMeasureWrite = writeNumber => event => {
-    this.setState({
-      [writeNumber]: event.target.value,
-    });
-  };
-  changeTimeout = (event, value) => {
-    this.setState({
-      timeout: value,
-    });
-  };
-  onChangeCaptureTimeIndex = (event, value) => {
+  onChangeCaptureTime = (event, value) => {
     this.setState(
       () => ({
-        captureTimeIndex: value,
+        captureTime: value / 1e3, // convert μs to ms
       }),
       () => {
         this.sendConfigToDevice();
@@ -172,6 +149,7 @@ class LogicAnalyzer extends Component {
   render() {
     const {
       isReading,
+      isAutoReading,
       numberOfChannels,
       channel1Map,
       channel2Map,
@@ -179,14 +157,8 @@ class LogicAnalyzer extends Component {
       trigger2Type,
       trigger3Type,
       trigger4Type,
-      timeMeasureChannel1,
-      timeMeasureChannel2,
-      timeMeasuretrigger1Type,
-      timeMeasuretrigger2Type,
-      timeMeasureWrite1,
-      timeMeasureWrite2,
-      timeout,
-      captureTimeIndex,
+      captureTime,
+      maxCaptureTime,
     } = this.state;
     const { isConnected } = this.props;
     return (
@@ -200,24 +172,12 @@ class LogicAnalyzer extends Component {
             trigger2Type={trigger2Type}
             trigger3Type={trigger3Type}
             trigger4Type={trigger4Type}
-            timeMeasureChannel1={timeMeasureChannel1}
-            timeMeasureChannel2={timeMeasureChannel2}
-            timeMeasuretrigger1Type={timeMeasuretrigger1Type}
-            timeMeasuretrigger2Type={timeMeasuretrigger2Type}
-            timeMeasureWrite1={timeMeasureWrite1}
-            timeMeasureWrite2={timeMeasureWrite2}
-            timeout={timeout}
             changeNumberOfChannels={this.changeNumberOfChannels}
             changeChannelMap={this.changeChannelMap}
             changeTriggerType={this.changeTriggerType}
-            changeTimeMeasureChannel={this.changeTimeMeasureChannel}
-            changeTimeMeasureTriggerType={this.changeTimeMeasureTriggerType}
-            changeTimeMeasureWrite={this.changeTimeMeasureWrite}
-            changeTimeout={this.changeTimeout}
-            captureTimeIndex={captureTimeIndex}
-            captureTime={this.captureTimeList[captureTimeIndex]}
-            onChangeCaptureTimeIndex={this.onChangeCaptureTimeIndex}
-            captureTimeListLength={this.captureTimeList.length}
+            onChangeCaptureTime={this.onChangeCaptureTime}
+            captureTime={captureTime}
+            maxCaptureTime={maxCaptureTime}
           />
         }
         actionButtons={
@@ -225,13 +185,16 @@ class LogicAnalyzer extends Component {
             isConnected={isConnected}
             isReading={isReading}
             toggleRead={this.toggleRead}
+            isAutoReading={isAutoReading}
+            toggleAutoRead={this.toggleAutoRead}
           />
         }
         graph={
           <Graph
             isReading={isReading}
-            numberOfChannels={numberOfChannels}
             toggleRead={this.toggleRead}
+            isAutoReading={isAutoReading}
+            numberOfChannels={numberOfChannels}
             dataPath={this.props.dataPath}
           />
         }

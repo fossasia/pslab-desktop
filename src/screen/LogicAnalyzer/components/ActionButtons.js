@@ -1,7 +1,11 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { ButtonWrapper } from './ActionButtons.styles';
+import {
+  ActionButtonsWrapper,
+  ButtonWrapper,
+  CheckboxWrapper,
+} from './ActionButtons.styles';
 
 const styles = () => ({
   buttonMargin: {
@@ -9,20 +13,37 @@ const styles = () => ({
   },
 });
 
-const ActionButtons = ({ isConnected, isReading, toggleRead, classes }) => {
+const ActionButtons = ({
+  isConnected,
+  isReading,
+  toggleRead,
+  isAutoReading,
+  toggleAutoRead,
+  classes,
+}) => {
   return (
-    <ButtonWrapper>
-      <Button
-        fullWidth={true}
-        variant="contained"
-        size="large"
-        disabled={!isConnected}
-        onClick={toggleRead}
-        style={{ color: '#d32f2f' }}
-      >
-        {isReading ? <b>ANALYZING</b> : <b>ANALYZE</b>}
-      </Button>
-    </ButtonWrapper>
+    <ActionButtonsWrapper>
+      <ButtonWrapper>
+        <Button
+          fullWidth={true}
+          variant="contained"
+          size="large"
+          disabled={!isConnected}
+          onClick={toggleRead}
+          style={{ color: '#d32f2f' }}
+        >
+          {isReading ? <b>ANALYZING</b> : <b>ANALYZE</b>}
+        </Button>
+      </ButtonWrapper>
+      <CheckboxWrapper>
+        <FormControlLabel
+          control={
+            <Checkbox checked={isAutoReading} onChange={toggleAutoRead} />
+          }
+          label="Auto Recapture"
+        />
+      </CheckboxWrapper>
+    </ActionButtonsWrapper>
   );
 };
 
