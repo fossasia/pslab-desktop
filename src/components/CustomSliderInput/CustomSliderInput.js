@@ -67,7 +67,7 @@ const CustomSliderInput = ({
               title: title,
               textTitle: `Enter value (${min} to ${max})`,
               onAccept: value => {
-                onChangeSlider(undefined, value);
+                onChangeSlider(undefined, Number(value));
               },
               onCheck: onCheck(min, max),
               inputCheck: inputCheck,
