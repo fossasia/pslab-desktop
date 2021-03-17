@@ -252,7 +252,9 @@ class App extends Component {
                 />
                 <Route
                   path="/loggeddata"
-                  render={props => <LoggedData {...props} />}
+                  render={props => (
+                    <LoggedData {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route path="/faq" render={props => <FAQ {...props} />} />
                 <Route path="/settings" component={Settings} />
