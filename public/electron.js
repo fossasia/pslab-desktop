@@ -1,12 +1,15 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
 const { ipcMain } = require('electron');
 const loadBalancer = require('electron-load-balancer');
 
 const { app } = electron;
-const { BrowserWindow } = electron;
+const { BrowserWindow, dialog } = electron;
 const nativeImage = electron.nativeImage;
+
+const { extractFileName } = require('../src/utils/fileNameProcessor');
 
 if (process.env.DEV) {
   const {
@@ -41,7 +44,7 @@ function createWindow() {
     icon,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
+      enableRemoteModule: false,
     },
     minWidth: 500,
     minHeight: 300,
@@ -149,3 +152,96 @@ ipcMain.on('FETCH_LA', (event, args) => {
 ipcMain.on('SENSORS_SCAN', (event, args) => {
   mainWindow.webContents.send('SENSORS_SCAN', args);
 });
+
+ipcMain.handle('OPEN_IMPORT_WINDOW', async (event, dataPath) => {
+  return dialog
+    .showOpenDialog(null, {
+      title: 'Select file(s) to import',
+      filters: [{ name: 'Data File', extensions: ['csv'] }],
+      properties: ['openFile', 'multiSelections'],
+    })
+    .then(result => {
+      if (result.filePaths) {
+        var message = 'Import successful';
+        result.filePaths.forEach(filePath => {
+          const fileName = extractFileName(filePath);
+          fs.copyFile(filePath, `${dataPath}/${fileName}`, err => {
+            if (err) {
+              console.log(err);
+              message = 'Import failed';
+            }
+          });
+        });
+      }
+      return message;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+ipcMain.handle('OPEN_EXPORT_WINDOW', async (event, filePath) => {
+  return dialog
+    .showOpenDialog(null, {
+      title: 'Select export location',
+      properties: ['openDirectory'],
+    })
+    .then(result => {
+      const dirPath = result.filePaths[0];
+      if (dirPath) {
+        var message = 'Export successful';
+        const fileName = extractFileName(filePath);
+        fs.copyFile(filePath, `${dirPath}/${fileName}`, err => {
+          if (err) {
+            console.log(err);
+            message = 'Export failed';
+          }
+        });
+        return message;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+ipcMain.handle('MAKE_DIRECTORY', (event, dirPath) => {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+});
+
+ipcMain.handle('DELETE_FILE', (event, path) => {
+  fs.unlink(path, err => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+ipcMain.handle('LIST_FILES', (event, dirPath, extension) => {
+  const processedFiles = fs
+    .readdirSync(dirPath)
+    .filter(files => {
+      return path.extname(files).toLowerCase() === extension;
+    })
+    .map(file => {
+      const filepath = path.join(dirPath, file);
+      return {
+        name: file,
+        filepath,
+        metaData: getMetaData(filepath),
+      };
+    });
+  return processedFiles;
+});
+
+getMetaData = path => {
+  const content = fs.readFileSync(path, 'utf8');
+  const data = content.split(/\r?\n/)[0].split(',');
+  return {
+    device: data[0],
+    date: data[1],
+    time: data[2],
+  };
+};

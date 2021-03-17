@@ -31,7 +31,6 @@ import {
   Stop as StopRecordIcon,
   ShoppingCart as CartIcon,
 } from '@material-ui/icons';
-import { extractFileName } from '../../utils/fileNameProcessor';
 import { Save as SaveIcon } from '@material-ui/icons';
 import AppIcon from '../../resources/app_icon.png';
 import {
@@ -50,10 +49,7 @@ import ConnectedIcon from '../../resources/device_connected.svg';
 import { openSnackbar } from '../../redux/actions/app';
 
 const electron = window.require('electron');
-const { remote } = window.require('electron');
 const { ipcRenderer } = electron;
-const fs = remote.require('fs');
-const { dialog } = remote;
 const loadBalancer = window.require('electron-load-balancer');
 
 const styles = theme => ({
@@ -84,26 +80,12 @@ const Appshell = ({
   const [drawerOpen, toggleDrawer] = useState(false);
   const [menuOpen, toggleMenu] = useState(null);
 
-  const openImportWindow = () => {
-    dialog.showOpenDialog(
-      null,
-      {
-        title: 'Select file to import',
-        properties: ['openFile'],
-        filters: [{ name: 'Data File', extensions: ['csv'] }],
-      },
-      filePath => {
-        if (filePath) {
-          const fileName = extractFileName(filePath[0]);
-          fs.copyFile(filePath[0], `${dataPath}/${fileName}`, err => {
-            if (err) {
-              openSnackbar({ message: 'Import failed' });
-            }
-            openSnackbar({ message: 'Import successful' });
-          });
-        }
-      },
-    );
+  const openImportWindow = async () => {
+    ipcRenderer.invoke('OPEN_IMPORT_WINDOW', dataPath).then(message => {
+      if (message) {
+        openSnackbar({ message });
+      }
+    });
   };
 
   const layoutButtonRenderer = location => {

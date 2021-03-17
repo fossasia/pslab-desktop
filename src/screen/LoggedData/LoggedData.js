@@ -28,16 +28,11 @@ import {
   InstrumentWrapper,
   EmptyWrapper,
 } from './LoggedData.styles.js';
-import {
-  fileNameTrimmer,
-  extractFileName,
-} from '../../utils/fileNameProcessor';
+import { fileNameTrimmer } from '../../utils/fileNameProcessor';
 import { openSnackbar } from '../../redux/actions/app';
-const { remote } = window.require('electron');
-const fs = remote.require('fs');
-const os = remote.require('os');
-const path = remote.require('path');
-const { dialog } = remote;
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 const chokidar = window.require('chokidar');
 
 class LoggedData extends Component {
@@ -49,84 +44,46 @@ class LoggedData extends Component {
     };
   }
 
-  componentDidMount() {
-    this.destDir = path.join(os.homedir(), 'Documents', 'PSLab');
-    if (!fs.existsSync(this.destDir)) {
-      fs.mkdirSync(this.destDir, { recursive: true });
-    }
-    this.watcher = chokidar.watch(this.destDir);
+  componentDidMount = async () => {
+    const { dataPath } = this.props;
+    await ipcRenderer.invoke('MAKE_DIRECTORY', dataPath);
+    this.watcher = chokidar.watch(dataPath);
     this.setState({
       loading: true,
     });
-
     this.listFiles('.csv');
     this.watcher.on('all', (event, path) => {
       this.listFiles('.csv');
     });
-  }
+  };
 
   componentWillUnmount() {
     this.watcher.unwatch(this.destDir);
   }
 
-  openExportWindow(filePath) {
+  openExportWindow = async filePath => {
     const { openSnackbar } = this.props;
-    const fileName = extractFileName(filePath);
-    dialog.showOpenDialog(
-      null,
-      {
-        title: 'Select export location',
-        properties: ['openDirectory'],
-      },
-      dirPath => {
-        dirPath &&
-          fs.copyFile(filePath, `${dirPath}/${fileName}`, err => {
-            if (err) {
-              openSnackbar({ message: 'Export failed' });
-            }
-            openSnackbar({ message: 'Export successful' });
-          });
-      },
-    );
-  }
-
-  listFiles = extension => {
-    fs.readdir(this.destDir, (err, files) => {
-      const processedFiles = files
-        .filter(files => {
-          return path.extname(files).toLowerCase() === extension;
-        })
-        .map(file => {
-          const filepath = path.join(this.destDir, file);
-          return {
-            name: file,
-            filepath,
-            metaData: this.getMetaData(filepath),
-          };
-        });
-      this.setState({
-        fileList: processedFiles,
-        loading: false,
-      });
-    });
-  };
-
-  deleteFile = path => {
-    fs.unlink(path, err => {
-      if (err) {
-        console.log(err);
+    ipcRenderer.invoke('OPEN_EXPORT_WINDOW', filePath).then(message => {
+      if (message) {
+        openSnackbar({ message: message });
       }
     });
   };
 
-  getMetaData = path => {
-    const content = fs.readFileSync(path, 'utf8');
-    const data = content.split(/\r?\n/)[0].split(',');
-    return {
-      device: data[0],
-      date: data[1],
-      time: data[2],
-    };
+  listFiles = extension => {
+    const { dataPath } = this.props;
+    ipcRenderer
+      .invoke('LIST_FILES', dataPath, extension)
+      .then(processedFiles => {
+        this.setState({
+          fileList: processedFiles,
+          loading: false,
+        });
+      });
+  };
+
+  deleteFile = path => {
+    ipcRenderer.invoke('DELETE_FILE', path);
   };
 
   iconRenderer = device => {
