@@ -270,7 +270,7 @@ class DigitalController extends Component {
     const getMaxSliderValue = () => {
       switch (activeSetting) {
         case 'Freq':
-          return 5000;
+          return 1e7;
         case 'Phase':
           // the maximum angle is 360
           return 360;
