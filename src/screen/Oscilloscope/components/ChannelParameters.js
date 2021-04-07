@@ -16,6 +16,7 @@ import { options } from './settingOptions';
 import formStyles from '../../../utils/formStyles';
 
 const styles = theme => ({
+  ...formStyles(theme),
   ch1ColorSwitchBase: {
     color: theme.palette.ch1Color,
     '&$colorChecked': {
@@ -289,6 +290,4 @@ class ChannelParameters extends Component {
   }
 }
 
-export default withTheme(
-  withStyles({ ...styles, ...formStyles })(ChannelParameters),
-);
+export default withTheme(withStyles(styles)(ChannelParameters));

@@ -22,6 +22,7 @@ import { options } from './settingOptions';
 import formStyles from '../../../utils/formStyles';
 
 const styles = theme => ({
+  ...formStyles(theme),
   s1colorSwitchBase: {
     color: theme.palette.s1Color,
     '&$colorChecked': {
@@ -203,6 +204,4 @@ class SineWaveParameters extends Component {
   }
 }
 
-export default withTheme(
-  withStyles({ ...styles, ...formStyles })(SineWaveParameters),
-);
+export default withTheme(withStyles(styles)(ChannelParameters));
