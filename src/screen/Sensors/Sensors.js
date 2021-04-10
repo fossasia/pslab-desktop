@@ -41,18 +41,29 @@ const knownSensors = [
     name: 'MPU6050',
   },
   {
+    id: 0x29,
+    name: 'VL53LXX', // TODO: implement in Python lib
+    description: 'Time-of-flight',
+  },
+  {
     id: 0x40,
     name: 'SHT21',
+    description: 'Temperature and humidity',
   },
   {
     id: 0x49,
     name: 'TSL2561',
+  },
+  {
+    id: 0x22,
+    name: 'GY-906',
   },
 ];
 
 const filterKnownSensors = (detectedSensors = []) => {
   // PSL always lists 0 and 96, regardless of whether a sensor is present
   const filtered = detectedSensors.filter(s => s !== 96 && s !== 0);
+  console.info({ detected: filtered });
   return knownSensors.filter(k => filtered.includes(k.id));
 };
 
@@ -61,7 +72,9 @@ const SensorList = ({ sensors = [], onReadSensor = () => {} }) => (
     {sensors.map((item, index) => {
       return (
         <SensorTab key={index} onClick={() => onReadSensor(item)}>
-          <SensorTitle>{item.name}</SensorTitle>
+          <SensorTitle>
+            {item.name} {item.description}
+          </SensorTitle>
         </SensorTab>
       );
     })}
@@ -77,6 +90,7 @@ class Sensors extends Component {
       isScanned: false,
       sensorList: [],
       data: null,
+      sensorData: null,
     };
   }
 
@@ -96,11 +110,18 @@ class Sensors extends Component {
         sensorList: filterKnownSensors(args.data),
       });
     });
+    ipcRenderer.on('SENSORS_READ', (event, args) => {
+      this.setState({
+        isScanned: true,
+        sensorData: args.data,
+      });
+    });
     // this.getConfigFromDevice();
   }
 
   componentWillUnmount() {
     ipcRenderer.removeAllListeners('SENSORS_SCAN');
+    ipcRenderer.removeAllListeners('SENSORS_READ');
   }
 
   getConfigFromDevice = debounce(() => {
@@ -118,8 +139,20 @@ class Sensors extends Component {
         command: 'SENSORS_SCAN',
       });
   }, 500);
+
+  onReadSensor = debounce(sensor => {
+    // TODO: use sensor and implement switch over it
+    // TODO: can we find a generic interface?
+    console.info({ sensor });
+    const { isConnected } = this.props;
+    isConnected &&
+      loadBalancer.sendData(ipcRenderer, 'linker', {
+        command: 'SENSORS_READ',
+      });
+  }, 500);
+
   render() {
-    const { data, isScanned, sensorList } = this.state;
+    const { data, isScanned, sensorList, sensorData } = this.state;
 
     return (
       <Container>
@@ -140,12 +173,13 @@ class Sensors extends Component {
                 <TitleWrapper>Detected sensors</TitleWrapper>
                 <SensorList
                   sensors={sensorList}
-                  onReadSensor={sensor => console.info({ sensor })}
+                  onReadSensor={this.onReadSensor}
                 />
               </>
             ) : (
               <TitleWrapper>No sensors detected</TitleWrapper>
             ))}
+          Sensor data: <pre>{JSON.stringify(sensorData)}</pre>
           <TitleWrapper>Known sensors</TitleWrapper>
           <SensorList sensors={knownSensors} />
           <pre>{JSON.stringify(data)}</pre>

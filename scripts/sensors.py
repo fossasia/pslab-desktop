@@ -3,7 +3,8 @@ import json
 import sys
 import threading
 import time
-
+from pslab.external import SHT21
+from pslab.bus import i2c
 
 class Sensors:
     def __init__(self, I, file_write):
@@ -38,6 +39,23 @@ class Sensors:
         while self.is_reading:
             if self.active_category == 'SCAN':
                 self.scan()
+
+    def read(self):
+        datetime_data = datetime.datetime.now()
+        timestamp = time.time()
+
+        # FIXME!
+        sensor = SHT21(self.device.i2c)
+        data = sensor.getRaw()
+
+        self.file_write.update_buffer(
+            "SENSOR_DATA", timestamp=timestamp, datetime=datetime_data, data='sensor_data', value=data)
+        time.sleep(0.25)
+
+        output = {'type': 'SENSORS_READ', 'data': data}
+        print(json.dumps(output))
+        sys.stdout.flush()
+
 
     def scan(self):
         datetime_data = datetime.datetime.now()

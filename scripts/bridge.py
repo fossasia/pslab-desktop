@@ -187,6 +187,9 @@ def main():
         if command == 'SENSORS_SCAN':
             sensors.scan()
 
+        if command == 'SENSORS_READ':
+            sensors.read()
+
         # -------------------------------- Write block -----------------------------------
 
         if command == 'START_WRITE':
