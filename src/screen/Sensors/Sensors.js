@@ -54,11 +54,16 @@ const knownSensors = [
     id: 0x49,
     name: 'TSL2561',
   },
+  {
+    id: 0x22,
+    name: 'GY-906',
+  },
 ];
 
 const filterKnownSensors = (detectedSensors = []) => {
   // PSL always lists 0 and 96, regardless of whether a sensor is present
   const filtered = detectedSensors.filter(s => s !== 96 && s !== 0);
+  console.info({ detected: filtered });
   return knownSensors.filter(k => filtered.includes(k.id));
 };
 
