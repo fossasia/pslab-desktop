@@ -9,6 +9,24 @@ const { app } = electron;
 const { BrowserWindow, dialog } = electron;
 const nativeImage = electron.nativeImage;
 
+const scriptDir = 'scripts';
+
+/**
+ * Get the path to the requested Python script, specified by its name.
+ * In dev mode, the path is just relative to the files in `background_tasks`.
+ * For distribution, we bundle everything into an asar archive except for the
+ * Python scripts. Otherwise, the Python interpreter cannot locate them.
+ */
+const getScriptPath = scriptName => {
+  const appPath = app.getAppPath();
+  if (process.env.DEV) {
+    return path.join(appPath, scriptDir, scriptName);
+  }
+  return path
+    .join(appPath, scriptDir, scriptName)
+    .replace('app.asar', 'app.asar.unpacked');
+};
+
 if (process.env.DEV) {
   const {
     default: installExtension,
@@ -82,7 +100,7 @@ loadBalancer.register(
     playback: '/background_tasks/playback.html',
   },
   // Set to true to unhide the window, useful for IPC debugging
-  { debug: false },
+  { debug: true },
 );
 
 ipcMain.on('OSC_VOLTAGE_DATA', (event, args) => {
@@ -149,6 +167,10 @@ ipcMain.on('FETCH_LA', (event, args) => {
 
 ipcMain.on('SENSORS_SCAN', (event, args) => {
   mainWindow.webContents.send('SENSORS_SCAN', args);
+});
+
+ipcMain.handle('GET_SCRIPT_PATH', (event, args) => {
+  return getScriptPath(args);
 });
 
 ipcMain.handle('OPEN_IMPORT_WINDOW', async (event, dataPath) => {
