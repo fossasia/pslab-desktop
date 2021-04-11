@@ -9,8 +9,6 @@ const { app } = electron;
 const { BrowserWindow, dialog } = electron;
 const nativeImage = electron.nativeImage;
 
-const { extractFileName } = require('../src/utils/fileNameProcessor');
-
 if (process.env.DEV) {
   const {
     default: installExtension,
@@ -190,7 +188,7 @@ ipcMain.handle('OPEN_EXPORT_WINDOW', async (event, filePath) => {
       const dirPath = result.filePaths[0];
       if (dirPath) {
         var message = 'Export successful';
-        const fileName = extractFileName(filePath);
+        const fileName = filePath.replace(/.*\//, '');
         fs.copyFile(filePath, `${dirPath}/${fileName}`, err => {
           if (err) {
             console.log(err);

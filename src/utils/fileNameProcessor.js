@@ -7,8 +7,3 @@ exports.fileNameTrimmer = (n, len) => {
   filename = filename.substr(0, len) + (n.length > len ? '...' : '');
   return filename + '.' + ext;
 };
-
-exports.extractFileName = filePath => {
-  const fileArray = filePath.split('/');
-  return fileArray[fileArray.length - 1];
-};
