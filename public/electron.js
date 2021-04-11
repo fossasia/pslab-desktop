@@ -100,7 +100,7 @@ loadBalancer.register(
     playback: '/background_tasks/playback.html',
   },
   // Set to true to unhide the window, useful for IPC debugging
-  { debug: true },
+  { debug: false },
 );
 
 ipcMain.on('OSC_VOLTAGE_DATA', (event, args) => {
