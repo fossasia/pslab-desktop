@@ -56,6 +56,14 @@ There are packages in `.deb` format (Debian, Ubuntu and derivatives), `.rpm`
 
 There are installers as `.exe` executables, based on NSIS.
 
+If you are using [Chocolatey](https://chocolatey.org/), you can install the app via:
+```
+choco install pslab-desktop
+```
+
+The package is available at https://community.chocolatey.org/packages/pslab-desktop
+and currently maintained at https://github.com/tunisiano187/Chocolatey-packages.
+
 ### macOS
 
 There are `.dmg` image files and `.zip` archives.
