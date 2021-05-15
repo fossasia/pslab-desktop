@@ -207,11 +207,11 @@ And wait for Electron to open.
 
 The stack comprises multiple pieces:
 
-- hardware offering phyiscal ports
-- firmware for the PIC MCU
-- Python backend library communicates with MCU via USB serial
-- bridge in `scripts/` talks to the Python library
-- Electron app offers UI and communicates with the bridge via stdout
+- [pslab-hardware](https://github.com/fossasia/pslab-hardware), offering phyiscal ports
+- [pslab-firmware](https://github.com/fossasia/pslab-firmware), running on the PIC MCU
+- [pslab-python](https://github.com/fossasia/pslab-python), a Python library that communicates with the MCU via USB serial
+- the bridge here in `scripts/`, which talks to the Python library
+- the Electron app itself, which offers the GUI and communicates with the bridge via stdin/stdout
 
 Electron builds on top of Node.js and Chromium. The UI is running in its own
 rendering process, requiring IPC in order to communicate with the main process.
