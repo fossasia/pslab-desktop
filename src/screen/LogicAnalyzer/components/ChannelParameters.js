@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Select,
   Typography,
@@ -11,29 +10,9 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
-
-const styles = theme => ({
-  formControl: {
-    margin: '0px 0px 0px 16px',
-  },
-});
+import formStyles from '../../../utils/formStyles';
 
 class ChannelParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      MapLabelWidth: 0,
-      TriggerLabelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      MapLabelWidth: ReactDOM.findDOMNode(this.MapRef).offsetWidth,
-      TriggerLabelWidth: ReactDOM.findDOMNode(this.TriggerRef).offsetWidth,
-    });
-  }
-
   render() {
     const {
       numberOfChannels,
@@ -47,15 +26,13 @@ class ChannelParameters extends Component {
       changeTriggerType,
       classes,
     } = this.props;
-    const { MapLabelWidth, TriggerLabelWidth } = this.state;
-
     return (
       <SettingsWrapper>
         <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
           Channel Parameters
         </Typography>
         <OptionsRowWrapper>
-          <Typography component="h6" variant="subheading">
+          <Typography component="h6" variant="subtitle1">
             LA1
           </Typography>
           {numberOfChannels <= 2 && (
@@ -64,12 +41,7 @@ class ChannelParameters extends Component {
               variant="outlined"
               fullWidth={true}
             >
-              <InputLabel
-                ref={ref => {
-                  this.MapRef = ref;
-                }}
-                htmlFor="outlined-map-la1"
-              >
+              <InputLabel className={classes.label} htmlFor="outlined-map-la1">
                 Mapped to
               </InputLabel>
               <Select
@@ -77,7 +49,7 @@ class ChannelParameters extends Component {
                 onChange={changeChannelMap('channel1Map')}
                 input={
                   <OutlinedInput
-                    labelWidth={MapLabelWidth}
+                    labelWidth={0}
                     name="outlined-map-la1"
                     id="outlined-map-la1"
                   />
@@ -101,9 +73,7 @@ class ChannelParameters extends Component {
             className={classes.formControl}
           >
             <InputLabel
-              ref={ref => {
-                this.TriggerRef = ref;
-              }}
+              className={classes.label}
               htmlFor="outlined-trigger-la1"
             >
               Trigger Type
@@ -113,7 +83,7 @@ class ChannelParameters extends Component {
               onChange={changeTriggerType('trigger1Type')}
               input={
                 <OutlinedInput
-                  labelWidth={TriggerLabelWidth}
+                  labelWidth={0}
                   name="outlined-trigger-la1"
                   id="outlined-trigger-la1"
                 />
@@ -133,7 +103,7 @@ class ChannelParameters extends Component {
         </OptionsRowWrapper>
         {numberOfChannels > 1 && (
           <OptionsRowWrapper>
-            <Typography component="h6" variant="subheading">
+            <Typography component="h6" variant="subtitle1">
               LA2
             </Typography>
             {numberOfChannels <= 2 && (
@@ -142,13 +112,18 @@ class ChannelParameters extends Component {
                 variant="outlined"
                 fullWidth={true}
               >
-                <InputLabel htmlFor="outlined-map-la2">Mapped to</InputLabel>
+                <InputLabel
+                  className={classes.label}
+                  htmlFor="outlined-map-la2"
+                >
+                  Mapped to
+                </InputLabel>
                 <Select
                   value={channel2Map}
                   onChange={changeChannelMap('channel2Map')}
                   input={
                     <OutlinedInput
-                      labelWidth={MapLabelWidth}
+                      labelWidth={0}
                       name="outlined-map-la2"
                       id="outlined-map-la2"
                     />
@@ -171,7 +146,10 @@ class ChannelParameters extends Component {
               fullWidth={true}
               className={classes.formControl}
             >
-              <InputLabel htmlFor="outlined-trigger-la2">
+              <InputLabel
+                className={classes.label}
+                htmlFor="outlined-trigger-la2"
+              >
                 Trigger Type
               </InputLabel>
               <Select
@@ -179,7 +157,7 @@ class ChannelParameters extends Component {
                 onChange={changeTriggerType('trigger2Type')}
                 input={
                   <OutlinedInput
-                    labelWidth={TriggerLabelWidth}
+                    labelWidth={0}
                     name="outlined-trigger-la2"
                     id="outlined-trigger-la2"
                   />
@@ -200,7 +178,7 @@ class ChannelParameters extends Component {
         )}
         {numberOfChannels > 2 && (
           <OptionsRowWrapper>
-            <Typography component="h6" variant="subheading">
+            <Typography component="h6" variant="subtitle1">
               LA3
             </Typography>
             <FormControl
@@ -208,7 +186,10 @@ class ChannelParameters extends Component {
               fullWidth={true}
               className={classes.formControl}
             >
-              <InputLabel htmlFor="outlined-trigger-la3">
+              <InputLabel
+                className={classes.label}
+                htmlFor="outlined-trigger-la3"
+              >
                 Trigger Type
               </InputLabel>
               <Select
@@ -216,7 +197,7 @@ class ChannelParameters extends Component {
                 onChange={changeTriggerType('trigger3Type')}
                 input={
                   <OutlinedInput
-                    labelWidth={TriggerLabelWidth}
+                    labelWidth={0}
                     name="outlined-trigger-la3"
                     id="outlined-trigger-la3"
                   />
@@ -237,7 +218,7 @@ class ChannelParameters extends Component {
         )}
         {numberOfChannels > 3 && (
           <OptionsRowWrapper>
-            <Typography component="h6" variant="subheading">
+            <Typography component="h6" variant="subtitle1">
               LA4
             </Typography>
             <FormControl
@@ -245,7 +226,10 @@ class ChannelParameters extends Component {
               fullWidth={true}
               className={classes.formControl}
             >
-              <InputLabel htmlFor="outlined-trigger-la4">
+              <InputLabel
+                className={classes.label}
+                htmlFor="outlined-trigger-la4"
+              >
                 Trigger Type
               </InputLabel>
               <Select
@@ -253,7 +237,7 @@ class ChannelParameters extends Component {
                 onChange={changeTriggerType('trigger4Type')}
                 input={
                   <OutlinedInput
-                    labelWidth={TriggerLabelWidth}
+                    labelWidth={0}
                     name="outlined-trigger-la4"
                     id="outlined-trigger-la4"
                   />
@@ -277,4 +261,4 @@ class ChannelParameters extends Component {
   }
 }
 
-export default withStyles(styles)(ChannelParameters);
+export default withStyles(formStyles)(ChannelParameters);

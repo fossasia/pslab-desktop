@@ -1,26 +1,12 @@
+from pslab.instrument.digital import DIGITAL_OUTPUTS
+from pslab.external.motor import Servo
+
+
 class RoboticArm:
-    def __init__(self, I, file_write):
-        self.prev_angle = [0, 0, 0, 0]
-        self.device = I
+    def __init__(self, device, file_write):
+        self.servos = [Servo(pin, device.pwm_generator) for pin in DIGITAL_OUTPUTS]
 
     def setServo(self, a1, a2, a3, a4):
-        if a1 is None:
-            a1 = self.prev_angle[0]
-        else:
-            self.prev_angle[0] = a1
-
-        if a2 is None:
-            a2 = self.prev_angle[1]
-        else:
-            self.prev_angle[1] = a2
-
-        if a3 is None:
-            a3 = self.prev_angle[2]
-        else:
-            self.prev_angle[2] = a3
-
-        if a4 is None:
-            a4 = self.prev_angle[3]
-        else:
-            self.prev_angle[3] = a4
-        self.device.servo4(a1, a2, a3, a4)
+        for servo, angle in zip(self.servos, [a1, a2, a3, a4]):
+            if angle is not None:
+                servo.angle = angle

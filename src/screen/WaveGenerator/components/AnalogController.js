@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button } from '@material-ui/core';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 import PlusIcon from '@material-ui/icons/ArrowRight';
 import MinusIcon from '@material-ui/icons/ArrowLeft';
 import {
@@ -30,20 +30,20 @@ import TriaIcon from '../../../resources/ic_triangular.png';
 
 const styles = theme => ({
   s1colorSwitchBase: {
-    color: theme.pallet.s1Color,
+    color: theme.palette.s1Color,
     '&$colorChecked': {
-      color: theme.pallet.s1Color,
+      color: theme.palette.s1Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.s1Color,
+        backgroundColor: theme.palette.s1Color,
       },
     },
   },
   s2colorSwitchBase: {
-    color: theme.pallet.s2Color,
+    color: theme.palette.s2Color,
     '&$colorChecked': {
-      color: theme.pallet.s2Color,
+      color: theme.palette.s2Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.s2Color,
+        backgroundColor: theme.palette.s2Color,
       },
     },
   },
@@ -222,7 +222,7 @@ class AnalogController extends Component {
                       backgroundColor:
                         activePin === 'wave1'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -245,7 +245,7 @@ class AnalogController extends Component {
                       backgroundColor:
                         activePin === 'wave2'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -261,7 +261,7 @@ class AnalogController extends Component {
                 <ButtonRow>
                   <Button
                     style={{
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor: theme.palette.primary.main,
                     }}
                     size="large"
                     variant="contained"
@@ -277,7 +277,7 @@ class AnalogController extends Component {
                       backgroundColor:
                         activePin === 'wave1'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -295,7 +295,7 @@ class AnalogController extends Component {
                       backgroundColor:
                         this.waveFormInv() === 'sine'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                     }}
                     size="large"
                     variant="contained"
@@ -322,7 +322,7 @@ class AnalogController extends Component {
                       backgroundColor:
                         this.waveFormInv() === 'tria'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                     }}
                     size="large"
                     variant="contained"
@@ -355,7 +355,7 @@ class AnalogController extends Component {
                     margin: '0px 0px 0px 16px',
                     backgroundColor: this.props.wave
                       ? '#ef9a9a'
-                      : theme.pallet.primary.main,
+                      : theme.palette.primary.main,
                     color: '#fff',
                   }}
                   onClick={onTogglePreview}
@@ -372,7 +372,7 @@ class AnalogController extends Component {
                     margin: '0px 0px 0px 16px',
                     backgroundColor: !this.props.wave
                       ? '#ef9a9a'
-                      : theme.pallet.primary.main,
+                      : theme.palette.primary.main,
                     color: '#fff',
                   }}
                   onClick={onTogglePreview}
@@ -391,7 +391,7 @@ class AnalogController extends Component {
                 variant="outlined"
                 onClick={this.onHandleMinus}
                 style={{
-                  backgroundColor: theme.pallet.primary.main,
+                  backgroundColor: theme.palette.primary.main,
                   color: '#ffffff',
                   margin: '0px 16px 0px 0px',
                 }}
@@ -417,7 +417,7 @@ class AnalogController extends Component {
                 onClick={this.onHandlePlus}
                 style={{
                   margin: '0px 0px 0px 16px',
-                  backgroundColor: theme.pallet.primary.main,
+                  backgroundColor: theme.palette.primary.main,
                   color: '#ffffff',
                 }}
               >
@@ -431,4 +431,4 @@ class AnalogController extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(AnalogController));
+export default withTheme(withStyles(styles)(AnalogController));

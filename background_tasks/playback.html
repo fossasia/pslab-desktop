@@ -2,49 +2,50 @@
 	const { PythonShell } = require('python-shell');
 	const { ipcRenderer } = require('electron');
 	const loadBalancer = require('electron-load-balancer');
-	const path = require('path');
 	const { LAProcessor } = require('../utils/preProcessor.js');
 	const log = require('electron-log');
 
-	let pyshell = new PythonShell(path.join(__dirname, '/../scripts/playback_bridge.py'), {
-		pythonPath: 'python3',
-	});
+	// For distribution, we bundle everything into an asar archive.
+  ipcRenderer.invoke('GET_SCRIPT_PATH', 'bridge.py').then((bridgePath) => {
+    const pyshell = new PythonShell(bridgePath);
+    log.info('Python spawned:', pyshell && pyshell.command);
 
-	loadBalancer.job(
-		ipcRenderer,
-		'playback',
-		() => {
-			loadBalancer.onRecieveData(ipcRenderer, 'playback', args => {
-				pyshell.send(JSON.stringify(args));
-			});
+    loadBalancer.job(
+      ipcRenderer,
+      'playback',
+      () => {
+        loadBalancer.onReceiveData(ipcRenderer, 'playback', args => {
+          pyshell.send(JSON.stringify(args));
+        });
 
-			pyshell.on('stderr', function(stderr) {
-				log.error(stderr);
-			});
+        pyshell.on('stderr', function(stderr) {
+          log.error(stderr);
+        });
 
-			pyshell.on('message', function(results) {
-				log.info(results);
-				try {
-					const parsedJSON = JSON.parse(results);
-					switch (parsedJSON['type']) {
-						case 'FETCH_ROB_ARM':
-							ipcRenderer.send('FETCH_ROB_ARM');
-							break;
-						case 'FETCH_LA':
-							ipcRenderer.send('FETCH_LA');
-							break;
-						case 'DATA_WRITING_STATUS':
-							ipcRenderer.send('DATA_WRITING_STATUS', parsedJSON);
-							break;
-					}
-				}
-				catch (error) {
-					log.error(error);
-				}
-			});
-		},
-		() => {
-			pyshell.terminate();
-		},
-	);
+        pyshell.on('message', function(results) {
+          log.info(results);
+          try {
+            const parsedJSON = JSON.parse(results);
+            switch (parsedJSON['type']) {
+              case 'FETCH_ROB_ARM':
+                ipcRenderer.send('FETCH_ROB_ARM');
+                break;
+              case 'FETCH_LA':
+                ipcRenderer.send('FETCH_LA');
+                break;
+              case 'DATA_WRITING_STATUS':
+                ipcRenderer.send('DATA_WRITING_STATUS', parsedJSON);
+                break;
+            }
+          }
+          catch (error) {
+            log.error(error);
+          }
+        });
+      },
+      () => {
+        pyshell.terminate();
+      },
+    );
+  });
 </script>

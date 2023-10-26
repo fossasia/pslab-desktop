@@ -145,8 +145,8 @@ const FAQ = () => {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
-              A: Right now, we don't having an option to make and save custom
-              experiments. But we will implement it soon.
+              A: Right now, we don&apos;t having an option to make and save
+              custom experiments. But we will implement it soon.
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>

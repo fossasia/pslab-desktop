@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import { openDialog } from '../../redux/actions/app';
 
@@ -67,7 +67,7 @@ const CustomSliderInput = ({
               title: title,
               textTitle: `Enter value (${min} to ${max})`,
               onAccept: value => {
-                onChangeSlider(undefined, value);
+                onChangeSlider(undefined, Number(value));
               },
               onCheck: onCheck(min, max),
               inputCheck: inputCheck,

@@ -16,38 +16,38 @@ import {
 
 const styles = theme => ({
   sqr1colorSwitchBase: {
-    color: theme.pallet.sqr1Color,
+    color: theme.palette.sqr1Color,
     '&$colorChecked': {
-      color: theme.pallet.sqr1Color,
+      color: theme.palette.sqr1Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.sqr1Color,
+        backgroundColor: theme.palette.sqr1Color,
       },
     },
   },
   sqr2colorSwitchBase: {
-    color: theme.pallet.sqr2Color,
+    color: theme.palette.sqr2Color,
     '&$colorChecked': {
-      color: theme.pallet.sqr2Color,
+      color: theme.palette.sqr2Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.sqr2Color,
+        backgroundColor: theme.palette.sqr2Color,
       },
     },
   },
   sqr3colorSwitchBase: {
-    color: theme.pallet.sqr3Color,
+    color: theme.palette.sqr3Color,
     '&$colorChecked': {
-      color: theme.pallet.sqr3Color,
+      color: theme.palette.sqr3Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.sqr3Color,
+        backgroundColor: theme.palette.sqr3Color,
       },
     },
   },
   sqr4colorSwitchBase: {
-    color: theme.pallet.sqr4Color,
+    color: theme.palette.sqr4Color,
     '&$colorChecked': {
-      color: theme.pallet.sqr4Color,
+      color: theme.palette.sqr4Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.sqr4Color,
+        backgroundColor: theme.palette.sqr4Color,
       },
     },
   },
@@ -230,4 +230,4 @@ const SquareWaveParameters = ({
   </SettingsWrapper>
 );
 
-export default withTheme()(withStyles(styles)(SquareWaveParameters));
+export default withTheme(withStyles(styles)(SquareWaveParameters));

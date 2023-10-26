@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Select,
   Typography,
@@ -18,27 +17,9 @@ import { withStyles } from '@material-ui/core/styles';
 import CustomSliderInput from '../../../components/CustomSliderInput';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
-
-const styles = () => ({
-  formControl: {
-    margin: '0px 0px 0px 16px',
-  },
-});
+import formStyles from '../../utils/formStyles';
 
 class AnalysisParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      labelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.ref).offsetWidth,
-    });
-  }
-
   render() {
     const {
       timeMeasureChannel1,
@@ -54,8 +35,6 @@ class AnalysisParameters extends Component {
       changeTimeout,
       classes,
     } = this.props;
-    const { labelWidth } = this.state;
-
     return (
       <SettingsWrapper>
         <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
@@ -64,12 +43,7 @@ class AnalysisParameters extends Component {
         <Divider />
         <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel
-              ref={ref => {
-                this.ref = ref;
-              }}
-              htmlFor="outlined-channel1"
-            >
+            <InputLabel className={classes.label} htmlFor="outlined-channel1">
               Channel 1
             </InputLabel>
             <Select
@@ -77,7 +51,7 @@ class AnalysisParameters extends Component {
               onChange={changeTimeMeasureChannel('timeMeasureChannel1')}
               input={
                 <OutlinedInput
-                  labelWidth={labelWidth}
+                  labelWidth={0}
                   name="outlined-channel1"
                   id="outlined-channel1"
                 />
@@ -99,13 +73,15 @@ class AnalysisParameters extends Component {
             fullWidth={true}
             className={classes.formControl}
           >
-            <InputLabel htmlFor="outlined-trigger1">Trigger Type</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-trigger1">
+              Trigger Type
+            </InputLabel>
             <Select
               value={timeMeasuretrigger1Type}
               onChange={changeTimeMeasureTriggerType('timeMeasuretrigger1Type')}
               input={
                 <OutlinedInput
-                  labelWidth={labelWidth}
+                  labelWidth={0}
                   name="outlined-trigger1"
                   id="outlined-trigger1"
                 />
@@ -127,13 +103,15 @@ class AnalysisParameters extends Component {
             fullWidth={true}
             className={classes.formControl}
           >
-            <InputLabel htmlFor="outlined-write1">Write To</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-write1">
+              Write To
+            </InputLabel>
             <Select
               value={timeMeasureWrite1}
               onChange={changeTimeMeasureWrite('timeMeasureWrite1')}
               input={
                 <OutlinedInput
-                  labelWidth={labelWidth}
+                  labelWidth={0}
                   name="outlined-write1"
                   id="outlined-write1"
                 />
@@ -154,13 +132,15 @@ class AnalysisParameters extends Component {
         <Divider />
         <OptionsRowWrapper>
           <FormControl variant="outlined" fullWidth={true}>
-            <InputLabel htmlFor="outlined-channel2">Channel 1</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-channel2">
+              Channel 1
+            </InputLabel>
             <Select
               value={timeMeasureChannel2}
               onChange={changeTimeMeasureChannel('timeMeasureChannel2')}
               input={
                 <OutlinedInput
-                  labelWidth={labelWidth}
+                  labelWidth={0}
                   name="outlined-channel2"
                   id="outlined-channel2"
                 />
@@ -182,13 +162,15 @@ class AnalysisParameters extends Component {
             fullWidth={true}
             className={classes.formControl}
           >
-            <InputLabel htmlFor="outlined-trigger2">Trigger Type</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-trigger2">
+              Trigger Type
+            </InputLabel>
             <Select
               value={timeMeasuretrigger2Type}
               onChange={changeTimeMeasureTriggerType('timeMeasuretrigger2Type')}
               input={
                 <OutlinedInput
-                  labelWidth={labelWidth}
+                  labelWidth={0}
                   name="outlined-trigger2"
                   id="outlined-trigger2"
                 />
@@ -210,13 +192,15 @@ class AnalysisParameters extends Component {
             fullWidth={true}
             className={classes.formControl}
           >
-            <InputLabel htmlFor="outlined-write2">Write To</InputLabel>
+            <InputLabel className={classes.label} htmlFor="outlined-write2">
+              Write To
+            </InputLabel>
             <Select
               value={timeMeasureWrite2}
               onChange={changeTimeMeasureWrite('timeMeasureWrite2')}
               input={
                 <OutlinedInput
-                  labelWidth={labelWidth}
+                  labelWidth={0}
                   name="outlined-write2"
                   id="outlined-write2"
                 />
@@ -295,4 +279,4 @@ class AnalysisParameters extends Component {
   }
 }
 
-export default withStyles(styles)(AnalysisParameters);
+export default withStyles(formStyles)(AnalysisParameters);

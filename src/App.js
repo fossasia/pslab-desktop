@@ -183,7 +183,7 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme.pallet}>
+        <ThemeProvider theme={theme.palette}>
           <HashRouter>
             <Appshell
               reset={this.reset}
@@ -252,7 +252,9 @@ class App extends Component {
                 />
                 <Route
                   path="/loggeddata"
-                  render={props => <LoggedData {...props} />}
+                  render={props => (
+                    <LoggedData {...props} dataPath={dataPath} />
+                  )}
                 />
                 <Route path="/faq" render={props => <FAQ {...props} />} />
                 <Route path="/settings" component={Settings} />

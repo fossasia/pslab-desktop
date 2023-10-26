@@ -10,7 +10,7 @@ from power_source import Power_source
 from multimeter import Multimeter
 from wave_generator import Wave_generator
 from robotic_arm import RoboticArm
-
+from sensors import Sensors
 
 def main():
     file_write = FileWrite()
@@ -25,6 +25,7 @@ def main():
     multimeter = Multimeter(I, file_write)
     wave_generator = Wave_generator(I, file_write)
     robotic_arm = RoboticArm(I, file_write)
+    sensors = Sensors(I, file_write)
 
     while(True):
         in_stream_data = input()
@@ -39,8 +40,8 @@ def main():
             oscilloscope.stop_read()
 
         if command == "SET_CONFIG_OSC":
-            old_read_state = oscilloscope.is_reading_voltage or oscilloscope.is_reading_fft
-            if oscilloscope.is_reading_voltage or oscilloscope.is_reading_fft:
+            old_read_state = oscilloscope.is_reading_voltage or oscilloscope.is_reading_fft or oscilloscope.is_reading_xy_plot
+            if old_read_state:
                 oscilloscope.stop_read()
 
             time_base = parsed_stream_data['timeBase']
@@ -87,8 +88,9 @@ def main():
             trigger2_type = parsed_stream_data['trigger2Type']
             trigger3_type = parsed_stream_data['trigger3Type']
             trigger4_type = parsed_stream_data['trigger4Type']
+            capture_time = parsed_stream_data['captureTime']
             logic_analyser.set_config(
-                number_of_channels, trigger1_type, trigger2_type, trigger3_type, trigger4_type)
+                number_of_channels, trigger1_type, trigger2_type, trigger3_type, trigger4_type,capture_time)
 
         if command == 'GET_CONFIG_LA':
             logic_analyser.get_config()
@@ -174,12 +176,16 @@ def main():
             wave_generator.save_config(data_path)
 
         # ------------------------------- Robtic Arm block -------------------------------
-        if command == 'SET_ROB_ARM':
+        if command == 'SET_ROBO_ARM':
             angle1 = parsed_stream_data['angle1']
             angle2 = parsed_stream_data['angle2']
             angle3 = parsed_stream_data['angle3']
             angle4 = parsed_stream_data['angle4']
             robotic_arm.setServo(angle1, angle2, angle3, angle4)
+
+        # ------------------------------- Sensors block ----------------------------------
+        if command == 'SENSORS_SCAN':
+            sensors.scan()
 
         # -------------------------------- Write block -----------------------------------
 

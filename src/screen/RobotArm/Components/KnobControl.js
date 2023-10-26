@@ -22,7 +22,7 @@ import CustomCircularInput from '../../../components/CustomCircularInput';
 
 const styles = theme => ({
   iconButton: {
-    color: theme.pallet.common.white,
+    color: theme.palette.common.white,
   },
 });
 
@@ -185,4 +185,4 @@ const KnobControl = ({
   );
 };
 
-export default withTheme()(withStyles(styles)(KnobControl));
+export default withTheme(withStyles(styles)(KnobControl));

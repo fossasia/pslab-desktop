@@ -51,12 +51,18 @@ class Graph extends Component {
 
   componentDidMount() {
     ipcRenderer.on('LA_DATA', (event, args) => {
-      const { isReading, toggleRead } = this.props;
+      const { isReading, toggleRead, isAutoReading } = this.props;
       if (isReading) {
         this.setState({
           ...args.data,
         });
         toggleRead();
+        const reducer = (accumulator, currentArray) =>
+          accumulator && currentArray.length == 0;
+        const noEventsDetected = Object.values(args.data).reduce(reducer, true);
+        if (isAutoReading && noEventsDetected) {
+          toggleRead();
+        }
       }
     });
 
@@ -112,7 +118,7 @@ class Graph extends Component {
               tickCount={20}
               interval="preserveStart"
             >
-              <Label value="mSec" position="bottom" />
+              <Label value="μs" position="bottom" />
             </XAxis>
             <YAxis yAxisId="left" domain={['dataMin - 2', 'dataMax + 2']} />
             <YAxis dataKey="voltage" yAxisId="right" orientation="right" />

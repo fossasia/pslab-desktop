@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   Checkbox,
   Select,
@@ -11,24 +10,13 @@ import {
   FormControl,
   InputLabel,
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import CustomSliderInput from '../../../components/CustomSliderInput';
 import { SettingsWrapper, OptionsRowWrapper } from './Settings.styles';
 import { options } from './settingOptions';
+import formStyles from '../../../utils/formStyles';
 
 class TimeParameters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      triggerLabelWidth: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      triggerLabelWidth: ReactDOM.findDOMNode(this.triggerRef).offsetWidth,
-    });
-  }
-
   render() {
     const {
       triggerVoltage,
@@ -41,9 +29,8 @@ class TimeParameters extends Component {
       onChangeTriggerVoltage,
       onChangeTriggerChannel,
       onChangeTimeBaseIndex,
+      classes,
     } = this.props;
-    const { triggerLabelWidth } = this.state;
-
     return (
       <SettingsWrapper>
         <Typography style={{ padding: '0.6rem' }} component="h6" variant="h6">
@@ -66,9 +53,7 @@ class TimeParameters extends Component {
             disabled={!isTriggerActive}
           >
             <InputLabel
-              ref={ref => {
-                this.triggerRef = ref;
-              }}
+              className={classes.label}
               htmlFor="outlined-trigger-channel"
             >
               Channel
@@ -78,7 +63,7 @@ class TimeParameters extends Component {
               onChange={onChangeTriggerChannel}
               input={
                 <OutlinedInput
-                  labelWidth={triggerLabelWidth}
+                  labelWidth={0}
                   name="trigger-channel"
                   id="outlined-trigger-channel"
                 />
@@ -129,4 +114,4 @@ class TimeParameters extends Component {
   }
 }
 
-export default TimeParameters;
+export default withStyles(formStyles)(TimeParameters);

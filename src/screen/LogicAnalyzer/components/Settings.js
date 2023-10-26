@@ -7,7 +7,7 @@ import {
 } from './Settings.styles';
 import NumberParameter from './NumberParameter';
 import ChannelParameters from './ChannelParameters';
-
+import TimeParameters from './TimeParameters';
 const Settings = ({
   numberOfChannels,
   channel1Map,
@@ -16,20 +16,12 @@ const Settings = ({
   trigger2Type,
   trigger3Type,
   trigger4Type,
-  timeMeasureChannel1,
-  timeMeasureChannel2,
-  timeMeasuretrigger1Type,
-  timeMeasuretrigger2Type,
-  timeMeasureWrite1,
-  timeMeasureWrite2,
-  timeout,
   changeNumberOfChannels,
   changeChannelMap,
   changeTriggerType,
-  changeTimeMeasureChannel,
-  changeTimeMeasureTriggerType,
-  changeTimeMeasureWrite,
-  changeTimeout,
+  onChangeCaptureTime,
+  captureTime,
+  maxCaptureTime,
 }) => (
   <SettingsContainer>
     <FixedWrapper>
@@ -51,19 +43,11 @@ const Settings = ({
           changeChannelMap={changeChannelMap}
           changeTriggerType={changeTriggerType}
         />
-        {/* <AnalysisParameters
-          timeMeasureChannel1={timeMeasureChannel1}
-          timeMeasureChannel2={timeMeasureChannel2}
-          timeMeasuretrigger1Type={timeMeasuretrigger1Type}
-          timeMeasuretrigger2Type={timeMeasuretrigger2Type}
-          timeMeasureWrite1={timeMeasureWrite1}
-          timeMeasureWrite2={timeMeasureWrite2}
-          timeout={timeout}
-          changeTimeMeasureChannel={changeTimeMeasureChannel}
-          changeTimeMeasureTriggerType={changeTimeMeasureTriggerType}
-          changeTimeMeasureWrite={changeTimeMeasureWrite}
-          changeTimeout={changeTimeout}
-        /> */}
+        <TimeParameters
+          onChangeCaptureTime={onChangeCaptureTime}
+          captureTime={captureTime}
+          maxCaptureTime={maxCaptureTime}
+        />
       </Scrollbars>
     </ScrollWrapper>
   </SettingsContainer>

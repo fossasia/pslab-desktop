@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button } from '@material-ui/core';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 import PlusIcon from '@material-ui/icons/ArrowRight';
 import MinusIcon from '@material-ui/icons/ArrowLeft';
 import {
@@ -29,20 +29,20 @@ import PWMIcon from '../../../resources/ic_pwm_pic.png';
 
 const styles = theme => ({
   s1colorSwitchBase: {
-    color: theme.pallet.s1Color,
+    color: theme.palette.s1Color,
     '&$colorChecked': {
-      color: theme.pallet.s1Color,
+      color: theme.palette.s1Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.s1Color,
+        backgroundColor: theme.palette.s1Color,
       },
     },
   },
   s2colorSwitchBase: {
-    color: theme.pallet.s2Color,
+    color: theme.palette.s2Color,
     '&$colorChecked': {
-      color: theme.pallet.s2Color,
+      color: theme.palette.s2Color,
       '& + $colorBar': {
-        backgroundColor: theme.pallet.s2Color,
+        backgroundColor: theme.palette.s2Color,
       },
     },
   },
@@ -267,7 +267,18 @@ class DigitalController extends Component {
       onTogglePreview,
     } = this.props;
     const { activePin, activeSetting } = this.state;
-
+    const getMaxSliderValue = () => {
+      switch (activeSetting) {
+        case 'Freq':
+          return 1e7;
+        case 'Phase':
+          // the maximum angle is 360
+          return 360;
+        default:
+          // maximum percentage, used for duty cycle
+          return 100;
+      }
+    };
     return (
       <Card>
         <Wrapper>
@@ -316,7 +327,7 @@ class DigitalController extends Component {
                       backgroundColor:
                         activePin === 'sqr1'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -340,7 +351,7 @@ class DigitalController extends Component {
                       backgroundColor:
                         activePin === 'sqr2'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -359,7 +370,7 @@ class DigitalController extends Component {
                       backgroundColor:
                         activePin === 'sqr3'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -378,7 +389,7 @@ class DigitalController extends Component {
                       backgroundColor:
                         activePin === 'sqr4'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -394,7 +405,7 @@ class DigitalController extends Component {
                 </ButtonRow>
                 <ButtonRow>
                   <Button
-                    style={{ backgroundColor: theme.pallet.primary.main }}
+                    style={{ backgroundColor: theme.palette.primary.main }}
                     size="large"
                     variant="contained"
                     color="primary"
@@ -410,7 +421,7 @@ class DigitalController extends Component {
                       backgroundColor:
                         activePin === 'sqr1'
                           ? '#ef9a9a'
-                          : theme.pallet.primary.main,
+                          : theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -426,7 +437,7 @@ class DigitalController extends Component {
                   <Button
                     style={{
                       margin: '0px 0px 0px 16px',
-                      backgroundColor: theme.pallet.primary.main,
+                      backgroundColor: theme.palette.primary.main,
                       color: '#fff',
                     }}
                     size="large"
@@ -450,7 +461,7 @@ class DigitalController extends Component {
                     margin: '0px 0px 0px 16px',
                     backgroundColor: this.props.wave
                       ? '#ef9a9a'
-                      : theme.pallet.primary.main,
+                      : theme.palette.primary.main,
                     color: '#fff',
                   }}
                   onClick={onTogglePreview}
@@ -467,7 +478,7 @@ class DigitalController extends Component {
                     margin: '0px 0px 0px 16px',
                     backgroundColor: !this.props.wave
                       ? '#ef9a9a'
-                      : theme.pallet.primary.main,
+                      : theme.palette.primary.main,
                     color: '#fff',
                   }}
                   onClick={onTogglePreview}
@@ -486,7 +497,7 @@ class DigitalController extends Component {
                 className={classes.button}
                 onClick={this.onHandleMinus}
                 style={{
-                  backgroundColor: theme.pallet.primary.main,
+                  backgroundColor: theme.palette.primary.main,
                   color: '#ffffff',
                   margin: '0px 16px 0px 0px',
                 }}
@@ -501,13 +512,7 @@ class DigitalController extends Component {
                 className={classes.slider}
                 step={1}
                 min={activeSetting === 'Freq' ? 10 : 0}
-                max={
-                  activeSetting === 'Freq'
-                    ? 5000
-                    : activeSetting === 'Phase'
-                    ? 360
-                    : 100
-                }
+                max={getMaxSliderValue()}
               />
             </SliderWrapper>
             <ButtonContainer>
@@ -517,7 +522,7 @@ class DigitalController extends Component {
                 className={classes.button}
                 style={{
                   margin: '0px 0px 0px 16px',
-                  backgroundColor: theme.pallet.primary.main,
+                  backgroundColor: theme.palette.primary.main,
                   color: '#ffffff',
                 }}
                 onClick={this.onHandlePlus}
@@ -532,4 +537,4 @@ class DigitalController extends Component {
   }
 }
 
-export default withTheme()(withStyles(styles)(DigitalController));
+export default withTheme(withStyles(styles)(DigitalController));

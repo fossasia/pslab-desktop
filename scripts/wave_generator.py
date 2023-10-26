@@ -8,7 +8,8 @@ class Wave_generator:
     def __init__(self, I, file_write):
         self.file_write = file_write
 
-        self.device = I
+        self.wavegen = I.waveform_generator
+        self.pwmgen = I.pwm_generator
         self.wave = True
         self.digital = False
         self.s1_frequency = 500
@@ -51,15 +52,32 @@ class Wave_generator:
 
     def change_device_settings(self):
         if self.wave:
-            self.device.set_w1(self.s1_frequency, waveType=self.wave_form_s1)
-            self.device.set_w2(self.s2_frequency, waveType=self.wave_form_s2)
-            self.device.set_waves(
-                self.s1_frequency, self.s2_phase, self.s2_frequency)
+            self.wavegen.load_function("SI1", self.wave_form_s1)
+            self.wavegen.load_function("SI2", self.wave_form_s2)
+            self.wavegen.generate(
+                    ["SI1", "SI2"],
+                    [self.s1_frequency, self.s2_frequency],
+                    self.s2_phase
+            )
         else:
-            self.device.sqrPWM(self.pwm_frequency,  self.sqr1_duty_cycle/100.,
-                               self.sqr2_phase/360., self.sqr2_duty_cycle/100.,
-                               self.sqr3_phase/360., self.sqr3_duty_cycle/100.,
-                               self.sqr4_phase/360., self.sqr4_duty_cycle/100.)
+            duty_cycles = (
+                    self.sqr1_duty_cycle,
+                    self.sqr2_duty_cycle,
+                    self.sqr3_duty_cycle,
+                    self.sqr4_duty_cycle,
+            )
+            phases = (
+                    0,
+                    self.sqr2_phase,
+                    self.sqr3_phase,
+                    self.sqr4_phase
+            )
+            self.pwmgen.generate(
+                    ["SQ1", "SQ2", "SQ3", "SQ4"],
+                    self.pwm_frequency,
+                    [dc / 100 for dc in duty_cycles],
+                    [ph / 360 for ph in phases],
+            )
 
     def get_config(self):
         output = {'type': 'GET_CONFIG_WAV_GEN',

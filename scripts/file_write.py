@@ -2,6 +2,7 @@ import time
 import datetime
 import sys
 import json
+import os.path
 
 
 class FileWrite:
@@ -32,8 +33,10 @@ class FileWrite:
             self.data_buffer.append(data)
 
     def start_recording(self, data_path, device_type):
-        file_name = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S:000")
-        self.file_pointed = open(data_path + '/' + file_name + '.csv', "w+")
+        file_name = datetime.datetime.now().strftime(
+            "%Y-%m-%d %H:%M:%S").replace(':', '꞉')
+        self.file_pointed = open(os.path.join(
+            data_path, file_name + '.csv'), "w+")
         self.file_pointed.write("%s, %s \n\n" % (
             device_type, str(datetime.datetime.now())))
         if device_type == 'Oscilloscope':
@@ -48,8 +51,10 @@ class FileWrite:
         sys.stdout.flush()
 
     def save_config(self, data_path, device_type, **kwargs):
-        file_name = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S:000")
-        self.file_pointed = open(data_path + '/' + file_name + '.csv', "w+")
+        file_name = datetime.datetime.now().strftime(
+            "%Y-%m-%d %H:%M:%S").replace(':', '꞉')
+        self.file_pointed = open(os.path.join(
+            data_path, file_name + '.csv'), "w+")
         self.file_pointed.write("%s, %s \n\n" % (
             device_type, str(datetime.datetime.now())))
 

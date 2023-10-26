@@ -1,8 +1,11 @@
-from PSL import sciencelab
 import sys
 import time
 import threading
 import json
+
+from serial.tools import list_ports
+
+from pslab import ScienceLab
 
 
 class Device_detection:
@@ -18,25 +21,19 @@ class Device_detection:
 
     def async_connect(self):
         # First connection attempt
-        self.device = sciencelab.ScienceLab(vebose=False)
+        self.device = ScienceLab()
         output = None
         if not self.device.connected:
-            if len(self.device.H.occupiedPorts):
-                # device connected but being used by some other program
-                output = {'type': 'DEVICE_CONNECTION_STATUS',
-                          'isConnected': False,
-                          'message': 'Device port busy'}
-            else:
-                # No device connected
-                output = {'type': 'DEVICE_CONNECTION_STATUS',
-                          'isConnected': False,
-                          'message': 'Device not connected', }
+            # No device connected
+            output = {'type': 'DEVICE_CONNECTION_STATUS',
+                      'isConnected': False,
+                      'message': 'Device not connected', }
         else:
             output = {'type': 'DEVICE_CONNECTION_STATUS',
                       'isConnected': True,
                       'message': 'Device connected',
                       'deviceName': str(self.device.get_version()),
-                      'portName': self.device.H.portname
+                      'portName': self.device.interface.name
                       }
             self.connected = True
         print(json.dumps(output))
@@ -49,7 +46,8 @@ class Device_detection:
 
     def check_connection(self):
         while self.connected:
-            if self.device.H.portname not in self.device.H.listPorts():
+            ports = [p.device for p in list_ports.comports()]
+            if self.device.interface.name not in ports:
                 output = {'type': 'DEVICE_CONNECTION_STATUS',
                           'isConnected': False,
                           'message': 'Device disconnected'}
