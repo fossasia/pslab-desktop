@@ -487,7 +487,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
+
+  withTheme()(
+
   withTheme(
+
     withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Appshell)),
   ),
 );
