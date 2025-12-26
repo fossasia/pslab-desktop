@@ -20,8 +20,34 @@ class Device_detection:
         self.device_detection_thread.join()
 
     def async_connect(self):
+        # Debug: List all ports
+        found_ports = list_ports.comports()
+        sys.stderr.write(f"Scanning {len(found_ports)} ports:\n")
+        pslab_port = None
+        for p in found_ports:
+            sys.stderr.write(f" - {p.device}: VID={p.vid}, PID={p.pid}\n")
+            if p.vid == 0x04D8 and p.pid == 0x00DF:
+                pslab_port = p.device
+
         # First connection attempt
-        self.device = ScienceLab()
+        try:
+            if pslab_port:
+                sys.stderr.write(f"Attempting to connect to PSLab on {pslab_port}\n")
+                self.device = ScienceLab(port=pslab_port)
+            else:
+                sys.stderr.write("PSLab not found in port scan, trying auto-detect\n")
+                self.device = ScienceLab()
+        except TypeError:
+            sys.stderr.write("ScienceLab does not accept 'port' argument, falling back to auto-detect\n")
+            self.device = ScienceLab()
+        except Exception as e:
+            sys.stderr.write(f"Error during connection: {e}\n")
+            # Create a dummy device object if instantiation failed completely
+            # so that self.device.connected check doesn't crash
+            class DummyDevice:
+                connected = False
+            self.device = DummyDevice()
+
         output = None
         if not self.device.connected:
             # No device connected
